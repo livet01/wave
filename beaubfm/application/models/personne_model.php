@@ -11,10 +11,10 @@ class Personne_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function ajouterPersonne($data)
+	public function ajouterPersonne($data,$cat)
 	{
-		return $this->db->set('per_nom', $data['artiste'])
-						->set('cat_id', ($data['autoprod']) ? 5 : 4)
+		return $this->db->set('per_nom', $data)
+						->set('cat_id', $cat)
 						->set('rad_id', 1)
 						->insert($this->table);
 	}
