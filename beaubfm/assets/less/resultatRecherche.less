@@ -1,0 +1,84 @@
+#resultat_recherche{
+    .margin_hauteur(15px);
+    .margin_cote(5px);
+    width: @w_main_page - 305px;
+    padding: 20px;
+    border: @border_div1;
+    background: #fff;
+    color: #777;
+    box-shadow: 0 0 0 2px #fff inset;
+    min-height: @height_mainPage - 100px;
+}
+table{
+  width:100%;
+  border: @border_div1;
+  border-collapse:collapse;
+}
+.title_tab{
+  font-size: 15px;
+  padding-left: 4px;
+}
+caption{
+  background-color:#6792AE;
+  color:black;
+  .padding_hauteur(2px);
+  font-weight: bold;
+  border: @border_div1;
+}
+tr, td{
+  .padding_cote(3px);
+  .padding_hauteur(2px);
+  color: #000;
+}
+tr:hover{
+  background-color:#C0D1DE;
+}
+a.action-tab{
+  text-decoration: none;
+  color:black;
+  font-size: 14px;
+}
+a.action-tab >i{
+  padding: 0;
+  margin: 0;
+}
+a.action-tab > i.icon-trash:hover{
+  color:red;
+}
+a.action-tab > i.icon-pencil:hover{
+  color:green;
+}
+.action-tab > i{
+  .padding_cote(2px);
+}
+th{
+  background-color:grey;
+  color: #000;
+}
+tr{
+  text-align:center;
+}
+.left{
+ // text-align:left;
+}
+.right{
+ // text-align:right;
+}
+.blue{
+  background-color:#bbb ;
+  color:#000;
+}
+#resultat_recherche > nav{
+   text-align:center;
+ }
+ 
+.navig_result a, .navig_result a:hover{
+  color:black;
+  padding:2px;
+  text-decoration: none;
+}
+
+#resultat > p {
+  margin-bottom: -5px;
+  margin-left: 25px;
+}
