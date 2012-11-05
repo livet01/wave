@@ -2,7 +2,7 @@
 			<div class="topright">
 				<nav>
 					<a class="btn-header-usr" href="#"><i class="icon-user"></i> Test</a>
-					<a class="btn-header-off" href="<?php echo base_url().'index.php/index/' ;?>"><i class="icon-off"></i></a>
+					<a class="btn-header-off" href="<?php echo site_url(array('deconnexion','index')); ?>"><i class="icon-off"></i></a>
 				</nav>
 
 			</div>
