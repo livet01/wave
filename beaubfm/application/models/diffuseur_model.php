@@ -12,12 +12,11 @@ class Diffuseur_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function ajouterDiffuseur()
+	public function ajouterDiffuseur($data,$per_id)
 	{
-		return $this->db->set('per_nom', $data)
-						->set('cat_id', $cat)
-						->set('rad_id', 1)
-						->insert($this->table);
+		return $this->db->set('dif_mail',$data)
+						->insert($this->table)
+						->where('per_id',$per_id);
 	}
 	
 	public function readDiffuseur($select = '*', $where = array())
@@ -28,4 +27,3 @@ class Diffuseur_model extends CI_Model {
 	}
 	
 }
-
