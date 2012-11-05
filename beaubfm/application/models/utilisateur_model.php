@@ -13,7 +13,7 @@ class Utilisateur_model extends CI_Model {
 		
 	public function readUtilisateurParLogin($login)
 	{
-		$this->query = $this->db->select('uti_prenom')->from('utilisateur')->where(array('uti_login'=>$login))->get();
+		$this->query = $this->db->select('*')->from('utilisateur')->where(array('uti_login'=>$login))->get();
 		return $this->query->row_array();
 	}
 
