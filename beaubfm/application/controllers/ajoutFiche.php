@@ -15,13 +15,10 @@ class AjoutFiche extends CI_Controller {
 		// Helper	
 		$this->load->helper('assets');
 		// Vues
-		if (empty($data))
-			$this->load->view('header');
-		else
-			$this->load->view('header', $data);
-		$this->load->view('ajoutFiche/actions_ajout');
-		$this->load->view('ajoutFiche/formulaire');
-		$this->load->view('footer');
+		$this->load->library('layout');
+		
+		$this->layout->views('menu_principal')
+					->view('ajouter_fiche');
 	}
 	
 	public function envoi() {
