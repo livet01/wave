@@ -25,6 +25,14 @@ class Personne_model extends CI_Model {
 						->from($this->table)
 						->where($where);
 	}
+
+	public function countPersonne($champ = array(), $valeur = null) // Si $champ est un array, la variable $valeur sera ignorée par la méthode where()
+	{
+		return (int) $this->db->where($champ, $valeur)
+	                              ->from($this->table)
+	                              ->count_all_results();
+	}
+	
 	
 }
 
