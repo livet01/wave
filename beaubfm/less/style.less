@@ -1,0 +1,46 @@
+@import 'variables';
+@import 'fonctions';
+@import 'recherche';
+@import 'resultatRecherche';
+@import 'headerFooter';
+@import 'selection';
+@import 'cadreAction';
+@import 'font-awesome';
+@import 'authentification';
+@import 'ajoutFiche';
+@import 'importerFiches';
+@import 'mesgErreur';
+//--> http://fortawesome.github.com/Font-Awesome/
+body { 
+    padding: 0; 
+    margin: 0; 
+    font-family: "Lucida Grande", Verdana, Arial, Helvetica, sans-serif; 
+    font-size: @fs_body; 
+    color: @tc_body; 
+    background-color: #fff;
+    height:100%;
+}
+
+#main_page{
+    width: @w_main_page;
+    min-height: 100%;
+    margin: auto; 
+}
+
+#cadre, #cadre2{
+   .margin_hauteur(5px);
+   .padding_hauteur(10px);
+   .padding_cote(20px);
+    border: @border_div;
+    background: #F4F4F4;
+    box-shadow: 0 0 0 5px #fff inset,
+                0 0 0 6px #DAD4D4 inset;
+    width:@w_page;
+  
+}
+
+h1 {
+  text-align: center;
+}
+
+

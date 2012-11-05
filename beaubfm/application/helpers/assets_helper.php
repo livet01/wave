@@ -3,19 +3,19 @@ if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 if (!function_exists('css_url')) {
 	function css_url($nom) {
-		return base_url() . 'assets/css/' . $nom . '.css';
+		return base_url() . 'css/' . $nom . '.css';
 	}
 
 }
 if (!function_exists('less_url')) {
 	function less_url($nom) {
-		return base_url() . 'assets/less/' . $nom . '.less';
+		return base_url() . 'less/' . $nom . '.less';
 	}
 
 }
 if (!function_exists('js_url')) {
 	function js_url($nom) {
-		return base_url() . 'assets/js/' . $nom . '.js';
+		return base_url() . 'js/' . $nom . '.js';
 	}
 
 }

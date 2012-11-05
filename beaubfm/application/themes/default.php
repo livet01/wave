@@ -3,10 +3,15 @@
 	<head>
 		<title>BeaubFM</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->config->item('charset'); ?>" />
-			<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />	
+		<!--	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />	-->
 			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 			<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+			
+					<link rel="stylesheet/less" type="text/css" href="<?php echo less_url('style'); ?>">
+
+		<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>
+			
 			<script type="text/javascript">
 			$(document).ready(function() {
 				
