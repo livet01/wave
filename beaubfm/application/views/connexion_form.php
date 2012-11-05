@@ -44,7 +44,7 @@ $session_id = $this->session->userdata('session_id');
 </script>
 </head>
 <body>
-	
+		<form action="<?php echo site_url(array('connexion','connexionOn')); ?>" method="post" id="connexion">
 		<div id="cadre_mesg_information" class="warning">
 			<i id="icon_info" class="icon-warning-sign"></i>
 			<b id="mesg_erreur">Veuillez vous authentifier</b>
@@ -60,13 +60,14 @@ $session_id = $this->session->userdata('session_id');
 				<label><i class="icon-key"></i></label>
 				<input id="password" name="password" type="password" size="30" placeholder="Mot de Passe">
 			</p>
-			<a class="btn_connexion" href="javascript: connexion()"><i class="icon-share-alt"></i> Se connecter</a>
+			<a class="btn_connexion" href="javascript: document.forms['connexion'].submit();"><i class="icon-share-alt"></i> Se connecter</a>
 		</div>
 		<div id="footer">
 			<img src="<?php echo img_url('valide_html5.png'); ?>" id="valideHtml5" alt=" valide HTML5 " />
 			<img src="<?php echo img_url('valide_css.png'); ?>" id="valideCSS"  alt=" valide CSS " />
 			<p style="font-size: 9px;">Page générée en <strong>{elapsed_time}</strong> seconde(s)</p>
 		</div>
+		</form>
 	</body>
 
 </html>

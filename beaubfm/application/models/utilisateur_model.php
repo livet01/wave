@@ -11,11 +11,10 @@ class Utilisateur_model extends CI_Model {
 		parent::__construct();
 	}
 		
-	public function readUtilisateurParLogin($where)
+	public function readUtilisateurParLogin($login)
 	{
-		return $this->db->select('uti_prenom')
-						->from($this->table)
-						->where($where);
+		$this->query = $this->db->select('uti_prenom')->from('utilisateur')->where(array('uti_login'=>$login))->get();
+		return $this->query->row_array();
 	}
 
 }
