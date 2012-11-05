@@ -16,6 +16,8 @@ class Connexion extends CI_Controller {
 		}
 
 	}
+	
+		
 
 	public function connexionOn() {
 		if (($this -> input -> post('login') == "test") && ($this -> input -> post('password') == "test")) {
