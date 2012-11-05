@@ -1,3 +1,8 @@
+<?php 
+if($affichage != 0)
+{
+	if($affichage == 1)
+	{ ?>
 <div id="cadre2">
 	<div id="selection">
 		<ul class="icons">
@@ -51,3 +56,73 @@
 		</nav>
 	</div>
 </div>
+<?php 	}
+	elseif($affichage==2) {
+			?>
+<div id="cadre2">
+	<div id="selection">
+		<ul class="icons">
+			<li>&nbsp;</li>
+			<li>Aucune sélection</li>
+			<li>&nbsp;</li>
+		</ul>
+		<div id="cadre_action">
+			<!-- 	<a class="btn-large-action-nonActif"><i class="icon-pencil"></i> Modifier la fiche</a> -->
+			<a class="btn-large-action-nonActif"><i class="icon-trash"></i> Supprimer les fiches</a>
+			<a class="btn-large-action-nonActif"><i class="icon-signin"></i> Importer des fiches</a>
+			<a class="btn-large-action-nonActif"><i class="icon-signout"></i> Exporter des fiches</a>
+		</div>
+	</div>
+	<div id="resultat_recherche">
+		<p>La recherche n'a renvoyé aucun résultat.</p>
+	</div>
+</div>
+
+			<?php
+		}elseif($affichage==-1) {
+			?>
+<div id="cadre2">
+	<div id="selection">
+		<ul class="icons">
+			<li>&nbsp;</li>
+			<li>Aucune sélection</li>
+			<li>&nbsp;</li>
+		</ul>
+		<div id="cadre_action">
+			<!-- 	<a class="btn-large-action-nonActif"><i class="icon-pencil"></i> Modifier la fiche</a> -->
+			<a class="btn-large-action-nonActif"><i class="icon-trash"></i> Supprimer les fiches</a>
+			<a class="btn-large-action-nonActif"><i class="icon-signin"></i> Importer des fiches</a>
+			<a class="btn-large-action-nonActif"><i class="icon-signout"></i> Exporter des fiches</a>
+		</div>
+	</div>
+	<div id="resultat_recherche">
+		<p>Veuillez saisir au moins une lettre pour faire une recherche.</p>
+	</div>
+</div>
+
+			<?php
+		}
+}
+else {
+	?>
+<div id="cadre2">
+	<div id="selection">
+		<ul class="icons">
+			<li>&nbsp;</li>
+			<li>Aucune sélection</li>
+			<li>&nbsp;</li>
+		</ul>
+		<div id="cadre_action">
+			<!-- 	<a class="btn-large-action-nonActif"><i class="icon-pencil"></i> Modifier la fiche</a> -->
+			<a class="btn-large-action-nonActif"><i class="icon-trash"></i> Supprimer les fiches</a>
+			<a class="btn-large-action-nonActif"><i class="icon-signin"></i> Importer des fiches</a>
+			<a class="btn-large-action-nonActif"><i class="icon-signout"></i> Exporter des fiches</a>
+		</div>
+	</div>
+	<div id="resultat_recherche">
+		<p>Commencer par faire une recherche.</p>
+	</div>
+</div>
+
+	<?php
+}

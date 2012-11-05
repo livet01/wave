@@ -23,23 +23,6 @@
 					},
 					minLength: 2
 					});
-		
-					$('#btn_rechercher').click(function() {
-						var form_data = {
-						recherche : $('#recherche').val(),
-						ajax : '1'
-						};
-						$.ajax({
-							url: "<?php echo site_url('index/ajax_check'); ?>",
-							type: 'POST',
-							async : false,
-							data: form_data,
-							success: function(msg) {
-							$('#recherche_update').html(msg);
-						}
-						});
-						return false;
-					});
 			});
 			</script>
 			<script type="text/javascript" src="<?php echo js_url('less') ?>"></script>
