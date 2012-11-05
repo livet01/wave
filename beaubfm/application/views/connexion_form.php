@@ -16,8 +16,8 @@ $session_id = $this->session->userdata('session_id');
 	function connexion() {
 	//Déclaration de variables de correspondances login-password pour
 	//tester la fonction connexion
-	var testLogin = "test";
-	var testPassword = "test";
+	var testLogin = "sbouaked";
+	var testPassword = "bouaked";
 
 	//Récupération des valeurs fournies par l'utilisateur
 	var chUsername = document.getElementById('login').value;

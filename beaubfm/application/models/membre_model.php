@@ -17,11 +17,5 @@ class Membre_model extends CI_Model {
 						->from($this->vue)
 						->where('mem_nom',$mem_nom);
 	}
-	
-	public function readMembreParLogin($mem_login)
-	{
-		return $this->db->select('mem_nom','mem_prenom')
-						->from($this->vue)
-						->where('mem_login',$mem_login);
-	}
+
 }
