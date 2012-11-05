@@ -51,7 +51,22 @@ class Index extends CI_Controller {
 			}
 		}
 	}
-
+	
+	function suggestions()
+	{
+		$this->load->model('autocomplete_model');
+		$term = $this->input->post('term',TRUE);
+	
+		if (strlen($term) < 2) break;
+	
+		$rows = $this->autocomplete_model->GetAutocomplete(array('keyword' => $term));
+	
+		$json_array = array();
+		foreach ($rows as $row)
+			 array_push($json_array, $row->art_nom);
+	
+		echo json_encode($json_array);
+	}
 	
 }
 

@@ -5,24 +5,41 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->config->item('charset'); ?>" />
 			<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />	
 			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-			<script type="application/javascript">
+			<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+			<script type="text/javascript">
 			$(document).ready(function() {
-			$('#btn_rechercher').click(function() {
-			var form_data = {
-			recherche : $('#recherche').val(),
-			ajax : '1'
-			};
-			$.ajax({
-			url: "<?php echo site_url('index/ajax_check'); ?>",
-			type: 'POST',
-			async : false,
-			data: form_data,
-			success: function(msg) {
-			$('#recherche_update').html(msg);
-			}
-			});
-			return false;
-			});
+				
+					$( "#recherche" ).autocomplete({
+						source: function(request, response) {
+							$.ajax({ url: "<?php echo site_url('index/suggestions'); ?>",
+							data: { term: $("#recherche").val()},
+							dataType: "json",
+							type: "POST",
+							success: function(data){
+								response(data);
+							}
+						});
+					},
+					minLength: 2
+					});
+		
+					$('#btn_rechercher').click(function() {
+						var form_data = {
+						recherche : $('#recherche').val(),
+						ajax : '1'
+						};
+						$.ajax({
+							url: "<?php echo site_url('index/ajax_check'); ?>",
+							type: 'POST',
+							async : false,
+							data: form_data,
+							success: function(msg) {
+							$('#recherche_update').html(msg);
+						}
+						});
+						return false;
+					});
 			});
 			</script>
 			<script type="text/javascript" src="<?php echo js_url('less') ?>"></script>
