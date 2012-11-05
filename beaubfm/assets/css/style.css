@@ -276,8 +276,8 @@ a.btn-large-action:hover {
     */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('http://127.0.0.1/Projet_tut/Beaub%27FM/less/../font/fontawesome-webfont.eot');
-  src: url('http://127.0.0.1/Projet_tut/Beaub%27FM/less/../font/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('http://127.0.0.1/Projet_tut/Beaub%27FM/less/../font/fontawesome-webfont.woff') format('woff'), url('http://127.0.0.1/Projet_tut/Beaub%27FM/less/../font/fontawesome-webfont.ttf') format('truetype'), url('http://127.0.0.1/Projet_tut/Beaub%27FM/less/../font/fontawesome-webfont.svg#FontAwesome') format('svg');
+  src: url('http://127.0.0.1/Projet_tut/BeaubFM/less/../font/fontawesome-webfont.eot');
+  src: url('http://127.0.0.1/Projet_tut/BeaubFM/less/../font/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('http://127.0.0.1/Projet_tut/BeaubFM/less/../font/fontawesome-webfont.woff') format('woff'), url('http://127.0.0.1/Projet_tut/BeaubFM/less/../font/fontawesome-webfont.ttf') format('truetype'), url('http://127.0.0.1/Projet_tut/BeaubFM/less/../font/fontawesome-webfont.svg#FontAwesome') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -1131,22 +1131,22 @@ a {
 .info {
   color: #00529B;
   background-color: #BDE5F8;
-  background-image: url('http://127.0.0.1/Projet_tut/Beaub%27FM/less/info.png');
+  background-image: url('http://127.0.0.1/Projet_tut/BeaubFM/less/info.png');
 }
 .success {
   color: #4F8A10;
   background-color: #DFF2BF;
-  background-image: url('http://127.0.0.1/Projet_tut/Beaub%27FM/less/success.png');
+  background-image: url('http://127.0.0.1/Projet_tut/BeaubFM/less/success.png');
 }
 .warning {
   color: #9F6000;
   background-color: #FEEFB3;
-  background-image: url('http://127.0.0.1/Projet_tut/Beaub%27FM/less/warning.png');
+  background-image: url('http://127.0.0.1/Projet_tut/BeaubFM/less/warning.png');
 }
 .error {
   color: #D8000C;
   background-color: #FFBABA;
-  background-image: url('http://127.0.0.1/Projet_tut/Beaub%27FM/less/error.png');
+  background-image: url('http://127.0.0.1/Projet_tut/BeaubFM/less/error.png');
 }
 .cadre_informations {
   border: thin solid #CE782D;
@@ -1187,7 +1187,7 @@ body {
   font-family: "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
   font-size: 12px;
   color: #494949;
-  background: url(http://127.0.0.1/Projet_tut/Beaub%27FM/less/../img/background.jpg) repeat #d1d5d8;
+  background: url(http://127.0.0.1/Projet_tut/BeaubFM/assets/less/../img/background.jpg) repeat #d1d5d8;
   height: 100%;
 }
 #main_page {
