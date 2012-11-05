@@ -53,12 +53,12 @@ $session_id = $this->session->userdata('session_id');
 			<p>
 				<!-- Nom de LOGIN -->
 				<label><i class="icon-user"></i></label>
-				<input id="login" type="text" size="30" placeholder="Login">
+				<input id="login" name="login" type="text" size="30" placeholder="Login">
 			</p>
 			<p>
 				<!-- PASSWORD -->
 				<label><i class="icon-key"></i></label>
-				<input id="password" type="password" size="30" placeholder="Mot de Passe">
+				<input id="password" name="password" type="password" size="30" placeholder="Mot de Passe">
 			</p>
 			<a class="btn_connexion" href="javascript: connexion()"><i class="icon-share-alt"></i> Se connecter</a>
 		</div>
