@@ -1,5 +1,5 @@
 <?
-class recherche_model extends CI_Model {
+class Recherche_model extends CI_Model {
 	
 	public function check_recherche($recherche) {
 	$this->query = $this->db->select('COUNT(*)')->from('Artiste')->where(array('art_nom'=>$recherche))->get();
