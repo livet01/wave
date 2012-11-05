@@ -29,7 +29,7 @@ $session_id = $this->session->userdata('session_id');
 				<label><i class="icon-key"></i></label>
 				<input id="password" name="password" type="password" size="30" placeholder="Mot de Passe">
 			</p>
-			<a class="btn_connexion" href="<?php echo site_url(array('connexion','connexionOn')); ?>"><i class="icon-share-alt"></i> Se connecter</a>
+			<input type="submit" class="btn_connexion"/>
 		</div>
 		<div id="footer">
 			<img src="<?php echo img_url('valide_html5.png'); ?>" id="valideHtml5" alt=" valide HTML5 " />
