@@ -14,9 +14,6 @@ class Diffuseur_model extends CI_Model {
 	
 	public function ajouterDiffuseur()
 	{
-		$this->load->model('personne_model', 'persManager');
-		$result = $this->persManager->ajouterpersonne($data['diffuseur'],($data['autoprod']) ? 5 : 4);
-		
 		return $this->db->set('per_nom', $data)
 						->set('cat_id', $cat)
 						->set('rad_id', 1)
