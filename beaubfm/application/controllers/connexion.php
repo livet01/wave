@@ -23,6 +23,7 @@ class Connexion extends CI_Controller {
 		$this->session->set_userdata('login', $data['uti_login']);
 		$this->session->set_userdata('prenom', $data['uti_prenom']);
 		$this->session->set_userdata('isLogged', TRUE);
+		//test
 		
 		
 	}
