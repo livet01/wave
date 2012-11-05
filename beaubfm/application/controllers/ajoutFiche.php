@@ -62,7 +62,7 @@ class AjoutFiche extends CI_Controller {
 			$result = $this->persManager->ajouterpersonne($data['artiste'],($data['autoprod']) ? 5 : 4);
 			
 			if ($result) {
-				$reslut = $this->disqueManager->ajouterFiche($data);
+				$result = $this->disqueManager->ajouterFiche($data);
 				var_dump($result);
 			}
 			else {
