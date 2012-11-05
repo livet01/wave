@@ -22,7 +22,6 @@ class Connexion extends CI_Controller {
 			$data['uti_login'] = $this -> input -> post('login');
 			var_dump($data);
 
-			$this -> session -> set_userdata('login', $data['uti_login']);
 			$this -> session -> set_userdata('isLogged', TRUE);
 			redirect('index/index/');
 		}
