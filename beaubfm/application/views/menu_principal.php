@@ -8,10 +8,10 @@
 			</div>
 			<div class="menu">
 				<nav>
-					<a href="<?php echo base_url().'index.php/index/indexco/' ;?>"><i class="icon-home"></i>Accueil</a>
+					<a href="<?php echo base_url().'index.php/index/' ;?>"><i class="icon-home"></i>Accueil</a>
 					<!--<a href="#"><i class="icon-user"></i>Mon profil</a>-->
-					<a href="<?php echo base_url().'index.php/index/ajouterFiche/' ;?>"><i class="icon-plus-sign"></i>Ajouter disque</a>
-					<a href="<?php echo base_url().'index.php/index/importer/' ;?>"><i class="icon-signin"></i>Importer</a>
+					<a href="<?php echo base_url().'index.php/ajoutFiche/' ;?>"><i class="icon-plus-sign"></i>Ajouter disque</a>
+					<a href="<?php echo base_url().'index.php/importerFiche/' ;?>"><i class="icon-signin"></i>Importer</a>
 				</nav>
 			</div>
 </div>
