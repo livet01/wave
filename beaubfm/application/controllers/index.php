@@ -5,6 +5,7 @@ class Index extends CI_Controller {
 		parent::__construct();
 		// Chargement des ressources pour tout le contrôleur
 		$this -> load -> database();
+		$this->load->library('form_validation');
 		// $this -> load -> helper(array('url', 'assets')); déjà chargé grace au fichier de config
 		//$this -> load -> model('recherche_model', 'rechercheManager'); à réfléchir
 	}
@@ -31,6 +32,27 @@ class Index extends CI_Controller {
 	}
 
 
+	public function ajax_check() {
+		if($this->input->post('ajax') == '1') 
+		{
+			$this->form_validation->set_rules('recherche', 'recherche', 'trim|required|xss_clean');
+			$this->form_validation->set_message('required', 'Please fill in the fields');
+			
+			if($this->form_validation->run() == FALSE) {
+				echo validation_errors();
+			} 
+			else {
+				$this->load->model('recherche_model');
+				$recherche = $this->recherche_model->check_recherche($this->input->post('recherche'));
+				if($recherche["COUNT(*)"] == 0)
+					echo 'Pas trouvé';
+				else
+					echo $recherche["COUNT(*)"].' ont été trouvé';
+			}
+		}
+	}
+
+	
 }
 
 /* End of file welcome.php */

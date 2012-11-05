@@ -1,53 +1,84 @@
-#barre_recherche>[type="text"] {
-   -webkit-appearance: textfield;
-   -webkit-box-sizing: content-box;
-   padding: 5px;  
-   font-size: 15px;  
-   text-shadow: 0px 1px 0px #fff; 
-   width:@w_main_page - 200px;
-}
-
-#barre_recherche{
-    padding: 5px 5px;
-    background: #F4F4F4;
-    color: #777;
+#barre_recherche> form>[type="text"] {
+-webkit-appearance:textfield;
+-webkit-box-sizing:content-box;
+padding:5px;
+font-size:15px;
+text-shadow:0 1px 0 #fff;
+width: @w_main_page - 200px;
 
 }
-#barre_recherche> a {
-  display : inline-block;
-  background-color: #6792AE;
-  border : 2px solid #bbb;
-  font-size: 13px;
-  height: 21px;
-  .padding_cote(5px);
-  padding-top:5px;
-  text-decoration : none;
-  color : #fff;
-  width : 116px;
-  cursor : pointer;
-  text-align:left;
-  padding-bottom: 2px;
-  margin-bottom: 10px;
+#barre_recherche> form {
+padding:5px;
+background:#F4F4F4;
+color:#777;
 }
-progress{
-  width: 128px;
-  float:right;
-  margin-top:-8px;
-  margin-right: 4px;
+#barre_recherche> form> a {
+display:inline-block;
+background-color:#6792AE;
+border:2px solid #bbb;
+font-size:13px;
+height:21px;
+padding-top:5px;
+text-decoration:none;
+color:#fff;
+width:116px;
+cursor:pointer;
+text-align:left;
+padding-bottom:2px;
+margin-bottom:10px;
 }
-
-
-
-
-#barre_recherche > a:hover{
-  background-color:#5785A4;
-  font-weight: bold;
+progress {
+width:128px;
+float:right;
+margin-top:-8px;
+margin-right:4px;
+}
+#barre_recherche> a:hover {
+background-color:#5785A4;
+font-weight:700;
 }
 .btn-large-search > i {
-  float:left;
-  width: 20px;
-  margin-right: 2px;
-  margin-left: 2px;
-  font-size: 20px;
-  margin-top: -4px;
+float:left;
+width:20px;
+margin-right:2px;
+margin-left:2px;
+font-size:20px;
+margin-top:-4px;
+}
+/* Autocompletion */
+.update {
+position:absolute;
+width:250px;
+background-color:#fff;
+border:1px solid #888;
+margin:0;
+padding:0;
+}
+ul.contacts {
+list-style-type:none;
+margin:0;
+padding:0;
+text-align:left;
+}
+ul.contacts li.selected {
+background-color:#ffb;
+cursor:pointer;
+}
+li.contact {
+list-style-type:none;
+display:block;
+margin:0;
+padding:2px;
+height:32px;
+}
+li.contact div.image {
+float:left;
+width:32px;
+height:32px;
+margin-right:8px;
+}
+li.contact div.nom {
+font-weight:700;
+font-size:12px;
+line-height:1.2em;
 }

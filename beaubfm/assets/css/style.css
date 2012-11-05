@@ -1,24 +1,22 @@
-#barre_recherche > [type="text"] {
+#barre_recherche > form > [type="text"] {
   -webkit-appearance: textfield;
   -webkit-box-sizing: content-box;
   padding: 5px;
   font-size: 15px;
-  text-shadow: 0px 1px 0px #fff;
+  text-shadow: 0 1px 0 #fff;
   width: 700px;
 }
-#barre_recherche {
-  padding: 5px 5px;
+#barre_recherche > form {
+  padding: 5px;
   background: #F4F4F4;
   color: #777;
 }
-#barre_recherche > a {
+#barre_recherche > form > a {
   display: inline-block;
   background-color: #6792AE;
   border: 2px solid #bbb;
   font-size: 13px;
   height: 21px;
-  padding-right: 5px;
-  padding-left: 5px;
   padding-top: 5px;
   text-decoration: none;
   color: #fff;
@@ -36,7 +34,7 @@ progress {
 }
 #barre_recherche > a:hover {
   background-color: #5785A4;
-  font-weight: bold;
+  font-weight: 700;
 }
 .btn-large-search > i {
   float: left;
@@ -45,6 +43,43 @@ progress {
   margin-left: 2px;
   font-size: 20px;
   margin-top: -4px;
+}
+/* Autocompletion */
+.update {
+  position: absolute;
+  width: 250px;
+  background-color: #fff;
+  border: 1px solid #888;
+  margin: 0;
+  padding: 0;
+}
+ul.contacts {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+ul.contacts li.selected {
+  background-color: #ffb;
+  cursor: pointer;
+}
+li.contact {
+  list-style-type: none;
+  display: block;
+  margin: 0;
+  padding: 2px;
+  height: 32px;
+}
+li.contact div.image {
+  float: left;
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+li.contact div.nom {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.2em;
 }
 #resultat_recherche {
   margin-top: 15px;
@@ -57,7 +92,7 @@ progress {
   background: #fff;
   color: #777;
   box-shadow: 0 0 0 2px #fff inset;
-  min-height: 310px;
+  min-height: 350px;
 }
 table {
   width: 100%;
@@ -276,8 +311,8 @@ a.btn-large-action:hover {
     */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('http://127.0.0.1/Projet_tut/BeaubFM/less/../font/fontawesome-webfont.eot');
-  src: url('http://127.0.0.1/Projet_tut/BeaubFM/less/../font/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('http://127.0.0.1/Projet_tut/BeaubFM/less/../font/fontawesome-webfont.woff') format('woff'), url('http://127.0.0.1/Projet_tut/BeaubFM/less/../font/fontawesome-webfont.ttf') format('truetype'), url('http://127.0.0.1/Projet_tut/BeaubFM/less/../font/fontawesome-webfont.svg#FontAwesome') format('svg');
+  src: url('../font/fontawesome-webfont.eot');
+  src: url('../font/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../font/fontawesome-webfont.woff') format('woff'), url('../font/fontawesome-webfont.ttf') format('truetype'), url('../font/fontawesome-webfont.svg#FontAwesome') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -969,30 +1004,10 @@ ul.icons li .icon-large:before {
 .icon-user-md:before {
   content: "\f200";
 }
-#cadre_mesg_information {
-  width: 1170px;
-  margin: auto;
-  margin-top: 20px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 5px;
-  padding-right: 2px;
-  font-size: 12px;
-  border-radius: 4px;
-}
-#cadre_mesg_information i {
-  font-size: 22px;
-  font-weight: bold;
-  vertical-align: middle;
-}
-#cadre_mesg_information b {
-  margin-left: 15px;
-  vertical-align: middle;
-}
 #cadre_authentification {
   width: 470px;
   margin: auto;
-  margin-top: 130px;
+  margin-top: 150px;
   padding-bottom: 30px;
   padding-top: 28px;
   border: 2px solid #bbbbbb;
@@ -1131,22 +1146,22 @@ a {
 .info {
   color: #00529B;
   background-color: #BDE5F8;
-  background-image: url('http://127.0.0.1/Projet_tut/BeaubFM/less/info.png');
+  background-image: url('info.png');
 }
 .success {
   color: #4F8A10;
   background-color: #DFF2BF;
-  background-image: url('http://127.0.0.1/Projet_tut/BeaubFM/less/success.png');
+  background-image: url('success.png');
 }
 .warning {
   color: #9F6000;
   background-color: #FEEFB3;
-  background-image: url('http://127.0.0.1/Projet_tut/BeaubFM/less/warning.png');
+  background-image: url('warning.png');
 }
 .error {
   color: #D8000C;
   background-color: #FFBABA;
-  background-image: url('http://127.0.0.1/Projet_tut/BeaubFM/less/error.png');
+  background-image: url('error.png');
 }
 .cadre_informations {
   border: thin solid #CE782D;
@@ -1187,7 +1202,7 @@ body {
   font-family: "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
   font-size: 12px;
   color: #494949;
-  background: url(http://127.0.0.1/Projet_tut/BeaubFM/assets/less/../img/background.jpg) repeat #d1d5d8;
+  background: url(../img/background.jpg) repeat #d1d5d8;
   height: 100%;
 }
 #main_page {
@@ -1209,7 +1224,6 @@ body {
                 0 0 0 6px #DAD4D4 inset;
   width: 860px;
 }
-
 h1 {
   text-align: center;
 }

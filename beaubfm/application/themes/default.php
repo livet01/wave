@@ -3,9 +3,29 @@
 	<head>
 		<title>BeaubFM</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->config->item('charset'); ?>" />
-			<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />
+			<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />	
+			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+			<script type="application/javascript">
+			$(document).ready(function() {
+			$('#btn_rechercher').click(function() {
+			var form_data = {
+			recherche : $('#recherche').val(),
+			ajax : '1'
+			};
+			$.ajax({
+			url: "<?php echo site_url('index/ajax_check'); ?>",
+			type: 'POST',
+			async : false,
+			data: form_data,
+			success: function(msg) {
+			$('#recherche_update').html(msg);
+			}
+			});
+			return false;
+			});
+			});
+			</script>
 			<script type="text/javascript" src="<?php echo js_url('less') ?>"></script>
-			<script type="text/javascript" src="<?php echo js_url('verifForm') ?>"></script>
 			<script>
 				function create_champ_fichier(i){
 					var i2 = i + 1;
