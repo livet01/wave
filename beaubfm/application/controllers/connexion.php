@@ -9,23 +9,36 @@ class Connexion extends CI_Controller {
 		$this -> connexion();
 	}
 
-	public function connexion() {
+	public function connexion($msg = NULL) {
 		if ($this -> session -> userdata('isLogged') === TRUE) {
 			redirect('index', 'index');			
 		} else {
-			$this -> load -> view('connexion_form');
+			$data['msg'] = $msg;
+			$this -> load -> view('connexion_form', $data);
 		}
 	}
 
 	public function connexionOn() {
-		if (($this -> input -> post('login') == "test") && ($this -> input -> post('password') == "test")) {
+		if (($this -> input -> post('login') == "") || ($this -> input -> post('password') == "")) {
+			$msg = array();
+			$msg[0] = "Login ou Mot de Passe manquant(s)";
+			$msg[1] = "info";
+			$msg[2] = "icon-info-sign";
+			$this -> connexion($msg);
+		}
+		else if (($this -> input -> post('login') == "test") && ($this -> input -> post('password') == "test")) {
 			$data['uti_login'] = $this -> input -> post('login');
 			var_dump($data);
 
 			$this -> session -> set_userdata('isLogged', TRUE);
 			redirect('index/index/');
 		} else {
-			redirect('connexion/connexion');
+			$msg = array();
+			$msg[0] = "Login ou Mot de Passe incorrect(s)";
+			$msg[1] = "error";
+			$msg[2] = "icon-exclamation-sign";
+			$this -> connexion($msg);
+			//redirect('connexion/connexion');
 		}
 	}
 }

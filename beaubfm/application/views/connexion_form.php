@@ -19,9 +19,9 @@ $session_id = $this -> session -> userdata('session_id');
 	</head>
 	<body>
 		<form action="<?php echo site_url(array('connexion', 'connexionOn')); ?>" method="post" id="connexion">
-			<div id="cadre_mesg_information" class="warning">
-				<i id="icon_info" class="icon-warning-sign"></i>
-				<b id="mesg_erreur">Veuillez vous authentifier</b>
+			<div id="cadre_mesg_information" class="<?php if (! is_null($msg)) echo $msg[1]; else echo "warning";?>">
+				<i id="icon_info" class="<?php if (! is_null($msg)) echo $msg[2]; else echo "icon-warning-sign";?>"></i>
+				<b id="mesg_erreur"><?php if (! is_null($msg)) echo $msg[0]; else echo "Veuillez vous authentifier";?></b>
 			</div>
 			<div id="cadre_authentification">
 				<p>
