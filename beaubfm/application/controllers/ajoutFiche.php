@@ -59,7 +59,9 @@ class AjoutFiche extends CI_Controller {
 			$data['autoprod'] = $this->input->post('autoprod');
 			$data['envoiMail'] = $this->input->post('envoiMail');
 			
-			$result = $this->persManager->ajouterpersonne($data['artiste'],($data['autoprod']) ? 5 : 4);
+			$result = $this->persManager->ajouterpersonne($data['artiste'],($data['autoprod']) ? 5 : 3);
+			
+			
 			
 			if ($result) {
 				$result = $this->disqueManager->ajouterFiche($data);
