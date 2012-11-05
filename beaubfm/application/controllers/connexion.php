@@ -10,14 +10,12 @@ class Connexion extends CI_Controller {
 	}
 
 	public function connexion() {
-		$this -> load -> view('connexion_form');
-		if ($this -> input -> post('login') == "test" && $this -> input -> post('password') == "test") {
-			redirect('connexion/connexionOn');
+		if ($this -> session -> userdata('isLogged') === TRUE) {
+			redirect('index', 'index');			
+		} else {
+			$this -> load -> view('connexion_form');
 		}
-
 	}
-	
-		
 
 	public function connexionOn() {
 		if (($this -> input -> post('login') == "test") && ($this -> input -> post('password') == "test")) {
@@ -26,11 +24,9 @@ class Connexion extends CI_Controller {
 
 			$this -> session -> set_userdata('isLogged', TRUE);
 			redirect('index/index/');
-		}
-		else {
+		} else {
 			redirect('connexion/connexion');
 		}
 	}
-
 }
 ?>
