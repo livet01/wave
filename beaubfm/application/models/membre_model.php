@@ -3,7 +3,7 @@
 /**
  * 
  */
-class Diffuseur_model extends CI_Model {
+class Membre_model extends CI_Model {
 	
 	protected $vue = 'membre';
 	
@@ -16,5 +16,12 @@ class Diffuseur_model extends CI_Model {
 		return $this->db->select('mem_id')
 						->from($this->vue)
 						->where('mem_nom',$mem_nom);
+	}
+	
+	public function readMembreParLogin($mem_login)
+	{
+		return $this->db->select('mem_nom','mem_prenom')
+						->from($this->vue)
+						->where('mem_login',$mem_login);
 	}
 }
