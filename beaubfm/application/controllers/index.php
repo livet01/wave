@@ -23,24 +23,14 @@ class Index extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function indexco(){		$this->load->library('layout');
+	 
+	public function index(){		$this->load->library('layout');
 		$this->layout->views('menu_principal')
 					->views('barre_recherche')
 					->view('resultat_recherche');
 	}
-	public function importer(){
-		$this->load->library('layout');
-		$this->layout->views('menu_principal')
-					-> view('importer');
-	}
-	public function ajouterFiche(){
-		$this->load->library('layout');
-		$this->layout->views('menu_principal')
-					->view('ajouter_fiche');
-	}
-	public function index(){
-		$this->load->view('connexion_form');
-	}
+
+
 }
 
 /* End of file welcome.php */

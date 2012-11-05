@@ -34,7 +34,7 @@ $session_id = $this->session->userdata('session_id');
 		var connexionOn = testConnexion(testLogin, testPassword, chUsername, chPassword);
 
 		if (connexionOn) {
-			window.location = "<?php echo base_url()?>/index.php/index/indexco/"
+			window.location = "<?php echo base_url()?>index.php/index/"
 		} else {
 			connexionRefusee();
 		}
