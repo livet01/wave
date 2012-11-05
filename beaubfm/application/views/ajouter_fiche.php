@@ -6,7 +6,7 @@
 	<div id="resultat_recherche">
 	<h1>Ajout d'une fiche</h1>
 	<div id="formulaire">
-		<form  method="post" id="fiche" onsubmit="return verifForm(this)" action="ajout_fiche.php">
+		<form  method="post" id="fiche" onsubmit="return verifForm(this)" action="envoi">
 			<div id="gauche">
 				<p>
 					<label class="labelGauche" for="titre"><i class="icon-music"></i> Titre </label>

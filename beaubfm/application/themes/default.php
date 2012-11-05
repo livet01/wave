@@ -5,6 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->config->item('charset'); ?>" />
 			<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />
 			<script type="text/javascript" src="<?php echo js_url('less') ?>"></script>
+			<script type="text/javascript" src="<?php echo js_url('verifForm') ?>"></script>
 			<script>
 				function create_champ_fichier(i){
 					var i2 = i + 1;
