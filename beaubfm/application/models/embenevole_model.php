@@ -22,7 +22,9 @@ class Embenevole_model extends CI_Model {
 	{
 		return $this->db->select($select)
 						->from($this->table)
-						->where($where);
+						->where($where)
+						->get()
+						->row_array();
 	}
 	
 }

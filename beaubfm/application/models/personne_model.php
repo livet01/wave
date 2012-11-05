@@ -19,11 +19,13 @@ class Personne_model extends CI_Model {
 						->insert($this->table);
 	}
 	
-	public function readPersonne($select = '*', $where = array())
+	public function readPersonne($select = '*', $where = "")
 	{
 		return $this->db->select($select)
 						->from($this->table)
-						->where($where);
+						->where($where)
+						->get()
+						->row_array();
 	}
 
 	public function countPersonne($champ = array(), $valeur = null) // Si $champ est un array, la variable $valeur sera ignorée par la méthode where()
