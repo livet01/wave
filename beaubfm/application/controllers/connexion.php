@@ -33,23 +33,16 @@ class Connexion extends CI_Controller {
 			$msg[2] = "icon-info-sign";
 			$this -> connexion($msg);
 		}
-		else if (($login == $loginBase) && ($this -> input -> post('password') == $passwordBase)) {
+		else if (($login == $loginBase) && (md5($this -> input -> post('password')) == $passwordBase)) {
 			$data['uti_login'] = $this -> input -> post('login');
-			var_dump($data);
-
-
 			$this -> session -> set_userdata('isLogged', TRUE);
 			redirect('index/index/');
 		} else {
-			$data['uti_login'] = $this -> input -> post('login');
-			var_dump($data);
-			echo $this->utilisateurManager->loginExist($login);
 			$msg = array();
 			$msg[0] = "Login ou Mot de Passe incorrect(s)";
 			$msg[1] = "error";
 			$msg[2] = "icon-exclamation-sign";
 			$this -> connexion($msg);
-			//redirect('connexion/connexion');
 		}
 	}
 }
