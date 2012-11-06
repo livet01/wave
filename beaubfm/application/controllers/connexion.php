@@ -53,6 +53,5 @@ class Connexion extends CI_Controller {
 			redirect('connexion', 'index');
 		}
 	}
-
 }
 ?>
