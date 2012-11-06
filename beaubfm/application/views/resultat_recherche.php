@@ -22,7 +22,7 @@ if($affichage != 0)
 	<div id="resultat_recherche">
 		<table>
 			<caption>
-				Résultat de la recherche : <?php echo count($resultat); ?> résultats trouvés.
+				Résultat de la recherche : <?php echo count($resultat); ?> résultat(s) trouvé(s).
 			</caption>
 			<tr>
 				<th>
@@ -123,7 +123,7 @@ else {
 		</div>
 	</div>
 	<div id="resultat_recherche">
-		<p>Commencer par faire une recherche.</p>
+		<p><img style="margin-left:120px;" src="<?php echo img_url('search.png'); ?>"></p>
 	</div>
 </div>
 
