@@ -1,8 +1,9 @@
 <?php 
 if($affichage != 0)
 {
-	if($affichage == 1)
-	{ ?>
+	if($affichage == 1 and isset($resultat))
+	{
+		?>
 <div id="cadre2">
 	<div id="selection">
 		<ul class="icons">
@@ -21,7 +22,7 @@ if($affichage != 0)
 	<div id="resultat_recherche">
 		<table>
 			<caption>
-				Résultat de la recherche : 6 résultats trouvés
+				Résultat de la recherche : <?php echo count($resultat); ?> résultats trouvés.
 			</caption>
 			<tr>
 				<th>
@@ -34,18 +35,20 @@ if($affichage != 0)
 
 			</tr>
 			<?php
-				for ($i = 0; $i < 10; $i++) {
+				$i=0;
+				foreach ($resultat as $ligne) {
 					if ($i % 2 == 0)
 						echo '<tr class="blue">';
 					else
 						echo '<tr>';
 					echo '<td><input type="checkbox" name="select" value="1"></td>';
-					echo '<td class="left">A ce qu\'il parait</td>';
-					echo '<td>Canardo</td>';
-					echo '<td>HENIJAI Music</td>';
+					echo '<td class="left">'.$ligne['dis_libelle'].'</td>';
+					echo '<td>'.$ligne['art_nom'].'</td>';
+					echo '<td>'.$ligne['per_nom'].'c</td>';
 					echo '<td><a class="action-tab" href="#"><i class="icon-pencil"></a></td>';
 					echo '<td><a class="action-tab" href="#"><i class="icon-trash"></a></td>';
 					echo '</tr>';
+					$i++;
 				}
 			?>
 		</table>
@@ -79,7 +82,7 @@ if($affichage != 0)
 </div>
 
 			<?php
-		}elseif($affichage==-1) {
+		}else{
 			?>
 <div id="cadre2">
 	<div id="selection">
