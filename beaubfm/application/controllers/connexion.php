@@ -19,6 +19,7 @@ class Connexion extends CI_Controller {
 	}
 
 	public function connexionOn() {
+		$this->load->model('utilisateur_model', 'utilisateurManager');
 		if (($this -> input -> post('login') == "") || ($this -> input -> post('password') == "")) {
 			$msg = array();
 			$msg[0] = "Login ou Mot de Passe manquant(s)";
@@ -26,13 +27,17 @@ class Connexion extends CI_Controller {
 			$msg[2] = "icon-info-sign";
 			$this -> connexion($msg);
 		}
-		else if (($this -> input -> post('login') == "test") && ($this -> input -> post('password') == "test")) {
+		else if (($this -> input -> post('login') == $this->utilisateurManager->loginExist($this -> input -> post('login'))) && ($this -> input -> post('password') == "test")) {
 			$data['uti_login'] = $this -> input -> post('login');
 			var_dump($data);
+
 
 			$this -> session -> set_userdata('isLogged', TRUE);
 			redirect('index/index/');
 		} else {
+			$data['uti_login'] = $this -> input -> post('login');
+			var_dump($data);
+			
 			$msg = array();
 			$msg[0] = "Login ou Mot de Passe incorrect(s)";
 			$msg[1] = "error";
