@@ -40,7 +40,8 @@ class Connexion extends CI_Controller {
 				$msg[1] = "error";
 				$msg[2] = "icon-exclamation-sign";
 			}
-			redirect('connexion','connexion');
+			$data['msg'] = $msg;
+			$this -> load -> view('connexion_form', $data);
 		}
 	}
 
