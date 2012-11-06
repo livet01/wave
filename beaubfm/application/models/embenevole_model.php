@@ -11,9 +11,10 @@ class Embenevole_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function ajouterEmission($data)
+	public function ajouterEmission($emb_id, $data)
 	{
-		return $this->db->set('emb_libelle', $data)
+		return $this->db->set('emb_id', $emb_id)
+						->set('emb_libelle', $data)
 						->set('rad_id', 1)
 						->insert($this->table);
 	}

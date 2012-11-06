@@ -19,13 +19,17 @@ class Disque_model extends CI_Model {
 	public function ajouterFiche($data)
 	{
 		if(!empty($data)){
-			$data['autoprod'] = ((!$data['autoprod']) ? "0" : "1");
-			$data['envoiMail'] = (($data['envoiMail'] === "0") ? "1" : "0");
-			
-			if($data['autoprod'])
-			{
-				
-			}
+			$this->db->set('dis_id', $data['id'])
+					->set('dis_libelle', $data['titre'])
+					->set('dis_format', $data['format'])
+					->set('uti_id_ecoute', $data['listenBy'])
+					->set('dis_date_ajout', NOW())
+					->set('per_id_artiste', $data['artiste'])
+					->set('dif_id', $data['diffuseur'])
+					->set('dis_envoi_mail', $data['envoiMail'])
+					->set('emp_id', $data['empl'])
+					->set('emb_id', $data['emBev'])
+					->insert();
 		}
 		else {
 			return FALSE;

@@ -11,19 +11,21 @@ class Personne_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function ajouterPersonne($data,$cat)
+	public function ajouterPersonne($id,$data,$cat)
 	{
-		return $this->db->set('per_nom', $data)
+		return $this->db->set('per_id', $id)
+						->set('per_nom', $data)
 						->set('cat_id', $cat)
 						->set('rad_id', 1)
 						->insert($this->table);
 	}
 	
-	public function readPersonne($select = '*', $where = "")
+	public function readPersonne($select = '', $where = "", $whereOr = array('1' => '0'))
 	{
 		return $this->db->select($select)
 						->from($this->table)
 						->where($where)
+						->where_or($whereOr)
 						->get()
 						->row_array();
 	}
@@ -37,4 +39,3 @@ class Personne_model extends CI_Model {
 	
 	
 }
-

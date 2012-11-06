@@ -23,10 +23,7 @@ class Diffuseur_model extends CI_Model {
 	{
 		return $this->db->select($select)
 						->from($this->vue)
-						->where($where)
-						->get()
-						->row_array();
+						->where($where);
 	}
-	
 	
 }
