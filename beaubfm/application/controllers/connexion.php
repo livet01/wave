@@ -21,9 +21,10 @@ class Connexion extends CI_Controller {
 	public function connexionOn() {
 		$this->load->model('utilisateur_model', 'utilisateurManager');
 		$login = $this->input->post('login');
-		
 		$loginFound = $this->utilisateurManager->loginExist($this -> input -> post('login'));
-		$result=$loginFound['uti_login'];
+		$loginBase=$loginFound['uti_login'];
+		$passwordFound=$this->utilisateurManager->getPasswordByLogin($this->input->post('login'));
+		$passwordBase=$passwordFound['uti_mdp'];
 		
 		if (($login== "") || ($this -> input -> post('password') == "")) {
 			$msg = array();
@@ -32,7 +33,7 @@ class Connexion extends CI_Controller {
 			$msg[2] = "icon-info-sign";
 			$this -> connexion($msg);
 		}
-		else if (($login == $result) && ($this -> input -> post('password') == "test")) {
+		else if (($login == $loginBase) && ($this -> input -> post('password') == $passwordBase)) {
 			$data['uti_login'] = $this -> input -> post('login');
 			var_dump($data);
 

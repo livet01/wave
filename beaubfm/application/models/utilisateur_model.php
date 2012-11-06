@@ -19,10 +19,10 @@ class Utilisateur_model extends CI_Model {
 						->row_array();
 		
 	}
-	public function getPasswordByLogin($mdp){
+	public function getPasswordByLogin($login){
 		return $this->db->select('uti_mdp')
 						->from($this->table)
-						->where(array('uti_mdp'=>$mdp))
+						->where(array('uti_login'=>$login))
 						->get()
 						->row_array();
 		
