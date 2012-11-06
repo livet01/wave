@@ -18,27 +18,40 @@ class Connexion extends CI_Controller {
 				$this -> load -> view('connexion_form', $data);
 			}
 		} else {
-			$this -> load -> model('utilisateur_model', 'utilisateurManager');
-			$login = $this -> input -> post('login');
-			$loginFound = $this -> utilisateurManager -> loginExist($this -> input -> post('login'));
-			$loginBase = $loginFound['uti_login'];
-			$passwordFound = $this -> utilisateurManager -> getPasswordByLogin($this -> input -> post('login'));
-			$passwordBase = $passwordFound['uti_mdp'];
-
-			if (($login == "") || ($this -> input -> post('password') == "")) {
+			$passwordBase=null;
+			$loginBase=null;			
+			if ($this -> input -> post('login') != "") {
+				$this -> load -> model('utilisateur_model', 'utilisateurManager');
+				$login = $this -> input -> post('login');
+				$loginFound = $this -> utilisateurManager -> loginExist($this -> input -> post('login'));
+				if ($loginFound != null) {
+					$loginBase = $loginFound['uti_login'];
+					if ($this -> input -> post('password') != "") {
+						$passwordFound = $this -> utilisateurManager -> getPasswordByLogin($this -> input -> post('login'));
+						if ($passwordFound != null) {
+							$passwordBase = $passwordFound['uti_mdp'];
+						}
+					}
+				}
+			}
+			if (($this -> input -> post('login') == "") || ($this -> input -> post('password') == "")) {
 				$msg = array();
 				$msg[0] = "Login ou Mot de Passe manquant(s)";
 				$msg[1] = "info";
 				$msg[2] = "icon-info-sign";
-			} else if (($login == $loginBase) && (md5($this -> input -> post('password')) == $passwordBase)) {
-				$data['uti_login'] = $this -> input -> post('login');
-				$this -> session -> set_userdata('isLogged', TRUE);
-				redirect('index/index/');
 			} else {
-				$msg = array();
-				$msg[0] = "Login ou Mot de Passe incorrect(s)";
-				$msg[1] = "error";
-				$msg[2] = "icon-exclamation-sign";
+				if ($loginBase != null && $passwordBase != null) {
+					if (($login == $loginBase) && (md5($this -> input -> post('password')) == $passwordBase)) {
+						$data['uti_login'] = $this -> input -> post('login');
+						$this -> session -> set_userdata('isLogged', TRUE);
+						redirect('index/index/');
+					}
+				} else {
+					$msg = array();
+					$msg[0] = "Login ou Mot de Passe incorrect(s)";
+					$msg[1] = "error";
+					$msg[2] = "icon-exclamation-sign";
+				}
 			}
 			$data['msg'] = $msg;
 			$this -> load -> view('connexion_form', $data);
@@ -53,5 +66,6 @@ class Connexion extends CI_Controller {
 			redirect('connexion', 'index');
 		}
 	}
+
 }
 ?>
