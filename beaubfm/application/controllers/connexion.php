@@ -45,5 +45,15 @@ class Connexion extends CI_Controller {
 			$this -> connexion($msg);
 		}
 	}
+
+	public function deconnexion() {
+		if ($this -> session -> userdata('isLogged') === TRUE) {
+			$this -> session -> set_userdata('isLogged', FALSE);
+			redirect('connexion', 'index');			
+		} else {
+			redirect('connexion', 'index');
+		}
+	}
+
 }
 ?>
