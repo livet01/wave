@@ -20,19 +20,19 @@ class Connexion extends CI_Controller {
 
 	public function connexionOn() {
 		$this->load->model('utilisateur_model', 'utilisateurManager');
-		$loginSaisie = $this->input->post('login');
+		$login = $this->input->post('login');
 		
 		$loginFound = $this->utilisateurManager->loginExist($this -> input -> post('login'));
-		$resultLogin=$loginFound['uti_login'];
+		$result=$loginFound['uti_login'];
 		
-		if (($loginSaisie== "") || ($this -> input -> post('password') == "")) {
+		if (($login== "") || ($this -> input -> post('password') == "")) {
 			$msg = array();
 			$msg[0] = "Login ou Mot de Passe manquant(s)";
 			$msg[1] = "info";
 			$msg[2] = "icon-info-sign";
 			$this -> connexion($msg);
 		}
-		else if (($loginSaisie == $result) && ($this -> input -> post('password') == "test")) {
+		else if (($login == $result) && ($this -> input -> post('password') == "test")) {
 			$data['uti_login'] = $this -> input -> post('login');
 			var_dump($data);
 
