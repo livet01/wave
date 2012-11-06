@@ -1,10 +1,11 @@
 <?php
-class AjoutFiche extends CI_Controller {
+class AjoutFiche extends MY_Controller {
 	private $titre_defaut;
 
 	public function __construct() {
 		parent::__construct();
 		
+		$this->load->library('session');
 	}
 
 	public function index() {
