@@ -39,7 +39,7 @@ class Index extends CI_Controller {
 
 	public function recherche() {
 		$this -> form_validation -> set_rules('recherche', 'recherche', 'trim|required|xss_clean');
-		$this->output->enable_profiler(TRUE);
+		//$this->output->enable_profiler(TRUE);
 		if ($this -> form_validation -> run() == FALSE) {
 			$this->index(-1);
 		} else {
