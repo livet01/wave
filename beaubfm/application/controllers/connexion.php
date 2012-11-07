@@ -18,8 +18,8 @@ class Connexion extends CI_Controller {
 				$this -> load -> view('connexion_form', $data);
 			}
 		} else {
-			$passwordBase=null;
-			$loginBase=null;			
+			$passwordBase = null;
+			$loginBase = null;
 			if ($this -> input -> post('login') != "") {
 				$this -> load -> model('utilisateur_model', 'utilisateurManager');
 				$login = $this -> input -> post('login');
@@ -40,14 +40,12 @@ class Connexion extends CI_Controller {
 				$msg[1] = "info";
 				$msg[2] = "icon-info-sign";
 			} else {
-				if ($loginBase != null && $passwordBase != null) {
-					if (($login == $loginBase) && (md5($this -> input -> post('password')) == $passwordBase)) {
-						$this -> session -> set_userdata('isLogged', TRUE);
-						$username=$this -> utilisateurManager -> getPrenomByLogin($login);
-						$username=$username['uti_prenom'];
-						$this -> session -> set_userdata('username',$username);
-						redirect('index/index/');
-					}
+				if (($loginBase != null && $passwordBase != null) && (($login == $loginBase) && (md5($this -> input -> post('password')) == $passwordBase))) {
+					$this -> session -> set_userdata('isLogged', TRUE);
+					$username = $this -> utilisateurManager -> getPrenomByLogin($login);
+					$username = $username['uti_prenom'];
+					$this -> session -> set_userdata('username', $username);
+					redirect('index/index/');
 				} else {
 					$msg = array();
 					$msg[0] = "Login ou Mot de Passe incorrect(s)";
@@ -62,7 +60,7 @@ class Connexion extends CI_Controller {
 
 	public function deconnexion() {
 		if ($this -> session -> userdata('isLogged') === TRUE) {
-			$this->session->sess_destroy();
+			$this -> session -> sess_destroy();
 			redirect('connexion', 'index');
 		} else {
 			redirect('connexion', 'index');
