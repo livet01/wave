@@ -36,7 +36,7 @@
 	});
 	
     	$(document).ready(function() {
-				$( "#recherche" ).catcomplete({
+				$("#recherche" ).catcomplete({
 						source: function(request, response) {
 								$.ajax({ url: "<?php echo site_url('index/suggestions'); ?>",
 								data: { term: $("#recherche").val()},

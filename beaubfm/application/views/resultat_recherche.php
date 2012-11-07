@@ -22,7 +22,7 @@ if($affichage != 0)
 	<div id="resultat_recherche">
 		<table>
 			<caption>
-				Résultat de la recherche : <?php echo count($resultat); ?> résultat(s) trouvé(s).
+				<?php echo count($resultat); ?> résultat(s) trouvé(s).
 			</caption>
 			<tr>
 				<th>
