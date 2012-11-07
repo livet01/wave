@@ -1,5 +1,5 @@
 <?php
-class ImporterFiche extends CI_Controller {
+class ImporterFiche extends MY_Controller {
 
 	public function __construct() {
 		parent::__construct();		
