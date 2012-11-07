@@ -120,7 +120,7 @@ class Index extends CI_Controller {
 						$this->index(2);
 					else {
 						$this -> load -> library('layout');
-						$this -> layout -> views('menu_principal') -> views('barre_recherche') -> view('resultat_recherche',array('affichage'=>'1','resultat'=>array_unique($tab_result))) ;
+						$this -> layout -> views('menu_principal') -> views('barre_recherche') -> view('resultat_recherche',array('affichage'=>'1','resultat'=>$tab_result)) ;
 				
 					}
 				}
@@ -147,7 +147,7 @@ class Index extends CI_Controller {
 
 		$rows = $this->autocomplete_model->GetAutocompleteLabel(array('keyword' => $term));
 		foreach ($rows as $row)
-			 array_push($json_array, array("label"=>$row->lab_nom,"category"=>"Artiste"));
+			 array_push($json_array, array("label"=>$row->lab_nom,"category"=>"Diffuseur"));
 
 		echo json_encode($json_array);
 	}

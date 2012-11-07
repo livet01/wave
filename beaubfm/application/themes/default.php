@@ -4,32 +4,51 @@
 		<title>BeaubFM</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this -> config -> item('charset'); ?>" />
 		<!--	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />	-->
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+		<script src="<?php echo js_url('jquery-1.8.2'); ?>"></script>
+		<link href="<?php echo css_url('jquery-ui'); ?>" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="<?php echo js_url('jquery-ui'); ?>"></script>
 
 		<link rel="stylesheet/less" type="text/css" href="<?php echo less_url('style'); ?>">
 
 		<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>
-
+    <style>
+    .ui-autocomplete-category {
+        font-weight: bold;
+        padding: .2em .4em;
+        margin: .8em 0 .2em;
+        line-height: 1.5;
+    }
+    </style>
 		<script type="text/javascript">
-			$(document).ready(function() {
 
-$( "#recherche" ).autocomplete({
-source: function(request, response) {
-$.ajax({ url: "<?php echo site_url('index/suggestions'); ?>
-	",
-	data: { term: $("#recherche").val()},
-	dataType: "json",
-	type: "POST",
-	success: function(data){
-	response(data);
-	}
+	$.widget( "custom.catcomplete", $.ui.autocomplete, {
+		_renderMenu: function( ul, items ) {
+			var that = this,
+				currentCategory = "";
+			$.each( items, function( index, item ) {
+				if ( item.category != currentCategory ) {
+					ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+					currentCategory = item.category;
+				}
+				that._renderItemData( ul, item );
+			});
+		}
 	});
-	},
-	minLength: 2
-	});
-	});
+	
+    	$(document).ready(function() {
+				$( "#recherche" ).catcomplete({
+						source: function(request, response) {
+								$.ajax({ url: "<?php echo site_url('index/suggestions'); ?>",
+								data: { term: $("#recherche").val()},
+								dataType: "json",
+								type: "POST",
+								success: function(data){response(data);}
+								});
+						},
+						minLength: 2,
+						delay:0
+				});
+			});
 		</script>
 		<script type="text/javascript" src="<?php echo js_url('less') ?>"></script>
 		<script>
