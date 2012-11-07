@@ -1,7 +1,7 @@
 <div id="header">
 			<div class="topright">
 				<nav>
-					<a class="btn-header-usr" href="#"><i class="icon-user"></i> Test</a>
+					<a class="btn-header-usr" href="#"><i class="icon-user"></i><?php echo $this->session->userdata('username');?></a>
 					<a class="btn-header-off" href="<?php echo site_url(array('connexion','deconnexion')); ?>"><i class="icon-off"></i></a>
 				</nav>
 

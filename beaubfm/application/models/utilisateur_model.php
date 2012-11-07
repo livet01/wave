@@ -27,5 +27,13 @@ class Utilisateur_model extends CI_Model {
 						->row_array();
 		
 	}
+	public function getPrenomByLogin($login){
+		return $this->db->select('uti_prenom')
+						->from($this->table)
+						->where(array('uti_login'=>$login))
+						->get()
+						->row_array();
+		
+	}	
 }
 	

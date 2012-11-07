@@ -42,8 +42,10 @@ class Connexion extends CI_Controller {
 			} else {
 				if ($loginBase != null && $passwordBase != null) {
 					if (($login == $loginBase) && (md5($this -> input -> post('password')) == $passwordBase)) {
-						$data['uti_login'] = $this -> input -> post('login');
 						$this -> session -> set_userdata('isLogged', TRUE);
+						$username=$this -> utilisateurManager -> getPrenomByLogin($login);
+						$username=$username['uti_prenom'];
+						$this -> session -> set_userdata('username',$username);
 						redirect('index/index/');
 					}
 				} else {
@@ -60,7 +62,7 @@ class Connexion extends CI_Controller {
 
 	public function deconnexion() {
 		if ($this -> session -> userdata('isLogged') === TRUE) {
-			$this -> session -> set_userdata('isLogged', FALSE);
+			$this->session->sess_destroy();
 			redirect('connexion', 'index');
 		} else {
 			redirect('connexion', 'index');
