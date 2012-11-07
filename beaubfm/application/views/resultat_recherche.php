@@ -44,7 +44,7 @@ if($affichage != 0)
 					echo '<td><input type="checkbox" name="select" value="1"></td>';
 					echo '<td class="left">'.$ligne['dis_libelle'].'</td>';
 					echo '<td>'.$ligne['art_nom'].'</td>';
-					echo '<td>'.$ligne['per_nom'].'c</td>';
+					echo '<td>'.$ligne['per_nom'].'</td>';
 					echo '<td><a class="action-tab" href="#"><i class="icon-pencil"></a></td>';
 					echo '<td><a class="action-tab" href="#"><i class="icon-trash"></a></td>';
 					echo '</tr>';

@@ -51,9 +51,9 @@ class Index extends CI_Controller {
 			if (empty($rows) and empty($rowsLabel) and empty($rowsDisque))
 				$this->index(2);
 			else
-				{
+				{	
 					$term = $this->input->post('recherche',TRUE);
-					if (strlen($term) < 2) break;
+					//if (strlen($term) < 2) break;
 					
 					$tab_result = array();
 					if(!empty($rows)) {
@@ -132,22 +132,34 @@ class Index extends CI_Controller {
 		$this->load->model('autocomplete_model');
 		$term = $this->input->post('term',TRUE);
 	
-		if (strlen($term) < 2) break;
+		if (strlen($term) < 1) break;
 	
 		$rows = $this->autocomplete_model->GetAutocompleteDisque(array('keyword' => $term));
 	
 		$json_array = array();
-		foreach ($rows as $row)
-			 array_push($json_array, array("label"=>$row->dis_libelle,"category"=>"Disque"));
+		$i=0;
+		foreach ($rows as $row){
+			if($i<4)
+				array_push($json_array, array("label"=>$row->dis_libelle,"category"=>"Disque"));
+			$i++;
+		}
+			 
 		
 		$rows = $this->autocomplete_model->GetAutocompleteArtiste(array('keyword' => $term));
-	
-		foreach ($rows as $row)
-			 array_push($json_array, array("label"=>$row->art_nom,"category"=>"Artiste"));
-
+		$i=0;
+		foreach ($rows as $row){
+			if($i<4)
+				array_push($json_array, array("label"=>$row->art_nom,"category"=>"Artiste"));
+			$i++;
+		}
+			 
+		$i=0;
 		$rows = $this->autocomplete_model->GetAutocompleteLabel(array('keyword' => $term));
-		foreach ($rows as $row)
-			 array_push($json_array, array("label"=>$row->lab_nom,"category"=>"Diffuseur"));
+		foreach ($rows as $row){
+			if($i<4)
+				array_push($json_array, array("label"=>$row->lab_nom,"category"=>"Diffuseur"));
+			$i++;
+		}
 
 		echo json_encode($json_array);
 	}

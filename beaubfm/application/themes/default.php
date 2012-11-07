@@ -20,7 +20,7 @@
     }
     </style>
 		<script type="text/javascript">
-
+	
 	$.widget( "custom.catcomplete", $.ui.autocomplete, {
 		_renderMenu: function( ul, items ) {
 			var that = this,
@@ -45,8 +45,13 @@
 								success: function(data){response(data);}
 								});
 						},
-						minLength: 2,
-						delay:0
+						minLength: 1,
+						delay:0,
+						select: function(event, ui) {
+					        if(ui.item){
+					            $('#recherche').val(ui.item.value);
+					        }
+					        $('#recherche_form').submit();}
 				});
 			});
 		</script>
