@@ -28,13 +28,9 @@ class Index extends MY_Controller {
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
 
-	public function index($affichage=0) {
-		if ($this -> session -> userdata('isLogged') === TRUE) {			$this -> load -> library('layout');
-			$this -> layout -> views('menu_principal') -> views('barre_recherche') -> view('resultat_recherche',array('affichage'=>$affichage)) ;
-		}
-		else {
-			redirect('connexion','connexion');
-		}
+	public function index($affichage=0) {		$this -> load -> library('layout');
+		$this -> layout -> views('menu_principal') -> views('barre_recherche') -> view('resultat_recherche',array('affichage'=>$affichage)) ;
+		
 	}
 
 	public function recherche() {

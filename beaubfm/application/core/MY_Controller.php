@@ -8,7 +8,7 @@ class MY_Controller extends CI_Controller
         $this->load->library('session');
         if (!$this->session->userdata('isLogged'))
         {
-           	redirect('Connexion', 'index');	
+           	redirect('connexion', 'index');	
         }
     }
 }
