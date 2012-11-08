@@ -5,7 +5,7 @@
  */
 class Membre_model extends CI_Model {
 	
-	protected $vue = 'membre';
+	protected $vue = 'Membre';
 	
 	function __construct() {
 		parent::__construct();
