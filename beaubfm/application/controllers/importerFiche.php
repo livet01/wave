@@ -24,7 +24,7 @@ class ImporterFiche extends MY_Controller {
 		
 		$this->load->library('upload', $config);
 	
-		if ( ! $this->upload->do_upload())
+		if ( ! $this->upload->do_upload('fichier'))
 		{
 			$error = array('error' => $this->upload->display_errors());			
 			$this->load->library('layout');
