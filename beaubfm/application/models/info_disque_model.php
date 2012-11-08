@@ -37,4 +37,20 @@ class Info_Disque_Model extends CI_Model
 		$query = $this->db->get('Disque');
 		return $query->result();
     }
+	
+	function GetAll($nb,$debut=0)
+    {
+		$this->db->select(array('Disque.dis_id','dis_libelle','dis_format','Membre.mem_nom','Artiste.art_nom','Personne.per_nom','Emplacement.emp_libelle'))
+						->join('Artiste', 'Disque.per_id_artiste=Artiste.art_id', 'LEFT')
+						->join('Emplacement', 'Disque.emp_id=Emplacement.emp_id', 'LEFT')
+						->join('Personne', 'Disque.dif_id=Personne.per_id', 'LEFT')
+						->join('Membre','Disque.uti_id_ecoute=Membre.mem_id', 'LEFT')
+						->order_by('dis_libelle', 'asc') -> limit($nb, $debut);
+		$query = $this->db->get('Disque');
+		return $query->result();
+    }
+	
+	public function count() {
+		return $this -> db -> count_all('Disque');
+	}
 }
