@@ -54,6 +54,24 @@
 					        $('#recherche_form').submit();}
 				});
 			});
+			// Fonction d'ajout ou de suppression du "loader"
+			function ajaxBox_loader(pState)
+			{
+			// Ajout d'un élement <img> d'id #ajaxBox_loader
+			if (pState === true)
+			$('#aff-disque').html('').html('<li>&nbsp;</li><li>&nbsp;</li><li><img id="ajaxBox_loader" src="<?php echo img_url('ajax-loader.gif');?>" align="center" /></li><li>&nbsp;</li><li>&nbsp;</li>');
+			// Suppression de l'élement d'id #ajaxBox_loader
+			else
+			$('#ajaxBox_loader').remove();
+			}
+			
+			
+			// Fonction de mise à jour du contenu de la div #ajaxBox
+			// Ajout d'un element <p> contenant le message, dans le div #ajaxBox
+			function ajaxBox_setText(pText)
+			{
+			$('#chargement').append('<p>'+ pText +'</p>');
+			}
 		</script>
 		<script type="text/javascript" src="<?php echo js_url('less') ?>"></script>
 		<script>
@@ -72,7 +90,7 @@
 		<div id="main_page">
 
 			<?php echo $output; ?>
-
+			
 		</div>
 		<div id="footer">
 			<img src="<?php echo img_url('valide_html5.png'); ?>" id="valideHtml5" alt=" valide HTML5 " />
