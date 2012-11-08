@@ -15,8 +15,8 @@ if($affichage != 0)
 		<div id="cadre_action">
 			<!-- 	<a class="btn-large-action-nonActif"><i class="icon-pencil"></i> Modifier la fiche</a> -->
 			<a class="btn-large-action-nonActif"><i class="icon-trash"></i> Supprimer les fiches</a>
-			<a class="btn-large-action" href="<?php echo base_url().'index.php/welcome/importer/' ;?>"><i class="icon-signin"></i> Importer des fiches</a>
-			<a class="btn-large-action" href="#"><i class="icon-signout"></i> Exporter des fiches</a>
+			<a class="btn-large-action-nonActif" href="<?php echo base_url().'index.php/welcome/importer/' ;?>"><i class="icon-signin"></i> Importer des fiches</a>
+			<a class="btn-large-action-nonActif" href="#"><i class="icon-signout"></i> Exporter des fiches</a>
 		</div>
 	</div>
 	<div id="resultat_recherche">
