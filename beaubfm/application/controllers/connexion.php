@@ -3,6 +3,8 @@ class Connexion extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
+		$this->load->library('form_validation');
+		$this->load->library('securite');
 	}
 
 	public function index() {
@@ -16,10 +18,13 @@ class Connexion extends CI_Controller {
 			} else {
 				$data['msg'] = $msg;
 			}
-		} else {
-			if (($this -> input -> post('login') == "") || ($this -> input -> post('password') == "")) {
+		} else {	
+			$this->form_validation->set_rules('login', 'login', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('password', 'password', 'trim|required|xss_clean');
+		$this->form_validation->set_message('required', 'Nom d\'utilisateur et mot de passe requis');
+			if ($this->form_validation->run() == FALSE) {
 				$msg = array();
-				$msg[0] = "Login ou Mot de Passe manquant(s)";
+				$msg[0] = validation_errors('&nbsp;','&nbsp;');
 				$msg[1] = "info";
 				$msg[2] = "icon-info-sign";
 			} else {
@@ -33,7 +38,7 @@ class Connexion extends CI_Controller {
 					$passwordBase = $this -> membreManager -> getPasswordByLogin($login);
 					$passwordBase = $passwordBase['mem_mdp'];
 				}
-				if (($login == $loginBase) && (md5($password) == $passwordBase)) {
+				if (($login == $loginBase) && ($this->securite->crypt($password) == $passwordBase)) {
 					$this -> session -> set_userdata('isLogged', TRUE);
 					$username = $this -> membreManager -> getPrenomNomByLogin($login);
 					$prenom = $username['mem_prenom'];
@@ -57,7 +62,7 @@ class Connexion extends CI_Controller {
 					redirect('index', 'index');
 				} else {
 					$msg = array();
-					$msg[0] = "Login ou Mot de Passe incorrect(s)";
+					$msg[0] = "Nom d'utilisateur ou mot de passe incorrect(s)";
 					$msg[1] = "error";
 					$msg[2] = "icon-exclamation-sign";
 				}
