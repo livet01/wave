@@ -8,7 +8,9 @@ if($affichage != 0)
 	<div id="selection">
 		<ul class="icons" id="aff-disque">
 			<li>&nbsp;</li>
+			<li>&nbsp;</li>
 			<li>Aucune sélection</li>
+			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
 
@@ -62,7 +64,9 @@ if($affichage != 0)
 	<div id="selection">
 		<ul class="icons">
 			<li>&nbsp;</li>
+			<li>&nbsp;</li>
 			<li>Aucune sélection</li>
+			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
 		<div id="cadre_action">
@@ -84,7 +88,9 @@ if($affichage != 0)
 	<div id="selection">
 		<ul class="icons">
 			<li>&nbsp;</li>
+			<li>&nbsp;</li>
 			<li>Aucune sélection</li>
+			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
 		<div id="cadre_action">
@@ -108,7 +114,9 @@ else {
 	<div id="selection">
 		<ul class="icons" id="aff-disque">
 			<li>&nbsp;</li>
+			<li>&nbsp;</li>
 			<li>Aucune sélection</li>
+			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
 		<div id="cadre_action">
