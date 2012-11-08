@@ -149,7 +149,7 @@ else {
 					else
 						echo '<tr>';
 					echo '<td><input type="checkbox" name="select" value="1"></td>';
-					echo '<td class="left"><a href="#" class="ligne-recherche" onclick="$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); });">'.$ligne['dis_libelle'].'</a></td>';
+					echo '<td class="left"><a href="#" class="ligne-recherche" onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['dis_libelle'].'</a></td>';
 					echo '<td>'.$ligne['art_nom'].'</td>';
 					echo '<td>'.$ligne['per_nom'].'</td>';
 					echo '<td><a class="action-tab" href="#"><i class="icon-pencil"></a></td>';
