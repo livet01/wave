@@ -6,11 +6,13 @@
 class Personne_model extends CI_Model {
 	
 	protected $table = 'personne';
+	protected $vueLbl = 'Label';
+	protected $vueArt = 'atiste';
+	protected $vueAutoProd = 'autoproduction';
 	
 	function __construct() {
 		parent::__construct();
 	}
-	
 	public function ajouterPersonne($id,$data,$cat)
 	{
 		return $this->db->set('per_id', $id)
@@ -20,14 +22,13 @@ class Personne_model extends CI_Model {
 						->insert($this->table);
 	}
 	
-	public function readPersonne($select = '', $where = "", $whereOr = array('1' => '0'))
+	public function readPersonne($select = '', $where = "")
 	{
-		return $this->db->select($select)
-						->from($this->table)
-						->where($where)
-						->where_or($whereOr)
-						->get()
-						->row_array();
+			return $this->db->select($select)
+							->from($this->table)
+							->where($where)
+							->get()
+							->row_array();
 	}
 
 	public function countPersonne($champ = array(), $valeur = null) // Si $champ est un array, la variable $valeur sera ignorée par la méthode where()

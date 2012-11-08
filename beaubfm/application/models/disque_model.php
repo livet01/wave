@@ -26,10 +26,10 @@ class Disque_model extends CI_Model {
 					->set('dis_date_ajout', NOW())
 					->set('per_id_artiste', $data['artiste'])
 					->set('dif_id', $data['diffuseur'])
-					->set('dis_envoi_mail', $data['envoiMail'])
-					->set('emp_id', $data['empl'])
-					->set('emb_id', $data['emBev'])
-					->insert();
+					->set('dis_envoi_ok', $data['envoiMail'])
+					->set('emp_id', $data['emplacement'])
+					->set('emb_id', (empty($data['emBev']) ? NULL : $data['emBev']))
+					->insert($this->table);
 		}
 		else {
 			return FALSE;

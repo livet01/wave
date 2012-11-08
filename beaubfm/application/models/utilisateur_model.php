@@ -34,6 +34,15 @@ class Utilisateur_model extends CI_Model {
 						->get()
 						->row_array();
 		
-	}	
+	}
+	
+	public function ajouterUtil($id, $prenom, $log, $mdp)
+	{
+		return $this->db->set('per_id', $id)
+						->set('uti_prenom', $prenom)
+						->set('uti_login', $log)
+						->set('uti_mdp', md5($mdp))
+						->insert($this->table);
+	}
 }
 	
