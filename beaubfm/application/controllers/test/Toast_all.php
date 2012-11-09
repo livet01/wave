@@ -16,7 +16,7 @@
  */
 
 
-class Toast_all extends Controller
+class Toast_all extends CI_Controller
 {
 	// The folder INSIDE /controllers/ where the test classes are located
 	// TODO: autoset
@@ -25,7 +25,8 @@ class Toast_all extends Controller
 	// Files to skip (ie. non-test classes) inside the test dir
 	var $skip = array(
 		'Toast.php',
-		'Toast_all.php'
+		'Toast_all.php',
+		'index.html'
 	);
 
 	// CURL multithreaded mode (only set to true if you are sure your tests
@@ -34,7 +35,7 @@ class Toast_all extends Controller
 
 	function Toast_all()
 	{
-		parent::Controller();
+		parent::__construct();
 	}
 
 	function index()

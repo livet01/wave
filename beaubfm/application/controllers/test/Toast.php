@@ -19,7 +19,7 @@
  */
 
 
-abstract class Toast extends Controller
+abstract class Toast extends CI_Controller
 {
 	// The folder INSIDE /controllers/ where the test classes are located
 	// TODO: autoset
@@ -32,8 +32,8 @@ abstract class Toast extends Controller
 	var $asserts;
 
 	function Toast($name)
-	{
-		parent::Controller();
+	{	
+		parent::__construct();
 		$this->load->library('unit_test');
 		$this->modelname = $name;
 		$this->modelname_short = basename($name, '.php');
