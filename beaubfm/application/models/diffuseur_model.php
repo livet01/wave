@@ -5,8 +5,8 @@
  */
 class Diffuseur_model extends CI_Model {
 	
-	protected $table = 'diffuseur';
-	protected $vue = 'label';
+	protected $table = 'Diffuseur';
+	protected $vue = 'Label';
 	
 	function __construct() {
 		parent::__construct();
@@ -23,7 +23,9 @@ class Diffuseur_model extends CI_Model {
 	{
 		return $this->db->select($select)
 						->from($this->vue)
-						->where($where);
+						->where($where)
+						->get()
+						->row_array();
 	}
 	
 }

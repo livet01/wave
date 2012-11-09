@@ -5,10 +5,9 @@
  */
 class Personne_model extends CI_Model {
 	
-	protected $table = 'personne';
-	protected $vueLbl = 'Label';
-	protected $vueArt = 'atiste';
-	protected $vueAutoProd = 'autoproduction';
+	protected $table = 'Personne';
+	protected $vueArt = 'Artiste';
+	protected $vueAutoProd = 'Autoproduction';
 	
 	function __construct() {
 		parent::__construct();
@@ -29,6 +28,35 @@ class Personne_model extends CI_Model {
 							->where($where)
 							->get()
 							->row_array();
+	}
+	
+	public function readArtiste($select = '', $where = "")
+	{
+		if(!empty($select) && !empty($where))
+		{
+			return $this->db->select($select)
+							->from($this->vueArt)
+							->where($where)
+							->get()
+							->row_array();
+		}
+		else
+			return "";
+	}
+	
+	public function readAutoprod($select = '', $where = '')
+	{
+		if(!empty($select) && !empty($where))
+		{
+			return $this->db->select($select)
+							->from($this->vueAutoProd)
+							->where($where)
+							->get()
+							->row_array();
+		}
+		else {
+			return "";
+		}
 	}
 
 	public function countPersonne($champ = array(), $valeur = null) // Si $champ est un array, la variable $valeur sera ignorée par la méthode where()

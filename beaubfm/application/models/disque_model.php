@@ -5,7 +5,7 @@
  */
 class Disque_model extends CI_Model {
 	
-	protected $table = 'disque';
+	protected $table = 'Disque';
 	
 	function __construct() {
 		parent::__construct();
@@ -16,7 +16,7 @@ class Disque_model extends CI_Model {
 	 *  @param tableau contenant tous les données à ajouter
 	 * 
 	 */
-	public function ajouterFiche($data)
+	public function ajouterDisque($data)
 	{
 		if(!empty($data)){
 			$this->db->set('dis_id', $data['id'])
@@ -46,9 +46,18 @@ class Disque_model extends CI_Model {
 		
 	}
 	
-	public function listerFiche()
+	public function readDisque($select = "", $where = "")
 	{
-		
+		if(!empty($select) && !empty($where))
+		{
+			return $this->db->select($select)
+							->from($this->table)
+							->where($where)
+							->get()
+							->row_array();
+		}
+		else
+			return "";
 	}
 }
 /* End of file disque_model.php */
