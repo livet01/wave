@@ -25,7 +25,7 @@ class Index extends MY_Controller {
 	public function index($g_nb_disques = 1, $affichage = 0) 
 	{
 		// Chargement des ressources		$this -> load -> library('layout');
-		$this -> load -> model('Info_Disque_Model');
+		$this -> load -> model('index/Info_Disque_Model');
 		$this -> load -> library('pagination');
 		
 		if($affichage === 0) // Si l'affichage est pour l'ensemble des disques
@@ -79,7 +79,7 @@ class Index extends MY_Controller {
 		$data['affichage'] = $affichage;
 			
 		// Chargement de la vue
-		$this -> layout -> views('menu_principal') -> views('barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('resultat_recherche', $data);
+		$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', $data);
 	}
 
 
@@ -98,8 +98,8 @@ class Index extends MY_Controller {
 		else // Aucune erreur
 		{
 			// Chargement des models
-			$this -> load -> model('autocomplete_model');
-			$this -> load -> model('Info_Disque_Model');
+			$this -> load -> model('index/autocomplete_model');
+			$this -> load -> model('index/Info_Disque_Model');
 			
 			// On récupère pour le mot clé saisie, l'id de tout les artistes correspondant
 			$rows = $this -> autocomplete_model -> GetAutocompleteArtiste(array('keyword' => $this -> input -> post('recherche')));
@@ -182,7 +182,7 @@ class Index extends MY_Controller {
 				else {
 					// On charge la vue avec un affichage de 1
 					$this -> load -> library('layout');
-					$this -> layout -> views('menu_principal') -> views('barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('resultat_recherche', array('resultat' => $tab_result, 'affichage' => 1));
+					$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', array('resultat' => $tab_result, 'affichage' => 1));
 
 				}
 			}
@@ -195,7 +195,7 @@ class Index extends MY_Controller {
 	// Méthode de suggestion : ajax et auto-completion.
 	//
 	public function suggestions() {
-		$this -> load -> model('autocomplete_model');
+		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
 
 		if (strlen($term) < 1)
@@ -239,7 +239,7 @@ class Index extends MY_Controller {
 		if (!empty($id_disque)) // Si le id_disque n'est pas nul
 		{
 			// On charge le model
-			$this -> load -> model('Info_Disque_Model', 'infodisque');
+			$this -> load -> model('index/Info_Disque_Model', 'infodisque');
 			
 			// id_dis doit être >= à 0
 			assert($id_disque >= 0);
@@ -264,7 +264,7 @@ class Index extends MY_Controller {
 			}
 			
 			// Envoi des données à la vue
-			$this -> load -> view('affichage_disque', array('data' => $json_array[0]));
+			$this -> load -> view('index/affichage_disque', array('data' => $json_array[0]));
 		}
 	}
 
