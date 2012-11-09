@@ -29,7 +29,7 @@ class Securite_test extends Toast
 	{
 		// Test code goes here
 		$mdp = "";
-		$this->_assert_not_empty($this->securite->crypt($mdp));
+		$this->_assert_empty($this->securite->crypt($mdp));
 		$this->message = "Mdp initial vide ";
 	}
 	

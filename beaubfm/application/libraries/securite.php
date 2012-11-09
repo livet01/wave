@@ -3,7 +3,7 @@
 class securite {
 
 	public static function crypt($mdp) {
-		return md5($mdp);
+		return (!empty($mdp))? md5($mdp) : NULL ;
 	}
 	
 }
