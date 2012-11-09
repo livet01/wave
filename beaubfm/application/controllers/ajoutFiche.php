@@ -12,18 +12,18 @@ class AjoutFiche extends MY_Controller {
 		$this->formulaire();
 	}
 	
-	public function formulaire($data = array()) {
+	public function formulaire($data = array('erreur' => "")) {
 		
 		// Helper	
 		$this->load->helper('assets');
 		
-		if(!empty($data))
-			echo $data['erreur'];
+		/*if(!empty($data))
+			echo $data['erreur'];*/
 		// Vues
 		$this->load->library('layout');
 		
 		$this->layout->views('menu_principal')
-					->view('ajouter_fiche');
+					->view('ajouter_fiche', $data);
 								
 	}
 	
@@ -35,6 +35,7 @@ class AjoutFiche extends MY_Controller {
 		//Chargement models
 		$this->load->model('personne_model', 'persManager');
 		$this->load->model('embenevole_model', 'emBevManager');
+		$this->load->model('disque_model', 'disqueManager');
 		$this->load->helper('date');
 		
 		//Création de existsEmBev pour 
@@ -53,7 +54,7 @@ class AjoutFiche extends MY_Controller {
 			$existsEmBev = $this->emBevManager->readEmission('emb_id', array('emb_libelle' => $this->input->post('emBev')));
 		}
 		else
-			$this->form_validation->set_rules('emBev', '"Emission"', 'trim|min_length[0]|max_length[0]|alpha_dash|encode_php_tags|xss_clean');
+			$this->form_validation->set_rules('emBev', '"Emission"', 'trim|min_length[0]|max_length[52]|alpha_dash|encode_php_tags|xss_clean');
 		
 		$this->form_validation->set_rules('listenBy', '"Ecouté par"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_]*$"]|encode_php_tags|xss_clean');
 		
@@ -62,15 +63,20 @@ class AjoutFiche extends MY_Controller {
 		
 		$this->form_validation->set_rules('diffuseur', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_]*$"]|encode_php_tags|xss_clean');
 		$this->form_validation->set_rules('email', '"Email"', 'trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
+		
+		$artId = $this->persManager->readArtiste('art_id', array('art_nom' => $this->input->post('artiste')));
+		if(!empty($artId))	
+			$disNom = $this->disqueManager->readDisque('dis_id', array('dis_libelle' => $this->input->post('titre'), 'per_id_artiste' => $artId['art_id']));
+		
 		//
 		// <-------- Fin des contrôles des champs  ----------->
 		//
 		
-		if($this->form_validation->run() && !empty($existsEmBev) && !empty($existslisten))
+		if($this->form_validation->run() && !empty($existsEmBev) && !empty($existslisten) && empty($disNom))
 		{
 			
 			//	Le formulaire est valide
-			$this->load->model('disque_model', 'disqueManager');
+			
 			$this->load->model('diffuseur_model', 'diffManager');
 			$this->load->model('utilisateur_model', 'utiManager');
 			
@@ -88,37 +94,42 @@ class AjoutFiche extends MY_Controller {
 			$data['envoiMail'] = (($this->input->post('envoiMail') === "0") ? "1" : "0");
 			
 			// Vérifiaction de l'éxistance de l'artiste
-			$artId = $this->persManager->readPersonne('per_id', array('per_nom' => $data['artiste'], 'cat_id' => 5), array('per_nom' => $data['artiste'], 'cat_id' => 3));//"per_nom = '".$data['artiste']."'	AND (cat_id = '4' OR cat_id = '5')");//
+			
 			$result_1 = FALSE;
 			if (empty($artId)){
 				$artId = (string)(rand(31, 99)+rand(800, 1000));
 				$result_1 = $this->persManager->ajouterpersonne($artId, $data['artiste'],($data['autoprod']) ? 5 : 3);
 			}
 			else{
-				$artId = $artId['per_id'];	
+				$artId = $artId['art_id'];	
 				$result_1 = TRUE;
 			}
 			
 			$result_2 = FALSE;
 			// Vérifiaction de l'éxistance du diffuseur si ce n'est pas un Autoprod !
-			if($data['autoprod'])
-				$difId = $this->persManager->readPersonne('per_id', array('per_nom' => $data['diffuseur'], 'cat_id' => 4));
+			if(!$data['autoprod'])
+				$difId = $this->diffManager->readDiffuseur('lab_id', array('lab_nom' => $data['diffuseur']));
 			else
-				$difId = $this->persManager->readPersonne('per_id', array('per_nom' => $data['artiste'], 'cat_id' => 5));
+				$difId = $this->persManager->readAutoprod('aut_id', array('aut_nom' => $data['artiste']));
 
 			$result_3 = FALSE;
 			$result_4 = FALSE;
-			if (empty($difId)){
+			
+			if (empty($difId)){	
 				$difId = (string)(rand(31, 99)+rand(800, 1000));
-				if(!$data['autoprod'])
+				if(!$data['autoprod']){
+					// Ajout du diffuseur
 					$result_2 = $this->persManager->ajouterpersonne($difId, $data['diffuseur'], 4);
+				}
 				else
 					$result_2 = TRUE;
+				// Ajout du Diffuseur ou de l'Artiste s'il est autoproducteur en tant qu'Utilisateur
 				$result_3 = $this->utiManager->ajouterUtil((($data['autoprod']) ? $artId : $difId), "",(($data['autoprod']) ? $data['artiste'] : $data['diffuseur']), "lapin");
 				$result_4 = $this->diffManager->ajouterDiffuseur((($data['autoprod']) ? $artId : $difId), $data['email']);
 			}
 			else{
-				$difId = $difId['per_id'];	
+				// Récupération de l'id du Diffuseur ou de l'id de l'Artiste si il est autoproducteur
+				$difId = ($data['autoprod']) ? $difId['aut_id'] : $difId['lab_id'];
 				$result_2 = TRUE;
 				$result_3 = TRUE;
 				$result_4 = TRUE;
@@ -127,30 +138,23 @@ class AjoutFiche extends MY_Controller {
 			$data['artiste'] = $artId;
 			$data['diffuseur'] = (($data['autoprod']) ? $artId : $difId);
 			
-			echo "result_2 =  ";
-			print_r($result_2);
-			echo "   |||||  result_1 =  ";
-			print_r($result_1);
-			echo "    ||||| result_3 = ";
-			print_r($result_3);
-			echo "   ###### cond = ";
-			print_r(($result_1 && $result_2 && $result_3));
 			
 			if ($result_1 && $result_2 && $result_3) {
 				
-				$result = $this->disqueManager->ajouterFiche($data);
-				echo "Connard !!!!!!";
+				$result = $this->disqueManager->ajouterDisque($data);
+				$this->formulaire(array("erreur" => "Ajout réussi"));
 			}
 			else {
-				//echo "Erreur ajout personne";
+				$this->formulaire(array("erreur" => "Echec de l'ajout"));
 			}
-			
-			$this->formulaire(array("erreur" => "¡¡¡¡¡¡¡¡¡¡ Ajout Réééééééuuuuuusssisisisisisisisisisisi !!!!!"));
 		}
 		else
 		{
 			//	Le formulaire est invalide ou vide
-			$this->formulaire();
+			if(!empty($disNom))
+				$this->formulaire(array("erreur" => "Echec de l'ajout"));
+			else
+				$this->formulaire();
 			
 		}
 	}
