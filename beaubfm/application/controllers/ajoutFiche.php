@@ -61,7 +61,7 @@ class AjoutFiche extends MY_Controller {
 		$existslisten = $this->persManager->readPersonne('per_id', array('per_nom' => $this->input->post('listenBy'), 'cat_id' => 2));
 		
 		$this->form_validation->set_rules('diffuseur', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_]*$"]|encode_php_tags|xss_clean');
-		$this->form_validation->set_rules('email', '"Email de contact"', 'trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
+		$this->form_validation->set_rules('email', '"Email"', 'trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
 		//
 		// <-------- Fin des contrôles des champs  ----------->
 		//
