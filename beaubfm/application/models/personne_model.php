@@ -7,7 +7,7 @@ class Personne_model extends CI_Model {
 	
 	protected $table = 'Personne';
 	protected $vueArt = 'Artiste';
-	protected $vueAutoProd = 'Autoproduction';
+	protected $vueAutoProd = 'autoproduction';
 	
 	function __construct() {
 		parent::__construct();
