@@ -8,7 +8,6 @@ $session_id = $this -> session -> userdata('session_id');
 	<head>
 		<title>Authentification</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this -> config -> item('charset'); ?>" />
-		<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />
 		<link rel="stylesheet/less" type="text/css" href="<?php echo less_url('style'); ?>">
 
 		<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>
