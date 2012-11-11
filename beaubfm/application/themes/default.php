@@ -12,14 +12,6 @@
 		<link rel="stylesheet/less" type="text/css" href="<?php echo less_url('style'); ?>">
 
 		<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>
-    <style>
-    .ui-autocomplete-category {
-        font-weight: bold;
-        padding: .2em .4em;
-        margin: .8em 0 .2em;
-        line-height: 1.5;
-    }
-    </style>
 		<script type="text/javascript">
 	
 	$.widget( "custom.catcomplete", $.ui.autocomplete, {
@@ -28,7 +20,7 @@
 				currentCategory = "";
 			$.each( items, function( index, item ) {
 				if ( item.category != currentCategory ) {
-					ul.append( "<li class='ui-logo'></li><li class='ui-autocomplete-category'>" + item.category + "</li>" );
+					ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
 					currentCategory = item.category;
 				}
 				that._renderItemData( ul, item );

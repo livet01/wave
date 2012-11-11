@@ -52,25 +52,38 @@
 	position: absolute;
 	top: 0; /* #8656 */
 	cursor: default;
+	border: 1px solid #ccc;
 }
 .ui-autocomplete-category {
 	background-color: #EFF0F0;
-	color: black;
+	color: #838992;
+	font-weight: bold;
+	margin-left: -40px;
+	padding: 4px;
+	border-top: 1px solid #ccc;
+
 	
 }
-.ui-logo{
-	background-color: red;
-	
-	float: left;
+.ui-autocomplete-category > li {
+	font-size: 1.2em;
+	vertical-align: middle;
+	margin-bottom: 5px;
+	margin-top : -20px;
 }
+.ui-autocomplete-category > i {
+	font-size: 1.5em;
+	padding-right: 10px;
+	padding-left: 2px;
+	color :#838992;
+}
+
 /* workarounds */
 
 .ui-menu {
 	list-style: none;
 	margin-left: 0;
-	display: block;
-	outline: none;
-	border: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	
 }
 
 .ui-menu .ui-menu-item {
@@ -79,7 +92,8 @@
 	zoom: 1;
 	width: 100%;
 	background-color: #FFF;
-	border-bottom: 1px solid #E7E7E7;
+	border-top: 1px solid #E7E7E7;
+
 }
 
 .ui-menu .ui-menu-item a {
@@ -122,14 +136,12 @@
 }
 .ui-widget-content {
 	border-top: 0;
-
-	border-right: 0px ;
+	border-right: 1px solid #ccc;
 	background: #EFF0F0;  /** ici **/
 	color: #222222;
-	
 }
 
-/**
+
 .ui-widget-content a {
 	color: #222222;
 }
@@ -142,7 +154,7 @@
 .ui-widget-header a {
 	color: #222222;
 }
-*/
+
 /* Interaction states
  ----------------------------------*/
 

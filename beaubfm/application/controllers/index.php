@@ -189,13 +189,13 @@ class Index extends MY_Controller {
 			foreach ($rows as $row) {
 				if ($i < 4) {
 					if ($j == 1) {
-						array_push($json_array, array("label" => $row -> dis_libelle, "category" => "Disque"));
+						array_push($json_array, array("label" => $row -> dis_libelle, "category" => " <i class='icon-music'></i> Titre"));
 					}
 					if ($j == 2) {
-						array_push($json_array, array("label" => $row -> art_nom, "category" => "Artiste"));
+						array_push($json_array, array("label" => $row -> art_nom, "category" => "<i class='icon-group'></i> Artiste"));
 					}
 					if ($j == 3) {
-						array_push($json_array, array("label" => $row -> lab_nom, "category" => "Diffuseur"));
+						array_push($json_array, array("label" => $row -> lab_nom, "category" => "<i class='icon-home'></i> Diffuseur"));
 					}
 				}
 				$i++;
