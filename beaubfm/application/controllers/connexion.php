@@ -21,12 +21,12 @@ class Connexion extends CI_Controller {
 		$data['msg'] = $msg;
 		$this -> load -> view('connexion_form', $data);
 	}
-	
+	/**
 	public function _remap($method)
 	{
 		$this->maintenance();
 	}
-	
+	*/
 	public function connexion($msg = NULL) {
 		if (!$this -> input -> post('password') && !$this -> input -> post('login')) {
 			if ($this -> session -> userdata('isLogged') === TRUE) {
@@ -75,11 +75,7 @@ class Connexion extends CI_Controller {
 						}
 					}
 					$this -> session -> set_userdata('username', $username);
-					// Mouchards
-					if($username==="admin"){
-						$this->load-> model('parametre_model','parametreManager');
-						$this->parametreManager->ajouterParam('connexionRodes',time());
-					}
+					
 					redirect('index', 'index');
 				} else {
 					$msg = array();
