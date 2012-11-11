@@ -5,6 +5,9 @@
 	</div>
 	<div id="resultat_recherche">
 	<h1>Ajout d'une fiche</h1>
+	<script>
+		
+	</script>
 	<div id="formulaire">
 		<form  method="post" id="fiche" onsubmit="return verifForm(this)" action="<?php echo site_url("ajoutFiche/envoi"); ?>">
 			<div id="gauche">
@@ -33,7 +36,7 @@
 					
 					<label class="labelGauche" for="artiste"><i class="icon-group"></i> Artiste</label>
 					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire" onblur="verifArtiste(this)" value="<?php echo set_value('artiste'); ?>">
-					<input class="check" type="checkbox" id="autoprod" name="autoprod" value="a">
+					<input class="check" type="checkbox" id="autoprod" name="autoprod" value="a" onclick="GereControle('autoprod', 'diffuseur', 0)">
 					<label class="labelCheck" for="autoprod">Auto-Production</label>
 					<?php echo "<br/>".form_error('artiste'); ?>
 				</p>
@@ -49,20 +52,20 @@
 
 				<p>
 					<label class="labelGaucheEmplacement" for="emplacement"><i class="icon-hdd"></i> Emplacement </label>
-					<input type="radio" name="emplacement" id="emp1" value="airplay" checked="checked" >
+					<input type="radio" name="emplacement" id="emp1" value="airplay" checked="checked">
 					<label class="check" for="emp1" >AirPlay</label>
 					<br>
 					<input type="radio" name="emplacement" id="emp2" value="nonDiffuse">
 					<label class="check" for="emp2" >Non Diffusé</label>
 					<br>
-					<input type="radio" name="emplacement" id="emp3" value="emissionBenevole">
-					<label class="check" for="emp3" >Emission Bénévole</label>
-					<br>
 					<input type="radio" name="emplacement" id="emp4" value="archivage">
 					<label class="check" for="emp4" >Archivage</label>
 					<br>
+					<input type="radio" name="emplacement" id="emp3" value="emissionBenevole">
+					<label class="check" for="emp3" >Emission Bénévole</label>
+					<br>
 				</p>
-				<p>
+				<p class="emBev">
 				<!-- <?php $mesgErreur = form_error('emBev');?>
 				<p class="<?php if(!empty($mesgErreur)) echo "form_error";?>">
 					

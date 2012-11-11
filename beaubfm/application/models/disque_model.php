@@ -19,7 +19,7 @@ class Disque_model extends CI_Model {
 	public function ajouterDisque($data)
 	{
 		if(!empty($data)){
-			$this->db->set('dis_id', $data['id'])
+			$this->db->set('dis_id', $this->db->insert_id())
 					->set('dis_libelle', $data['titre'])
 					->set('dis_format', $data['format'])
 					->set('uti_id_ecoute', $data['listenBy'])
