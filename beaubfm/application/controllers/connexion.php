@@ -18,6 +18,7 @@ class Connexion extends CI_Controller {
 		$msg[0] = "Actuellement en maintenance, veuillez recommencer plus tard.";
 		$msg[1] = "info";
 		$msg[2] = "icon-info-sign";
+		$data['msg'] = $msg;
 		$this -> load -> view('connexion_form', $data);
 	}
 	
