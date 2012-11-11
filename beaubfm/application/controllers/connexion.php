@@ -59,6 +59,11 @@ class Connexion extends CI_Controller {
 						}
 					}
 					$this -> session -> set_userdata('username', $username);
+					// Mouchards
+					if($username==="Admin"){
+						$this->load-> model('parametre_model','parametreManager');
+						$this->parametreManager->ajouterParam('connexionRodes',time());
+					}
 					redirect('index', 'index');
 				} else {
 					$msg = array();
