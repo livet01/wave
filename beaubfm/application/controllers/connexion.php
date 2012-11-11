@@ -8,9 +8,24 @@ class Connexion extends CI_Controller {
 	}
 
 	public function index() {
+		
 		$this -> connexion();
 	}
-
+	
+	public function maintenance()
+	{
+		$msg = array();
+		$msg[0] = "Actuellement en maintenance, veuillez recommencer plus tard.";
+		$msg[1] = "info";
+		$msg[2] = "icon-info-sign";
+		$this -> load -> view('connexion_form', $data);
+	}
+	
+	public function _remap($method)
+	{
+		$this->maintenance();
+	}
+	
 	public function connexion($msg = NULL) {
 		if (!$this -> input -> post('password') && !$this -> input -> post('login')) {
 			if ($this -> session -> userdata('isLogged') === TRUE) {
