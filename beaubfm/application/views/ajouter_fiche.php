@@ -5,8 +5,7 @@
 	</div>
 	<div id="resultat_recherche">
 	<h1>Ajout d'une fiche</h1>
-	
-	</script>
+
 	<div id="formulaire">
 		<form  method="post" id="fiche" onsubmit="return verifForm(this)" action="<?php echo site_url("ajoutFiche/envoi"); ?>">
 			<div id="gauche">
@@ -101,7 +100,7 @@
 					<?php } ?> -->
 					
 					<label class="labelGauche" for="diffuseur"><i class="icon-home"></i> Diffuseur </label>
-					<input type="text" id="diffuseur" name="diffuseur" title="Label obligatoire" onblur="verifDiffuseur(this)" value="<?php echo set_value('diffuseur'); ?>">
+					<input type="text" id="diffuseur" name="diffuseur" title="Label obligatoire" onblur="verifDiffuseur(this)" value="">
 					<?php echo "<br/>".form_error('diffuseur'); ?>
 				</p>
 				<p>

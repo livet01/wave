@@ -4,7 +4,4 @@ function GereControle(Controleur, Controle, Masquer) {
 	
 	if (Masquer=='1')
 		objControle.style.visibility=(objControleur.checked==true)?'hidden':'visible';
-	else
-		objControle.disabled=(objControleur.checked==true)?true:false;
-	return true;
 }
