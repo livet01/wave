@@ -14,17 +14,17 @@ a.ligne-recherche {
     box-shadow: 0 0 0 2px #fff inset;
     min-height: @height_mainPage - 100px;
 }
-table{
+#resultat_recherche > table{
   width:100%;
   font-family: Arial,Helvetica,Verdana,sans-serif;
 
   border-collapse:collapse;
 }
-.title_tab{
+#resultat_recherche > .title_tab{
   font-size: 15px;
   padding-left: 4px;
 }
-caption{
+#resultat_recherche caption{
   background-color:#C0D1DE;
   color: #444444;
   .padding_hauteur(6px);
@@ -33,54 +33,49 @@ caption{
   margin-bottom: 5px;
   border-radius: 2px;
 }
-tr, td{
+#resultat_recherche tr, #resultat_recherche td{
   .padding_cote(5px);
   .padding_hauteur(3px);
   color: #444444;
   font-size: 0.94em;
     
 }
-tr:hover{
+#resultat_recherche tr:hover{
   background-color:#EBEBEB;
   border-radius: 2px;
 }
-td.checkbox{
+#resultat_recherche td.checkbox{
   text-align: center;
 }
-a.action-tab{
+#resultat_recherche a.action-tab{
   text-decoration: none;
   color: #444444;
   font-size: 14px;
 }
-a.action-tab >i{
+#resultat_recherche a.action-tab >i{
   padding: 0;
   margin: 0;
 }
-a.action-tab > i.icon-trash:hover{
+#resultat_recherche a.action-tab > i.icon-trash:hover{
   color:red;
 }
-a.action-tab > i.icon-pencil:hover{
+#resultat_recherche a.action-tab > i.icon-pencil:hover{
   color:green;
 }
-.action-tab > i{
+#resultat_recherche .action-tab > i{
   .padding_cote(2px);
 }
-th{
+#resultat_recherche th{
   background-color:#A8ADB3;
   color: #FFF;
   border-left: 1px solid #BAC0C6;
   text-align: center;
   height: 22px;
 }
-tr{
+#resultat_recherche tr{
   text-align:left;
 }
-.left{
- // text-align:left;
-}
-.right{
- // text-align:right;
-}
+
 .blue{
   background-color:#F6F6F6 ;
   color:#000;
