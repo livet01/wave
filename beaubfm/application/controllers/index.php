@@ -16,6 +16,7 @@ class Index extends MY_Controller {
 		// Chargement des ressources pour tout le contrôleur
 		$this -> load -> database();
 		$this -> load -> library('form_validation');
+		
 	}
 
 	//

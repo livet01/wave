@@ -23,8 +23,14 @@ class Membre_model extends CI_Model {
 						->from($this->vue)
 						->where(array('mem_login'=>$login))
 						->get()
-						->row_array();
-		
+						->row_array();	
+	}
+	public function loginMdpExist($login,$mdp){
+		return $this->db->select('mem_login')
+						->from($this->vue)
+						->where(array('mem_login'=>$login,'mem_mdp'=>$mdp))
+						->get()
+						->row_array();	
 	}
 	public function getPasswordByLogin($login){
 		return $this->db->select('mem_mdp')
@@ -40,5 +46,23 @@ class Membre_model extends CI_Model {
 						->where(array('mem_login'=>$login))
 						->get()
 						->row_array();		
+	}
+	public function getIdByLogin($login){
+		return $this->db->select('mem_id')
+						->from($this->vue)
+						->where(array('mem_login'=>$login))
+						->get()
+						->row_array();		
+	}
+	public function getVerrouByLogin($login){
+		return $this->db->select('mem_verrou')
+						->from($this->vue)
+						->where(array('mem_login'=>$login))
+						->get()
+						->row_array();		
+	}
+	public function setVerrouByLogin($login,$verrou){
+		return $this->db->where(array('mem_login'=>$login))
+						->update($this->vue,array('mem_verrou' => $verrou));	
 	}
 }
