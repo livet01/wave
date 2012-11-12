@@ -10,7 +10,7 @@ if($affichage != 0)
 		<ul class="icons" id="aff-disque">
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
-			<li>Aucune sélection</li>
+			<li id="chargement" class="chargement"><img src="<?php echo img_url('search.png'); ?>"> </li>
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
@@ -67,7 +67,7 @@ if($affichage != 0)
 		<ul class="icons">
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
-			<li id="chargement">Aucune sélection</li>
+			<li id="chargement" class="chargement"><img src="<?php echo img_url('search.png'); ?>"> </li>
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
@@ -93,7 +93,8 @@ if($affichage != 0)
 		<ul class="icons">
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
-			<li>Aucune sélection</li>
+						<li id="chargement" class="chargement"><img src="<?php echo img_url('search.png'); ?>"> </li>
+
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
@@ -121,7 +122,7 @@ else {
 		<ul class="icons" id="aff-disque">
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
-			<li id="chargement">Aucune sélection</li>
+			<li id="chargement" class="chargement"><img src="<?php echo img_url('search.png'); ?>"> </li>
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
