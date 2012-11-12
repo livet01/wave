@@ -1,8 +1,4 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-/**
- * CRUD d'une fiche
- */
 class Disque_model extends CI_Model {
 	
 	protected $table = 'Disque';
@@ -36,18 +32,15 @@ class Disque_model extends CI_Model {
 		}
 	}
 	
-	public function modifierFiche()
-	{
+	public function modifierFiche(){
 		
 	}
 	
-	public function supprimmerFiche()
-	{
+	public function supprimmerFiche(){
 		
 	}
 	
-	public function readDisque($select = "", $where = "")
-	{
+	public function readDisque($select = "", $where = ""){
 		if(!empty($select) && !empty($where))
 		{
 			return $this->db->select($select)
