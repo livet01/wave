@@ -33,8 +33,8 @@
 					<!-- <?php } ?> -->
 					
 					<label class="labelGauche" for="artiste"><i class="icon-group"></i> Artiste</label>
-					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire" onblur="verifArtiste(this)" value="<?php echo set_value('artiste'); ?>">
-					<input class="check" type="checkbox" id="autoprod" name="autoprod" value="a" onclick="GereControle('autoprod', 'diffuseur', 0)">
+					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire" onblur="verifArtiste(this)" value="<?php echo set_value('artiste'); ?>" onChange="javascript:document.getElementById('diffuseur').value = document.getElementById('artiste').value">
+					<input class="check" type="checkbox" id="autoprod" name="autoprod" value="a" onclick="GereControle('autoprod', 'diffuseur', 0)" >
 					<label class="labelCheck" for="autoprod">Auto-Production</label>
 					<?php echo "<br/>".form_error('artiste'); ?>
 				</p>
