@@ -30,9 +30,9 @@ if($affichage != 0)
 				<th>
 				<input type="checkbox" name="select" value="1">
 				</th>
-				<th>- <i class="icon-music"></i> Titre -</th>
-				<th>- <i class="icon-group"></i> Artiste -</th>
-				<th>- <i class="icon-home"></i> Label -</th>
+				<th><i class="icon-music"></i> Titre</th>
+				<th><i class="icon-group"></i> Artiste</th>
+				<th><i class="icon-home"></i> Label</th>
 				<th class="tab-menu-action" colspan="2">- <i class="icon-cogs"></i> -</th>
 
 			</tr>
@@ -129,15 +129,15 @@ else {
 	<div id="resultat_recherche">
 		<table>
 			<caption>
-				Listes des disques.
+				Listes des disques
 			</caption>
 			<tr>
 				<th>
 				<input type="checkbox" name="select" value="1">
 				</th>
-				<th>- <i class="icon-music"></i> Titre -</th>
-				<th>- <i class="icon-group"></i> Artiste -</th>
-				<th>- <i class="icon-home"></i> Label -</th>
+				<th><i class="icon-music"></i> Titre</th>
+				<th><i class="icon-group"></i> Artiste</th>
+				<th><i class="icon-home"></i> Label</th>
 				<th class="tab-menu-action" colspan="2">- <i class="icon-cogs"></i> -</th>
 
 			</tr>
