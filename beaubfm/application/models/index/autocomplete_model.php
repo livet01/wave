@@ -21,5 +21,13 @@ class Autocomplete_Model extends CI_Model
 	    $this->db->like('dis_libelle', $options['keyword'], 'both');
    		$query = $this->db->get('Disque');
 		return $query->result();
+    }	
+	function GetAutocompleteArrayDisque($options = array())
+    {
+	    $this->db->select(array('dis_id'));
+	    $this->db->like('dis_libelle', $options['keyword'], 'both');
+   		$query = $this->db->get('Disque');
+		return $query->result_array();
     }
+
 }

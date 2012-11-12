@@ -103,7 +103,7 @@ class Index extends MY_Controller {
 			$rowsLabel = $this -> autocomplete_model -> GetAutocompleteLabel(array('keyword' => $this -> input -> post('recherche')));
 
 			// On récupère pour le mot clé saisie, l'id de tout les disques correspondant
-			$rowsDisque = $this -> autocomplete_model -> GetAutocompleteDisque(array('keyword' => $this -> input -> post('recherche')));
+			$rowsDisque = $this -> autocomplete_model -> GetAutocompleteArrayDisque(array('keyword' => $this -> input -> post('recherche')));
 
 			if (empty($rows) and empty($rowsLabel) and empty($rowsDisque))// Aucun disque, artiste, label a été trouvé
 				$this -> index(1, 2);
@@ -116,14 +116,14 @@ class Index extends MY_Controller {
 				$tab_result = array();
 
 				//On stoque les différents "rows" dans un tableau
-				$rowsArray = array($rows, $rowsLabel, $rowsDisque);
+				$rowsArray = array($rows, $rowsLabel);
 
 				//Permet de sélectionner la bonne méthode dans le foreach
 				$i = 1;
 
 				foreach ($rowsArray as $rows) {
 
-					if (!empty($rows))// Si on a des artistes, des labels ou des disques qui correspondent
+					if (!empty($rows))// Si on a des artistes ou des labels qui correspondent
 					{
 						foreach ($rows as $row) {
 							//Selon $i on les sélectionne tous par leurs id dans la bonne table
@@ -133,37 +133,47 @@ class Index extends MY_Controller {
 							if ($i == 2) {
 								$tabs = $this -> Info_Disque_Model -> GetLabel($row -> lab_id);
 							}
-							if ($i == 3) {
-								$tabs = $this -> Info_Disque_Model -> GetDisque($row -> dis_id);
-							}
 
 							foreach ($tabs as $tab) {
-								if (empty($tab -> emb_id))
-									$emb_id = null;
-								else {
-									$emb_id = $tab -> emb_id;
-								}
-								// On ajoute charque disque au tab_result correspondant à l'artiste, le label ou le disque
-								$tab_result[] = array("dis_id" => $tab -> dis_id, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+								// On ajoute charque disque au tab_result correspondant à l'artiste ou le label
+								$tab_result[] = $tab['dis_id'];
 							}
 						}
 					}
 					$i++;
 				}
 
-				// Si il n'y a pas de disque dans tab result
-				if (count($tab_result) == 0)
+				foreach ($rowsDisque as $tab) {
+					// On ajoute charque disque au tab_result
+					$tab_result[] = $tab['dis_id'];
+				}
+
+				//On dédoublonne le tableau
+				$tab_result = array_unique($tab_result);
+
+				foreach ($tab_result as $row) {
+					//On va chercher toutes les infos du disque en fonction de son id
+					$disque = $this -> Info_Disque_Model -> GetArrayDisque($row);
+					foreach ($disque as $dis) {
+						// On ajoute charque disque au tab_resultDisque
+						$tab_resultDisque[] = $dis;
+					}
+				}
+
+				// Si il n'y a pas de disque dans tab_resultDisque
+				if (count($tab_resultDisque) == 0)
 					$this -> index(1, 2);
-				// On revoi sur l'index avec un affichage de 2
+				// On renvoi sur l'index avec un affichage de 2
 				else {
 					// On charge la vue avec un affichage de 1
 					$this -> load -> library('layout');
-					$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', array('resultat' => $tab_result, 'affichage' => 1));
+					$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', array('resultat' => $tab_resultDisque, 'affichage' => 1));
 
 				}
 			}
 
 		}
+
 	}
 
 	//
