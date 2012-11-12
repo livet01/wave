@@ -5,8 +5,7 @@
 	</div>
 	<div id="resultat_recherche">
 	<h1>Ajout d'une fiche</h1>
-	<script>
-		
+	
 	</script>
 	<div id="formulaire">
 		<form  method="post" id="fiche" onsubmit="return verifForm(this)" action="<?php echo site_url("ajoutFiche/envoi"); ?>">
@@ -52,20 +51,20 @@
 
 				<p>
 					<label class="labelGaucheEmplacement" for="emplacement"><i class="icon-hdd"></i> Emplacement </label>
-					<input type="radio" name="emplacement" id="emp1" value="airplay" checked="checked">
-					<label class="check" for="emp1" >AirPlay</label>
+					<input type="radio" name="emplacement" id="emp1" value="airplay" checked="checked"onclick="$('#emb').hide()" >
+					<label class="check" for="emp1" onclick="$('#emb').hide()">AirPlay</label>
 					<br>
-					<input type="radio" name="emplacement" id="emp2" value="nonDiffuse">
-					<label class="check" for="emp2" >Non Diffusé</label>
+					<input type="radio" name="emplacement" id="emp2" value="nonDiffuse" onclick="$('#emb').hide()">
+					<label class="check" for="emp2"onclick="$('#emb').hide()" >Non Diffusé</label>
 					<br>
-					<input type="radio" name="emplacement" id="emp4" value="archivage">
-					<label class="check" for="emp4" >Archivage</label>
+					<input type="radio" name="emplacement" id="emp4" value="archivage" onclick="$('#emb').hide()">
+					<label class="check" for="emp4" onclick="$('#emb').hide()">Archivage</label>
 					<br>
-					<input type="radio" name="emplacement" id="emp3" value="emissionBenevole">
-					<label class="check" for="emp3" >Emission Bénévole</label>
+					<input type="radio" name="emplacement" id="emp3" value="emissionBenevole" onclick="$('#emb').show()">
+					<label class="check" for="emp3" onclick="$('#emb').show()" >Emission Bénévole</label>
 					<br>
 				</p>
-				<p class="emBev">
+				<p id="emb" style="display: none;">
 				<!-- <?php $mesgErreur = form_error('emBev');?>
 				<p class="<?php if(!empty($mesgErreur)) echo "form_error";?>">
 					
@@ -74,10 +73,11 @@
 					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo $mesgErreur; ?></label>
 					<?php } ?> -->
 					
-					<label class="labelGauche" for="emBev"><i class="icon-comments"></i> Emission Bénévole </label>
-					<input type="text" name="emBev" id="emBev" onblur="verifEmBen(this)" value="<?php echo set_value('emBev'); ?>">
-					<?php echo "<br/>".form_error('emBev'); ?>
+					<label class="labelGauche" for="emb"><i class="icon-comments"></i> Emission Bénévole </label>
+					<input type="text" name="emb" id="emb" onblur="verifEmBen(this)" value="<?php echo set_value('emb'); ?>">
+					<?php echo "<br/>".form_error('emb'); ?>
 				</p>
+				
 				<p>
 				<!-- <?php $mesgErreur = form_error('listenBy');?>
 				<p class="<?php if(!empty($mesgErreur)) echo "form_error";?>">
