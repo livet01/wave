@@ -6,6 +6,7 @@ if($affichage != 0)
 		?>
 <div id="cadre2">
 	<div id="selection">
+		<div class="infos-disque">
 		<ul class="icons" id="aff-disque">
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
@@ -13,7 +14,7 @@ if($affichage != 0)
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
-
+		</div>
 		<div id="cadre_action">
 			<!-- 	<a class="btn-large-action-nonActif"><i class="icon-pencil"></i> Modifier la fiche</a> -->
 			<a class="btn-large-action-nonActif"><i class="icon-trash"></i> Supprimer les fiches</a>
@@ -33,7 +34,7 @@ if($affichage != 0)
 				<th><i class="icon-music"></i> Titre</th>
 				<th><i class="icon-group"></i> Artiste</th>
 				<th><i class="icon-home"></i> Label</th>
-				<th class="tab-menu-action" colspan="2">- <i class="icon-cogs"></i> -</th>
+				<th class="tab-menu-action" colspan="2"><i class="icon-cogs"></i></th>
 
 			</tr>
 			<?php
@@ -62,6 +63,7 @@ if($affichage != 0)
 			?>
 <div id="cadre2">
 	<div id="selection">
+		<div class="infos-disque">
 		<ul class="icons">
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
@@ -69,6 +71,7 @@ if($affichage != 0)
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
+		</div>
 		<div id="cadre_action">
 			<!-- 	<a class="btn-large-action-nonActif"><i class="icon-pencil"></i> Modifier la fiche</a> -->
 			<a class="btn-large-action-nonActif"><i class="icon-trash"></i> Supprimer les fiches</a>
@@ -86,6 +89,7 @@ if($affichage != 0)
 			?>
 <div id="cadre2">
 	<div id="selection">
+		<div class="infos-disque">
 		<ul class="icons">
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
@@ -93,6 +97,7 @@ if($affichage != 0)
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
+		</div>
 		<div id="cadre_action">
 			<!-- 	<a class="btn-large-action-nonActif"><i class="icon-pencil"></i> Modifier la fiche</a> -->
 			<a class="btn-large-action-nonActif"><i class="icon-trash"></i> Supprimer les fiches</a>
@@ -112,6 +117,7 @@ else {
 	?>
 <div id="cadre2">
 	<div id="selection">
+		<div class="infos-disque">
 		<ul class="icons" id="aff-disque">
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
@@ -119,6 +125,7 @@ else {
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 		</ul>
+		</div>
 		<div id="cadre_action">
 			<!-- 	<a class="btn-large-action-nonActif"><i class="icon-pencil"></i> Modifier la fiche</a> -->
 			<a class="btn-large-action-nonActif"><i class="icon-trash"></i> Supprimer les fiches</a>
@@ -138,7 +145,7 @@ else {
 				<th><i class="icon-music"></i> Titre</th>
 				<th><i class="icon-group"></i> Artiste</th>
 				<th><i class="icon-home"></i> Label</th>
-				<th class="tab-menu-action" colspan="2">- <i class="icon-cogs"></i> -</th>
+				<th class="tab-menu-action" colspan="2"><i class="icon-cogs"></i></th>
 
 			</tr>
 			<?php
@@ -149,9 +156,9 @@ else {
 					else
 						echo '<tr>';
 					echo '<td class="checkbox"><input type="checkbox" name="select" value="1"></td>';
-					echo '<td class="left"><a href="#" class="ligne-recherche" onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['dis_libelle'].'</a></td>';
-					echo '<td>'.$ligne['art_nom'].'</td>';
-					echo '<td>'.$ligne['per_nom'].'</td>';
+					echo '<td class="left" onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});"><a href="#" class="ligne-recherche">'.$ligne['dis_libelle'].'</a></td>';
+					echo '<td onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['art_nom'].'</td>';
+					echo '<td onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['per_nom'].'</td>';
 					echo '<td><a class="action-tab" href="#"><i class="icon-pencil"></a></td>';
 					echo '<td><a class="action-tab" href="#"><i class="icon-trash"></a></td>';
 					echo '</tr>';

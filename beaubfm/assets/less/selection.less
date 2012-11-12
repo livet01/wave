@@ -1,19 +1,29 @@
 #selection{
     .margin_hauteur(15px);
-    .margin_cote(2px);
+    .margin_cote(0px);
     width: 200px;
     //padding: 20px;
-    border: @border_div1;
-    background: #fff;
-    color: #777;
-    box-shadow: 0 0 0 2px #fff inset;
-    height: 100px;
+    min-height: 100px;
     float:right;
+    padding:0;
 }
 
 #selection > .icons {
-  margin-left: -10px;
+
 }
 #ajaxBox_loader {
   margin-left:57px;
+}
+.infos-disque{
+  width: 200px;
+  min-height: 100px;
+  border: @border_div1;
+  box-shadow: 0 0 0 2px #fff inset;
+  background-color: #fff;
+  color: #777;
+  font-size: 0.9em;
+}
+
+.infos-disque > ul.icons{
+  margin-left: 0px;
 }
