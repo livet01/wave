@@ -69,7 +69,15 @@
 	vertical-align: middle;
 	margin-bottom: 5px;
 	margin-top : -20px;
+	border-top: 1px solid #ccc;
 }
+
+.ui-menu-item:last-child {		
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
+	border-bottom-right-radius: 10px;
+}
+
 .ui-autocomplete-category > i {
 	font-size: 1.5em;
 	padding-right: 10px;
@@ -83,6 +91,12 @@
 	list-style: none;
 	margin-left: 0;
 	border-left: 1px solid #ccc;
+	-webkit-border-bottom-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
 	
 }
 
@@ -177,6 +191,8 @@
 	font-weight: normal;
 	color: #212121;
 }
+
+
 .ui-state-hover a, .ui-state-hover a:hover, .ui-state-hover a:link, .ui-state-hover a:visited{
 	color: #212121;
 	text-decoration: none;
