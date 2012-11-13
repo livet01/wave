@@ -27,7 +27,8 @@ $session_id = $this -> session -> userdata('session_id');
 				   url: "<?php echo site_url(array('connexion', 'ajax')); ?>", // url du fichier php
 				   data: "login="+$("#login").val()+"&password="+$("#password").val(), // données à transmettre
 				   success: function(msg){ // si l'appel a bien fonctionné
-						$("#error").html("").html(msg);
+						<?php if(!empty($session_id)) {?> document.location.href="<?php echo site_url('index');?>" <?php } else { ?>
+							$("#error").html("").html(msg); <?php } ?>
 				   },
 				   complete: function() {
 						$('#spinner').fadeOut();
