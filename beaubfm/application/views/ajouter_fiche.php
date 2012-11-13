@@ -10,29 +10,18 @@
 		<form  method="post" id="fiche" onsubmit="return verifForm(this)" action="<?php echo site_url("ajoutFiche/envoi"); ?>">
 			<div id="gauche">
 				<p>
-				<?php echo $erreur."<br/>"; ?>
-				<!-- <?php $mesgErreur = form_error('titre');?>
-				<p class="<?php if(!empty($mesgErreur)) echo "form_error";?>">
-					
-					<!-- Message d'erreur 
-					<?php if(!empty($mesgErreur)) {?> --> 
-					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo $mesgErreur; ?></label>
-					<!-- <?php } ?> -->
+					<!-- Message d'erreur -->
+					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo form_error('titre'); ?></label>
 					
 					<label class="labelGauche" for="titre"><i class="icon-music"></i> Titre </label>
 					<input type="text" id="titre" name="titre" title="Titre obligatoire" onblur="verifTitre(this)" value="<?php echo set_value('titre'); ?>">
 				</p>
 				<p>
-				<!-- <?php $mesgErreur = form_error('artiste');?>
-				<p class="<?php if(!empty($mesgErreur)) echo "form_error";?>"> -->
-					
 					<!-- Message d'erreur -->
-					<!-- <?php if(!empty($mesgErreur)) {?> -->
-					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo $mesgErreur; ?></label>
-					<!-- <?php } ?> -->
+					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo form_error('artiste'); ?></label>
 					
 					<label class="labelGauche" for="artiste"><i class="icon-group"></i> Artiste</label>
-					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire" onblur="verifArtiste(this)" value="<?php echo set_value('artiste'); ?>" onChange="javascript:document.getElementById('diffuseur').value = document.getElementById('artiste').value">
+					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire" onblur="verifArtiste(this)" value="<?php if(!empty($value)) { echo $value; } ?>" onchange="$('#diffuseur').val($('#artiste').val());" >
 					<input class="check" type="checkbox" id="autoprod" name="autoprod" value="a" onclick="GereControle('autoprod', 'diffuseur', 0)" >
 					<label class="labelCheck" for="autoprod">Auto-Production</label>
 				</p>
@@ -62,50 +51,30 @@
 					<br>
 				</p>
 				<p id="emb" style="display: none;">
-				<!-- <?php $mesgErreur = form_error('emBev');?>
-				<p class="<?php if(!empty($mesgErreur)) echo "form_error";?>">
-					
-					<!-- Message d'erreur 
-					<?php if(!empty($mesgErreur)) {?> --> 
-					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo $mesgErreur; ?></label>
-					<!-- <?php } ?> -->
+					<!-- Message d'erreur -->
+					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo form_error('emBev'); ?></label>
 					
 					<label class="labelGauche" for="emb"><i class="icon-comments"></i> Emission Bénévole </label>
 					<input type="text" name="emb" id="emb" onblur="verifEmBen(this)" value="<?php echo set_value('emb'); ?>">
 				</p>
 				
 				<p>
-				<!-- <?php $mesgErreur = form_error('listenBy');?>
-				<p class="<?php if(!empty($mesgErreur)) echo "form_error";?>">
-					
-					<!-- Message d'erreur 
-					<?php if(!empty($mesgErreur)) {?> -->
-					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo $mesgErreur; ?></label>
-					<!-- <?php } ?> -->
+					<!-- Message d'erreur -->
+					<!-- <label class="mesgErr"><i class="icon-remove-sign"></i><?php echo form_error('listenBy'); ?></label> -->
 					
 					<label class="labelGauche" for="listenBy"><i class="icon-headphones"></i> Ecouté par </label>
 					<input type="text" name="listenBy" readonly="readonly" id="listenBy" onblur="verifDiffuseur(this)" value="admin">
 				</p>
 				<p>			
-				<!-- <?php $mesgErreur = form_error('diffuseur');?>
-				<p class="<?php if(!empty($mesgErreur)) echo "form_error";?>">
-					
-					<!-- Message d'erreur 
-					<?php if(!empty($mesgErreur)) {?> --> 
-					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo $mesgErreur; ?></label>
-					<!-- <?php } ?> -->
+					<!-- Message d'erreur --> 
+					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo form_error('diffuseur'); ?></label>
 					
 					<label class="labelGauche" for="diffuseur"><i class="icon-home"></i> Diffuseur </label>
-					<input type="text" id="diffuseur" name="diffuseur" title="Label obligatoire" onblur="verifDiffuseur(this)" value="">
+					<input type="text" id="diffuseur" name="diffuseur" title="Label obligatoire" onblur="verifDiffuseur(this)" value="<?php if(!empty($value)) { echo $value; } ?>">
 				</p>
 				<p>
-				<!-- <?php $mesgErreur = form_error('email');?>
-				<p class="<?php if(!empty($mesgErreur)) echo "form_error";?>">
-					
-					<!-- Message d'erreur 
-					<?php if(!empty($mesgErreur)) {?> --> 
-					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo $mesgErreur; ?></label>
-					<!-- <?php } ?> -->
+					<!-- Message d'erreur --> 
+					<label class="mesgErr"><i class="icon-remove-sign"></i><?php echo form_error('email'); ?></label>
 					
 					<label class="labelGauche" for="email"><i class="icon-envelope-alt"></i> Email de contact </label>
 					<input type="text" id="email" name="email" title="e-mail obligatoire" onblur="verifMail(this)" value="<?php echo set_value('email'); ?>">

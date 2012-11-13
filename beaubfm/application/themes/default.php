@@ -8,8 +8,9 @@
 		<link href="<?php echo css_url('jquery-ui'); ?>" rel="stylesheet" type="text/css"/>
 		<script type="text/javascript" src="<?php echo js_url('jquery-ui'); ?>"></script>
 		<script type="text/javascript" src="<?php echo js_url('ajoutfiche'); ?>"></script>
-
+		
 		<link rel="stylesheet/less" type="text/css" href="<?php echo less_url('style'); ?>">
+		
 
 		<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>
 		<script type="text/javascript">
@@ -27,7 +28,8 @@
 			});
 		}
 	});
-	
+		
+		//Recherche (autocomplétion)
     	$(document).ready(function() {
 				$("#recherche" ).catcomplete({
 						source: function(request, response) {
@@ -65,6 +67,59 @@
 			{
 			$('#chargement').append('<p>'+ pText +'</p>');
 			}
+			
+			//Recherche Artiste (autocomplétion)
+			$(document).ready(function() {
+				$("#artiste").autocomplete({
+					source : function(request, response) {
+					$.ajax({
+							url : "<?php echo site_url('ajoutFiche/suggestions'); ?>",
+							data : {
+							termArtiste : $("#artiste").val()
+							},
+							dataType : "json",
+							type : "POST",
+							success : function(data) {
+							response(data);
+						}
+					});	
+				},
+				minLength : 1,
+				delay : 0,
+				select : function(event, ui) {
+					if (ui.item) {
+						$('#artiste').val(ui.item.value);
+					}
+					$('#fiche').submit();
+				}
+				});
+			}); 
+			//Recherche Label (autocomplétion)
+			$(document).ready(function() {
+				$("#diffuseur").autocomplete({
+					source : function(request, response) {
+					$.ajax({
+							url : "<?php echo site_url('ajoutFiche/suggestions'); ?>",
+							data : {
+							termDiffuseur : $("#diffuseur").val()
+							},
+							dataType : "json",
+							type : "POST",
+							success : function(data) {
+							response(data);
+						}
+					});	
+				},
+				minLength : 1,
+				delay : 0,
+				select : function(event, ui) {
+					if (ui.item) {
+						$('#diffuseur').val(ui.item.value);
+					}
+					$('#fiche').submit();
+				}
+				});
+			}); 
 		</script>
 		<script type="text/javascript" src="<?php echo js_url('less') ?>"></script>
 		<script>
