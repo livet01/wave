@@ -15,14 +15,24 @@ $session_id = $this -> session -> userdata('session_id');
 		<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>
 		<script type="text/javascript">
 		$(document).ready(function() {
-			$("#connexion").submit( function() {	// à la soumission du formulaire						 
+			//creation de l'image
+			$('<img src="<?php echo img_url('ajax-loader2.gif');?>" id="spinner" />').css('position','absolute').hide().appendTo('body');
+
+			$("#connexion").submit( function() {	// à la soumission du formulaire
+				$('#seconnecter').attr('disabled','disabled');	
+				var position = $("#seconnecter").offset();
+				$('#spinner').css({ top: position.top-3 , left: position.left + $('#seconnecter').width()+20  }).fadeIn();		
 				$.ajax({ // fonction permettant de faire de l'ajax
 				   type: "POST", // methode de transmission des données au fichier php
 				   url: "<?php echo site_url(array('connexion', 'ajax')); ?>", // url du fichier php
 				   data: "login="+$("#login").val()+"&password="+$("#password").val(), // données à transmettre
 				   success: function(msg){ // si l'appel a bien fonctionné
 						$("#error").html("").html(msg);
-				   }
+				   },
+				   complete: function() {
+						$('#spinner').fadeOut();
+						$('#seconnecter').removeAttr('disabled');
+					}
 				});
 				return false; // permet de rester sur la même page à la soumission du formulaire
 			});
@@ -48,7 +58,7 @@ $session_id = $this -> session -> userdata('session_id');
 					<label><i class="icon-key"></i></label>
 					<input id="password" name="password" type="password" size="30" placeholder="Mot de Passe">
 				</p>
-				<input type="submit" class="btn_connexion" name="envoi" value="Se connecter">
+				<input type="submit" class="btn_connexion" name="envoi" value="Se connecter" id="seconnecter">
 			</div>
 			<div id="footer">
 				<img src="<?php echo img_url('valide_html5.png'); ?>" id="valideHtml5" alt=" valide HTML5 " />

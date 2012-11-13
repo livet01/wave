@@ -30,7 +30,6 @@ class Connexion extends CI_Controller {
 	}
 
 	public function ajax() {
-		
 		define('TEST','TEST');
 		
 		$this->verification();
