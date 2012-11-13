@@ -14,7 +14,7 @@ class Personne_model extends CI_Model {
 	}
 	public function ajouterPersonne($id,$data,$cat)
 	{
-		return $this->db->set('per_id', $id)
+		return $this->db->set('per_id', $this->db->insert_id())
 						->set('per_nom', $data)
 						->set('cat_id', $cat)
 						->set('rad_id', 1)

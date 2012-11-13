@@ -14,7 +14,7 @@ class Diffuseur_model extends CI_Model {
 	
 	public function ajouterDiffuseur($data, $per_id)
 	{
-		return $this->db->set('per_id', $data)
+		return $this->db->set('per_id', $this->db->insert_id())
 						->set('dif_mail', $per_id)
 						->insert($this->table);
 	}
