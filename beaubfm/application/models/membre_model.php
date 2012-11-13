@@ -10,6 +10,30 @@ class Membre_model extends CI_Model {
 	function __construct() {
 		parent::__construct();
 	}
+	
+	// Retourne l'id du memnbre
+	public function getIdByLogin($login){
+		return $this->db->select('mem_id')
+						->from($this->vue)
+						->where(array('mem_login'=>$login))
+						->get()
+						->row_array();	
+	}
+	
+	// Retourne les infos du membres
+	public function getMembreById($id){
+		return $this->db->select(array('mem_mdp','mem_login','mem_id','mem_nom','mem_prenom','mem_verrou'))
+						->from($this->vue)
+						->where(array('mem_id'=>$id))
+						->get()
+						->row_array();
+		
+	}	
+	// Modifie le verrou du login
+	public function setVerrouByLogin($login,$verrou){
+		return $this->db->where(array('mem_login'=>$login))
+						->update($this->vue,array('mem_verrou' => $verrou));	
+	}
 		
 	public function readMembre($mem_nom)
 	{
@@ -18,51 +42,5 @@ class Membre_model extends CI_Model {
 						->where('mem_nom',$mem_nom);
 	}
 	
-	public function loginExist($login){
-		return $this->db->select('mem_login')
-						->from($this->vue)
-						->where(array('mem_login'=>$login))
-						->get()
-						->row_array();	
-	}
-	public function loginMdpExist($login,$mdp){
-		return $this->db->select('mem_login')
-						->from($this->vue)
-						->where(array('mem_login'=>$login,'mem_mdp'=>$mdp))
-						->get()
-						->row_array();	
-	}
-	public function getPasswordByLogin($login){
-		return $this->db->select('mem_mdp')
-						->from($this->vue)
-						->where(array('mem_login'=>$login))
-						->get()
-						->row_array();
-		
-	}
-	public function getPrenomNomByLogin($login){
-		return $this->db->select(array('mem_prenom','mem_nom'))
-						->from($this->vue)
-						->where(array('mem_login'=>$login))
-						->get()
-						->row_array();		
-	}
-	public function getIdByLogin($login){
-		return $this->db->select('mem_id')
-						->from($this->vue)
-						->where(array('mem_login'=>$login))
-						->get()
-						->row_array();		
-	}
-	public function getVerrouByLogin($login){
-		return $this->db->select('mem_verrou')
-						->from($this->vue)
-						->where(array('mem_login'=>$login))
-						->get()
-						->row_array();		
-	}
-	public function setVerrouByLogin($login,$verrou){
-		return $this->db->where(array('mem_login'=>$login))
-						->update($this->vue,array('mem_verrou' => $verrou));	
-	}
+
 }

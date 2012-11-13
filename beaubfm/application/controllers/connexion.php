@@ -1,178 +1,229 @@
 <?php
 class Connexion extends CI_Controller {
 
+	private $login;
+	private $mdp;
+	private $msg = array("Veuillez vous authentifier", "warning", "icon-warning-sign");
+	private static $maxConnexion;
+	
 	public function __construct() {
 		parent::__construct();
 		$this -> load -> library('form_validation');
 		$this -> load -> library('securite');
 		$this -> load -> model('log_connexion_model', 'logConnexionManager');
 		$this -> load -> model('parametre_model', 'parametreManager');
-		$this->load->model('personne_model', 'persManager');
+		$this -> load -> model('personne_model', 'persManager');
+		$this -> load -> model('membre_model', 'membreManager');
+		$result = $this -> parametreManager -> select('max_connexion');
+		self::setMaxConnexion($result['param_valeur']);
 		//$this -> output -> enable_profiler(TRUE);
 	}
-
+	
 	public function index() {
-
-		$this -> connexion();
+		
+		define('TEST','TEST');
+		
+		$this->verification();
+		
+		// On fais appelle à la vue
+		$this -> load -> view('connexion/connexion_form.php',array('msg'=>$this->getMsg()));
 	}
 
-	public function maintenance() {
-		$msg = array();
-		$msg[0] = "Actuellement en maintenance, veuillez recommencer plus tard.";
-		$msg[1] = "info";
-		$msg[2] = "icon-info-sign";
-		$data['msg'] = $msg;
-		$this -> load -> view('connexion_form', $data);
+	public function ajax() {
+		
+		define('TEST','TEST');
+		
+		$this->verification();
+		
+		// On fais appelle à la vue
+		$this -> load -> view('connexion/connexion_form_erreur.php',array('msg'=>$this->getMsg()));
 	}
-
-	/*
-
-	 public function _remap($method)
-	 {
-	 $this->maintenance();
-	 }
-
-	 */
-
-	public function connexion($msg = NULL) {
-		$est_co = FALSE;
+	
+	private function verification() {
+		// Si l'utilisateur passe directement dans cette méthode
+		if(!defined('TEST'))
+			redirect('connexion', 'index');
+			
 		// Si l'utilisateur est déja connecté
 		if ($this -> session -> userdata('isLogged') === TRUE) {
 			redirect('index', 'index');
 		}
 		
-		$maintenance = $this->parametreManager->select('maintenance');
-
-		// On test que les champs sont pas false
-		if (!$this -> input -> post('password') && !$this -> input -> post('login')) {
-			$data['msg'] = $msg;
-		} else {
-
+		// Maintenance
+		$maintenance = $this -> parametreManager -> select('maintenance');
+		$est_maintenance = (!empty($maintenance) and $maintenance['param_valeur'] == "1");
+		
+		
+		if($this->input->post('login') != "" or $this->input->post('password') !="") {
 			// Validation formulaire
 			$this -> form_validation -> set_rules('login', 'login', 'trim|required|xss_clean');
 			$this -> form_validation -> set_rules('password', 'password', 'trim|required|xss_clean');
 			$this -> form_validation -> set_message('required', 'Nom d\'utilisateur et mot de passe requis');
-
+			
 			// Champs requis
 			if ($this -> form_validation -> run() == FALSE) {
-				$msg = array();
-				$msg[0] = validation_errors('&nbsp;', '&nbsp;');
-				$msg[1] = "info";
-				$msg[2] = "icon-info-sign";
+				$this -> setMsg(array(validation_errors('&nbsp;', '&nbsp;'), "info", "icon-info-sign"));
 			} else {
-				// Attribution des variables
-				$loginBase = null;
-				$login = $this -> input -> post('login');
-				$password = $this -> input -> post('password');
-
-				// Model
-				$this -> load -> model('membre_model', 'membreManager');
-
-				// On recupère le login si il existe dans la base de donnée
-				$loginBase = $this -> membreManager -> loginExist($login);
-
-				if ($loginBase != null) 
-				{
-					$loginBase = $loginBase['mem_login'];
-
-					$passwordBase = $this -> membreManager -> getPasswordByLogin($login);
-					$passwordBase = $passwordBase['mem_mdp'];
-
-					if (($login == $loginBase)) 
-					{
-						$verrouBase = $this -> membreManager -> getVerrouByLogin($login);
-
-						if ($verrouBase['mem_verrou'] < 10) {
-							if ($this -> securite -> crypt($password) == $passwordBase) {
-								$est_co = TRUE;
-								$this -> session -> set_userdata('isLogged', TRUE);
-								$username = $this -> membreManager -> getPrenomNomByLogin($login);
-								$prenom = $username['mem_prenom'];
-								$nom = $username['mem_nom'];
-								if ($prenom != null && $nom != null) {
-									if ($prenom == $nom) {
-										$username = $nom;
-									} else {
-
-										$username = $prenom . " " . $nom;
-									}
-								} else {
-									if ($prenom == null) {
-										$username = $nom;
-									}
-									if ($nom == null) {
-										$username = $prenom;
-									}
-								}
-								$this -> session -> set_userdata('username', $username);
-							} else {
-								$this -> membreManager -> setVerrouByLogin($login, $verrouBase['mem_verrou'] + 1);
-								$msg = array();
-								$msg[0] = "Nom d'utilisateur ou mot de passe incorrect(s)";
-								$msg[1] = "error";
-								$msg[2] = "icon-exclamation-sign";
-							}
-						} else {
-							$msg = array();
-							$msg[0] = "Votre compte est bloqué, merci de contacter l'administrateur";
-							$msg[1] = "error";
-							$msg[2] = "icon-exclamation-sign";
-
-						}
-					} else {
-						$msg = array();
-						$msg[0] = "Nom d'utilisateur ou mot de passe incorrect(s)";
-						$msg[1] = "error";
-						$msg[2] = "icon-exclamation-sign";
-					}
-				} else {
-					$msg = array();
-					$msg[0] = "Nom d'utilisateur ou mot de passe incorrect(s)";
-					$msg[1] = "error";
-					$msg[2] = "icon-exclamation-sign";
-				}
-
-				if ($this -> membreManager -> getIdByLogin($login) == null) {
-					$per_id = NULL;
-				} else {
-					$per_id = $this -> membreManager -> getIdByLogin($login);
-				}
-				$this -> logConnexionManager -> insert(array('reussi' => $est_co, 'ip_adresse' => $this -> input -> ip_address(), 'user_agent' => $this -> input -> user_agent(), 'login' => $login, 'per_id' => $per_id['mem_id']));
-
+				
+				// On insert les logins et mot de passe :
+				$this->setLogin($this->input->post('login'));
+				$this->setMdp($this->input->post('password')); // Mdp crypter dans le setter
+				
+				// On lance la connexion
+				$this -> connexion($est_maintenance);
 			}
-
-		}
+		}	
 		
-		if(!empty($maintenance) and $maintenance['param_valeur'] == "1" ) {
-			$data = array();
-			$msg[0] = "Le site est actuellement en maintenance, réessayez plus tard.";
-			$msg[1] = "info";
-			$msg[2] = "icon-info-sign";
-			$data['msg'] = $msg;
-			if ($est_co) 
-			{
-				$cat_id = $this->persManager->readPersonne('cat_id',array('per_id'=>$per_id['mem_id']));
-				if($cat_id['cat_id'] == 1 ) {
-					redirect('index', 'index');
+		// Dans le cas d'une maintenance, on affiche le message :
+		if ($est_maintenance) {
+			
+			// On enregistre le message à afficher 
+			$this->setMsg(array("Le site est actuellement en maintenance, réessayez plus tard.","info","icon-info-sign"));
+			
+		} 
+		
+	}
+
+
+	public static function setMaxConnexion($maxConnexion) {
+		self::$maxConnexion = $maxConnexion;
+	}
+	
+	public static function getMaxConnexion() {
+		return self::$maxConnexion;
+	}
+	
+	public function setLogin($login) {
+		$this -> login = $login;
+	}
+
+	public function setMdp($mdp) {
+		$this -> mdp = $this -> securite -> crypt($mdp);
+	}
+
+	public function setMsg($msg) {
+		$this -> msg = $msg;
+	}
+
+	public function getLogin() {
+		return $this -> login;
+	}
+
+	public function getMdp() {
+		return $this -> mdp;
+	}
+
+	public function getMsg() {
+		return $this -> msg;
+	}
+
+	// La méthode connexion requière d'être appellé par une autre méthode !
+	public function connexion($est_maintenance=FALSE) {
+		// Si l'utilisateur passe directement dans cette méthode
+		if(!defined('TEST'))
+			redirect('connexion', 'index');
+		
+		$est_co = FALSE;
+
+		// Initialisation
+		$loginBase = null;
+
+		// On recupère le login si il existe dans la base de donnée
+		$id = $this -> membreManager -> getIdByLogin($this->login);
+
+		if (isset($id) and isset($id['mem_id'])) { // Si le membre existe dans la base de donnée
+			// Suppression du tableau renvoyé par la bd
+			$id = $id['mem_id'];
+			
+			// Prend les infos du membre en bdd
+			$membre = $this -> membreManager -> getMembreById($id);
+			$passwordBase = $membre['mem_mdp'];
+			$verrouBase = $membre['mem_verrou'];
+			
+			// Test Verrou
+			if ($verrouBase < self::getMaxConnexion()) { // Si le verrou est inférieur au nombre limite de connexion possible
+				
+				// Test mot de passe
+				if ($this -> mdp == $passwordBase) { // Si mdp correcte
+						
+						// L'utilisateur est t'il administrateur ?
+						$cat_id = $this -> persManager -> readPersonne('cat_id', array('per_id' => $id));
+						$est_admin = ($cat_id['cat_id'] == 1);
+						
+						// Si la maintenance est déactivé ou si la maintenance est activé et que c'est un admin
+						if (!$est_maintenance or ($est_maintenance and $est_admin)) {
+			
+							// Booléen de connexion a true
+							$est_co = TRUE;
+							
+							// On enregistre en session qu'il est loggé
+							$this -> session -> set_userdata('isLogged', TRUE);
+							
+							$prenom = $membre['mem_prenom'];
+							$nom = $membre['mem_nom'];
+							
+							// Attribution du nom et prénom a afficher 
+							if (isset($prenom) && isset($nom)) {
+								if ($prenom == $nom) {
+									$username = $nom;
+								} else {
+									$username = $prenom . " " . $nom;
+								}
+							} else {
+								if ($prenom == null) {
+									$username = $nom;
+								}
+								if ($nom == null) {
+									$username = $prenom;
+								}
+							}
+							
+							// Enregistrement du nom à afficher en base
+							$this -> session -> set_userdata('username', $username);
+							
+							// Enregistrement de l'id en base
+							$this -> session -> set_userdata('mem_id', $id);
+							
+							// On place le verrou à 0
+							$this -> membreManager -> setVerrouByLogin($membre['mem_login'], 0);
+						}
+						else { // La maintenance est activé
+						
+							// On enregistre le message à afficher 
+							$this->setMsg(array("Le site est actuellement en maintenance, réessayez plus tard.","info","icon-info-sign"));
+			
+						}
+				} else { // Dans le cas d'un mdp incorecte
+					
+					// On incrémente le verrou
+					$this -> membreManager -> setVerrouByLogin($membre['mem_login'], $verrouBase + 1);
+					
+					// On enregistre le message à afficher 
+					$this->setMsg(array("Nom d'utilisateur ou mot de passe incorrect(s)","error","icon-exclamation-sign"));
 				}
-				else{
-					if ($this -> session -> userdata('isLogged') === TRUE) {
-						$this -> session -> sess_destroy();
-					}
-				}
+				
+			} else { // Dans le cas d'un compte bloqué
+				
+				// On enregistre le message à afficher 
+				$this->setMsg(array("Votre compte est bloqué, contacté l'administrateur","error","icon-exclamation-sign"));
 			}
 			
-			$this -> load -> view('connexion_form', $data);
+			// Enregistrement d'un log de connexion
+			$this -> logConnexionManager -> insert(array('reussi' => $est_co, 'ip_adresse' => $this -> input -> ip_address(), 'user_agent' => $this -> input -> user_agent(), 'login' => $this->login, 'per_id' => $id));
+			
+		} else { // Dans le cas d'un login innexistant
+			
+			// On enregistre le message à afficher 
+			$this->setMsg(array("Nom d'utilisateur ou mot de passe incorrect(s)","error","icon-exclamation-sign"));
+			
+			// Enregistrement d'un log de connexion
+			$this -> logConnexionManager -> insert(array('reussi' => $est_co, 'ip_adresse' => $this -> input -> ip_address(), 'user_agent' => $this -> input -> user_agent(), 'login' => $this->login, 'per_id' => NULL));
+			
 		}
-		else
-		{
-			if (!$est_co) {
-				$data['msg'] = $msg;
-				$this -> load -> view('connexion_form', $data);
-			} else {
-				redirect('index', 'index');
-			}
-		}		
+		// Si la connexion s'est bien passé -> page d'accueil
+		if ($est_co) {
+			redirect('index', 'index');
+		}
 	}
 
 	public function deconnexion() {
