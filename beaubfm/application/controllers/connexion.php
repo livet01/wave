@@ -23,22 +23,32 @@ class Connexion extends CI_Controller {
 		
 		define('TEST','TEST');
 		
-		$this->verification();
-		
-		// On fais appelle à la vue
-		$this -> load -> view('connexion/connexion_form.php',array('msg'=>$this->getMsg()));
+		if($this->verification()) {
+			// Si la connexion s'est bien passé -> page d'accueil
+			redirect('index', 'index');
+		}
+		else {
+			// On fais appelle à la vue
+			$this -> load -> view('connexion/connexion_form.php',array('msg'=>$this->getMsg()));
+		}
 	}
 
 	public function ajax() {
 		define('TEST','TEST');
 		
-		$this->verification();
-		
-		// On fais appelle à la vue
-		$this -> load -> view('connexion/connexion_form_erreur.php',array('msg'=>$this->getMsg()));
+		if($this->verification()) {
+			// Si la connexion s'est bien passé -> page d'accueil
+			echo "1";
+		}
+		else {
+			// On fais appelle à la vue
+			$this -> load -> view('connexion/connexion_form_erreur.php',array('msg'=>$this->getMsg()));
+		}
 	}
 	
 	private function verification() {
+		$est_co = false;
+		
 		// Si l'utilisateur passe directement dans cette méthode
 		if(!defined('TEST'))
 			redirect('connexion', 'index');
@@ -69,7 +79,7 @@ class Connexion extends CI_Controller {
 				$this->setMdp($this->input->post('password')); // Mdp crypter dans le setter
 				
 				// On lance la connexion
-				$this -> connexion($est_maintenance);
+				$est_co = $this -> connexion($est_maintenance);
 			}
 		}	
 		
@@ -80,7 +90,7 @@ class Connexion extends CI_Controller {
 			$this->setMsg(array("Le site est actuellement en maintenance, réessayez plus tard.","info","icon-info-sign"));
 			
 		} 
-		
+		return $est_co;
 	}
 
 
@@ -219,10 +229,8 @@ class Connexion extends CI_Controller {
 			$this -> logConnexionManager -> insert(array('reussi' => $est_co, 'ip_adresse' => $this -> input -> ip_address(), 'user_agent' => $this -> input -> user_agent(), 'login' => $this->login, 'per_id' => NULL));
 			
 		}
-		// Si la connexion s'est bien passé -> page d'accueil
-		if ($est_co) {
-			redirect('index', 'index');
-		}
+
+		return $est_co;
 	}
 
 	public function deconnexion() {
