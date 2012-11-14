@@ -65,7 +65,7 @@ class AjoutFiche extends MY_Controller {
 		$this->form_validation->set_rules('email', '"Email"', 'trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
 		
 		$artId = $this->persManager->readArtiste('art_id', array('art_nom' => $this->input->post('artiste')));
-		var_dump($artId);
+		//var_dump($artId);
 		if(!empty($artId))	
 			$disNom = $this->disqueManager->readDisque('dis_id', array('dis_libelle' => $this->input->post('titre'), 'per_id_artiste' => $artId['art_id']));
 		

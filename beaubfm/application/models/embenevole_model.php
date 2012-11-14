@@ -5,7 +5,7 @@
  */
 class Embenevole_model extends CI_Model {
 	
-	protected $table = 'emBenevole';
+	protected $table = 'EmBenevole';
 	
 	function __construct() {
 		parent::__construct();
