@@ -40,28 +40,32 @@ class AjoutFiche extends MY_Controller {
 		
 		//Création de existsEmBev pour 
 		$existsEmBev = "nonvide";
-		
+		$data['autoprod'] = ((!$this->input->post('autoprod')) ? "0" : "1");
+		$data['envoiMail'] = (($this->input->post('envoiMail') === "0") ? "1" : "0");
 		//
 		// <-------- Début des contrôles des champs  ----------->
 		//
-		$this->form_validation->set_rules('titre', '"Titre"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_]*$"]|encode_php_tags|xss_clean');
-		$this->form_validation->set_rules('artiste', '"Artiste"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_]*$"]|encode_php_tags|xss_clean');
+		$this->form_validation->set_rules('titre', '"Titre"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		$this->form_validation->set_rules('artiste', '"Artiste"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 		
 		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
 		$emBev = $this->input->post('emplacement');
 		if ($emBev == "emissionBenevole"){
-			$this->form_validation->set_rules('emBev', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_]*$"]|encode_php_tags|xss_clean');
+			$this->form_validation->set_rules('emBev', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 			$existsEmBev = $this->emBevManager->readEmission('emb_id', array('emb_libelle' => $this->input->post('emBev')));
 		}
 		else
 			$this->form_validation->set_rules('emBev', '"Emission"', 'trim|min_length[0]|max_length[52]|alpha_dash|encode_php_tags|xss_clean');
 		
-		$this->form_validation->set_rules('listenBy', '"Ecouté par"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_]*$"]|encode_php_tags|xss_clean');
+		$this->form_validation->set_rules('listenBy', '"Ecouté par"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 		
 		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
 		$existslisten = $this->persManager->readPersonne('per_id', array('per_nom' => $this->input->post('listenBy'), 'cat_id' => 2));
 		
-		$this->form_validation->set_rules('diffuseur', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_]*$"]|encode_php_tags|xss_clean');
+		if(!$data['autoprod'])
+			$this->form_validation->set_rules('diffuseur', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');	
+		else
+			$this->form_validation->set_rules('diffuseur', '"Diffuseur"', 'trim||min_length[0]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 		$this->form_validation->set_rules('email', '"Email"', 'trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
 		
 		$artId = $this->persManager->readArtiste('art_id', array('art_nom' => $this->input->post('artiste')));
@@ -91,8 +95,7 @@ class AjoutFiche extends MY_Controller {
 				$data['emBev'] = $existsEmBev['emb_id'];
 			
 			$data['listenBy'] = $existslisten['per_id'];
-			$data['autoprod'] = ((!$this->input->post('autoprod')) ? "0" : "1");
-			$data['envoiMail'] = (($this->input->post('envoiMail') === "0") ? "1" : "0");
+			
 			
 			// Vérifiaction de l'éxistance de l'artiste
 			

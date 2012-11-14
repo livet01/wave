@@ -9,6 +9,7 @@
 	<div id="formulaire">
 		<form  method="post" id="fiche" onsubmit="return verifForm(this)" action="<?php echo site_url("ajoutFiche/envoi"); ?>">
 			<div id="gauche">
+				<?php echo $erreur; ?>
 				<p>
 					<!-- Message d'erreur -->
 					<label class="mesgErr"><i class=<?php if (form_error('titre')) echo "icon-remove-sign";?>></i><?php echo form_error('titre'); ?></label>
