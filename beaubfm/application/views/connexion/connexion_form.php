@@ -17,6 +17,7 @@ if (!defined('BASEPATH'))
 		$(document).ready(function() {
 			//creation de l'image
 			$('<img src="<?php echo img_url('ajax-loader2.gif');?>" id="spinner" />').css('position','absolute').hide().appendTo('body');
+			
 
 			$("#connexion").submit( function() {	// à la soumission du formulaire
 				$('#seconnecter').attr('disabled','disabled');	
@@ -31,7 +32,9 @@ if (!defined('BASEPATH'))
 							document.location.href="<?php echo site_url('index');?>"
 						}
 						else {
-							$("#error").html("").html(msg); 
+							$("#password").val("");
+							$("#error").html("").html(msg);
+							$("#login").val("").focus(); 
 						}
 				   },
 				   complete: function() {
@@ -55,12 +58,12 @@ if (!defined('BASEPATH'))
 			<div id="cadre_authentification">
 				<p>
 					<!-- Nom de LOGIN -->
-					<label><i class="icon-user"></i></label>
+					<label for="login"><i class="icon-user"></i></label>
 					<input id="login" name="login" type="text" size="30" placeholder="Nom d'utilisateur">
 				</p>
 				<p>
 					<!-- PASSWORD -->
-					<label><i class="icon-key"></i></label>
+					<label for"password"><i class="icon-key"></i></label>
 					<input id="password" name="password" type="password" size="30" placeholder="Mot de Passe">
 				</p>
 				<input type="submit" class="btn_connexion" name="envoi" value="Se connecter" id="seconnecter">
