@@ -69,5 +69,9 @@ class Personne_model extends CI_Model {
 	                              ->count_all_results();
 	}
 	
+	public function last_id()
+	{
+		return $this->db->count_all_results($this->table)+1000;
+	}
 	
 }

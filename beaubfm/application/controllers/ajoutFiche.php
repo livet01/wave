@@ -102,7 +102,7 @@ class AjoutFiche extends MY_Controller {
 			
 			$result_1 = FALSE;
 			if (empty($artId)){
-				$artId = (string)(rand(31, 99)+rand(800, 1000));
+				$artId = $difId = $this->persManager->last_id();
 				$result_1 = $this->persManager->ajouterpersonne($artId, $data['artiste'],($data['autoprod']) ? 5 : 3);
 			}
 			else{
@@ -120,15 +120,21 @@ class AjoutFiche extends MY_Controller {
 			$result_3 = FALSE;
 			$result_4 = FALSE;
 			
-			if (empty($difId)){	
-				$difId = (string)(rand(31, 99)+rand(800, 1000));
+			
+			
+			if (empty($difId)){
+				//var_dump($difId);	
+				$difId = $this->persManager->last_id();
+				//var_dump($difId);
 				if(!$data['autoprod']){
 					// Ajout du diffuseur
 					$result_2 = $this->persManager->ajouterpersonne($difId, $data['diffuseur'], 4);
 				}
 				else
 					$result_2 = TRUE;
+				
 				// Ajout du Diffuseur ou de l'Artiste s'il est autoproducteur en tant qu'Utilisateur
+				//var_dump($artId);
 				$result_3 = $this->utiManager->ajouterUtil((($data['autoprod']) ? $artId : $difId), "",(($data['autoprod']) ? $data['artiste'] : $data['diffuseur']), "lapin");
 				$result_4 = $this->diffManager->ajouterDiffuseur((($data['autoprod']) ? $artId : $difId), $data['email']);
 			}
