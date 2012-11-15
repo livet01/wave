@@ -12,7 +12,7 @@ class AjoutFiche extends MY_Controller {
 		$this->formulaire();
 	}
 	
-	public function formulaire($data = array('erreur' => "")) {
+	public function formulaire($data = array('erreur' => "", 'reussi' => "")) {
 		
 		// Helper	
 		$this->load->helper('assets');
@@ -31,7 +31,6 @@ class AjoutFiche extends MY_Controller {
 		
 		//	Chargement de la bibliothèque
 		$this->load->library('form_validation');
-		
 		//Chargement models
 		$this->load->model('personne_model', 'persManager');
 		$this->load->model('embenevole_model', 'emBevManager');
@@ -89,7 +88,9 @@ class AjoutFiche extends MY_Controller {
 			$data = $this->input->post();
 			// Défintion de l'Id
 			$data['id'] = (string)(rand(31, 99)+rand(800, 1000));
-			
+			$data['autoprod'] = ((!$this->input->post('autoprod')) ? "0" : "1");
+			$data['envoiMail'] = (($this->input->post('envoiMail') === "0") ? "1" : "0");
+		
 			$data['emplacement'] = 1;
 			if($existsEmBev != "nonvide")
 				$data['emBev'] = $existsEmBev['emb_id'];
@@ -145,14 +146,14 @@ class AjoutFiche extends MY_Controller {
 			if ($result_1 && $result_2 && $result_3) {
 
 				$result = $this -> disqueManager -> ajouterDisque($data);
-				$this -> formulaire(array("erreur" => "Ajout réussi"));
+				$this -> formulaire(array("reussi" => "Ajout réussi", "erreur" => ""));
 			} else {
-				$this -> formulaire(array("erreur" => "Echec de l'ajout"));
+				$this -> formulaire(array("erreur" => "Echec de l'ajout", "reussi" => ""));
 			}
 		} else {
 			//	Le formulaire est invalide ou vide
 			if (!empty($disNom))
-				$this -> formulaire(array("erreur" => "Echec de l'ajout"));
+				$this -> formulaire(array("erreur" => "Echec de l'ajout", "reussi" => ""));
 			else
 				$this -> formulaire();
 
