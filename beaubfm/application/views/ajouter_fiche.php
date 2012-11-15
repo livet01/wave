@@ -9,6 +9,7 @@
 	<div id="formulaire">
 		<form  method="post" id="fiche" onsubmit="return verifForm(this)" action="<?php echo site_url("ajoutFiche/envoi"); ?>">
 			<div id="gauche">
+				<?php echo $reussi; ?>
 				<?php echo $erreur; ?>
 				<p>
 					<!-- Message d'erreur -->
@@ -22,7 +23,7 @@
 					<label class="mesgErr"><i class=<?php if (form_error('artiste')) echo "icon-remove-sign";?>></i><?php echo form_error('artiste'); ?></label>
 					
 					<label class="labelGauche" for="artiste"><i class="icon-group"></i> Artiste</label>
-					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire" onblur="verifArtiste(this)" value="<?php if(!empty($value)) { echo $value; } ?>" onchange="$('#diffuseur').val($('#artiste').val());" >
+					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire" onblur="verifArtiste(this)" value="<?php if(!empty($value)) { echo $value; } ?>" > <!-- onchange="$('#diffuseur').val($('#artiste').val());" --> 
 					<input class="check" type="checkbox" id="autoprod" name="autoprod" value="a" onclick="GereControle('autoprod', 'diffuseur', 0)" >
 					<label class="labelCheck" for="autoprod">Auto-Production</label>
 				</p>
