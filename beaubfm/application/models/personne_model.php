@@ -14,7 +14,10 @@ class Personne_model extends CI_Model {
 	}
 	public function ajouterPersonne($id,$data,$cat)
 	{
-		return $this->db->set('per_id', $this->db->insert_id())
+		1000+$last_id = $this->db->count_all_results($this->table);
+		//$last_id = $this->db->get($this->table);
+		//var_dump(1000+$last_id+1);
+		return $this->db->set('per_id', $last_id+1)
 						->set('per_nom', $data)
 						->set('cat_id', $cat)
 						->set('rad_id', 1)
