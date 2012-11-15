@@ -15,8 +15,8 @@ class Disque_model extends CI_Model {
 	public function ajouterDisque($data)
 	{
 		if(!empty($data)){
-			1000+$last_id = $this->db->count_all_results($this->table);
-			return $this->db->set('dis_id', $last_id+21)
+			$last_id = $this->db->count_all_results($this->table);
+			return $this->db->set('dis_id', $last_id+1+1000 )
 					->set('dis_libelle', $data['titre'])
 					->set('dis_format', $data['format'])
 					->set('uti_id_ecoute', $data['listenBy'])
