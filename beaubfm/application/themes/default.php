@@ -29,7 +29,7 @@
 		}
 	});
 		
-		//Recherche (autocomplétion)
+		//Recherche (autocomplï¿½tion)
     	$(document).ready(function() {
 				$("#recherche" ).catcomplete({
 						source: function(request, response) {
@@ -68,7 +68,7 @@
 			$('#chargement').append('<p>'+ pText +'</p>');
 			}
 			
-			//Recherche Artiste (autocomplétion)
+			//Recherche Artiste (autocomplï¿½tion)
 			$(document).ready(function() {
 				$("#artiste").autocomplete({
 					source : function(request, response) {
@@ -94,7 +94,7 @@
 				}
 				});
 			}); 
-			//Recherche Label (autocomplétion)
+			//Recherche Label (autocomplï¿½tion)
 			$(document).ready(function() {
 				$("#diffuseur").autocomplete({
 					source : function(request, response) {
@@ -135,11 +135,18 @@
 		-->
 	</head>
 	<body>
-		<div id="main_page">
-
-			<?php echo $output; ?>
-			
+		<div id="main_menu">
+		  
 		</div>
+		
+		<div id="main_page">
+		<div id="page">
+		  <?php echo $output; ?>
+		</div>
+			
+			
+		
+		
 		<div id="footer">
 			<img src="<?php echo img_url('valide_html5.png'); ?>" id="valideHtml5" alt=" valide HTML5 " />
 			<img src="<?php echo img_url('valide_css.png'); ?>" id="valideCSS"  alt=" valide CSS " />
@@ -147,6 +154,6 @@
 				Page gÃ©nÃ©rÃ©e en <strong>{elapsed_time}</strong> seconde(s)
 			</p>
 		</div>
-
-	</body>
+		</div>
+</body>
 </html>

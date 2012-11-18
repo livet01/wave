@@ -77,7 +77,7 @@ class Index extends MY_Controller {
 		$data['affichage'] = $affichage;
 
 		// Chargement de la vue
-		$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', $data);
+		$this -> layout -> views('menu_principal') -> view('index/barre_recherche', array('value' => $this -> input -> post('recherche')));
 	}
 
 	//
