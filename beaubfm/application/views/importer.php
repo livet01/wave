@@ -6,7 +6,6 @@
 	<div id="resultat_recherche">
 		<div id="cadre_importation">
 			<div class="cadre_selection">
-				<?php if(isset($error)) echo $error; ?>
 				<!-- Sélection de fichiers -->
 				<h1>Importation</h1>
 				<form  method="post" name="importer" id="importer" action="<?php echo site_url("importerFiche/envoi"); ?>" enctype="multipart/form-data">
@@ -17,6 +16,7 @@
 					</p>
 				</form>
 			</div>
+			<?php if(isset($msgError)) echo $msgError; ?>
 		</div>
 	</div>
 </div>
