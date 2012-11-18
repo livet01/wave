@@ -1,0 +1,39 @@
+Entities\Personne:
+    type: entity
+    table: Personne
+    fields:
+        perId:
+            id: true
+            type: string
+            length: 8
+            fixed: false
+            nullable: false
+            column: per_id
+            generator:
+                strategy: IDENTITY
+        perNom:
+            type: string
+            length: 45
+            fixed: false
+            nullable: false
+            column: per_nom
+    manyToOne:
+        cat:
+            targetEntity: Categorie
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                cat_id:
+                    referencedColumnName: cat_id
+            orphanRemoval: false
+        rad:
+            targetEntity: Radio
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                rad_id:
+                    referencedColumnName: rad_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

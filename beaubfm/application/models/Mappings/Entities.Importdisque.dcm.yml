@@ -1,0 +1,80 @@
+Entities\Importdisque:
+    type: entity
+    table: ImportDisque
+    fields:
+        impId:
+            id: true
+            type: smallint
+            nullable: false
+            column: imp_id
+            generator:
+                strategy: IDENTITY
+        impLibelle:
+            type: string
+            length: 100
+            fixed: false
+            nullable: true
+            column: imp_libelle
+        impFormat:
+            type: string
+            length: 100
+            fixed: false
+            nullable: true
+            column: imp_format
+        impEcoute:
+            type: string
+            length: 100
+            fixed: false
+            nullable: true
+            column: imp_ecoute
+        impDateAjout:
+            type: string
+            length: 100
+            fixed: false
+            nullable: true
+            column: imp_date_ajout
+        impArtiste:
+            type: string
+            length: 100
+            fixed: false
+            nullable: true
+            column: imp_artiste
+        impDiffuseur:
+            type: string
+            length: 100
+            fixed: false
+            nullable: true
+            column: imp_diffuseur
+        impEmailDiffuseur:
+            type: string
+            length: 100
+            fixed: false
+            nullable: true
+            column: imp_email_diffuseur
+        impEnvoiOk:
+            type: string
+            length: 100
+            fixed: false
+            nullable: true
+            column: imp_envoi_ok
+        impEmplacement:
+            type: string
+            length: 100
+            fixed: false
+            nullable: true
+            column: imp_emplacement
+        impDateImport:
+            type: date
+            nullable: false
+            column: imp_date_import
+    manyToOne:
+        perImport:
+            targetEntity: Utilisateur
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                per_id_import:
+                    referencedColumnName: per_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,52 @@
+Entities\Role:
+    type: entity
+    table: Role
+    fields:
+        rolId:
+            id: true
+            type: smallint
+            nullable: false
+            column: rol_id
+            generator:
+                strategy: IDENTITY
+        rolAjouterDisque:
+            type: boolean
+            nullable: false
+            column: rol_ajouter_disque
+        rolModifierDisque:
+            type: boolean
+            nullable: false
+            column: rol_modifier_disque
+        rolSupprimerDisque:
+            type: boolean
+            nullable: false
+            column: rol_supprimer_disque
+        rolLireFiche:
+            type: boolean
+            nullable: false
+            column: rol_lire_fiche
+        rolRechercher:
+            type: boolean
+            nullable: false
+            column: rol_rechercher
+        rolImporter:
+            type: boolean
+            nullable: false
+            column: rol_importer
+        rolAjouterPret:
+            type: boolean
+            nullable: false
+            column: rol_ajouter_pret
+        rolModifierPret:
+            type: boolean
+            nullable: false
+            column: rol_modifier_pret
+        rolSupprimerPret:
+            type: boolean
+            nullable: false
+            column: rol_supprimer_pret
+        rolLirePret:
+            type: boolean
+            nullable: false
+            column: rol_lire_pret
+    lifecycleCallbacks: {  }

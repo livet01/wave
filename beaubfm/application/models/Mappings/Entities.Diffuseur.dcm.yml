@@ -1,0 +1,12 @@
+Entities\Diffuseur:
+    type: entity
+    table: Diffuseur
+    fields:
+        difMail:
+            type: string
+            length: 60
+            fixed: false
+            nullable: true
+            column: dif_mail
+
+    lifecycleCallbacks: {  }

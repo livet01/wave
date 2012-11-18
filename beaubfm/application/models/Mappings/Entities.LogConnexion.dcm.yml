@@ -1,0 +1,41 @@
+Entities\LogConnexion:
+    type: entity
+    table: log_connexion
+    fields:
+        date:
+            id: true
+            type: datetime
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        ipAddress:
+            type: string
+            length: 16
+            fixed: false
+            nullable: false
+            column: ip_address
+        userAgent:
+            type: string
+            length: 120
+            fixed: false
+            nullable: false
+            column: user_agent
+        login:
+            type: string
+            length: 45
+            fixed: false
+            nullable: false
+        reussi:
+            type: boolean
+            nullable: false
+    manyToOne:
+        per:
+            targetEntity: Utilisateur
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                per_id:
+                    referencedColumnName: per_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
