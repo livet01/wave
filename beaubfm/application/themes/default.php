@@ -135,18 +135,17 @@
 		-->
 	</head>
 	<body>
-		<div id="main_menu">
-		  
+		<div id="mainheader">
+		  <img src="<?php echo img_url('logo-2.png'); ?>" id="logo" alt="logo " />
 		</div>
 		
 		<div id="main_page">
-		<div id="page">
+		
 		  <?php echo $output; ?>
 		</div>
 			
 			
-		
-		
+
 		<div id="footer">
 			<img src="<?php echo img_url('valide_html5.png'); ?>" id="valideHtml5" alt=" valide HTML5 " />
 			<img src="<?php echo img_url('valide_css.png'); ?>" id="valideCSS"  alt=" valide CSS " />
@@ -154,6 +153,6 @@
 				Page générée en <strong>{elapsed_time}</strong> seconde(s)
 			</p>
 		</div>
-		</div>
+		
 </body>
 </html>
