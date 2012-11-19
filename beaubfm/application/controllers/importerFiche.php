@@ -5,6 +5,7 @@ class ImporterFiche extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this -> load -> library('upload');
+		$this -> load -> library('excel');
 	}
 	
 	public function setMsgError($msgError) {
