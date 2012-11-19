@@ -135,8 +135,9 @@
 		-->
 	</head>
 	<body>
-		<div id="mainheader">
-		  <img src="<?php echo img_url('logo-2.png'); ?>" id="logo" alt="logo " />
+		<div id="header" ">
+		<div id="mainheader" class="b<?php echo rand(1, 5);?>">
+		  <img src="<?php echo img_url('logo.png'); ?>" id="logo" alt="logo " />
 		</div>
 		
 		<div id="main_page">
