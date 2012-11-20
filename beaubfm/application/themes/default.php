@@ -29,7 +29,7 @@
 		}
 	});
 		
-		//Recherche (autocomplï¿½tion)
+		//Recherche (autocomplétion)
     	$(document).ready(function() {
 				$("#recherche" ).catcomplete({
 						source: function(request, response) {
@@ -68,7 +68,7 @@
 			$('#chargement').append('<p>'+ pText +'</p>');
 			}
 			
-			//Recherche Artiste (autocomplï¿½tion)
+			//Recherche Artiste (autocomplétion)
 			$(document).ready(function() {
 				$("#artiste").autocomplete({
 					source : function(request, response) {
@@ -94,7 +94,7 @@
 				}
 				});
 			}); 
-			//Recherche Label (autocomplï¿½tion)
+			//Recherche Label (autocomplétion)
 			$(document).ready(function() {
 				$("#diffuseur").autocomplete({
 					source : function(request, response) {
@@ -135,18 +135,11 @@
 		-->
 	</head>
 	<body>
-		<div id="header" ">
-		<div id="mainheader" class="b<?php echo rand(1, 5);?>">
-		  <img src="<?php echo img_url('logo.png'); ?>" id="logo" alt="logo " />
-		</div>
-		
 		<div id="main_page">
-		
-		  <?php echo $output; ?>
-		</div>
-			
-			
 
+			<?php echo $output; ?>
+			
+		</div>
 		<div id="footer">
 			<img src="<?php echo img_url('valide_html5.png'); ?>" id="valideHtml5" alt=" valide HTML5 " />
 			<img src="<?php echo img_url('valide_css.png'); ?>" id="valideCSS"  alt=" valide CSS " />
@@ -154,6 +147,6 @@
 				Page gÃ©nÃ©rÃ©e en <strong>{elapsed_time}</strong> seconde(s)
 			</p>
 		</div>
-		
-</body>
+
+	</body>
 </html>
