@@ -9,7 +9,7 @@
 		<script type="text/javascript" src="<?php echo js_url('jquery-ui'); ?>"></script>
 		<script type="text/javascript" src="<?php echo js_url('ajoutfiche'); ?>"></script>
 		
-		<link rel="stylesheet/css" type="text/css" href="<?php echo css_url('style1'); ?>">
+		<link rel="stylesheet/css" type="text/css" href="<?php echo css_url('style'); ?>">
 		
 
 		<!--<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>-->
@@ -29,7 +29,7 @@
 		}
 	});
 		
-		//Recherche (autocomplétion)
+		//Recherche (autocomplï¿½tion)
     	$(document).ready(function() {
 				$("#recherche" ).catcomplete({
 						source: function(request, response) {
@@ -68,7 +68,7 @@
 			$('#chargement').append('<p>'+ pText +'</p>');
 			}
 			
-			//Recherche Artiste (autocomplétion)
+			//Recherche Artiste (autocomplï¿½tion)
 			$(document).ready(function() {
 				$("#artiste").autocomplete({
 					source : function(request, response) {
@@ -94,7 +94,7 @@
 				}
 				});
 			}); 
-			//Recherche Label (autocomplétion)
+			//Recherche Label (autocomplï¿½tion)
 			$(document).ready(function() {
 				$("#diffuseur").autocomplete({
 					source : function(request, response) {
