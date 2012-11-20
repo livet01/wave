@@ -8,7 +8,7 @@ if (!defined('BASEPATH'))
 	<head>
 		<title>Authentification</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this -> config -> item('charset'); ?>" />
-		<link rel="stylesheet/css" type="text/css" href="<?php echo css_url('style1'); ?>">
+		<link rel="stylesheet/less" type="text/css" href="<?php echo less_url('style'); ?>">
 
 		<script src="<?php echo js_url('jquery-1.8.2'); ?>"></script>
 		<script type="text/javascript" src="<?php echo js_url('jquery-ui'); ?>"></script>
