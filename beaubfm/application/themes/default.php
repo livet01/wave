@@ -9,10 +9,10 @@
 		<script type="text/javascript" src="<?php echo js_url('jquery-ui'); ?>"></script>
 		<script type="text/javascript" src="<?php echo js_url('ajoutfiche'); ?>"></script>
 		
-		<link rel="stylesheet/css" type="text/css" href="<?php echo css_url('style'); ?>">
+		<link rel="stylesheet/less" type="text/css" href="<?php echo less_url('style'); ?>">
 		
 
-		<!--<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>-->
+		<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>
 		<script type="text/javascript">
 	
 	$.widget( "custom.catcomplete", $.ui.autocomplete, {
