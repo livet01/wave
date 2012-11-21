@@ -46,7 +46,7 @@ class ImporterFiche extends MY_Controller {
 		date_default_timezone_set("Asia/Jakarta");
 		$this -> load -> library('Excel');
 
-		//On rÈcupËre le type du fichier pour charger la bonne librairie
+		//On rÔøΩcupÔøΩre le type du fichier pour charger la bonne librairie
 		foreach ($nombreFichier as $i) {
 			if (isset($data[$i])) {
 				if ($data[$i]['upload_data']['file_ext'] == '.csv')
@@ -62,30 +62,18 @@ class ImporterFiche extends MY_Controller {
 	public function excelFile($data) {
 		$objPHPExcel = new PHPExcel();
 		$objPHPExcel = PHPExcel_IOFactory::load($data['upload_data']['full_path']);
-		$objWorksheet = $objPHPExcel -> getActiveSheet();
-		var_dump($objWorksheet);
+		var_dump($objPHPExcel->getSheet()->toArray());
 
-		//Test affichage du tableau de donn√©es renvoy√©
-		echo '<table>' . "\n";
-		foreach ($objWorksheet->getRowIterator() as $row) {
-			echo '<tr>' . "\n";
-
-			$cellIterator = $row -> getCellIterator();
-			$cellIterator -> setIterateOnlyExistingCells(false);
-			foreach ($cellIterator as $cell) {
-				echo '<td>' . $cell -> getValue() . '</td>' . "\n";
-			}
-
-			echo '</tr>' . "\n";
-		}
-		echo '</table>' . "\n";
 	}
-	
+
 	public function xmlFile($data) {
 	}
-	
+
 	public function csvFile($data) {
-		
+		$objReader = PHPExcel_IOFactory::createReader('CSV');
+		$objPHPExcel = $objReader -> load($data['upload_data']['full_path']);
+		var_dump($objPHPExcel->getSheet()->toArray());
 	}
+
 }
 ?>
