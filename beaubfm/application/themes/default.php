@@ -126,7 +126,18 @@
 			function create_champ_fichier(i) {
 				var i2 = i + 1;
 				document.getElementById('leschamps_' + i).innerHTML = '<br><label class="lab_import" for="fichier">Fichier ' + i + ':</label> <input size="60" type="file" id="fichier_' + i + '" name="fichier_' + i + '"></span>';
-				document.getElementById('leschamps_' + i).innerHTML += (i <= 6) ? '<span id="leschamps_' + i2 + '"><a href="javascript:create_champ_fichier(' + i2 + ')"><i class="icon-plus-sign"></i></a><i class="icon-minus-sign"></i><br></span>' : '';
+				document.getElementById('leschamps_' + i).innerHTML += (i <= 6) ? '<span id="leschamps_' + i2 + '"><a href="javascript:create_champ_fichier(' + i2 + ')"><i class="icon-plus-sign" ></i></a><a href="javascript:del_champ_fichier(' + i + ')"><i class="icon-minus-sign"></i></a><br></span>' : '';
+				
+				document.getElementById('leschamps_' + i).innerHTML += (i == 7) ? '<span id="leschamps_' + i2 + '"><a href="javascript:del_champ_fichier(' + i + ')"><i class="icon-minus-sign"></i></a><br></span>' : '';
+			}
+			
+			function del_champ_fichier(i) {
+				if (i != 2) {
+					$("#leschamps_" + i).html("<a href='javascript:create_champ_fichier("+(i)+")'><i class='icon-plus-sign'></i></a><a href='javascript:del_champ_fichier("+(i-1)+")'><i class='icon-minus-sign'></i></a>");
+				}
+				else {
+					$("#leschamps_" + i).html("<a href='javascript:create_champ_fichier("+(i)+")'><i class='icon-plus-sign'></i></a>");
+				}
 			}
 		</script>
 		<!-- Ne fonctionne pas :s
