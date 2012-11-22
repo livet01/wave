@@ -5,6 +5,7 @@ class ImporterFiche extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this -> load -> library('upload');
+		date_default_timezone_set("Asia/Jakarta");
 		$this -> load -> library('excel');
 	}
 
@@ -42,11 +43,7 @@ class ImporterFiche extends MY_Controller {
 		}
 		$this -> index();
 
-		//Test Import, mettre qu'un fichier xls en premier
-		date_default_timezone_set("Asia/Jakarta");
-		$this -> load -> library('Excel');
-
-		//On r�cup�re le type du fichier pour charger la bonne librairie
+		//Pour chaque fichier téléchargé on récupère le type du fichier pour charger la bonne librairie
 		foreach ($nombreFichier as $i) {
 			if (isset($data[$i])) {
 				if ($data[$i]['upload_data']['file_ext'] == '.csv')
@@ -62,8 +59,8 @@ class ImporterFiche extends MY_Controller {
 	public function excelFile($data) {
 		$objPHPExcel = new PHPExcel();
 		$objPHPExcel = PHPExcel_IOFactory::load($data['upload_data']['full_path']);
-		var_dump($objPHPExcel->getSheet()->toArray());
-
+		$arrayFichier = $objPHPExcel -> getSheet() -> toArray();
+		$this -> lireTableau($arrayFichier);
 	}
 
 	public function xmlFile($data) {
@@ -72,7 +69,22 @@ class ImporterFiche extends MY_Controller {
 	public function csvFile($data) {
 		$objReader = PHPExcel_IOFactory::createReader('CSV');
 		$objPHPExcel = $objReader -> load($data['upload_data']['full_path']);
-		var_dump($objPHPExcel->getSheet()->toArray());
+		var_dump($objPHPExcel -> getSheet() -> toArray());
+	}
+
+	public function lireTableau($arrayFichier) {
+		$listeKeys = array('Titre', 'Artiste', 'Label', 'Format', 'Emplacement', 'Date d\'ajout', 'Genre', 'Ecoute par', 'email label');
+		foreach ($listeKeys as $libelleKeys) {
+			$keys[$libelleKeys] = array_search($libelleKeys, $arrayFichier[0]);
+		}
+
+		$longueurArray = count($arrayFichier) - 1;
+		for ($i = 1; $i <= $longueurArray; $i++) {
+			foreach ($listeKeys as $libelleKeys) {
+				$arrayEpure[$i][$libelleKeys] = $arrayFichier[$i][$keys[$libelleKeys]];
+			}
+		}
+		var_dump($arrayEpure);
 	}
 
 }
