@@ -162,7 +162,9 @@ class ImporterFiche extends MY_Controller {
 			//var_dump($existslisten);
 
 			//on teste si le disque actuel n'est pas déjà présent en base de données
-			testDoublon($album);
+			if ($this -> testDoublon($album)) {
+				$valide = FALSE;
+			}
 		}
 
 		return $valide;
@@ -176,11 +178,12 @@ class ImporterFiche extends MY_Controller {
 		$this -> load -> model('diffuseur_model', 'difManager');
 		$this -> load -> model('disque_model', 'disqueManager');
 		
-		$artId = $this->persManager->readArtiste('art_id', array('art_nom' => $album('Artiste')));
-		//$difId = $this->difManager->readDiffuseur('dif_id', array('dif_nom' => $album('Label')));
+		$artId = $this -> persManager -> readArtiste('art_id', array('art_nom' => $album('Artiste')));
 		
-		$disId = $this -> disqueManager -> readDisque(array('dis_libelle' => $album['Titre']), array('dis_format' => $album['Format'])
-					, array('dis_date_ajout' => $album['Date d\'ajout']), array('per_id_artiste' => $artId['art_id']), array('dif_id' => $difId['dif_id']));
+		
+		$disId = $this -> disqueManager -> readDisque('dis_id', array('dis_libelle' => $album['Titre'], 'dis_format' => $album['Format'], 
+		'dis_date_ajout' => $album['Date d\'ajout'], 'per_id_artiste' => $artId['art_id']));
+		var_dump($disId);
 
 		return $estDoublon;
 	}
