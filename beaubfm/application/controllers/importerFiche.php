@@ -60,7 +60,10 @@ class ImporterFiche extends MY_Controller {
 		$objPHPExcel = new PHPExcel();
 		$objPHPExcel = PHPExcel_IOFactory::load($data['upload_data']['full_path']);
 		$arrayFichier = $objPHPExcel -> getSheet() -> toArray();
-		$this -> lireTableau($arrayFichier);
+
+		//$this -> lireTableau($arrayFichier);
+		$tabAjout = $this -> getTabFinal($arrayFichier);
+		$this -> ctrlAjoutFiche($tabAjout);
 	}
 
 	public function xmlFile($data) {
@@ -88,6 +91,98 @@ class ImporterFiche extends MY_Controller {
 			}
 		}
 		var_dump($arrayEpure);
+		return $arrayEpure;
+	}
+
+	//On constitue un tableau structuré contenant des informations utiles à l'ajout d'une fiche disque
+	public function getTabFinal($arrayFichier) {
+
+		//On constitue un tableau associant chaque ligne à 1 album avec toutes les informations le concernant
+		$listeKeys = array('Titre', 'Artiste', 'Label', 'Format', 'Emplacement', 'Date d\'ajout', 'Genre', 'Ecoute par', 'email label');
+		foreach ($listeKeys as $libelleKeys) {
+			$keys[$libelleKeys] = array_search($libelleKeys, $arrayFichier[0]);
+		}
+
+		$longueurArray = count($arrayFichier) - 1;
+		for ($i = 1; $i <= $longueurArray; $i++) {
+			foreach ($listeKeys as $libelleKeys) {
+				$arrayEpure[$i][$libelleKeys] = $arrayFichier[$i][$keys[$libelleKeys]];
+			}
+		}
+		//var_dump($arrayEpure);
+
+		return $arrayEpure;
+	}
+
+	public function ctrlAjoutFiche($array) {
+		$inv = 0;
+		$nb = 0;
+
+		//$array = tableau recensant tous les albums / $i = ligne / $album = tableau contenant informations propres à chaque album
+		foreach ($array as $i => $album) {
+			$nb++;
+
+			$peutAjouter = $this -> traitementAlbum($album);
+			if (!$peutAjouter) {
+				$inv++;
+			}
+		}
+		echo "$inv album(s) invalides ! ... sur $nb album(s) testés";
+	}
+
+	public function traitementAlbum($album) {
+		$valide = TRUE;
+		$autoprod = FALSE;
+
+		//on vérifie si les champs sont renseignés
+		if (is_null($album['Titre']) || is_null($album['Artiste']) || is_null($album['Emplacement']) || is_null($album['Label']) || is_null($album['email label'])) {
+			$valide = FALSE;
+			var_dump($album);
+		} else {
+
+			//Insertion de valeurs par défaut sur certains champs non renseignés
+			if (is_null($album['Format'])) {
+				$album['Format'] = "CD";
+			}
+
+			if (is_null($album['Date d\'ajout'])) {
+				$album['Date d\'ajout'] = date('m-d-y');
+			}
+
+			//on teste si l'artiste est un auto-producteur
+			if ($album['Artiste'] == $album['Label']) {
+				$autoprod = TRUE;
+			}
+
+			//Chargement des modèles
+			//$this -> load -> model('personne_model', 'persManager');
+			//
+			// VÃ©rifiaction de l'existance de l'utilisateur renseingné dans le champ 'Ecoute par'
+			//$existslisten = $this -> persManager -> readPersonne('per_id', array('per_nom' => $album['Ecoute par'], 'cat_id' => 2));
+			//var_dump($existslisten);
+
+			//on teste si le disque actuel n'est pas déjà présent en base de données
+			testDoublon($album);
+		}
+
+		return $valide;
+	}
+
+	public function testDoublon($album) {
+		$estDoublon = FALSE;
+
+		//Chargement des modèles
+		$this -> load -> model('personne_model', 'persManager');
+		$this -> load -> model('diffuseur_model', 'difManager');
+		$this -> load -> model('disque_model', 'disqueManager');
+		
+		$artId = $this->persManager->readArtiste('art_id', array('art_nom' => $album('Artiste')));
+		//$difId = $this->difManager->readDiffuseur('dif_id', array('dif_nom' => $album('Label')));
+		
+		$disId = $this -> disqueManager -> readDisque(array('dis_libelle' => $album['Titre']), array('dis_format' => $album['Format'])
+					, array('dis_date_ajout' => $album['Date d\'ajout']), array('per_id_artiste' => $artId['art_id']), array('dif_id' => $difId['dif_id']));
+
+		return $estDoublon;
 	}
 
 }
