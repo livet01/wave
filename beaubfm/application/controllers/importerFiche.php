@@ -67,9 +67,12 @@ class ImporterFiche extends MY_Controller {
 	}
 
 	public function csvFile($data) {
-		$objReader = PHPExcel_IOFactory::createReader('CSV');
+		$objReader = PHPExcel_IOFactory::createReader('CSV')->setDelimiter(';')
+															->setLineEnding("\r\n")
+															->setSheetIndex(0);		
 		$objPHPExcel = $objReader -> load($data['upload_data']['full_path']);
-		var_dump($objPHPExcel -> getSheet() -> toArray());
+		$arrayFichier = $objPHPExcel -> getSheet() -> toArray();
+		$this->lireTableau($arrayFichier);
 	}
 
 	public function lireTableau($arrayFichier) {
