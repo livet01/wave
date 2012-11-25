@@ -23,24 +23,37 @@ class ImporterFiche extends MY_Controller {
 	}
 
 	public function envoi() {
+		//On dÃ©clare ici le nombre de fichier possible Ã  uploader depuis la vue
 		$nombreFichier = array('1', '2', '3', '4', '5', '6', '7');
 
+		//Pour chaque fichier qu'on peut uploader on test si il existe et s'il possÃ¨de la bonne extension
 		foreach ($nombreFichier as $i) {
+			
+			//Si le fichier existe on initialise la config
 			if (!empty($_FILES['fichier_' . $i]['name'])) {
+				
+				//Le nom sera du type "username_fichier_NUMFICHIER"
 				$config['file_name'] = $this -> session -> userdata('username') . '_fichier_' . $i;
 				$config['upload_path'] = './assets/upload';
+				
+				//Les extensions acceptÃ©es sont les suivantes
 				$config['allowed_types'] = 'csv|xml|txt|xls|xlsx';
 				$config['max_size'] = '2048';
 				$config['overwrite'] = TRUE;
 				$this -> upload -> initialize($config);
 				$form_name = 'fichier_' . $i;
-				if (!$this -> upload -> do_upload($form_name)) {
+				
+				//Si l'upload ne fonctionne pas
+				if (!$this -> upload -> do_upload($form_name)) {					
+					//On rÃ©cupÃ¨re l'erreur
 					$this -> setMsgError($this -> getMsgError() . "Fichier " . $i . " : " . $this -> upload -> display_errors() . "\n");
 				} else {
+					//Sinon on rÃ©cupÃ¨re les informations de l'upload
 					$data[$i] = array('upload_data' => $this -> upload -> data());
 				}
 			}
 		}
+		//On recharge l'index et on affiche les Ã©ventuels messages d'erreurs
 		$this -> index();
 
 		//Pour chaque fichier tÃ©lÃ©chargÃ© on rÃ©cupÃ¨re le type du fichier pour charger la bonne librairie
@@ -57,12 +70,18 @@ class ImporterFiche extends MY_Controller {
 	}
 
 	public function excelFile($data) {
+		//On instancie un objet PHPExcel
 		$objPHPExcel = new PHPExcel();
+		
+		//On charge le fichier excel correspondant Ã  l'appel de la fonction
 		$objPHPExcel = PHPExcel_IOFactory::load($data['upload_data']['full_path']);
+		
+		//On le change en tableau
 		$arrayFichier = $objPHPExcel -> getSheet() -> toArray();
-
-		//$this -> lireTableau($arrayFichier);
+		
+		//On garde que les informations utiles pour la mise en Base de donnÃ©es
 		$tabAjout = $this -> getTabFinal($arrayFichier);
+		
 		$this -> ctrlAjoutFiche($tabAjout);
 	}
 
@@ -70,34 +89,22 @@ class ImporterFiche extends MY_Controller {
 	}
 
 	public function csvFile($data) {
+		//On charge le fichier CSV selon plusieurs critÃ¨res avec comme dÃ©limiteur ";"
 		$objReader = PHPExcel_IOFactory::createReader('CSV')->setDelimiter(';')
 															->setLineEnding("\r\n")
-															->setSheetIndex(0);		
+															->setSheetIndex(0);
+															
+		//On charge le fichier CSV correspondant Ã  l'appel de la fonction
 		$objPHPExcel = $objReader -> load($data['upload_data']['full_path']);
+		
+		//On le change en tableau
 		$arrayFichier = $objPHPExcel -> getSheet() -> toArray();
-		$this->lireTableau($arrayFichier);
 	}
 
-	public function lireTableau($arrayFichier) {
-		$listeKeys = array('Titre', 'Artiste', 'Label', 'Format', 'Emplacement', 'Date d\'ajout', 'Genre', 'Ecoute par', 'email label');
-		foreach ($listeKeys as $libelleKeys) {
-			$keys[$libelleKeys] = array_search($libelleKeys, $arrayFichier[0]);
-		}
-
-		$longueurArray = count($arrayFichier) - 1;
-		for ($i = 1; $i <= $longueurArray; $i++) {
-			foreach ($listeKeys as $libelleKeys) {
-				$arrayEpure[$i][$libelleKeys] = $arrayFichier[$i][$keys[$libelleKeys]];
-			}
-		}
-		var_dump($arrayEpure);
-		return $arrayEpure;
-	}
-
-	//On constitue un tableau structuré contenant des informations utiles à l'ajout d'une fiche disque
+	//On constitue un tableau structurï¿½ contenant des informations utiles ï¿½ l'ajout d'une fiche disque
 	public function getTabFinal($arrayFichier) {
 
-		//On constitue un tableau associant chaque ligne à 1 album avec toutes les informations le concernant
+		//On constitue un tableau associant chaque ligne d'un album avec toutes les informations le concernant
 		$listeKeys = array('Titre', 'Artiste', 'Label', 'Format', 'Emplacement', 'Date d\'ajout', 'Genre', 'Ecoute par', 'email label');
 		foreach ($listeKeys as $libelleKeys) {
 			$keys[$libelleKeys] = array_search($libelleKeys, $arrayFichier[0]);
@@ -118,7 +125,7 @@ class ImporterFiche extends MY_Controller {
 		$inv = 0;
 		$nb = 0;
 
-		//$array = tableau recensant tous les albums / $i = ligne / $album = tableau contenant informations propres à chaque album
+		//$array = tableau recensant tous les albums / $i = ligne / $album = tableau contenant informations propres ï¿½ chaque album
 		foreach ($array as $i => $album) {
 			$nb++;
 
@@ -127,20 +134,20 @@ class ImporterFiche extends MY_Controller {
 				$inv++;
 			}
 		}
-		echo "$inv album(s) invalides ! ... sur $nb album(s) testés";
+		echo "$inv album(s) invalides ! ... sur $nb album(s) testï¿½s";
 	}
 
 	public function traitementAlbum($album) {
 		$valide = TRUE;
 		$autoprod = FALSE;
 
-		//on vérifie si les champs sont renseignés
+		//on vï¿½rifie si les champs sont renseignï¿½s
 		if (is_null($album['Titre']) || is_null($album['Artiste']) || is_null($album['Emplacement']) || is_null($album['Label']) || is_null($album['email label'])) {
 			$valide = FALSE;
 			var_dump($album);
 		} else {
 
-			//Insertion de valeurs par défaut sur certains champs non renseignés
+			//Insertion de valeurs par dï¿½faut sur certains champs non renseignï¿½s
 			if (is_null($album['Format'])) {
 				$album['Format'] = "CD";
 			}
@@ -154,14 +161,14 @@ class ImporterFiche extends MY_Controller {
 				$autoprod = TRUE;
 			}
 
-			//Chargement des modèles
+			//Chargement des modï¿½les
 			//$this -> load -> model('personne_model', 'persManager');
 			//
-			// VÃ©rifiaction de l'existance de l'utilisateur renseingné dans le champ 'Ecoute par'
+			// VÃ©rifiaction de l'existance de l'utilisateur renseingnï¿½ dans le champ 'Ecoute par'
 			//$existslisten = $this -> persManager -> readPersonne('per_id', array('per_nom' => $album['Ecoute par'], 'cat_id' => 2));
 			//var_dump($existslisten);
 
-			//on teste si le disque actuel n'est pas déjà présent en base de données
+			//on teste si le disque actuel n'est pas dï¿½jï¿½ prï¿½sent en base de donnï¿½es
 			if ($this -> testDoublon($album)) {
 				$valide = FALSE;
 			}
@@ -173,7 +180,7 @@ class ImporterFiche extends MY_Controller {
 	public function testDoublon($album) {
 		$estDoublon = FALSE;
 
-		//Chargement des modèles
+		//Chargement des modï¿½les
 		$this -> load -> model('personne_model', 'persManager');
 		$this -> load -> model('diffuseur_model', 'difManager');
 		$this -> load -> model('disque_model', 'disqueManager');
