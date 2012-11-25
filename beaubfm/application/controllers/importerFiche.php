@@ -173,17 +173,17 @@ class ImporterFiche extends MY_Controller {
 
 				$existEmBev = FALSE;
 				if (strtolower($disque['Emplacement']) == "airplay" || strtolower($disque['Emplacement']) == "archivage" || strtoupper($disque['Emplacement']) == "refus√©" || is_null($disque['Emplacement'])) {
-					if (strtolower($disque['Emplacement']) == "airplay"){
-						$disque['Emplacement']=1;
+					if (strtolower($disque['Emplacement']) == "airplay") {
+						$disque['Emplacement'] = 1;
 					}
-					if (strtolower($disque['Emplacement']) == "archivage"){
-						$disque['Emplacement']=2;
+					if (strtolower($disque['Emplacement']) == "archivage") {
+						$disque['Emplacement'] = 2;
 					}
-					if (strtolower($disque['Emplacement']) == "refus√©" || is_null($disque['Emplacement'])){
-						$disque['Emplacement']=3;
+					if (strtolower($disque['Emplacement']) == "refus√©" || is_null($disque['Emplacement'])) {
+						$disque['Emplacement'] = 3;
 					}
 				} else {
-					$disque['Emplacement']=4;
+					$disque['Emplacement'] = 4;
 					$existEmBev = $this -> emBevManager -> readEmission('emb_id', array('emb_libelle' => $disque['Emplacement']));
 				}
 
@@ -192,11 +192,10 @@ class ImporterFiche extends MY_Controller {
 				}
 
 				$existListen = $this -> persManager -> readPersonne('per_id', array('per_nom' => $disque['Ecoute par'], 'cat_id' => 2));
-				$disque['listenBy']=0;
+				$disque['listenBy'] = 0;
 				if ($existListen) {
 					$disque['listenBy'] = $existListen['per_id'];
 				}
-				
 
 				// V√©rification de l'√©xistance de l'artiste
 
@@ -205,7 +204,6 @@ class ImporterFiche extends MY_Controller {
 				if (empty($artId)) {
 					$artId = $difId = $this -> persManager -> last_id();
 					$result_1 = $this -> persManager -> ajouterpersonne($artId, $disque['Artiste'], ($disque['autoprod']) ? 5 : 3);
-					$artId=$result_1['art_id'];
 				} else {
 					$artId = $artId['art_id'];
 					$result_1 = TRUE;
@@ -230,9 +228,15 @@ class ImporterFiche extends MY_Controller {
 					} else
 						$result_2 = TRUE;
 
-					// Ajout du Diffuseur ou de l'Artiste s'il est autoproducteur en tant qu'Utilisateur
-					$result_3 = $this -> utiManager -> ajouterUtil((($disque['autoprod']) ? $artId : $difId), "", (($disque['autoprod']) ? $disque['Artiste'] : $disque['Label']), "lapin");
-					$result_4 = $this -> diffManager -> ajouterDiffuseur((($disque['autoprod']) ? $artId : $difId), $disque['email label']);
+					// On contrÙle si l'utilisateur n'est pas dÈj‡ prÈsent en base de donnÈes
+					$resSearchUtil = $this -> utiManager -> readUtilisateur('per_id', array('uti_prenom' => $disque['Label']));
+					if (empty($resSearchUtil)) {
+						
+						var_dump($resSearchUtil);
+						// Ajout du Diffuseur ou de l'Artiste s'il est autoproducteur en tant qu'Utilisateur
+						$result_3 = $this -> utiManager -> ajouterUtil((($disque['autoprod']) ? $artId : $difId), "", (($disque['autoprod']) ? $disque['Artiste'] : $disque['Label']), "lapin");
+						$result_4 = $this -> diffManager -> ajouterDiffuseur((($disque['autoprod']) ? $artId : $difId), $disque['email label']);
+					}
 				} else {
 					// R√©cup√©ration de l'id du Diffuseur ou de l'id de l'Artiste si il est autoproducteur
 					$difId = ($disque['autoprod']) ? $difId['aut_id'] : $difId['lab_id'];

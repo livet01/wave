@@ -17,5 +17,18 @@ class Utilisateur_model extends CI_Model {
 						->set('uti_mdp', md5($mdp))
 						->insert($this->table);
 	}
-}
+	
+	public function readUtilisateur($select = '', $where = "")
+	{
+		if(!empty($select) && !empty($where)){	
+			return $this->db->select($select)
+							->from($this->table)
+							->where($where)
+							->get()
+							->row_array();
+		}
+		else return "";
+	}
+}	
+
 	
