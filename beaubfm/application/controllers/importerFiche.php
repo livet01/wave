@@ -28,23 +28,23 @@ class ImporterFiche extends MY_Controller {
 
 		//Pour chaque fichier qu'on peut uploader on test si il existe et s'il possède la bonne extension
 		foreach ($nombreFichier as $i) {
-			
+
 			//Si le fichier existe on initialise la config
 			if (!empty($_FILES['fichier_' . $i]['name'])) {
-				
+
 				//Le nom sera du type "username_fichier_NUMFICHIER"
 				$config['file_name'] = $this -> session -> userdata('username') . '_fichier_' . $i;
 				$config['upload_path'] = './assets/upload';
-				
+
 				//Les extensions acceptées sont les suivantes
 				$config['allowed_types'] = 'csv|xml|txt|xls|xlsx';
 				$config['max_size'] = '2048';
 				$config['overwrite'] = TRUE;
 				$this -> upload -> initialize($config);
 				$form_name = 'fichier_' . $i;
-				
+
 				//Si l'upload ne fonctionne pas
-				if (!$this -> upload -> do_upload($form_name)) {					
+				if (!$this -> upload -> do_upload($form_name)) {
 					//On récupère l'erreur
 					$this -> setMsgError($this -> getMsgError() . "Fichier " . $i . " : " . $this -> upload -> display_errors() . "\n");
 				} else {
@@ -66,22 +66,23 @@ class ImporterFiche extends MY_Controller {
 				if ($data[$i]['upload_data']['file_ext'] == '.xml')
 					$this -> xmlFile($data[$i]);
 			}
+			
 		}
 	}
 
 	public function excelFile($data) {
 		//On instancie un objet PHPExcel
 		$objPHPExcel = new PHPExcel();
-		
+
 		//On charge le fichier excel correspondant à l'appel de la fonction
 		$objPHPExcel = PHPExcel_IOFactory::load($data['upload_data']['full_path']);
-		
+
 		//On le change en tableau
 		$arrayFichier = $objPHPExcel -> getSheet() -> toArray();
-		
+
 		//On garde que les informations utiles pour la mise en Base de données
 		$tabAjout = $this -> getTabFinal($arrayFichier);
-		
+
 		$this -> ctrlAjoutFiche($tabAjout);
 	}
 
@@ -90,13 +91,11 @@ class ImporterFiche extends MY_Controller {
 
 	public function csvFile($data) {
 		//On charge le fichier CSV selon plusieurs critères avec comme délimiteur ";"
-		$objReader = PHPExcel_IOFactory::createReader('CSV')->setDelimiter(';')
-															->setLineEnding("\r\n")
-															->setSheetIndex(0);
-															
+		$objReader = PHPExcel_IOFactory::createReader('CSV') -> setDelimiter(';') -> setLineEnding("\r\n") -> setSheetIndex(0);
+
 		//On charge le fichier CSV correspondant à l'appel de la fonction
 		$objPHPExcel = $objReader -> load($data['upload_data']['full_path']);
-		
+
 		//On le change en tableau
 		$arrayFichier = $objPHPExcel -> getSheet() -> toArray();
 	}
@@ -134,7 +133,7 @@ class ImporterFiche extends MY_Controller {
 				$inv++;
 			}
 		}
-		echo "$inv album(s) invalides ! ... sur $nb album(s) test�s";
+		echo "$inv album(s) invalides ! ... sur $i album(s) test�s";
 	}
 
 	public function traitementAlbum($album) {
@@ -161,17 +160,11 @@ class ImporterFiche extends MY_Controller {
 				$autoprod = TRUE;
 			}
 
-			//Chargement des mod�les
-			//$this -> load -> model('personne_model', 'persManager');
-			//
-			// Vérifiaction de l'existance de l'utilisateur renseingn� dans le champ 'Ecoute par'
-			//$existslisten = $this -> persManager -> readPersonne('per_id', array('per_nom' => $album['Ecoute par'], 'cat_id' => 2));
-			//var_dump($existslisten);
-
 			//on teste si le disque actuel n'est pas d�j� pr�sent en base de donn�es
 			if ($this -> testDoublon($album)) {
 				$valide = FALSE;
 			}
+			
 		}
 
 		return $valide;
@@ -184,13 +177,19 @@ class ImporterFiche extends MY_Controller {
 		$this -> load -> model('personne_model', 'persManager');
 		$this -> load -> model('diffuseur_model', 'difManager');
 		$this -> load -> model('disque_model', 'disqueManager');
-		
-		$artId = $this -> persManager -> readArtiste('art_id', array('art_nom' => $album('Artiste')));
-		
-		
-		$disId = $this -> disqueManager -> readDisque('dis_id', array('dis_libelle' => $album['Titre'], 'dis_format' => $album['Format'], 
-		'dis_date_ajout' => $album['Date d\'ajout'], 'per_id_artiste' => $artId['art_id']));
-		var_dump($disId);
+
+		$artId = $this -> persManager -> readArtiste('art_id', array('art_nom' => $album['Artiste']));
+		//var_dump($artId);
+
+		if ($artId != NULL) {
+
+			$disId = $this -> disqueManager -> readDisque('dis_id', array('dis_libelle' => $album['Titre'], 'dis_format' => $album['Format'], 'per_id_artiste' => $artId['art_id']));
+
+			if ($disId != NULL) {
+				$estDoublon = TRUE;
+			}
+		}
+		//var_dump($estDoublon);
 
 		return $estDoublon;
 	}
