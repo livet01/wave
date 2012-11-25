@@ -20,7 +20,7 @@ class Disque_model extends CI_Model {
 					->set('dis_libelle', $data['titre'])
 					->set('dis_format', $data['format'])
 					->set('uti_id_ecoute', $data['listenBy'])
-					->set('dis_date_ajout', NOW())
+					->set('dis_date_ajout', 'NOW()',false)
 					->set('per_id_artiste', $data['artiste'])
 					->set('dif_id', $data['diffuseur'])
 					->set('dis_envoi_ok', $data['envoiMail'])

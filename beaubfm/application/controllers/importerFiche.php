@@ -66,7 +66,6 @@ class ImporterFiche extends MY_Controller {
 				if ($data[$i]['upload_data']['file_ext'] == '.xml')
 					$this -> xmlFile($data[$i]);
 			}
-			
 		}
 	}
 
@@ -136,35 +135,127 @@ class ImporterFiche extends MY_Controller {
 		echo "$inv album(s) invalides ! ... sur $i album(s) test�s";
 	}
 
-	public function traitementAlbum($album) {
+	public function traitementAlbum($disque) {
 		$valide = TRUE;
-		$autoprod = FALSE;
 
 		//on v�rifie si les champs sont renseign�s
-		if (is_null($album['Titre']) || is_null($album['Artiste']) || is_null($album['Emplacement']) || is_null($album['Label']) || is_null($album['email label'])) {
+		if (is_null($disque['Titre']) || is_null($disque['Artiste']) || is_null($disque['Emplacement']) || is_null($disque['Label']) || is_null($disque['email label'])) {
 			$valide = FALSE;
-			var_dump($album);
+			var_dump($disque);
 		} else {
 
 			//Insertion de valeurs par d�faut sur certains champs non renseign�s
-			if (is_null($album['Format'])) {
-				$album['Format'] = "CD";
+			if (is_null($disque['Format'])) {
+				$disque['Format'] = "CD";
 			}
 
-			if (is_null($album['Date d\'ajout'])) {
-				$album['Date d\'ajout'] = date('m-d-y');
+			if (is_null($disque['Date d\'ajout'])) {
+				$disque['Date d\'ajout'] = date('m-d-y');
 			}
 
-			//on teste si l'artiste est un auto-producteur
-			if ($album['Artiste'] == $album['Label']) {
-				$autoprod = TRUE;
-			}
-
-			//on teste si le disque actuel n'est pas d�j� pr�sent en base de donn�es
-			if ($this -> testDoublon($album)) {
+			if ($this -> testDoublon($disque)) {
 				$valide = FALSE;
 			}
-			
+
+			if ($valide == TRUE) {
+				$this -> load -> model('personne_model', 'persManager');
+				$this -> load -> model('embenevole_model', 'emBevManager');
+				$this -> load -> model('disque_model', 'disqueManager');
+				$this -> load -> model('diffuseur_model', 'diffManager');
+				$this -> load -> model('utilisateur_model', 'utiManager');
+
+				// Défintion de l'Id
+				$disque['id'] = (string)(rand(31, 99) + rand(800, 1000));
+				$disque['autoprod'] = 0;
+				if ($disque['Artiste'] == $disque['Label']) {
+					$disque['autoprod'] = 1;
+				}
+
+				$existEmBev = FALSE;
+				if (strtolower($disque['Emplacement']) == "airplay" || strtolower($disque['Emplacement']) == "archivage" || strtoupper($disque['Emplacement']) == "refusé" || is_null($disque['Emplacement'])) {
+					if (strtolower($disque['Emplacement']) == "airplay"){
+						$disque['Emplacement']=1;
+					}
+					if (strtolower($disque['Emplacement']) == "archivage"){
+						$disque['Emplacement']=2;
+					}
+					if (strtolower($disque['Emplacement']) == "refusé" || is_null($disque['Emplacement'])){
+						$disque['Emplacement']=3;
+					}
+				} else {
+					$disque['Emplacement']=4;
+					$existEmBev = $this -> emBevManager -> readEmission('emb_id', array('emb_libelle' => $disque['Emplacement']));
+				}
+
+				if ($existEmBev != FALSE) {
+					$disque['emBev'] = $existsEmBev['emb_id'];
+				}
+
+				$existListen = $this -> persManager -> readPersonne('per_id', array('per_nom' => $disque['Ecoute par'], 'cat_id' => 2));
+				$disque['listenBy']=0;
+				if ($existListen) {
+					$disque['listenBy'] = $existListen['per_id'];
+				}
+				
+
+				// Vérification de l'éxistance de l'artiste
+
+				$result_1 = FALSE;
+				$artId = $this -> persManager -> readArtiste('art_id', array('art_nom' => $disque['Artiste']));
+				if (empty($artId)) {
+					$artId = $difId = $this -> persManager -> last_id();
+					$result_1 = $this -> persManager -> ajouterpersonne($artId, $disque['Artiste'], ($disque['autoprod']) ? 5 : 3);
+					$artId=$result_1['art_id'];
+				} else {
+					$artId = $artId['art_id'];
+					$result_1 = TRUE;
+				}
+
+				$result_2 = FALSE;
+				// Vérifiaction de l'éxistance du diffuseur si ce n'est pas un Autoprod !
+				if (!$disque['autoprod'])
+					$difId = $this -> diffManager -> readDiffuseur('lab_id', array('lab_nom' => $disque['Label']));
+				else
+					$difId = $this -> persManager -> readAutoprod('aut_id', array('aut_nom' => $disque['Artiste']));
+
+				$result_3 = FALSE;
+				$result_4 = FALSE;
+
+				if (empty($difId)) {
+					$difId = $this -> persManager -> last_id();
+
+					if (!$disque['autoprod']) {
+						// Ajout du diffuseur
+						$result_2 = $this -> persManager -> ajouterpersonne($difId, $disque['Label'], 4);
+					} else
+						$result_2 = TRUE;
+
+					// Ajout du Diffuseur ou de l'Artiste s'il est autoproducteur en tant qu'Utilisateur
+					$result_3 = $this -> utiManager -> ajouterUtil((($disque['autoprod']) ? $artId : $difId), "", (($disque['autoprod']) ? $disque['Artiste'] : $disque['Label']), "lapin");
+					$result_4 = $this -> diffManager -> ajouterDiffuseur((($disque['autoprod']) ? $artId : $difId), $disque['email label']);
+				} else {
+					// Récupération de l'id du Diffuseur ou de l'id de l'Artiste si il est autoproducteur
+					$difId = ($disque['autoprod']) ? $difId['aut_id'] : $difId['lab_id'];
+					$result_2 = TRUE;
+					$result_3 = TRUE;
+					$result_4 = TRUE;
+				}
+
+				$disque['artiste'] = $artId;
+				$disque['diffuseur'] = (($disque['autoprod']) ? $artId : $difId);
+
+				if ($result_1 && $result_2 && $result_3) {
+					$disque['titre'] = $disque['Titre'];
+					$disque['format'] = $disque['Format'];
+					$disque['envoiMail'] = 0;
+					$disque['emplacement'] = $disque['Emplacement'];
+					$result = $this -> disqueManager -> ajouterDisque($disque);
+					echo "Réussi";
+				} else {
+					echo "Erreur";
+				}
+			}
+
 		}
 
 		return $valide;
@@ -189,7 +280,6 @@ class ImporterFiche extends MY_Controller {
 				$estDoublon = TRUE;
 			}
 		}
-		//var_dump($estDoublon);
 
 		return $estDoublon;
 	}
