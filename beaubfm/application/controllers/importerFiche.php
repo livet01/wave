@@ -141,7 +141,6 @@ class ImporterFiche extends MY_Controller {
 		//on vï¿½rifie si les champs sont renseignï¿½s
 		if (is_null($disque['Titre']) || is_null($disque['Artiste']) || is_null($disque['Emplacement']) || is_null($disque['Label']) || is_null($disque['email label'])) {
 			$valide = FALSE;
-			var_dump($disque);
 		} else {
 
 			//Insertion de valeurs par dï¿½faut sur certains champs non renseignï¿½s
@@ -224,14 +223,17 @@ class ImporterFiche extends MY_Controller {
 
 					if (!$disque['autoprod']) {
 						// Ajout du diffuseur
-						$result_2 = $this -> persManager -> ajouterpersonne($difId, $disque['Label'], 4);
+						$resSearchPers = $this -> persManager -> readPersonne('per_id', array('per_nom' => $disque['Label']));
+						if (empty($resSearchPers)){
+							$result_2 = $this -> persManager -> ajouterpersonne($difId, $disque['Label'], 4);
+						}
 					} else
 						$result_2 = TRUE;
 
-					// On contrôle si l'utilisateur n'est pas déjà présent en base de données
-					$resSearchUtil = $this -> utiManager -> readUtilisateur('per_id', array('uti_prenom' => $disque['Label']));
+					// On contrï¿½le si l'utilisateur n'est pas dï¿½jï¿½ prï¿½sent en base de donnï¿½es
+					$resSearchUtil = $this -> utiManager -> readUtilisateur('per_id', array('uti_login' => $disque['Label']));
 					if (empty($resSearchUtil)) {
-						
+
 						var_dump($resSearchUtil);
 						// Ajout du Diffuseur ou de l'Artiste s'il est autoproducteur en tant qu'Utilisateur
 						$result_3 = $this -> utiManager -> ajouterUtil((($disque['autoprod']) ? $artId : $difId), "", (($disque['autoprod']) ? $disque['Artiste'] : $disque['Label']), "lapin");
@@ -257,6 +259,7 @@ class ImporterFiche extends MY_Controller {
 					echo "RÃ©ussi";
 				} else {
 					echo "Erreur";
+					var_dump($disque);
 				}
 			}
 
