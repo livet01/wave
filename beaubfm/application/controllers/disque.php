@@ -222,25 +222,25 @@ private function attribution (){
 		
 	}
 
-	public function rechercheArtisteByNom($nom,$radio,$autoproducteur=FALSE) {
+	public function rechercheArtisteByNom($nom,$radio,$categorie) {
 		$artId = $this->artisteManager->select('art_id', array('art_nom' => $nom));
 		if(empty($artId)){
-			 $artId = (int)$this->artisteManager->insert($nom, $radio,($autoproducteur) ? 5 : 3);
+			 $artId = (int)$this->artisteManager->insert($nom, $radio,$categorie);
 		}
 		else
 			$artId = $artId["art_id"];
 		return $artId;
 	}
 	
-	public function rechercheDiffuseurByNom($nom,$radio,$email,$autoproducteur=FALSE) {
+	public function rechercheDiffuseurByNom($nom,$radio,$email,$categorie) {
 		$difId = $this->diffuseurManager->select('Diffuseur.per_id', array('Personne.per_nom' => $nom,));
 		if(empty($difId)){
-			$utiId = (int)$this->utilisateurManager->insert($this->rechercheArtisteByNom($nom,$radio,$autoproducteur),$nom,$this -> securite -> crypt($nom));
+			$utiId = (int)$this->utilisateurManager->insert($this->rechercheArtisteByNom($nom,$radio,$categorie),$nom,$this -> securite -> crypt($nom));
 			$difId = (int)$this->diffuseurManager->insert($utiId,$email);
 		}
 		else
 			$difId = $difId["per_id"];
-		echo $difId;
+		return $difId;
 	}
 }
 ?>
