@@ -37,6 +37,24 @@
 						<option value="Vinyle">Vinyle</option>
 					</select>
 				</p>
+				<p>
+					<label class="labelGauche" for="style"><i class="icon-file"></i> Style</label>
+					<input type="radio" name="style" id="rouge" value="rouge" checked="checked"onclick="$('#emb').hide()" >
+					<label class="check" for="rouge" onclick="$('#emb').hide()">Rock/HardRock/Punk</label>
+					<br>
+					<input type="radio" name="style" id="bleu" value="bleu" onclick="$('#emb').hide()">
+					<label class="check" for="bleu"onclick="$('#emb').hide()" >Electro/House/DubStep</label>
+					<br>
+					<input type="radio" name="style" id="vert" value="vert" onclick="$('#emb').hide()">
+					<label class="check" for="vert" onclick="$('#emb').hide()">HipHop/Slam</label>
+					<br>
+					<input type="radio" name="style" id="jaune" value="jaune" onclick="$('#emb').hide()">
+					<label class="check" for="jaune" onclick="$('#emb').hide()">Pop/Folk</label>
+					<br>
+					<input type="radio" name="style" id="blanc" value="blanc" onclick="$('#emb').hide()">
+					<label class="check" for="blanc" onclick="$('#emb').hide()">World/Traditionnelle</label>
+					<br>
+				</p>
 
 				<p>
 					<label class="labelGaucheEmplacement" for="emplacement"><i class="icon-hdd"></i> Emplacement </label>
