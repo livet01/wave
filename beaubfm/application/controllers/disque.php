@@ -20,6 +20,7 @@ class disque extends MY_Controller {
 	private $emb_id;
 	private $emp_id;
 	private $dif_mail;
+	private $dis_style;
 
 	//
 	// Constructeur
@@ -134,7 +135,15 @@ class disque extends MY_Controller {
 	}
 	
 	public function set_dif_mail($dif_mail){
-		$this -> dif_mail =$dif_mail;
+		$this -> dif_mail = $dif_mail;
+	}
+	
+	public function get_dis_style(){
+		return $this -> dis_style;
+	}
+	
+	public function set_dis_style($dis_style){
+		$this -> dif_style = $dis_style;
 	}
 	
 	private function verification() {
@@ -162,10 +171,70 @@ class disque extends MY_Controller {
 		
 		set_dis_libelle($this->input->post('titre'));
 		set_dis_art_id($this->input->post('artiste'));
-		set_dif_id($this->input->post('autopro'));
-		set_emb_id($this->input->post('emissionBenevole'));
+		
+		//Vérification si autoproduction
+		if($this->input->post('autopro')=="a"){
+			set_dif_id($this->input->post('artiste'));
+		}
+		else{
+			set_dif_if($this->input->post('diffuseur'));
+		}
+		
+		//Vérification si emission bénévole coché
+		if ($this->input->post('emplacement') == "emissionBenevole") {
+			set_emb_id($this->input->post('emb'));
+		}else{
+			set_emb_id($this->input->post('emplacement'));
+		}
+
 		set_dif_mail($this->input->post('email'));
-		set
+			
+		
+		/*if($this->input->post('envoiMail')=="0"){
+			
+		}else{
+			
+		}*/
+		
+		//vérification du format selectionné
+		switch ($this->input->post('format')) {
+			case 'cd':
+				set_dis_format('CD');
+				break;
+			case 'numerique':
+				set_dis_format('Numérique');	
+				break;
+			case 'Vinyle' : 
+				set_dis_format('Vinyle');
+			default:
+				throw new Exception("Le format n'est pas valide", 1);
+				break;
+		}
+		
+		//Vérification de l'emplacement selectionné
+		switch ($this->input->post('emplacement')){
+			case 'emp1' : 
+				set_emp_id('AirPlay');
+				break;
+			case 'emp2' : 
+				set_emp_id('Non Diffusé');
+				break;
+			case 'emp4' :
+				set_emp_id('Archivage');
+				break;
+			default:
+				throw new Exception("L'emplacement n'est pas valide", 1);
+				break;
+		}
+				 
+				
+				
+				
+				
+				
+		set_mem_id($this->input->post('listenBy'));
+		set_dis_style($this->input->post('style'));
+			
 		
 	}
 	
