@@ -4,42 +4,7 @@ if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
 class disque extends MY_Controller {
-
-	public function __construct() {
-		parent::__construct();
-
-		//Chargement Librairie
-		$this -> load -> library('form_validation');
-
-		//Chargement models
-		$this -> load -> model('personne_model', 'persManager');
-		$this -> load -> model('embenevole_model', 'emBevManager');
-		$this -> load -> model('disque_model', 'disqueManager');
-		$this -> load -> helper(array('form', 'url'));
-
-	}
-
-	private function verification() {
-
-		$this -> form_validation -> set_rules('titre', '"Titre"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-		$this -> form_validation -> set_rules('artiste', '"Artiste"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-		$this -> form_validation -> set_rules('email', '"Email"', 'trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
-		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-
-		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
-		if ($this->input->post('emissionBenevole') == "emissionBenevole") {
-			$this -> form_validation -> set_rules('emBev', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-		}
-
-		//Vérifiaction du diffuseur
-		if ($this->input-> post('autopro')!="a")
-			$this -> form_validation -> set_rules('dif_id', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-
-		return $this -> form_validation -> run();
-		
-	}
-
-
+	
 	//
 	// Attributs
 	//
@@ -54,6 +19,23 @@ class disque extends MY_Controller {
 	private $dis_disponible;
 	private $emb_id;
 	private $emp_id;
+
+	//
+	// Constructeur
+	//
+	public function __construct() {
+		parent::__construct();
+
+		//Chargement Librairie
+		$this -> load -> library('form_validation');
+
+		//Chargement models
+		$this -> load -> model('personne_model', 'persManager');
+		$this -> load -> model('embenevole_model', 'emBevManager');
+		$this -> load -> model('disque_model', 'disqueManager');
+		$this -> load -> helper(array('form', 'url'));
+
+	}
 
 	//
 	// Getteur et Setter
@@ -145,6 +127,27 @@ class disque extends MY_Controller {
 	public function set_emp_id($emp_id) {
 		$this -> emp_id = $emp_id;
 	}
+	
+	private function verification() {
+
+		$this -> form_validation -> set_rules('titre', '"Titre"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		$this -> form_validation -> set_rules('artiste', '"Artiste"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		$this -> form_validation -> set_rules('email', '"Email"', 'trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
+		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+
+		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
+		if ($this->input->post('emissionBenevole') == "emissionBenevole") {
+			$this -> form_validation -> set_rules('emBev', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		}
+
+		//Vérifiaction du diffuseur
+		if ($this->input-> post('autopro')!="a")
+			$this -> form_validation -> set_rules('dif_id', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+
+		return $this -> form_validation -> run();
+		
+	}
+	
 
 }
 ?>
