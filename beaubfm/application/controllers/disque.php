@@ -28,10 +28,13 @@ class disque extends MY_Controller {
 
 		//Chargement Librairie
 		$this -> load -> library('form_validation');
+		$this -> load -> library('securite');
 
 		//Chargement models
 		$this -> load -> model('personne_model', 'persManager');
 		$this -> load -> model('disque/artiste_model', 'artisteManager');
+		$this -> load -> model('disque/diffuseur_model', 'diffuseurManager');
+		$this -> load -> model('disque/utilisateur_model', 'utilisateurManager');
 		$this -> load -> model('embenevole_model', 'emBevManager');
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
@@ -227,6 +230,17 @@ private function attribution (){
 		else
 			$artId = $artId["art_id"];
 		return $artId;
+	}
+	
+	public function rechercheDiffuseurByNom($nom,$radio,$email,$autoproducteur=FALSE) {
+		$difId = $this->diffuseurManager->select('Diffuseur.per_id', array('Personne.per_nom' => $nom,));
+		if(empty($difId)){
+			$utiId = (int)$this->utilisateurManager->insert($this->rechercheArtisteByNom($nom,$radio,$autoproducteur),$nom,$this -> securite -> crypt($nom));
+			$difId = (int)$this->diffuseurManager->insert($utiId,$email);
+		}
+		else
+			$difId = $difId["per_id"];
+		echo $difId;
 	}
 }
 ?>
