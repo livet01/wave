@@ -19,8 +19,6 @@ class disque extends MY_Controller {
 	private $dis_disponible;
 	private $emb_id;
 	private $emp_id;
-	private $dif_mail;
-	private $dis_style;
 
 	//
 	// Constructeur
@@ -33,6 +31,7 @@ class disque extends MY_Controller {
 
 		//Chargement models
 		$this -> load -> model('personne_model', 'persManager');
+		$this -> load -> model('disque/artiste_model', 'artisteManager');
 		$this -> load -> model('embenevole_model', 'emBevManager');
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
@@ -130,30 +129,13 @@ class disque extends MY_Controller {
 		$this -> emp_id = $emp_id;
 	}
 	
-	public function get_dif_mail(){
-		return $this -> dif_email;
-	}
-	
-	public function set_dif_mail($dif_mail){
-		$this -> dif_mail = $dif_mail;
-	}
-	
-	public function get_dis_style(){
-		return $this -> dis_style;
-	}
-	
-	public function set_dis_style($dis_style){
-		$this -> dif_style = $dis_style;
-	}
-	
 	private function verification() {
 
 		$this -> form_validation -> set_rules('titre', '"Titre"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 		$this -> form_validation -> set_rules('artiste', '"Artiste"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 		$this -> form_validation -> set_rules('email', '"Email"', 'trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
-		
-	
+		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+
 		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
 		if ($this->input->post('emissionBenevole') == "emissionBenevole") {
 			$this -> form_validation -> set_rules('emBev', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
@@ -166,8 +148,7 @@ class disque extends MY_Controller {
 		return $this -> form_validation -> run();
 		
 	}
-	
-	private function attribution (){
+private function attribution (){
 		
 		set_dis_libelle($this->input->post('titre'));
 		set_dis_art_id($this->input->post('artiste'));
@@ -237,7 +218,16 @@ class disque extends MY_Controller {
 			
 		
 	}
-	
+
+	public function rechercheArtisteByNom($nom,$radio,$autoproducteur=FALSE) {
+		$artId = $this->artisteManager->select('art_id', array('art_nom' => $nom));
+		if(empty($artId)){
+			 $artId = (int)$this->artisteManager->insert($nom, $radio,($autoproducteur) ? 5 : 3);
+		}
+		else
+			$artId = $artId["art_id"];
+		return $artId;
+	}
 }
 ?>
 
