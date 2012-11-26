@@ -1171,6 +1171,13 @@ ul.icons li .icon-large:before {
   text-align: left;
   margin-top: 5px;
 }
+#formulaire .labelGaucheStyle  {
+  float: left;
+  width: 135px;
+  padding-bottom: 50px;
+  text-align: left;
+  margin-top: 5px;
+}
 #formulaire input[type=text] {
   width: 150px;
 }

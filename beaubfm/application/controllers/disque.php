@@ -212,12 +212,31 @@ private function attribution (){
 		}
 				 
 				
-				
-				
-				
-				
+							
 		set_mem_id($this->input->post('listenBy'));
-		set_dis_style($this->input->post('style'));
+		
+		
+		switch ($this->input->post('style')){
+			case 'rouge' : 
+				set_dis_style('Rock/HardRock/Punk');
+				break;
+			case 'bleu' : 
+				set_dis_style('Electro/House/DubStep');
+				break;
+			case 'vert' : 
+				set_dis_style('HipHop/Slam');
+				break;
+			case 'jaune' : 
+				set_dis_style('Pop/Folk');
+				break;
+			case 'blanc' : 
+				set_dis_style('World/Traditionnelle');
+				break;
+			default :
+				throw new Exception("Le style n'est pas valide", 1);
+				break;
+				
+		}
 			
 		
 	}
