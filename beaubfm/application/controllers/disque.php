@@ -154,7 +154,7 @@ class disque extends MY_Controller {
 private function attribution (){
 		
 		set_dis_libelle($this->input->post('titre'));
-		set_dis_art_id($this->input->post('artiste'));
+		set_dis_art_id($this->rechercheArtisteByNom($this->input->post('artiste'), $radio, $categorie));
 		
 		//Vérification si autoproduction
 		if($this->input->post('autopro')=="a"){
@@ -198,7 +198,7 @@ private function attribution (){
 		//Vérification de l'emplacement selectionné
 		switch ($this->input->post('emplacement')){
 			case 'emp1' : 
-				set_emp_id('AirPlay');
+				set_emp_id(rechercherEmplacementByNom('Airplay'));
 				break;
 			case 'emp2' : 
 				set_emp_id('Non Diffusé');
@@ -260,6 +260,10 @@ private function attribution (){
 		else
 			$difId = $difId["per_id"];
 		return $difId;
+	}
+	
+	public function rechercheEmplacementByNom($nom){
+		
 	}
 }
 ?>
