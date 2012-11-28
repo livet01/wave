@@ -37,7 +37,7 @@ class ImporterFiche extends MY_Controller {
 				$config['upload_path'] = './assets/upload';
 
 				//Les extensions acceptées sont les suivantes
-				$config['allowed_types'] = 'csv|xml|txt|xls|xlsx';
+				$config['allowed_types'] = 'csv|xml|xls|xlsx';
 				$config['max_size'] = '2048';
 				$config['overwrite'] = TRUE;
 				$this -> upload -> initialize($config);
@@ -53,20 +53,23 @@ class ImporterFiche extends MY_Controller {
 				}
 			}
 		}
-		//On recharge l'index et on affiche les éventuels messages d'erreurs
-		$this -> index();
 
 		//Pour chaque fichier téléchargé on récupère le type du fichier pour charger la bonne librairie
 		foreach ($nombreFichier as $i) {
 			if (isset($data[$i])) {
 				if ($data[$i]['upload_data']['file_ext'] == '.csv')
-					$this -> csvFile($data[$i]);
+					$arrayFichier = $this -> csvFile($data[$i]);
 				if ($data[$i]['upload_data']['file_ext'] == '.xls' || $data[$i]['upload_data']['file_ext'] == '.xlsx')
-					$this -> excelFile($data[$i]);
+					$arrayFichier = $this -> excelFile($data[$i]);
 				if ($data[$i]['upload_data']['file_ext'] == '.xml')
-					$this -> xmlFile($data[$i]);
+					$arrayFichier = $this -> xmlFile($data[$i]);
+				$arrayDisqueEpure = $this -> getTabFinal($arrayFichier);
+				$this -> ctrlAjoutFiche($arrayDisqueEpure);
 			}
 		}
+
+		//On recharge l'index et on affiche les éventuels messages d'erreurs
+		$this -> index();
 	}
 
 	public function excelFile($data) {
@@ -76,13 +79,8 @@ class ImporterFiche extends MY_Controller {
 		//On charge le fichier excel correspondant à l'appel de la fonction
 		$objPHPExcel = PHPExcel_IOFactory::load($data['upload_data']['full_path']);
 
-		//On le change en tableau
-		$arrayFichier = $objPHPExcel -> getSheet() -> toArray();
-
-		//On garde que les informations utiles pour la mise en Base de données
-		$tabAjout = $this -> getTabFinal($arrayFichier);
-
-		$this -> ctrlAjoutFiche($tabAjout);
+		//On le change en tableau et on le renvoie
+		return $objPHPExcel -> getSheet() -> toArray();
 	}
 
 	public function xmlFile($data) {
@@ -95,27 +93,64 @@ class ImporterFiche extends MY_Controller {
 		//On charge le fichier CSV correspondant à l'appel de la fonction
 		$objPHPExcel = $objReader -> load($data['upload_data']['full_path']);
 
-		//On le change en tableau
-		$arrayFichier = $objPHPExcel -> getSheet() -> toArray();
+		//On le change en tableau et on le renvoie
+		return $objPHPExcel -> getSheet() -> toArray();
 	}
 
-	//On constitue un tableau structur� contenant des informations utiles � l'ajout d'une fiche disque
+	/**
+	 *	Retourne un tableau épuré contenant que les informations nécessaires à l'ajout d'un disque en base
+	 *	Le tableau de retour contient une colonne Emission Bénévole si le fichier provient de notre base,
+	 *	et pas de colonne Emission Bénévole s'il provient de la base de gcstar.
+	 *
+	 *	Si il manque un champ dans le fichier uploadé, la colonne sera ignoré et le tableau retourné ne la
+	 *	contiendra pas
+	 *
+	 * Le tableau retourné possède comme index les valeurs de l'array $listeKeysFinal
+	 */
 	public function getTabFinal($arrayFichier) {
+		//liste de clés utilisées pour le tableau de retour
+		$listeKeysFinal = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "Date ajout", "Genre", "Ecouté par", "Mail", "Emission Bénévole");
+				
+		//on initialise les clés de recherche dans le fichier
+		//les clés suivantes sont identiques aux deux fichiers
+		$keyTitre = "Titre";
+		$keyArtiste = "Artiste";
+		$keyFormat = "Format";
+		$keyEmplacement = "Emplacement";
+		$keyDateAjout = "Date d'ajout";
+		$keyGenre = "Genre";
+
+		//si on trouve diffuseur l'export provient de notre base
+		if (array_search("Diffuseur", $arrayFichier[0])) {
+			$keyDiffuseur = "Diffuseur";
+			$keyEcoutePar = "Ecouté par";
+			$keyMail = "Mail diffuseur";
+			$keyEmBev = "Emission Bénévole";
+			$listeKeys = array($keyTitre, $keyArtiste, $keyDiffuseur, $keyFormat, $keyEmplacement, $keyDateAjout, $keyGenre, $keyEcoutePar, $keyMail, $keyEmBev);
+			//sinon il provient de la base de gcstar
+		} else {
+			$keyDiffuseur = "Label";
+			$keyEcoutePar = "Ecoute par";
+			$keyMail = "email label";
+			$listeKeys = array($keyTitre, $keyArtiste, $keyDiffuseur, $keyFormat, $keyEmplacement, $keyDateAjout, $keyGenre, $keyEcoutePar, $keyMail);
+		}
 
 		//On constitue un tableau associant chaque ligne d'un album avec toutes les informations le concernant
-		$listeKeys = array('Titre', 'Artiste', 'Label', 'Format', 'Emplacement', 'Date d\'ajout', 'Genre', 'Ecoute par', 'email label');
 		foreach ($listeKeys as $libelleKeys) {
 			$keys[$libelleKeys] = array_search($libelleKeys, $arrayFichier[0]);
 		}
 
 		$longueurArray = count($arrayFichier) - 1;
 		for ($i = 1; $i <= $longueurArray; $i++) {
+			$j = 0;
 			foreach ($listeKeys as $libelleKeys) {
-				$arrayEpure[$i][$libelleKeys] = $arrayFichier[$i][$keys[$libelleKeys]];
+				if ($keys[$libelleKeys] !== false) {
+					$arrayEpure[$i][$listeKeysFinal[$j]] = $arrayFichier[$i][$keys[$libelleKeys]];
+				}
+				$j++;
 			}
 		}
-		//var_dump($arrayEpure);
-
+		var_dump($arrayEpure);
 		return $arrayEpure;
 	}
 
@@ -157,110 +192,7 @@ class ImporterFiche extends MY_Controller {
 			}
 
 			if ($valide == TRUE) {
-				$this -> load -> model('personne_model', 'persManager');
-				$this -> load -> model('embenevole_model', 'emBevManager');
-				$this -> load -> model('disque_model', 'disqueManager');
-				$this -> load -> model('diffuseur_model', 'diffManager');
-				$this -> load -> model('utilisateur_model', 'utiManager');
 
-				// Défintion de l'Id
-				$disque['id'] = (string)(rand(31, 99) + rand(800, 1000));
-				$disque['autoprod'] = 0;
-				if ($disque['Artiste'] == $disque['Label']) {
-					$disque['autoprod'] = 1;
-				}
-
-				$existEmBev = FALSE;
-				if (strtolower($disque['Emplacement']) == "airplay" || strtolower($disque['Emplacement']) == "archivage" || strtoupper($disque['Emplacement']) == "refusé" || is_null($disque['Emplacement'])) {
-					if (strtolower($disque['Emplacement']) == "airplay") {
-						$disque['Emplacement'] = 1;
-					}
-					if (strtolower($disque['Emplacement']) == "archivage") {
-						$disque['Emplacement'] = 2;
-					}
-					if (strtolower($disque['Emplacement']) == "refusé" || is_null($disque['Emplacement'])) {
-						$disque['Emplacement'] = 3;
-					}
-				} else {
-					$disque['Emplacement'] = 4;
-					$existEmBev = $this -> emBevManager -> readEmission('emb_id', array('emb_libelle' => $disque['Emplacement']));
-				}
-
-				if ($existEmBev != FALSE) {
-					$disque['emBev'] = $existsEmBev['emb_id'];
-				}
-
-				$existListen = $this -> persManager -> readPersonne('per_id', array('per_nom' => $disque['Ecoute par'], 'cat_id' => 2));
-				$disque['listenBy'] = 0;
-				if ($existListen) {
-					$disque['listenBy'] = $existListen['per_id'];
-				}
-
-				// Vérification de l'éxistance de l'artiste
-
-				$result_1 = FALSE;
-				$artId = $this -> persManager -> readArtiste('art_id', array('art_nom' => $disque['Artiste']));
-				if (empty($artId)) {
-					$artId = $difId = $this -> persManager -> last_id();
-					$result_1 = $this -> persManager -> ajouterpersonne($artId, $disque['Artiste'], ($disque['autoprod']) ? 5 : 3);
-				} else {
-					$artId = $artId['art_id'];
-					$result_1 = TRUE;
-				}
-
-				$result_2 = FALSE;
-				// Vérifiaction de l'éxistance du diffuseur si ce n'est pas un Autoprod !
-				if (!$disque['autoprod'])
-					$difId = $this -> diffManager -> readDiffuseur('lab_id', array('lab_nom' => $disque['Label']));
-				else
-					$difId = $this -> persManager -> readAutoprod('aut_id', array('aut_nom' => $disque['Artiste']));
-
-				$result_3 = FALSE;
-				$result_4 = FALSE;
-
-				if (empty($difId)) {
-					$difId = $this -> persManager -> last_id();
-
-					if (!$disque['autoprod']) {
-						// Ajout du diffuseur
-						$resSearchPers = $this -> persManager -> readPersonne('per_id', array('per_nom' => $disque['Label']));
-						if (empty($resSearchPers)){
-							$result_2 = $this -> persManager -> ajouterpersonne($difId, $disque['Label'], 4);
-						}
-					} else
-						$result_2 = TRUE;
-
-					// On contr�le si l'utilisateur n'est pas d�j� pr�sent en base de donn�es
-					$resSearchUtil = $this -> utiManager -> readUtilisateur('per_id', array('uti_login' => $disque['Label']));
-					if (empty($resSearchUtil)) {
-
-						var_dump($resSearchUtil);
-						// Ajout du Diffuseur ou de l'Artiste s'il est autoproducteur en tant qu'Utilisateur
-						$result_3 = $this -> utiManager -> ajouterUtil((($disque['autoprod']) ? $artId : $difId), "", (($disque['autoprod']) ? $disque['Artiste'] : $disque['Label']), "lapin");
-						$result_4 = $this -> diffManager -> ajouterDiffuseur((($disque['autoprod']) ? $artId : $difId), $disque['email label']);
-					}
-				} else {
-					// Récupération de l'id du Diffuseur ou de l'id de l'Artiste si il est autoproducteur
-					$difId = ($disque['autoprod']) ? $difId['aut_id'] : $difId['lab_id'];
-					$result_2 = TRUE;
-					$result_3 = TRUE;
-					$result_4 = TRUE;
-				}
-
-				$disque['artiste'] = $artId;
-				$disque['diffuseur'] = (($disque['autoprod']) ? $artId : $difId);
-
-				if ($result_1 && $result_2 && $result_3) {
-					$disque['titre'] = $disque['Titre'];
-					$disque['format'] = $disque['Format'];
-					$disque['envoiMail'] = 0;
-					$disque['emplacement'] = $disque['Emplacement'];
-					$result = $this -> disqueManager -> ajouterDisque($disque);
-					echo "Réussi";
-				} else {
-					echo "Erreur";
-					var_dump($disque);
-				}
 			}
 
 		}
