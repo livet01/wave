@@ -32,10 +32,11 @@ class disque extends MY_Controller {
 
 		//Chargement models
 		$this -> load -> model('personne_model', 'persManager');
+		$this -> load -> model('disque/disque_model', 'disqueManager');
 		$this -> load -> model('disque/artiste_model', 'artisteManager');
 		$this -> load -> model('disque/diffuseur_model', 'diffuseurManager');
 		$this -> load -> model('disque/utilisateur_model', 'utilisateurManager');
-		$this -> load -> model('embenevole_model', 'emBevManager');
+		$this -> load -> model('disque/embenevole_model', 'embManager');
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
 
@@ -262,8 +263,17 @@ private function attribution (){
 		return $difId;
 	}
 	
-	public function rechercheEmplacementByNom($nom){
-		
+	public function rechercheEmbByNom($nom,$radio) {
+		$id = $this->embManager->select('emb_id', array('emb_libelle' => $nom));
+		if(empty($id)){
+			 $id = (int)$this->embManager->insert($nom, $radio);
+		}
+		else
+			$id = $id["emb_id"];
+		return $id;
+	}
+	public function existeTitreArtiste($titre,$id_artiste) {
+		return !empty($this->disqueManager->select('dis_id', array('per_id' => $id_artiste,'dis_titre'=>$titre)));
 	}
 }
 ?>
