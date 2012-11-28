@@ -219,19 +219,19 @@ class disque extends MY_Controller {
 		
 		switch ($this->input->post('style')){
 			case 'rouge' : 
-				$this->set_dis_style(rechercherStyleByNom('Rock/HardRock/Punk',1));
+				$this->set_dis_style(rechercherStyleByNom('Rock/HardRock/Punk'));
 				break;
 			case 'bleu' : 
-				$this->set_dis_style(rechercherStyleByNom('Electro/House/DubStep',1));
+				$this->set_dis_style(rechercherStyleByNom('Electro/House/DubStep'));
 				break;
 			case 'vert' : 
-				$this->set_dis_style(rechercherStyleByNom('HipHop/Slam',1));
+				$this->set_dis_style(rechercherStyleByNom('HipHop/Slam'));
 				break;
 			case 'jaune' : 
-				$this->set_dis_style(rechercherStyleByNom('Pop/Folk',1));
+				$this->set_dis_style(rechercherStyleByNom('Pop/Folk'));
 				break;
 			case 'blanc' : 
-				$this->set_dis_style(rechercherStyleByNom('World/Traditionnelle',1));
+				$this->set_dis_style(rechercherStyleByNom('World/Traditionnelle'));
 				break;
 			default :
 				throw new Exception("Le style n'est pas valide", 1);
@@ -272,7 +272,7 @@ class disque extends MY_Controller {
 			$id = $id["emb_id"];
 		return $id;
 	}
-	public function rechercheEmplacementByNom($nom, $radio){
+	public function rechercheEmplacementByNom($nom){
 		$empId = $this -> emplacementManager -> select('emp_id', array('emp_libelle' => $nom));
 		if(empty($empId)){
 			$empId = (int)$this->emplacementManager->insert($nom, $radio);
@@ -284,7 +284,7 @@ class disque extends MY_Controller {
 		
 	}
 	
-	public function rechercherStyleByNom($nom, $radio){
+	public function rechercherStyleByNom($nom){
 		
 	}
 	
