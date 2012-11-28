@@ -57,12 +57,15 @@ class ImporterFiche extends MY_Controller {
 		//Pour chaque fichier téléchargé on récupère le type du fichier pour charger la bonne librairie
 		foreach ($nombreFichier as $i) {
 			if (isset($data[$i])) {
-				if ($data[$i]['upload_data']['file_ext'] == '.csv')
+				if ($data[$i]['upload_data']['file_ext'] == '.csv'){
 					$arrayFichier = $this -> csvFile($data[$i]);
-				if ($data[$i]['upload_data']['file_ext'] == '.xls' || $data[$i]['upload_data']['file_ext'] == '.xlsx')
+				}					
+				if ($data[$i]['upload_data']['file_ext'] == '.xls' || $data[$i]['upload_data']['file_ext'] == '.xlsx'){
 					$arrayFichier = $this -> excelFile($data[$i]);
-				if ($data[$i]['upload_data']['file_ext'] == '.xml')
+				}					
+				if ($data[$i]['upload_data']['file_ext'] == '.xml'){
 					$arrayFichier = $this -> xmlFile($data[$i]);
+				}					
 				$arrayDisqueEpure = $this -> getTabFinal($arrayFichier);
 				$this -> ctrlAjoutFiche($arrayDisqueEpure);
 			}
