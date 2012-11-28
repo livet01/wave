@@ -1,3 +1,4 @@
+
 <div id="cadre2">
 	<div id="selection">
 		<div class="infos-disque">
@@ -22,7 +23,7 @@
 		<?php if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 			<p>Veuillez saisir au moins une lettre pour faire une recherche.</p>
 		<?php } ?>
-		<?php if($affichage==0 || ($affichage==1 && isset($resultat))){ ?>		
+		<?php if(($affichage==0 || $affichage==1) && !empty($resultat)){ ?>		
 		<table>
 			<caption>
 				<?php if($affichage==0) { ?> Listes des disques <?php } ?>
@@ -58,6 +59,13 @@
 			<?php echo $pagination; ?>
 			</nav>
 		<?php } ?>
-	<?php } ?>
+	<?php }
+
+		else {
+			?>
+			<p>Bienvenue, il n'y a aucun disque dans la base de données. Pour commener veuillez ajouter un titre.</p>
+			<?php
+		}
+	?>
 	</div>
 </div>

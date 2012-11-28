@@ -68,9 +68,10 @@ class Index extends MY_Controller {
 				}
 				$tab_result[] = array("dis_id" => $tab -> dis_id, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
 			}
-
-			// On passe le tableau de disque
-			$data['resultat'] = $tab_result;
+			if(!empty($tab_result)){
+				// On passe le tableau de disque
+				$data['resultat'] = $tab_result;		
+			}
 		}
 
 		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
@@ -151,7 +152,7 @@ class Index extends MY_Controller {
 
 				//On dédoublonne le tableau
 				$tab_result = array_unique($tab_result);
-
+				$tab_resultDisque = array();
 				foreach ($tab_result as $row) {
 					//On va chercher toutes les infos du disque en fonction de son id
 					$disque = $this -> Info_Disque_Model -> GetArrayDisque($row);
@@ -162,7 +163,7 @@ class Index extends MY_Controller {
 				}
 
 				// Si il n'y a pas de disque dans tab_resultDisque
-				if (count($tab_resultDisque) == 0)
+				if (count($tab_resultDisque) == 0 || !isset($tab_resultDisque))
 					$this -> index(1, 2);
 				// On renvoi sur l'index avec un affichage de 2
 				else {
