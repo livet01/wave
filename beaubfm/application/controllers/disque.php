@@ -202,10 +202,10 @@ private function attribution (){
 				set_emp_id(rechercherEmplacementByNom('Airplay'));
 				break;
 			case 'emp2' : 
-				set_emp_id('Non Diffusé');
+				set_emp_id(rechercherEmplacementByNom('Refusé'));
 				break;
 			case 'emp4' :
-				set_emp_id('Archivage');
+				set_emp_id(rechercherEmplacementByNom('Archivage'));
 				break;
 			default:
 				throw new Exception("L'emplacement n'est pas valide", 1);
@@ -219,19 +219,19 @@ private function attribution (){
 		
 		switch ($this->input->post('style')){
 			case 'rouge' : 
-				set_dis_style('Rock/HardRock/Punk');
+				set_dis_style(rechercherStyleByNom('Rock/HardRock/Punk'));
 				break;
 			case 'bleu' : 
-				set_dis_style('Electro/House/DubStep');
+				set_dis_style(rechercherStyleByNom('Electro/House/DubStep'));
 				break;
 			case 'vert' : 
-				set_dis_style('HipHop/Slam');
+				set_dis_style(rechercherStyleByNom('HipHop/Slam'));
 				break;
 			case 'jaune' : 
-				set_dis_style('Pop/Folk');
+				set_dis_style(rechercherStyleByNom('Pop/Folk'));
 				break;
 			case 'blanc' : 
-				set_dis_style('World/Traditionnelle');
+				set_dis_style(rechercherStyleByNom('World/Traditionnelle'));
 				break;
 			default :
 				throw new Exception("Le style n'est pas valide", 1);
@@ -253,7 +253,7 @@ private function attribution (){
 	}
 	
 	public function rechercheDiffuseurByNom($nom,$radio,$email,$categorie) {
-		$difId = $this->diffuseurManager->select('Diffuseur.per_id', array('Personne.per_nom' => $nom,));
+		$difId = $this->diffuseurManager->select('Diffuseur.per_id', array('Personne.per_nom' => $nom));
 		if(empty($difId)){
 			$utiId = (int)$this->utilisateurManager->insert($this->rechercheArtisteByNom($nom,$radio,$categorie),$nom,$this -> securite -> crypt($nom));
 			$difId = (int)$this->diffuseurManager->insert($utiId,$email);
@@ -263,6 +263,23 @@ private function attribution (){
 		return $difId;
 	}
 	
+
+	public function rechercheEmplacementByNom($nom, $radio, $categorie){
+		$empId = $this -> emplacementManager -> select('emp_id', array('emp_libelle' => $nom));
+		if(empty($empId)){
+			$empId = (int)$this->emplacementManager->insert($nom, $radio, $categorie);
+		}
+		else {
+			$empId = $empId["emp_id"];
+		}
+		return $empId;
+		
+	}
+	
+	public function rechercherStyleByNom($nom, $radio, $categorie){
+		
+	}
+
 	public function rechercheEmbByNom($nom,$radio) {
 		$id = $this->embManager->select('emb_id', array('emb_libelle' => $nom));
 		if(empty($id)){
@@ -272,9 +289,13 @@ private function attribution (){
 			$id = $id["emb_id"];
 		return $id;
 	}
+
 	public function existeTitreArtiste($titre,$id_artiste) {
 		return !empty($this->disqueManager->select('dis_id', array('per_id' => $id_artiste,'dis_titre'=>$titre)));
 	}
+
+	
+	
 }
 ?>
 
