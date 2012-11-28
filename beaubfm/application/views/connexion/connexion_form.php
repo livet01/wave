@@ -12,7 +12,7 @@ if (!defined('BASEPATH'))
 
 		<script src="<?php echo js_url('jquery-1.8.2'); ?>"></script>
 		<script type="text/javascript" src="<?php echo js_url('jquery-ui'); ?>"></script>
-		<!--<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>-->
+		<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>
 		<script type="text/javascript">
 		$(document).ready(function() {
 			//creation de l'image
