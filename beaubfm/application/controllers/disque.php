@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
 class disque extends MY_Controller {
-	
+
 	//
 	// Attributs
 	//
@@ -132,142 +132,150 @@ class disque extends MY_Controller {
 	public function set_emp_id($emp_id) {
 		$this -> emp_id = $emp_id;
 	}
-	
+
 	private function verification() {
-
+		// Vérification du titre
 		$this -> form_validation -> set_rules('titre', '"Titre"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		// Vérification de l'artiste
 		$this -> form_validation -> set_rules('artiste', '"Artiste"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		// Vérification de l'email
 		$this -> form_validation -> set_rules('email', '"Email"', 'trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
+		// Vérification du champs écouté par
 		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-
 		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
-		if ($this->input->post('emissionBenevole') == "emissionBenevole") {
+		if ($this -> input -> post('emissionBenevole') == "emissionBenevole") {
 			$this -> form_validation -> set_rules('emBev', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 		}
-
-		//Vérifiaction du diffuseur
-		if ($this->input-> post('autopro')!="a")
+		// Vérifiaction du diffuseur si il y n'est pas auto producteur
+		if ($this -> input -> post('autopro') != "a")
 			$this -> form_validation -> set_rules('dif_id', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 
+		// On renvoi le résultats des vérifications
 		return $this -> form_validation -> run();
-		
-	}
-private function attribution (){
-		
-		set_dis_libelle($this->input->post('titre'));
-		set_dis_art_id($this->rechercheArtisteByNom($this->input->post('artiste'), $radio, $categorie));
-		
-		//Vérification si autoproduction
-		if($this->input->post('autopro')=="a"){
-			set_dif_id($this->input->post('artiste'));
-		}
-		else{
-			set_dif_if($this->input->post('diffuseur'));
-		}
-		
-		//Vérification si emission bénévole coché
-		if ($this->input->post('emplacement') == "emissionBenevole") {
-			set_emb_id($this->input->post('emb'));
-		}else{
-			set_emb_id($this->input->post('emplacement'));
-		}
 
-		set_dif_mail($this->input->post('email'));
-			
+	}
+
+	private function attribution() {
+		$est_auto_production = $this -> input -> post('autopro') == "a";
 		
-		/*if($this->input->post('envoiMail')=="0"){
-			
-		}else{
-			
-		}*/
+		$this->set_dis_libelle($this -> input -> post('titre'));
+		$this->set_dis_art_id($this -> rechercheArtisteByNom($this -> input -> post('artiste'), 1, ($est_auto_production)?5:3));
 		
-		//vérification du format selectionné
-		switch ($this->input->post('format')) {
-			case 'cd':
-				set_dis_format('CD');
-				break;
-			case 'numerique':
-				set_dis_format('Numérique');	
-				break;
-			case 'Vinyle' : 
-				set_dis_format('Vinyle');
-			default:
-				throw new Exception("Le format n'est pas valide", 1);
-				break;
-		}
-		
-		//Vérification de l'emplacement selectionné
-		switch ($this->input->post('emplacement')){
-			case 'emp1' : 
-				set_emp_id(rechercherEmplacementByNom('Airplay'));
-				break;
-			case 'emp2' : 
-				set_emp_id(rechercherEmplacementByNom('Refusé'));
-				break;
-			case 'emp4' :
-				set_emp_id(rechercherEmplacementByNom('Archivage'));
-				break;
-			default:
-				throw new Exception("L'emplacement n'est pas valide", 1);
-				break;
-		}
-				 
+		// Si le titre et l'artiste ne sont pas présent en base de données.
+		if (!$this -> existeTitreArtiste($this -> dis_libelle, $this -> art_id)) {	
+			
+			// Vérification si autoproduction
+			if ($est_auto_production) {
+				$this->set_dif_id($this->rechercheDiffuseurByNom($this -> input -> post('artiste'),1, $this -> input -> post('email'), 5));
+			} else {
+				$this->set_dif_id($this->rechercheDiffuseurByNom($this -> input -> post('diffuseur'),1, $this -> input -> post('email'), 4));
+			}
+
+			//Vérification si emission bénévole coché
+			if ($this -> input -> post('emplacement') == "emissionBenevole") {
+				$this->set_emb_id($this->rechercheEmbByNom($this -> input -> post('emb'),1));
+			} 
+
+			/*if($this->input->post('envoiMail')=="0"){
+
+			 }else{
+
+			 }*/
+
+			//vérification du format selectionné
+			switch ($this->input->post('format')) {
+				case 'cd' :
+					$this->set_dis_format('CD');
+					break;
+				case 'numerique' :
+					$this->set_dis_format('Numérique');
+					break;
+				case 'Vinyle' :
+					$this->set_dis_format('Vinyle');
+				default :
+					throw new Exception("Le format n'est pas valide");
+					break;
+			}
+
+			//Vérification de l'emplacement selectionné
+			switch ($this->input->post('emplacement')) {
+				case 'emp1' :
+					$this->set_emp_id(rechercherEmplacementByNom('Airplay'));
+					break;
+				case 'emp2' :
+					$this->set_emp_id(rechercherEmplacementByNom('Non Diffusé'));
+					break;
+				case 'emp4' :
+					$this->set_emp_id(rechercherEmplacementByNom('Archivage'));
+					break;
+				default :
+					throw new Exception("L'emplacement n'est pas valide");
+					break;
+			}
 				
-							
+								
 		set_mem_id($this->input->post('listenBy'));
 		
 		
 		switch ($this->input->post('style')){
 			case 'rouge' : 
-				set_dis_style(rechercherStyleByNom('Rock/HardRock/Punk'));
+				$this->set_dis_style(rechercherStyleByNom('Rock/HardRock/Punk',1));
 				break;
 			case 'bleu' : 
-				set_dis_style(rechercherStyleByNom('Electro/House/DubStep'));
+				$this->set_dis_style(rechercherStyleByNom('Electro/House/DubStep',1));
 				break;
 			case 'vert' : 
-				set_dis_style(rechercherStyleByNom('HipHop/Slam'));
+				$this->set_dis_style(rechercherStyleByNom('HipHop/Slam',1));
 				break;
 			case 'jaune' : 
-				set_dis_style(rechercherStyleByNom('Pop/Folk'));
+				$this->set_dis_style(rechercherStyleByNom('Pop/Folk',1));
 				break;
 			case 'blanc' : 
-				set_dis_style(rechercherStyleByNom('World/Traditionnelle'));
+				$this->set_dis_style(rechercherStyleByNom('World/Traditionnelle',1));
 				break;
 			default :
 				throw new Exception("Le style n'est pas valide", 1);
 				break;
 				
 		}
+		}
+		else { // Le titre, artiste est déja en base de données
+			throw new Exception("Le disque $this->dis_libelle est déjà présent dans la base de donnée.");
 			
-		
+		}
 	}
 
-	public function rechercheArtisteByNom($nom,$radio,$categorie) {
-		$artId = $this->artisteManager->select('art_id', array('art_nom' => $nom));
-		if(empty($artId)){
-			 $artId = (int)$this->artisteManager->insert($nom, $radio,$categorie);
-		}
-		else
+	public function rechercheArtisteByNom($nom, $radio, $categorie) {
+		$artId = $this -> artisteManager -> select('art_id', array('art_nom' => $nom));
+		if (empty($artId)) {
+			$artId = (int)$this -> artisteManager -> insert($nom, $radio, $categorie);
+		} else
 			$artId = $artId["art_id"];
 		return $artId;
 	}
-	
-	public function rechercheDiffuseurByNom($nom,$radio,$email,$categorie) {
-		$difId = $this->diffuseurManager->select('Diffuseur.per_id', array('Personne.per_nom' => $nom));
-		if(empty($difId)){
-			$utiId = (int)$this->utilisateurManager->insert($this->rechercheArtisteByNom($nom,$radio,$categorie),$nom,$this -> securite -> crypt($nom));
-			$difId = (int)$this->diffuseurManager->insert($utiId,$email);
-		}
-		else
+
+	public function rechercheDiffuseurByNom($nom, $radio, $email, $categorie) {
+		$difId = $this -> diffuseurManager -> select('Diffuseur.per_id', array('Personne.per_nom' => $nom, ));
+		if (empty($difId)) {
+			$utiId = (int)$this -> utilisateurManager -> insert($this -> rechercheArtisteByNom($nom, $radio, $categorie), $nom, $this -> securite -> crypt($nom));
+			$difId = (int)$this -> diffuseurManager -> insert($utiId, $email);
+		} else
 			$difId = $difId["per_id"];
 		return $difId;
 	}
-	
 
-	public function rechercheEmplacementByNom($nom, $radio, $categorie){
+	public function rechercheEmbByNom($nom, $radio) {
+		$id = $this -> embManager -> select('emb_id', array('emb_libelle' => $nom));
+		if (empty($id)) {
+			$id = (int)$this -> embManager -> insert($nom, $radio);
+		} else
+			$id = $id["emb_id"];
+		return $id;
+	}
+	public function rechercheEmplacementByNom($nom, $radio){
 		$empId = $this -> emplacementManager -> select('emp_id', array('emp_libelle' => $nom));
 		if(empty($empId)){
-			$empId = (int)$this->emplacementManager->insert($nom, $radio, $categorie);
+			$empId = (int)$this->emplacementManager->insert($nom, $radio);
 		}
 		else {
 			$empId = $empId["emp_id"];
@@ -276,26 +284,14 @@ private function attribution (){
 		
 	}
 	
-	public function rechercherStyleByNom($nom, $radio, $categorie){
+	public function rechercherStyleByNom($nom, $radio){
 		
 	}
-
-	public function rechercheEmbByNom($nom,$radio) {
-		$id = $this->embManager->select('emb_id', array('emb_libelle' => $nom));
-		if(empty($id)){
-			 $id = (int)$this->embManager->insert($nom, $radio);
-		}
-		else
-			$id = $id["emb_id"];
-		return $id;
+	
+	public function existeTitreArtiste($titre, $id_artiste) {
+		return !empty($this -> disqueManager -> select('dis_id', array('per_id' => $id_artiste, 'dis_titre' => $titre)));
 	}
 
-	public function existeTitreArtiste($titre,$id_artiste) {
-		return !empty($this->disqueManager->select('dis_id', array('per_id' => $id_artiste,'dis_titre'=>$titre)));
-	}
-
-	
-	
 }
 ?>
 
