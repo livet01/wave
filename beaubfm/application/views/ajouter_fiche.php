@@ -11,8 +11,8 @@
 			<div id="gauche">
 				
 				<p>
-					<label class="mesgReussi"><p class = <?php (empty($reussi)) ? "" : "mesgReussi"; ?>><i class=<?php if (!empty($reussi)) echo "icon-ok-sign";?>></i><?php echo $reussi; ?></p></label>
-					<label class="mesgReussi"><p class = <?php (empty($erreur)) ? "" : "mesgErr"; ?>><?php echo $erreur; ?></p></label>
+					<label class="mesgReussi"><i class = <?php (empty($reussi)) ? "" : "mesgReussi"; ?>><i class=<?php if (!empty($reussi)) echo "icon-ok-sign";?>></i><?php echo $reussi; ?></i></label>
+					<label class="mesgReussi"><i class = <?php (empty($erreur)) ? "" : "mesgErr"; ?>><?php echo $erreur; ?></i></label>
 					
 				</p>
 				<p>
