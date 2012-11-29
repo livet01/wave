@@ -32,6 +32,7 @@ class disque extends MY_Controller {
 
 		//Chargement models
 		$this -> load -> model('personne_model', 'persManager');
+		$this -> load -> model('parametre_model', 'parametreManager');
 		$this -> load -> model('disque/disque_model', 'disqueManager');
 		$this -> load -> model('disque/artiste_model', 'artisteManager');
 		$this -> load -> model('disque/diffuseur_model', 'diffuseurManager');
@@ -182,7 +183,8 @@ class disque extends MY_Controller {
 			 }else{
 
 			 }*/
-
+			
+			
 			//vérification du format selectionné
 			switch ($this->input->post('format')) {
 				case 'cd' :
@@ -270,7 +272,16 @@ class disque extends MY_Controller {
 		$return = $this -> disqueManager -> select('dis_id', array('per_id_artiste' => $id_artiste, 'dis_libelle' => $titre));
 		return !empty($return);
 	}
-
+	public function verificationFormat($nom) {
+		$result = $this -> parametreManager -> select('format');
+		$format = explode(";", $result['param_valeur']);
+		$return = false;
+		foreach ($format as $nom) {
+			if ($format == $nom) {
+				$return = true;
+			}
+		}
+	}
 }
 ?>
 
