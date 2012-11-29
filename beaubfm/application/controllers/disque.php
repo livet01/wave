@@ -255,7 +255,8 @@ class disque extends MY_Controller {
 	}
 	
 	public function existeTitreArtiste($titre, $id_artiste) {
-		//return !empty($this -> disqueManager -> select('dis_id', array('per_id' => $id_artiste, 'dis_titre' => $titre)));
+		$return = $this -> disqueManager -> select('dis_id', array('per_id_artiste' => $id_artiste, 'dis_libelle' => $titre));
+		return !empty($return);
 	}
 
 }
