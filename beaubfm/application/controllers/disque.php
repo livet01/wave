@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-class disque extends MY_Controller {
+class Disque extends MY_Controller {
 
 	//
 	// Attributs
@@ -29,7 +29,6 @@ class disque extends MY_Controller {
 		//Chargement Librairie
 		$this -> load -> library('form_validation');
 		$this -> load -> library('securite');
-		$this -> load -> library('hachage');
 
 		//Chargement models
 		$this -> load -> model('personne_model', 'persManager');
@@ -137,6 +136,21 @@ class disque extends MY_Controller {
 	public function set_emp_id($emp_id) {
 		$this -> emp_id = $emp_id;
 	}
+	
+	//
+	// Ajouter un disque
+	// 
+	public function ajouter() {
+		
+	}
+
+
+
+
+
+
+
+
 
 	private function verification() {
 		// Vérification du titre
@@ -165,21 +179,21 @@ class disque extends MY_Controller {
 		$est_auto_production = $this -> input -> post('autopro') == "a";
 		
 		$this->set_dis_libelle($this -> input -> post('titre'));
-		$this->set_dis_art_id($this -> rechercheArtisteByNom($this -> input -> post('artiste'), 1, ($est_auto_production)?5:3));
+		$this->set_dis_art_id($this -> rechercheArtisteByNom($this -> input -> post('artiste'), $this->user['rad_id'], ($est_auto_production)?5:3));
 		
 		// Si le titre et l'artiste ne sont pas présent en base de données.
 		if (!$this -> existeTitreArtiste($this -> dis_libelle, $this -> art_id)) {	
 			
 			// Vérification si autoproduction
 			if ($est_auto_production) {
-				$this->set_dif_id($this->rechercheDiffuseurByNom($this -> input -> post('artiste'),1, $this -> input -> post('email'), 5));
+				$this->set_dif_id($this->rechercheDiffuseurByNom($this -> input -> post('artiste'),$this->user['rad_id'], $this -> input -> post('email'), 5));
 			} else {
-				$this->set_dif_id($this->rechercheDiffuseurByNom($this -> input -> post('diffuseur'),1, $this -> input -> post('email'), 4));
+				$this->set_dif_id($this->rechercheDiffuseurByNom($this -> input -> post('diffuseur'),$this->user['rad_id'], $this -> input -> post('email'), 4));
 			}
 
 			//Vérification si emission bénévole coché
 			if ($this -> input -> post('emplacement') == "emissionBenevole") {
-				$this->set_emb_id($this->rechercheEmbByNom($this -> input -> post('emb'),1));
+				$this->set_emb_id($this->rechercheEmbByNom($this -> input -> post('emb'),$this->user['rad_id']));
 			} 
 
 			/*if($this->input->post('envoiMail')=="0"){
@@ -210,22 +224,26 @@ class disque extends MY_Controller {
 		}
 	}
 
-	public function ajouter() {
+	private function ajouter_disque() {
 		$erreur = "";
-		if($this->verification()) {
-			try {
-				$this->attribution();
+		if(!$this->formulaire_null()) {
+			if($this->verification()) {
+				try {
+					$this->attribution();
+					$this->addBDD();
+				}
+				catch (Execption $e) {
+					$erreur = $e.getMessage();
+				}
 			}
-			catch (Execption $e) {
-				$erreur = $e.getMessage();
+			else {
+				$erreur = validation_errors('&nbsp;', '&nbsp;');
 			}
 		}
 		else {
-			$erreur = validation_errors('&nbsp;', '&nbsp;');
+			$erreur = "Le formulaire envoyé est nul.";
 		}
-		echo "<pre>";
-		var_dump($this);
-		echo "</pre>";
+		return $erreur;
 	}
 
 	public function addBDD() {
@@ -239,7 +257,9 @@ class disque extends MY_Controller {
 		$data['emp_id'] = $this -> get_emp_id();
 		$data['emb_id'] = $this -> get_emb_id();
 		
-		$this->disqueManager->insert($data);
+		if(!$this->disqueManager->insert($data)) {
+			throw new Exception("Erreur dans l'ajout");
+		}
 	}
 
 	public function rechercheArtisteByNom($nom, $radio, $categorie) {
