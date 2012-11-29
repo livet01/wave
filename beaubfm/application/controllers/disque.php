@@ -37,6 +37,7 @@ class disque extends MY_Controller {
 		$this -> load -> model('disque/diffuseur_model', 'diffuseurManager');
 		$this -> load -> model('disque/utilisateur_model', 'utilisateurManager');
 		$this -> load -> model('disque/embenevole_model', 'embManager');
+		$this -> load -> model('disque/emplacement_model', 'emplacementManager');
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
 
@@ -198,50 +199,15 @@ class disque extends MY_Controller {
 			}
 
 			//Vérification de l'emplacement selectionné
-			switch ($this->input->post('emplacement')) {
-				case 'emp1' :
-					$this->set_emp_id(rechercherEmplacementByNom('Airplay'));
-					break;
-				case 'emp2' :
-					$this->set_emp_id(rechercherEmplacementByNom('Non Diffusé'));
-					break;
-				case 'emp4' :
-					$this->set_emp_id(rechercherEmplacementByNom('Archivage'));
-					break;
-				default :
-					throw new Exception("L'emplacement n'est pas valide");
-					break;
-			}
+			$this->set_emp_id(rechercherEmplacementByNom($this->input->post('emplacement')));
 				
 								
-		set_mem_id($this->input->post('listenBy'));
+			$this->set_mem_id($this->input->post('listenBy'));
 		
-		
-		switch ($this->input->post('style')){
-			case 'rouge' : 
-				$this->set_dis_style(rechercherStyleByNom('Rock/HardRock/Punk'));
-				break;
-			case 'bleu' : 
-				$this->set_dis_style(rechercherStyleByNom('Electro/House/DubStep'));
-				break;
-			case 'vert' : 
-				$this->set_dis_style(rechercherStyleByNom('HipHop/Slam'));
-				break;
-			case 'jaune' : 
-				$this->set_dis_style(rechercherStyleByNom('Pop/Folk'));
-				break;
-			case 'blanc' : 
-				$this->set_dis_style(rechercherStyleByNom('World/Traditionnelle'));
-				break;
-			default :
-				throw new Exception("Le style n'est pas valide", 1);
-				break;
-				
-		}
+			$this->set_dis_style(rechercherStyleByCouleur($this->input->post('style')));
 		}
 		else { // Le titre, artiste est déja en base de données
 			throw new Exception("Le disque $this->dis_libelle est déjà présent dans la base de donnée.");
-			
 		}
 	}
 
@@ -275,7 +241,7 @@ class disque extends MY_Controller {
 	public function rechercheEmplacementByNom($nom){
 		$empId = $this -> emplacementManager -> select('emp_id', array('emp_libelle' => $nom));
 		if(empty($empId)){
-			$empId = (int)$this->emplacementManager->insert($nom, $radio);
+			throw new Exception("L'emplacement n'existe pas.");
 		}
 		else {
 			$empId = $empId["emp_id"];
@@ -289,7 +255,7 @@ class disque extends MY_Controller {
 	}
 	
 	public function existeTitreArtiste($titre, $id_artiste) {
-		return !empty($this -> disqueManager -> select('dis_id', array('per_id' => $id_artiste, 'dis_titre' => $titre)));
+		//return !empty($this -> disqueManager -> select('dis_id', array('per_id' => $id_artiste, 'dis_titre' => $titre)));
 	}
 
 }
