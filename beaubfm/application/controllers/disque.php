@@ -263,7 +263,6 @@ class disque extends MY_Controller {
 			
 			$styleId = $styleId["sty_id"];
 		}
-		
 		return $styleId;
 		
 		
@@ -282,7 +281,6 @@ class disque extends MY_Controller {
 				$return = true;
 			}
 		}
-		var_dump($return);
 		return $return;
 	}
 }
