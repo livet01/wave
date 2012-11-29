@@ -39,6 +39,7 @@ class disque extends MY_Controller {
 		$this -> load -> model('disque/utilisateur_model', 'utilisateurManager');
 		$this -> load -> model('disque/embenevole_model', 'embManager');
 		$this -> load -> model('disque/emplacement_model', 'emplacementManager');
+		$this -> load -> model('disque/style_model', 'styleManager');
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
 
@@ -253,16 +254,16 @@ class disque extends MY_Controller {
 	}
 	
 	public function rechercherStyleByNom($nom){
-		$styleId = $this -> styleManager -> select('sty_id', array('sty_libelle' => $nom));
+		$styleId = $this -> styleManager -> select('sty_id', array('sty_couleur' => $nom));
 		if(empty($styleId)){
-			echo"coucou2";
+			echo "coucou2";
 			//throw new Exception("Le style n'existe pas.");
 		}
 		else {
 			echo "coucou";
 			$styleId = $styleId["sty_id"];
 		}
-		echo $styleId;
+		
 		return $styleId;
 		
 		
