@@ -164,7 +164,7 @@ class ImporterFiche extends MY_Controller {
 		//$array = tableau recensant tous les albums / $i = ligne / $album = tableau contenant informations propres � chaque album
 		foreach ($array as $i => $album) {
 			$nb++;
-			$peutAjouter = $this -> traitementAlbum($album);
+			$peutAjouter = $this -> verificationAlbum($album);
 			if (!$peutAjouter) {
 				$inv++;
 			}
@@ -172,7 +172,8 @@ class ImporterFiche extends MY_Controller {
 		echo "$inv album(s) invalides ! ... sur $i album(s) test�s";
 	}
 
-	public function traitementAlbum($disque) {
+	public function verificationAlbum($disque) {
+		$disqueControlleur=new Disque();
 		$valide = TRUE;
 
 		//on v�rifie si les champs sont renseignés
@@ -182,12 +183,18 @@ class ImporterFiche extends MY_Controller {
 
 			//Insertion de valeurs par d�faut sur certains champs non renseignés
 			
-			if (is_null($disque['Format']) || ) {
+			if (is_null($disque['Format']) || !$disque->verificationFormat($disque['Format'])) {
 				$disque['Format'] = "CD";
 			}
 			
-			if (is_null($disque['Format']) || !$formatValide) {
-				$disque['Format'] = "CD";
+			if (is_null($disque['Ecouté par']) || !$disque->recherche($disque['Ecouté par'])) {
+				$disque['Ecouté par'] = 0;
+			}
+			
+			$idArt=$disque->rechercheArtisteByNom($disque['Artiste'],1,3);
+			
+			if (!$disque->existeTitreArtiste($disque['Titre'],$idArt)) {
+				$disque['Ecouté par'] = "CD";
 			}
 
 			if ($this -> testDoublon($disque)) {
@@ -200,29 +207,6 @@ class ImporterFiche extends MY_Controller {
 
 		}
 		return $valide;
-	}
-
-	public function testDoublon($album) {
-		$estDoublon = FALSE;
-
-		//Chargement des mod�les
-		$this -> load -> model('personne_model', 'persManager');
-		$this -> load -> model('diffuseur_model', 'difManager');
-		$this -> load -> model('disque_model', 'disqueManager');
-
-		$artId = $this -> persManager -> readArtiste('art_id', array('art_nom' => $album['Artiste']));
-		//var_dump($artId);
-
-		if ($artId != NULL) {
-
-			$disId = $this -> disqueManager -> readDisque('dis_id', array('dis_libelle' => $album['Titre'], 'dis_format' => $album['Format'], 'per_id_artiste' => $artId['art_id']));
-
-			if ($disId != NULL) {
-				$estDoublon = TRUE;
-			}
-		}
-
-		return $estDoublon;
 	}
 
 }
