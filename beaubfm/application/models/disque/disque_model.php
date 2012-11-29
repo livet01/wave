@@ -50,7 +50,7 @@ class Disque_model extends CI_Model {
 	
 	public function suppArtiste ($artiste){
 		
-		return $this -> db ->delete($table, array('dis_id' => $artiste));
+		return $this -> db ->delete($this->table, array('dis_id' => $artiste));
 	}
 	
 }
