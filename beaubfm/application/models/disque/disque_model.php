@@ -42,9 +42,9 @@ class Disque_model extends CI_Model {
 	public function nombreArtiste ($artiste, $where)
 	{
 		return $this -> db->select($artiste)
-							->from($this->$table)
+							->from($this->table)
 							->where($where)
-							->count_all_results($artiste);
+							->count_all_results();
 							
 	}
 	
