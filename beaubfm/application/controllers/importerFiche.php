@@ -112,7 +112,7 @@ class ImporterFiche extends MY_Controller {
 	 */
 	public function getTabFinal($arrayFichier) {
 		//liste de clés utilisées pour le tableau de retour
-		$listeKeysFinal = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "Date ajout", "Ecouté par", "Mail", "Emission Bénévole", "Style");
+		$listeKeysFinal = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "DateAjout", "EcoutePar", "Mail", "EmissionBenevole", "Style");
 
 		//on initialise les clés de recherche dans le fichier
 		//les clés suivantes sont identiques aux deux fichiers
@@ -189,12 +189,12 @@ class ImporterFiche extends MY_Controller {
 					$disque['Format'] = "CD";
 				}
 
-				$idEcoutePar = $disqueControlleur -> rechercheEcoutePar($disque['Ecouté par']);
+				$idEcoutePar = $disqueControlleur -> rechercheEcoutePar($disque['EcoutePar']);
 
-				if (!is_null($disque['Ecouté par']) && !empty($idEcoutePar)) {
-					$disque['Ecouté par'] = $idEcoutePar;
+				if (!is_null($disque['EcoutePar']) && !empty($idEcoutePar)) {
+					$disque['EcoutePar'] = $idEcoutePar;
 				} else {
-					$disque['Ecouté par'] = 0;
+					$disque['EcoutePar'] = 0;
 				}
 
 				$idArt = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], 1, 3);
@@ -202,7 +202,51 @@ class ImporterFiche extends MY_Controller {
 				if ($disque -> existeTitreArtiste($disque['Titre'], $idArt)) {
 					$valide = FALSE;
 				}
-
+				
+				if (!empty($disque['EmissionBenevole'])) {
+						
+					$valEmp = strtolower($disque['Emplacement']);
+					$empId;
+					$genre;
+					$embId;
+						
+					if ((strcmp($valEmp, "airplay")) == 0) {
+						$empId = 1;
+					}
+					else if ((substr_compare($valEmp, "arch", 0, 4)) == 0) {
+						$empId = 2;
+						
+						if (strstr($valEmp, "rouge")) {
+							$genre = "rouge";
+						} else if (strstr($valEmp, "jaune")) {
+							$genre = "jaune";
+						} else if (strstr($valEmp, "blanc")) {
+							$genre = "blanc";
+						} else if (strstr($valEmp, "vert")) {
+							$genre = "vert";
+						} else if (strstr($valEmp, "bleu")) {
+							$genre = "bleu";
+						} else {
+							$valide = FALSE;
+						}
+					} else {
+						$empId = 4;
+						
+						$embId = $disqueControlleur -> rechercheEmbByNom($disque['EmissionBenevole'],1);
+					}
+					
+					genreId;
+					try {
+						$genreId = $disqueControlleur -> rechercherStyleByNom($genre);
+					} catch (Exception $e) {
+						echo "Exception re�ue : ", $e->getMessage(), "\n";
+					}
+					$disque['Emplacement'] = $empId;
+					if ($genreId != null) 
+						$disque['Style'] = $genreId;
+					$disque['EmissionBenevole'] = $embId;
+				}
+				
 				if ($valide == TRUE) {
 
 				}
