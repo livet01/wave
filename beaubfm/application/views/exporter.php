@@ -11,7 +11,7 @@
 		</div>
 		<div id="cadre_action">
 			 <!--href="<?php echo site_url("ExporterFiche/CSV"); ?>"-->
-			<a id="linkCSV" class="btn-large-action" ><i class="icon-download-alt"></i> Exporter en CSV</a>
+			<a id="linkCSV" class="btn-large-action" href="#"><i class="icon-download-alt"></i> Exporter en CSV</a>
 			<a id="linkXLS" class="btn-large-action" href="#" ><i class="icon-download-alt"></i> Exporter en XLS</a>
 			<a class="btn-large-action" href="<?php echo site_url("index"); ?>"><i class="icon-undo"></i> Annuler</a>
 		</div>

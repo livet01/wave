@@ -148,6 +148,11 @@
 					$("#exportdisque").attr("action","<?php echo site_url("exporterFiche/xls"); ?>");
 					$("#exportdisque").submit();
 				});
+				
+				$("#linkCSV").click(function(){
+					$("#exportdisque").attr("action","<?php echo site_url("exporterFiche/csv"); ?>");
+					$("#exportdisque").submit();
+				});
 		
 			});
 			

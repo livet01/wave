@@ -82,37 +82,13 @@ class ExporterFiche extends MY_Controller {
 	}
     
     
-    
-    
-    
-    /*$data = '')
-    {
-		$this -> load -> library('layout');
-		$this->load->model('index/Info_Disque_Model');
-		$data = $this->input->post();
-		
-		
-		$tabs = $this->Info_Disque_Model->GetAll_in($data['choix']);
-		
-		foreach ($tabs as $tab) {
-				if (empty($tab -> emb_id))
-					$emb_id = null;
-				else {
-					$emb_id = $tab -> emb_id;
-				}
-				$tab_result[] = array("dis_id" => $tab -> dis_id, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
-			}
-		
-		$data['resultat'] = $tab_result;
-		
-		$this->layout->views('menu_principal')->view('exporter', $data);
-		
-    }*/
+   
 	public function xls($id = '')
 	{
 		$this->load->model("exporter_model", "exportManager");
 		
-	   	date_default_timezone_set("Europe/Paris");
+		date_default_timezone_set("Europe/Paris");
+	   	
 	   	$table_name = 'Disque';
 	    //$query = $this->db->get($table_name);
 	    /*$query = $this->createQueryBuilder('d')
@@ -128,7 +104,7 @@ class ExporterFiche extends MY_Controller {
         // Starting the PHPExcel library
         $this->load->library('Excel');
         //$this->load->library('PHPExcel/IOFactory');
- 		//var_dump($query->result());
+
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
  
@@ -136,8 +112,8 @@ class ExporterFiche extends MY_Controller {
  
         // Field names in the first row
         //$rest = $query->list_fields();
-        $column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout', 'Disponible', 'Mail diffuseur', 'Emplacement', 'Emission Bénévole');
-        $fields = array('dis_libelle', 'art_nom', 'lab_nom', 'dis_format', 'uti_prenom', 'dis_date_ajout', 'dis_disponible', 'lab_mail', 'emp_libelle', 'emb_libelle');
+        $column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout', 'Mail diffuseur', 'Emplacement', 'Emission Bénévole');
+        $fields = array('dis_libelle', 'art_nom', 'lab_nom', 'dis_format', 'uti_prenom', 'dis_date_ajout', 'lab_mail', 'emp_libelle', 'emb_libelle');
 		//var_dump($fields);
 		//var_dump($query->result());
 		//return false;
@@ -177,75 +153,47 @@ class ExporterFiche extends MY_Controller {
         $objWriter->save('php://output');
 	}
 
-	public function csv($value='')
+	public function csv()
 	{
+		date_default_timezone_set("Europe/Paris");
+		
+		header('Content-Type: text/csv;');
+		header('Content-Disposition: attachment; filename="Products_'.date('dMy').'.csv"');
+			
 		$this->load->model("exporter_model", "exportManager");
-		
-		
-	   	date_default_timezone_set("Asia/Jakarta");
-	   	$table_name = 'Disque';
-	    //$query = $this->db->get($table_name);
-	    /*$query = $this->createQueryBuilder('d')
-					->join('d.Artiste', 'a')
-					->getQuery();
-		$result = $query->getResult();*/
-		$query = $this->exportManager->select_export();
-        //var_dump($query->result());
+
+		$query = $this->exportManager->select_export($this->input->post('choix'));
+
         if(!$query)
             return false;
- 		//return false;
-        // Starting the PHPExcel library
-        $this->load->library('Excel');
-        //$this->load->library('PHPExcel/IOFactory');
- 
-        $objPHPExcel = new PHPExcel_Writer_CSV();
-		//$objPHPExcel->setExcelCompatibility(TRUE);
-        //$objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
- 
-        //$objPHPExcel->setActiveSheetIndex(0);
- 
-        // Field names in the first row
-        //$rest = $query->list_fields();
-        $column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout','mail ok', 'Disponible', 'Mail diffuseur', 'Emplacement', 'Emission Bénévole');
-        $fields = array('dis_libelle', 'art_nom', 'lab_nom', 'dis_format', 'uti_prenom', 'dis_date_ajout','dis_envoi_ok', 'dis_disponible', 'lab_mail', 'emp_libelle', 'emb_libelle');
-		//var_dump($fields);
-		//var_dump($query->result());
-		//return false;
-		$col = 0;
-        foreach ($column as $field)
-        {
-           	//var_dump($field);
-			//var_dump($col);
-           	$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $field);
-            $col++;
-        }
 		
-        // Fetching the table data
-        $row = 2;
-        foreach($query->result() as $data)
-        {
-           	//var_dump($data);
-            $col = 0;
-            foreach ($fields as $field)
-            {
-               	$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
-                $col++;
-            }
- 
-            $row++;
-        }
- 		
-		$objPHPExcel->setDelimiter(";");
-        $objPHPExcel->setActiveSheetIndex(0);
- 		
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
-        // Sending headers to force the user to download the file
-        //header('Content-Type: application/vnd.ms-excel');
-		header('Content-type: text/csv');
-        header('Content-Disposition: attachment;filename="Products_'.date('dMy').'.csv"');
-        header('Cache-Control: max-age=0');
- 		
-        $objWriter->save('php://output');
+		$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout', 'Mail diffuseur', 'Emplacement', 'Emission Bénévole');
+        $fields = array('dis_libelle', 'art_nom', 'lab_nom', 'dis_format', 'uti_prenom', 'dis_date_ajout', 'lab_mail', 'emp_libelle', 'emb_libelle');
+		
+		foreach ($query->result() as $data) {
+			$datas[] = array(
+				'Titre' => $data->dis_libelle,
+				'Artiste' => $data->art_nom,
+				'Diffuseur' => $data->lab_nom,
+				'Format' => $data->dis_format,
+				'Ecouté par' => $data->uti_prenom,
+				'Date d\'ajout' => $data->dis_date_ajout,
+				'Mail diffuseur' => $data->lab_mail,
+				'Emplacement' => $data->emp_libelle,
+				'Emission Bénévole' => $data->emb_libelle
+				
+			);
+		}
+		
+		$i = 0;
+		foreach ($datas as $data) {
+			if($i == 0)
+				echo implode(';', array_keys($data))."\r\n";
+			
+			echo implode(';', $data)."\r\n";
+			$i++;
+		}
+		
 	}
  
 }
