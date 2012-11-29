@@ -253,11 +253,14 @@ class disque extends MY_Controller {
 	public function rechercherStyleByNom($nom){
 		$styleId = $this -> styleManager -> select('sty_id', array('sty_libelle' => $nom));
 		if(empty($styleId)){
-			throw new Exception("Le style n'existe pas.");
+			echo"coucou2";
+			//throw new Exception("Le style n'existe pas.");
 		}
 		else {
+			echo "coucou";
 			$styleId = $styleId["sty_id"];
 		}
+		echo $styleId;
 		return $styleId;
 		
 		
