@@ -38,5 +38,19 @@ class Disque_model extends CI_Model {
 			return FALSE;
 		}
 	}
+
+	public function nombreArtiste ($artiste, $where)
+	{
+		return $this -> db->select($artiste)
+							->from($this->$table)
+							->where($where)
+							->count_all_results($artiste);
+							
+	}
+	
+	public function suppArtiste ($artiste){
+		
+		return $this -> db ->delete($table, array('dis_id' => $artiste));
+	}
 	
 }
