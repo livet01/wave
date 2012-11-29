@@ -40,7 +40,7 @@ class disque extends MY_Controller {
 		$this -> load -> model('disque/embenevole_model', 'embManager');
 		$this -> load -> model('disque/emplacement_model', 'emplacementManager');
 		$this -> load -> model('disque/style_model', 'styleManager');
-		$this -> load -> model('disque/ecoutePar_model', 'ecouteParManager');
+		$this -> load -> model('disque/ecoute_model', 'ecouteManager');
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
 
@@ -288,15 +288,15 @@ class disque extends MY_Controller {
 	
 	public function rechercherEcouteParByNom($nom){
 		
-		$ecouteParId = $this -> ecouteParManager -> select('per_id', array('per_nom' => $nom));
-		if(empty($ecouteParId)){
+		$ecouteId = $this -> ecouteManager -> select('per_id', array('per_nom' => $nom));
+		if(empty($ecouteId)){
 			
 			throw new Exception ("L'utilisateur n'existe pas.");
 		}
 		else{
-			$ecouteParId = $ecouteParId['per_id'];
+			$ecouteId = $ecouteId['per_id'];
 		}
-		return $ecouteParId;
+		return $ecouteId;
 		
 		
 	}

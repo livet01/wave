@@ -3,7 +3,7 @@
 /**
  * 
  */
-class EcoutePar_model extends CI_Model {
+class Ecoute_model extends CI_Model {
 	
 	protected $table = 'Personne';
 	
