@@ -5,7 +5,7 @@ class ImporterFiche extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this -> load -> library('upload');
-		date_default_timezone_set("Asia/Jakarta");
+		date_default_timezone_set("Europe/Paris");
 		$this -> load -> library('excel');
 	}
 
@@ -112,7 +112,7 @@ class ImporterFiche extends MY_Controller {
 	 */
 	public function getTabFinal($arrayFichier) {
 		//liste de clés utilisées pour le tableau de retour
-		$listeKeysFinal = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "Date ajout", "Genre", "Ecouté par", "Mail", "Emission Bénévole");
+		$listeKeysFinal = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "Date ajout","Ecouté par", "Mail", "Emission Bénévole","Style");
 				
 		//on initialise les clés de recherche dans le fichier
 		//les clés suivantes sont identiques aux deux fichiers
@@ -121,7 +121,6 @@ class ImporterFiche extends MY_Controller {
 		$keyFormat = "Format";
 		$keyEmplacement = "Emplacement";
 		$keyDateAjout = "Date d'ajout";
-		$keyGenre = "Genre";
 
 		//si on trouve diffuseur l'export provient de notre base
 		if (array_search("Diffuseur", $arrayFichier[0])) {
@@ -129,13 +128,14 @@ class ImporterFiche extends MY_Controller {
 			$keyEcoutePar = "Ecouté par";
 			$keyMail = "Mail diffuseur";
 			$keyEmBev = "Emission Bénévole";
-			$listeKeys = array($keyTitre, $keyArtiste, $keyDiffuseur, $keyFormat, $keyEmplacement, $keyDateAjout, $keyGenre, $keyEcoutePar, $keyMail, $keyEmBev);
+			$keyGenre = "Style";
+			$listeKeys = array($keyTitre, $keyArtiste, $keyDiffuseur, $keyFormat, $keyEmplacement, $keyDateAjout, $keyEcoutePar, $keyMail, $keyEmBev, $keyGenre);
 			//sinon il provient de la base de gcstar
 		} else {
 			$keyDiffuseur = "Label";
 			$keyEcoutePar = "Ecoute par";
 			$keyMail = "email label";
-			$listeKeys = array($keyTitre, $keyArtiste, $keyDiffuseur, $keyFormat, $keyEmplacement, $keyDateAjout, $keyGenre, $keyEcoutePar, $keyMail);
+			$listeKeys = array($keyTitre, $keyArtiste, $keyDiffuseur, $keyFormat, $keyEmplacement, $keyDateAjout, $keyEcoutePar, $keyMail);
 		}
 
 		//On constitue un tableau associant chaque ligne d'un album avec toutes les informations le concernant
@@ -164,7 +164,6 @@ class ImporterFiche extends MY_Controller {
 		//$array = tableau recensant tous les albums / $i = ligne / $album = tableau contenant informations propres � chaque album
 		foreach ($array as $i => $album) {
 			$nb++;
-
 			$peutAjouter = $this -> traitementAlbum($album);
 			if (!$peutAjouter) {
 				$inv++;
@@ -176,18 +175,19 @@ class ImporterFiche extends MY_Controller {
 	public function traitementAlbum($disque) {
 		$valide = TRUE;
 
-		//on v�rifie si les champs sont renseign�s
-		if (is_null($disque['Titre']) || is_null($disque['Artiste']) || is_null($disque['Emplacement']) || is_null($disque['Label']) || is_null($disque['email label'])) {
+		//on v�rifie si les champs sont renseignés
+		if (is_null($disque['Artiste']) || is_null($disque['Titre']) || is_null($disque['Diffuseur']) || is_null($disque['Emplacement'])) {
 			$valide = FALSE;
 		} else {
 
-			//Insertion de valeurs par d�faut sur certains champs non renseign�s
-			if (is_null($disque['Format'])) {
+			//Insertion de valeurs par d�faut sur certains champs non renseignés
+			
+			if (is_null($disque['Format']) || ) {
 				$disque['Format'] = "CD";
 			}
-
-			if (is_null($disque['Date d\'ajout'])) {
-				$disque['Date d\'ajout'] = date('m-d-y');
+			
+			if (is_null($disque['Format']) || !$formatValide) {
+				$disque['Format'] = "CD";
 			}
 
 			if ($this -> testDoublon($disque)) {
@@ -199,7 +199,6 @@ class ImporterFiche extends MY_Controller {
 			}
 
 		}
-
 		return $valide;
 	}
 
