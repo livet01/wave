@@ -288,7 +288,7 @@ class disque extends MY_Controller {
 	
 	public function rechercherEcouteParByNom($nom){
 		
-		$ecouteParId = $this -> ecouteParManager -> select('per_id', array('pe_nom' => $nom));
+		$ecouteParId = $this -> ecouteParManager -> select('per_id', array('per_nom' => $nom));
 		if(empty($ecouteParId)){
 			
 			throw new Exception ("L'utilisateur n'existe pas.");
