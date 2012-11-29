@@ -57,15 +57,15 @@ class ImporterFiche extends MY_Controller {
 		//Pour chaque fichier téléchargé on récupère le type du fichier pour charger la bonne librairie
 		foreach ($nombreFichier as $i) {
 			if (isset($data[$i])) {
-				if ($data[$i]['upload_data']['file_ext'] == '.csv'){
+				if ($data[$i]['upload_data']['file_ext'] == '.csv') {
 					$arrayFichier = $this -> csvFile($data[$i]);
-				}					
-				if ($data[$i]['upload_data']['file_ext'] == '.xls' || $data[$i]['upload_data']['file_ext'] == '.xlsx'){
+				}
+				if ($data[$i]['upload_data']['file_ext'] == '.xls' || $data[$i]['upload_data']['file_ext'] == '.xlsx') {
 					$arrayFichier = $this -> excelFile($data[$i]);
-				}					
-				if ($data[$i]['upload_data']['file_ext'] == '.xml'){
+				}
+				if ($data[$i]['upload_data']['file_ext'] == '.xml') {
 					$arrayFichier = $this -> xmlFile($data[$i]);
-				}					
+				}
 				$arrayDisqueEpure = $this -> getTabFinal($arrayFichier);
 				$this -> ctrlAjoutFiche($arrayDisqueEpure);
 			}
@@ -112,8 +112,8 @@ class ImporterFiche extends MY_Controller {
 	 */
 	public function getTabFinal($arrayFichier) {
 		//liste de clés utilisées pour le tableau de retour
-		$listeKeysFinal = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "Date ajout","Ecouté par", "Mail", "Emission Bénévole","Style");
-				
+		$listeKeysFinal = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "Date ajout", "Ecouté par", "Mail", "Emission Bénévole", "Style");
+
 		//on initialise les clés de recherche dans le fichier
 		//les clés suivantes sont identiques aux deux fichiers
 		$keyTitre = "Titre";
@@ -169,40 +169,43 @@ class ImporterFiche extends MY_Controller {
 				$inv++;
 			}
 		}
-		echo "$inv album(s) invalides ! ... sur $i album(s) test�s";
+		echo "$inv album(s) invalides ! ... sur $i album(s) testés";
 	}
 
 	public function verificationAlbum($disque) {
-		$disqueControlleur=new Disque();
+		$disqueControlleur = new Disque();
 		$valide = TRUE;
 
 		//on v�rifie si les champs sont renseignés
 		if (is_null($disque['Artiste']) || is_null($disque['Titre']) || is_null($disque['Diffuseur']) || is_null($disque['Emplacement'])) {
 			$valide = FALSE;
 		} else {
-
-			//Insertion de valeurs par d�faut sur certains champs non renseignés
-			
-			if (is_null($disque['Format']) || !$disque->verificationFormat($disque['Format'])) {
-				$disque['Format'] = "CD";
-			}
-			
-			if (is_null($disque['Ecouté par']) || !$disque->recherche($disque['Ecouté par'])) {
-				$disque['Ecouté par'] = 0;
-			}
-			
-			$idArt=$disque->rechercheArtisteByNom($disque['Artiste'],1,3);
-			
-			if (!$disque->existeTitreArtiste($disque['Titre'],$idArt)) {
-				$disque['Ecouté par'] = "CD";
-			}
-
-			if ($this -> testDoublon($disque)) {
+			if ($disqueControlleur -> testDoublon()) {
 				$valide = FALSE;
-			}
+			} else {
+				//Insertion de valeurs par d�faut sur certains champs non renseignés
 
-			if ($valide == TRUE) {
+				if (is_null($disque['Format']) || !$disqueControlleur -> verificationFormat($disque['Format'])) {
+					$disque['Format'] = "CD";
+				}
 
+				$idEcoutePar = $disqueControlleur -> rechercheEcoutePar($disque['Ecouté par']);
+
+				if (!is_null($disque['Ecouté par']) && !empty($idEcoutePar)) {
+					$disque['Ecouté par'] = $idEcoutePar;
+				} else {
+					$disque['Ecouté par'] = 0;
+				}
+
+				$idArt = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], 1, 3);
+
+				if ($disque -> existeTitreArtiste($disque['Titre'], $idArt)) {
+					$valide = FALSE;
+				}
+
+				if ($valide == TRUE) {
+
+				}
 			}
 
 		}
