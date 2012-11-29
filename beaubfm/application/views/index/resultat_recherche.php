@@ -19,11 +19,14 @@
 	<div id="resultat_recherche">
 		<?php if($affichage==2){ ?>
 			<p>La recherche n'a renvoyé aucun résultat.</p>
-		<?php } ?>
-		<?php if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
+		<?php }
+			if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 			<p>Veuillez saisir au moins une lettre pour faire une recherche.</p>
-		<?php } ?>
-		<?php if(($affichage==0 || $affichage==1) && !empty($resultat)){ ?>		
+		<?php }
+		if(empty($resultat) && $affichage!=0 && $affichage!=1 && $affichage!=2){ ?>
+		<p>Bienvenue, il n'y a aucun disque dans la base de données. Pour commener veuillez ajouter un titre.</p>
+		<?php }
+			if(($affichage==0 || $affichage==1) && !empty($resultat)){ ?>		
 		<div id="box"></div>
 		
 		<table>
@@ -68,12 +71,6 @@
 			<!-- <?php echo $pagination; ?> -->
 			</nav>
 	<?php }
-	}
-		else {
-		?>
-			<p>Bienvenue, il n'y a aucun disque dans la base de données. Pour commener veuillez ajouter un titre.</p>
-		<?php
-		}
-		?>
+	}?>
 	</div>
 </div>
