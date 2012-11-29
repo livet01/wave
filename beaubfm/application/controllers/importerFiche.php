@@ -3,7 +3,7 @@ require_once 'disque.php';
 
 class ImporterFiche extends MY_Controller {
 	private $msgError = "";
-	private $msg="";
+	private $msg = "";
 
 	public function __construct() {
 		parent::__construct();
@@ -20,11 +20,11 @@ class ImporterFiche extends MY_Controller {
 	public function getMsgError() {
 		return $this -> msgError;
 	}
-	
+
 	public function setMsg($msg) {
-		$this->msg=$msg;
+		$this -> msg = $msg;
 	}
-	
+
 	public function getMsg() {
 		return $this -> msg;
 	}
@@ -58,7 +58,7 @@ class ImporterFiche extends MY_Controller {
 				//Si l'upload ne fonctionne pas
 				if (!$this -> upload -> do_upload($form_name)) {
 					//On récupère l'erreur
-					$this -> setMsgError($this -> getMsgError() . "Fichier " . $i . " : " . $this -> upload -> display_errors() . "\n");
+					$this -> setMsgError($this -> getMsgError() . "Fichier " . $i . " : " . $this -> upload -> display_errors());
 				} else {
 					//Sinon on récupère les informations de l'upload
 					$data[$i] = array('upload_data' => $this -> upload -> data());
@@ -81,12 +81,14 @@ class ImporterFiche extends MY_Controller {
 				$arrayDisqueEpure = $this -> getTabFinal($arrayFichier);
 				$this -> ctrlAjoutFiche($arrayDisqueEpure);
 				unlink($data[$i]['upload_data']['full_path']);
+				$this -> setMsg($this -> getMsg()." (fichier ".$i.")");
 			}
 		}
 
-		//On recharge la vue et on affiche les éventuels messages d'erreurs		
+		//On recharge la vue et on affiche les éventuels messages d'erreurs
+		parent::__construct();
 		$this -> load -> library('layout');
-		$this -> layout -> views('menu_principal')->view('importer', array('msgError' => $this -> getMsgError(),'msg'=>$this->getMsg()));
+		$this -> layout -> views('menu_principal') -> view('importer', array('msgError' => $this -> getMsgError(), 'msg' => $this -> getMsg()));
 	}
 
 	public function excelFile($data) {
@@ -172,7 +174,8 @@ class ImporterFiche extends MY_Controller {
 
 	public function ctrlAjoutFiche($array) {
 		$invalide = 0;
-		$doublon=0;
+		$doublon = 0;
+		$valide=0;
 		$nb = 0;
 
 		//$array = tableau recensant tous les albums / $i = ligne / $album = tableau contenant informations propres � chaque album
@@ -185,8 +188,11 @@ class ImporterFiche extends MY_Controller {
 			if ($result['doublon']) {
 				$doublon++;
 			}
+			if(!$result['doublon'] && $result['valide']){
+				$valide++;
+			}
 		}
-		$this->setMsg("$invalide album(s) invalides dont $doublon doublon(s) sur un total de $i album(s) testés");
+		$this -> setMsg($this->getMsg()."$invalide album(s) invalides dont $doublon doublon(s) sur un total de $nb album(s) testés, $valide ajoutés en base");
 	}
 
 	public function verificationAlbum($disque) {
@@ -205,7 +211,7 @@ class ImporterFiche extends MY_Controller {
 			if (is_null($disque['Format']) || !$disqueControlleur -> verificationFormat($disque['Format'])) {
 				$format = "CD";
 			} else {
-				$format=$disque['Format'];
+				$format = $disque['Format'];
 			}
 
 			//Mail
@@ -228,7 +234,7 @@ class ImporterFiche extends MY_Controller {
 
 				//Emplacement & EmissionBenevole
 				$valEmp = strtolower($disque['Emplacement']);
-				$emb_id=null;
+				$emb_id = null;
 				try {
 					$emp_id = $disqueControlleur -> rechercheEmplacementByNom($valEmp);
 				} catch (Exception $e) {
@@ -327,7 +333,7 @@ class ImporterFiche extends MY_Controller {
 				$ecoute_id = 0;
 			}
 
-			if ($valide === TRUE && $doublon===FALSE) {
+			if ($valide === TRUE && $doublon === FALSE) {
 				$disqueControlleur -> set_dis_libelle($titre);
 				$disqueControlleur -> set_dis_format($format);
 				$disqueControlleur -> set_mem_id($ecoute_id);
@@ -346,19 +352,15 @@ class ImporterFiche extends MY_Controller {
 			}
 		}
 
-		if ($valide === FALSE && $doublon===FALSE) {
+		if ($valide === FALSE && $doublon === FALSE) {
 			//Cas d'un fichier exporté depuis gcstar
 			if (!isset($disque['EmissionBenevole'])) {
-				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'],
-															$disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'],
-															$this -> user['per_id'], null,null);
+				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this -> user['per_id'], null, null);
 			} else {
-				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'],
-															$disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'],
-															$this -> user['per_id'], $disque['Style'],$disque['EmissionBenevole']);
+				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this -> user['per_id'], $disque['Style'], $disque['EmissionBenevole']);
 			}
 		}
-		return array('valide'=>$valide,'doublon'=>$doublon);
+		return array('valide' => $valide, 'doublon' => $doublon);
 	}
 
 }
