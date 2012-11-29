@@ -1,4 +1,6 @@
 <?php
+require_once 'disque.php';
+
 class ImporterFiche extends MY_Controller {
 	private $msgError = "";
 
@@ -7,6 +9,7 @@ class ImporterFiche extends MY_Controller {
 		$this -> load -> library('upload');
 		date_default_timezone_set("Europe/Paris");
 		$this -> load -> library('excel');
+		$this -> load -> model('importer/importer_model', 'importerManager');
 	}
 
 	public function setMsgError($msgError) {
@@ -32,8 +35,8 @@ class ImporterFiche extends MY_Controller {
 			//Si le fichier existe on initialise la config
 			if (!empty($_FILES['fichier_' . $i]['name'])) {
 
-				//Le nom sera du type "username_fichier_NUMFICHIER"
-				$config['file_name'] = $this -> session -> userdata('username') . '_fichier_' . $i;
+				//Le nom sera du type "login_fichier_NUMFICHIER"
+				$config['file_name'] = $this -> user['uti_login'] . '_fichier_' . $i;
 				$config['upload_path'] = './assets/upload';
 
 				//Les extensions acceptées sont les suivantes
@@ -68,6 +71,7 @@ class ImporterFiche extends MY_Controller {
 				}
 				$arrayDisqueEpure = $this -> getTabFinal($arrayFichier);
 				$this -> ctrlAjoutFiche($arrayDisqueEpure);
+				unlink($data[$i]['upload_data']['full_path']);
 			}
 		}
 
@@ -153,126 +157,196 @@ class ImporterFiche extends MY_Controller {
 				$j++;
 			}
 		}
-		var_dump($arrayEpure);
 		return $arrayEpure;
 	}
 
 	public function ctrlAjoutFiche($array) {
-		$inv = 0;
+		$invalide = 0;
+		$doublon=0;
 		$nb = 0;
 
 		//$array = tableau recensant tous les albums / $i = ligne / $album = tableau contenant informations propres � chaque album
 		foreach ($array as $i => $album) {
 			$nb++;
-			$peutAjouter = $this -> verificationAlbum($album);
-			if (!$peutAjouter) {
-				$inv++;
+			$result = $this -> verificationAlbum($album);
+			if (!$result['valide']) {
+				$invalide++;
+			}
+			if ($result['doublon']) {
+				$doublon++;
 			}
 		}
-		echo "$inv album(s) invalides ! ... sur $i album(s) testés";
+		echo "$invalide album(s) invalides dont $doublon doublon(s) !";
+		echo "sur un total de $i album(s) testés";
 	}
 
 	public function verificationAlbum($disque) {
 		$disqueControlleur = new Disque();
 		$valide = TRUE;
+		$doublon = FALSE;
 
-		//on v�rifie si les champs sont renseignés
+		//on vérifie si les champs obligatoires sont renseignés
 		if (is_null($disque['Artiste']) || is_null($disque['Titre']) || is_null($disque['Diffuseur']) || is_null($disque['Emplacement'])) {
 			$valide = FALSE;
 		} else {
-			if ($disqueControlleur -> testDoublon()) {
-				$valide = FALSE;
-			} else {
-				//Insertion de valeurs par d�faut sur certains champs non renseignés
-				
-				//Format
-				if (is_null($disque['Format']) || !$disqueControlleur -> verificationFormat($disque['Format'])) {
-					$disque['Format'] = "CD";
-				}
-				
-				//EcoutePar
-				$idEcoutePar = $disqueControlleur -> rechercheEcoutePar($disque['EcoutePar']);
+			$listeKeysFinal = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "DateAjout", "EcoutePar", "Mail", "EmissionBenevole", "Style");
+			//Insertion de valeurs par défaut sur certains champs non renseignés
 
-				if (!is_null($disque['EcoutePar']) && !empty($idEcoutePar)) {
-					$disque['EcoutePar'] = $idEcoutePar;
-				} else {
-					$disque['EcoutePar'] = 0;
-				}
-				
-				//Artiste
-				$chVerifAUtoProd = strtolower($disque['Diffuseur']);
-				$catId = 3;
-				
-				if (strstr($chVerifAUtoProd, "auto")) {
-					if (strstr($chVerifAUtoProd, "prod"))
-						$catId = 5;
-				}
-				$idArt = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $catId);
-				
-				if ($disque -> existeTitreArtiste($disque['Titre'], $idArt)) {
-					$valide = FALSE;
-				}
-				
-				//Emplacement & EmissionBenevole
-				if (!empty($disque['EmissionBenevole'])) {
-						
-					$valEmp = strtolower($disque['Emplacement']);
-					$empId;
-					$genre;
-					$embId;
-						
-					if ((strcmp($valEmp, "airplay")) == 0) {
-						$empId = 1;
+			//Format
+			if (is_null($disque['Format']) || !$disqueControlleur -> verificationFormat($disque['Format'])) {
+				$format = "CD";
+			}
+
+			//Mail
+			if (!empty($disque['Mail']) && !preg_match("/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i", $disque['Mail'])) {
+				$mail = null;
+			} else {
+				$mail = $disque['Mail'];
+			}
+
+			//Cas d'un fichier exporté depuis gcstar
+			if (!isset($disque['EmissionBenevole'])) {
+
+				//Catégorie
+				$cat_id = 3;
+				if (strstr(strtolower($disque['Diffuseur']), "auto")) {
+					if (strstr(strtolower($disque['Diffuseur']), "prod")) {
+						$cat_id = 5;
 					}
-					else if ((substr_compare($valEmp, "arch", 0, 4)) == 0) {
-						$empId = 2;
-						
+				}
+
+				//Emplacement & EmissionBenevole
+				$valEmp = strtolower($disque['Emplacement']);
+
+				try {
+					$emp_id = $disqueControlleur -> rechercheEmplacementByNom($valEmp);
+				} catch (Exception $e) {
+					if ((substr_compare($valEmp, "arch", 0, 4)) == 0) {
+						$emp_id = 2;
+
 						if (strstr($valEmp, "rouge")) {
-							$genre = "rouge";
+							$style = "rouge";
 						} else if (strstr($valEmp, "jaune")) {
-							$genre = "jaune";
+							$style = "jaune";
 						} else if (strstr($valEmp, "blanc")) {
-							$genre = "blanc";
+							$style = "blanc";
 						} else if (strstr($valEmp, "vert")) {
-							$genre = "vert";
+							$style = "vert";
 						} else if (strstr($valEmp, "bleu")) {
-							$genre = "bleu";
+							$style = "bleu";
 						} else {
 							$valide = FALSE;
 						}
 					} else {
-						$empId = 4;
-						
-						$embId = $disqueControlleur -> rechercheEmbByNom($disque['EmissionBenevole'],1);
+						$emp_id = 4;
+						$emb_id = $disqueControlleur -> rechercheEmbByNom($valEmp, $this -> user['rad_id']);
+						if (empty($emb_id)) {
+							$valide = FALSE;
+						}
 					}
-					
-					genreId;
+
+					//Style
+					if (!empty($style)) {
+						try {
+							$style_id = $disqueControlleur -> rechercherStyleByNom($style);
+						} catch (Exception $e) {
+							$valide = FALSE;
+						}
+					}
+				}
+
+			} else {
+				//Dans le cas ou le fichier vient de notre base
+
+				//Catégorie
+				if ($disque['Diffuseur'] === $disque['Artiste']) {
+					$cat_id = 5;
+				} else {
+					$cat_id = 3;
+				}
+
+				//Emplacement
+				try {
+					$emp_id = $disqueControlleur -> rechercheEmplacementByNom($disque['Emplacement']);
+				} catch (Exception $e) {
+					$valide = FALSE;
+				}
+
+				//Emission Bénévole
+				if (!empty($emp_id) && $emp_id === 4) {
+					$emb_id = $disqueControlleur -> rechercheEmbByNom($valEmp, $this -> user['rad_id']);
+				}
+
+				//Style
+				if (empty($disque['Style'])) {
+					$style_id = null;
+				} else {
 					try {
-						$genreId = $disqueControlleur -> rechercherStyleByNom($genre);
+						$style_id = $disqueControlleur -> rechercherStyleByNom($disque['Style']);
 					} catch (Exception $e) {
-						echo "Exception re�ue : ", $e->getMessage(), "\n";
+						$style_id = null;
 					}
-					$disque['Emplacement'] = $empId;
-					if ($genreId != null) 
-						$disque['Style'] = $genreId;
-					$disque['EmissionBenevole'] = $embId;
 				}
-				
-				if ($valide == TRUE) {
-					$disqueAjout=new Disque();
-					$disqueAjout->set_art_id($art_id);
-					
-				}
+
 			}
 
+			//Artiste
+			$art_id = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $this -> user['rad_id'], $cat_id);
+
+			//Titre
+			if ($disqueControlleur -> existeTitreArtiste($disque['Titre'], $art_id)) {
+				$valide = FALSE;
+				$doublon = TRUE;
+			} else {
+				$titre = $disque['Titre'];
+			}
+
+			//Diffuseur
+			if ($cat_id === 5) {
+				$dif_id = $art_id;
+			} else {
+				$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Diffuseur'], $this -> user['rad_id'], $mail, 4);
+			}
+
+			//EcoutePar
+			try {
+				$ecoute_id = $disqueControlleur -> rechercherEcouteParByNom($disque['EcoutePar']);
+			} catch (Exception $e) {
+				$ecoute_id = 0;
+			}
+
+			if ($valide === TRUE && $doublon===FALSE) {
+				$disqueControlleur -> set_dis_libelle($titre);
+				$disqueControlleur -> set_dis_format($format);
+				$disqueControlleur -> set_mem_id($ecoute_id);
+				$disqueControlleur -> set_art_id($art_id);
+				$disqueControlleur -> set_dif_id($dif_id);
+				$disqueControlleur -> set_dis_envoi_ok(TRUE);
+				$disqueControlleur -> set_emp_id($emp_id);
+				$disqueControlleur -> set_emb_id($emb_id);
+
+				try {
+					$disqueControlleur -> addBDD();
+				} catch (Exception $e) {
+					$e -> getMessage();
+				}
+
+			}
 		}
-		if($valide===FALSE){
-			$this -> load -> model('importer_model', 'importerManager');
-			$this->importerManager->ajoutDisqueImport($disque['Titre'],$disque['Format'],$disque['EcoutePar'],$disque['DateAjout'],$disque['Artiste'],
-														$disque['Diffuseur'],$disque['Mail'],$disque['Emplacement'],$id,
-														$style);
+
+		if ($valide === FALSE && $doublon===FALSE) {
+			//Cas d'un fichier exporté depuis gcstar
+			if (!isset($disque['EmissionBenevole'])) {
+				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'],
+															$disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'],
+															$this -> user['per_id'], null,null);
+			} else {
+				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'],
+															$disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'],
+															$this -> user['per_id'], $disque['Style'],$disque['EmissionBenevole']);
+			}
 		}
-		return $valide;
+		return array('valide'=>$valide,'doublon'=>$doublon);
 	}
 
 }

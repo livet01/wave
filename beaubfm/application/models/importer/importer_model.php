@@ -5,7 +5,9 @@ class Importer_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function ajoutDisqueImport($libelle,$format, $ecoute,$dateAjout,$artiste,$diffuseur,$email,$emplacement,$perId,$style)
+	public $table="importdisque";
+	
+	public function ajoutDisqueImport($libelle,$format, $ecoute,$dateAjout,$artiste,$diffuseur,$email,$emplacement,$perId,$style,$emBev)
 	{
 		
 		return $this->db->set('imp_libelle', $libelle)
@@ -18,7 +20,8 @@ class Importer_model extends CI_Model {
 						->set('imp_emplacement', $emplacement)
 						->set('per_id_import', $perId)	
 						->set('imp_date_import', 'NOW()',false)
-						->set('imp_style', $diffuseur)
+						->set('imp_style', $style)
+						->set('imp_em_bev',$emBev)
 						->insert($this->table);
 	}
 }
