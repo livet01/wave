@@ -371,7 +371,7 @@ class Disque extends MY_Controller {
 	
 	public function suppArtiste($nom=''){
 		
-		$artiste = $this -> disqueManager -> nombreArtiste('per_id_artiste', array('dis_id' => 12));
+		$artiste = $this -> disqueManager -> nombreArtiste('per_id_artiste', array('dis_id' => $nom));
 		if($artiste =='0' || '1'){
 			
 			$sup = $this -> disqueManager -> suppArtiste($artiste);
