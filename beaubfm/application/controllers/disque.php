@@ -296,6 +296,7 @@ class disque extends MY_Controller {
 		else{
 			$ecouteId = $ecouteId['per_id'];
 		}
+		var_dump($ecouteId);
 		return $ecouteId;
 		
 		
