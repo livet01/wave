@@ -229,7 +229,16 @@ class disque extends MY_Controller {
 	}
 
 	public function addBDD() {
-		$data['dif_id']=$this->get_dif_id();
+		
+		$data['dis_libelle'] = $this-> get_dis_libelle();
+		$data['dis_format'] = $this -> get_dis_format();
+		$data['uti_id_ecoute'] = $this -> get_uti_id_ecoute();
+		$data['per_id_artiste'] = $this -> get_per_id_artiste();
+		$data['dif_id'] = $this -> get_dif_id();
+		$data['dis_envoi_ok'] = $this -> get_dis_envoi_ok();
+		$data['emp_id'] = $this -> get_emp_id();
+		$data['emb_id'] = $this -> get_emb_id();
+		
 		$this->disqueManager->insert($data);
 	}
 
