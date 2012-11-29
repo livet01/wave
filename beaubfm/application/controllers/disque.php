@@ -300,6 +300,27 @@ class disque extends MY_Controller {
 		
 		
 	}
+	
+	public function formulaire_null(){
+		$titre = $this -> input ->post('titre') ;
+		$artiste = $this -> input ->post('artiste') ; 
+		$format = $this -> input ->post('format') ;
+		$style = $this -> input ->post('style') ; 
+		$emplacement = $this -> input ->post('emplacement') ;
+		$ecoute = $this -> input ->post('listenBy') ;
+		$diffuseur = $this -> input ->post('diffuseur') ;
+		$email = $this -> input ->post('email') ;
+		
+		
+		if (empty($titre) && empty($artiste) && empty($format) && empty($style) && empty($emplacement)
+			&& empty($ecoute) && empty($diffuseur) && empty($email)){
+				
+				return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>
 
