@@ -40,6 +40,7 @@ class disque extends MY_Controller {
 		$this -> load -> model('disque/embenevole_model', 'embManager');
 		$this -> load -> model('disque/emplacement_model', 'emplacementManager');
 		$this -> load -> model('disque/style_model', 'styleManager');
+		$this -> load -> model('disque/ecoutePar_model', 'ecouteParManager');
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
 
@@ -272,6 +273,7 @@ class disque extends MY_Controller {
 		$return = $this -> disqueManager -> select('dis_id', array('per_id_artiste' => $id_artiste, 'dis_libelle' => $titre));
 		return !empty($return);
 	}
+	
 	public function verificationFormat($nom) {
 		$result = $this -> parametreManager -> select('format');
 		$format = explode(";", $result['param_valeur']);
@@ -282,6 +284,20 @@ class disque extends MY_Controller {
 			}
 		}
 		return $return;
+	}
+	
+	public function rechercherEcouteParByNom($nom){
+		
+		$ecouteParId = $this -> ecouteParManager -> select('per_id', array('pe_nom' => $nom));
+		if(empty($ecouteParId)){
+			
+			throw new Exception ("L'utilisateur n'existe pas.");
+		}
+		else{
+			$ecouteParId = $ecouteParId['per_id'];
+		}
+		
+		
 	}
 }
 ?>
