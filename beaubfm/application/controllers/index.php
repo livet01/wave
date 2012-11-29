@@ -34,7 +34,7 @@ class Index extends MY_Controller {
 
 			// On récupère le nombre de disque présent dans la base
 			$nb_disques_total = $this -> Info_Disque_Model -> count();
-
+			
 			// On vérifie la cohérence de la variable $_GET
 			if ($g_nb_disques > 1) {
 				// La variable $_GET semblent être correcte. On doit maintenant
@@ -53,11 +53,19 @@ class Index extends MY_Controller {
 			}
 
 			// Mise en place de la pagination
-			$this -> pagination -> initialize(array('base_url' => base_url() . 'index.php/index/index/', 'total_rows' => $nb_disques_total, 'per_page' => self::NB_DISQUE_PAR_PAGE));
-			$data['pagination'] = $this -> pagination -> create_links();
+			//$this -> pagination -> initialize(array('base_url' => base_url() . 'index.php/index/index/', 'total_rows' => $nb_disques_total, 'per_page' => self::NB_DISQUE_PAR_PAGE));
+			/*$pag = "";
+			for($i = 1 ; $i <= ($nb_disques_total/self::NB_DISQUE_PAR_PAGE)+1 ; $i++)
+			{
+				$pag = $pag."&nbsp;<a href=\"#\" id=\"p".$i."\">".$i."</a>&nbsp;";
+			}
+			
+			$linkpag = "<a href=\"#\" id=\"begin\">&lt;&lt;</a><a href=\"#\" id=\"pred\">&lt;</a>".$pag."<a href=\"#\" id=\"suiv\">&gt;</a><a href=\"#\" id=\"fin\">&gt;&gt;</a>";
+			$data['pagination'] = $linkpag;
+			//$data['pagination'] = $this -> pagination -> create_links();*/
 
 			// Récupération de tout les disques pour la page
-			$tabs = $this -> Info_Disque_Model -> GetAll(self::NB_DISQUE_PAR_PAGE, $nb_disques - 1);
+			$tabs = $this -> Info_Disque_Model -> GetAll();
 
 			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
 			foreach ($tabs as $tab) {
