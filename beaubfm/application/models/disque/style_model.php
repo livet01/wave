@@ -3,9 +3,9 @@
 /**
  * 
  */
-class Emplacement_model extends CI_Model {
+class Style_model extends CI_Model {
 	
-	protected $table = 'Emplacement';
+	protected $table = 'Style';
 	
 	function __construct() {
 		parent::__construct();
@@ -20,3 +20,4 @@ class Emplacement_model extends CI_Model {
 	}
 	
 }
+
