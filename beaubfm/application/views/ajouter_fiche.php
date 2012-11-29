@@ -44,7 +44,7 @@
 				<p>
 					<label class="labelGaucheEmplacement" for="style"><i class="icon-file"></i> Style</label>
 					<input type="radio" name="style" id="rouge" value="rouge" checked="checked">
-					<label class="check" for="rouge" >Rock/HardRock/Punk</label>
+					<label id="rouge" class="check" for="rouge" >Rock/HardRock/Punk</label>
 					<br>
 					<input type="radio" name="style" id="bleu" value="bleu" >
 					<label class="check" for="bleu" >Electro/House/DubStep</label>
