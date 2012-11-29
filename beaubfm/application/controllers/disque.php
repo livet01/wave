@@ -250,8 +250,8 @@ class Disque extends MY_Controller {
 		
 		$data['dis_libelle'] = $this-> get_dis_libelle();
 		$data['dis_format'] = $this -> get_dis_format();
-		$data['uti_id_ecoute'] = $this -> get_uti_id_ecoute();
-		$data['per_id_artiste'] = $this -> get_per_id_artiste();
+		$data['uti_id_ecoute'] = $this -> get_mem_id();
+		$data['per_id_artiste'] = $this -> get_art_id();
 		$data['dif_id'] = $this -> get_dif_id();
 		$data['dis_envoi_ok'] = $this -> get_dis_envoi_ok();
 		$data['emp_id'] = $this -> get_emp_id();
