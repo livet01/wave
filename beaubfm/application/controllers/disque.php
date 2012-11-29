@@ -279,11 +279,13 @@ class disque extends MY_Controller {
 		$result = $this -> parametreManager -> select('format');
 		$format = explode(";", $result['param_valeur']);
 		$return = false;
-		foreach ($format as $nom) {
-			if ($format == $nom) {
+		foreach ($format as $format2) {
+			if (strtoupper($format2) == strtoupper($nom)) {
 				$return = true;
 			}
 		}
+		var_dump($return);
+		return $return;
 	}
 }
 ?>
