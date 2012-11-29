@@ -184,11 +184,13 @@ class ImporterFiche extends MY_Controller {
 				$valide = FALSE;
 			} else {
 				//Insertion de valeurs par d�faut sur certains champs non renseignés
-
+				
+				//Format
 				if (is_null($disque['Format']) || !$disqueControlleur -> verificationFormat($disque['Format'])) {
 					$disque['Format'] = "CD";
 				}
-
+				
+				//EcoutePar
 				$idEcoutePar = $disqueControlleur -> rechercheEcoutePar($disque['EcoutePar']);
 
 				if (!is_null($disque['EcoutePar']) && !empty($idEcoutePar)) {
@@ -196,13 +198,22 @@ class ImporterFiche extends MY_Controller {
 				} else {
 					$disque['EcoutePar'] = 0;
 				}
-
-				$idArt = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], 1, 3);
-
+				
+				//Artiste
+				$chVerifAUtoProd = strtolower($disque['Diffuseur']);
+				$catId = 3;
+				
+				if (strstr($chVerifAUtoProd, "auto")) {
+					if (strstr($chVerifAUtoProd, "prod"))
+						$catId = 5;
+				}
+				$idArt = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $catId);
+				
 				if ($disque -> existeTitreArtiste($disque['Titre'], $idArt)) {
 					$valide = FALSE;
 				}
 				
+				//Emplacement & EmissionBenevole
 				if (!empty($disque['EmissionBenevole'])) {
 						
 					$valEmp = strtolower($disque['Emplacement']);
