@@ -6,9 +6,10 @@
 		<!--	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />	-->
 		<script src="<?php echo js_url('jquery-1.8.2'); ?>"></script>
 		<link href="<?php echo css_url('jquery-ui'); ?>" rel="stylesheet" type="text/css"/>
+		<link href="<?php echo css_url('jPages'); ?>" rel="stylesheet" type="text/css"/>
 		<script type="text/javascript" src="<?php echo js_url('jquery-ui'); ?>"></script>
 		<script type="text/javascript" src="<?php echo js_url('ajoutfiche'); ?>"></script>
-		
+		<script type="text/javascript" src="<?php echo js_url('jPages'); ?>"></script>
 		<link rel="stylesheet/less" type="text/css" href="<?php echo less_url('style'); ?>">
 		
 
@@ -119,8 +120,69 @@
 					$('#fiche').submit();
 				}
 				});
-			}); 
+				
+				/*$("input.chx:checked").each(function() {
+					$("#exporter").removeClass().addClass('btn-large-action');
+					alert("c oucou");
+				});*/
+				
+				function countChecked() {
+				  var n = $("input:checked").length;
+				  if(n >= 1) {
+				  	$("#exporter").removeClass().addClass("btn-large-action");
+				  	$("#exporter").click(function(){
+				  		
+				  		$("#tdisque").submit();
+				  		
+				  	});
+				  }
+				  else {
+				  	$("#exporter").removeClass().addClass("btn-large-action-nonActif");
+				  	$("#exporter").attr("href", "#");
+				  }
+				}
+				countChecked();
+				$(":checkbox").click(countChecked);
+				
+				$("#linkXLS").click(function(){
+					$("#exportdisque").attr("action","<?php echo site_url("exporterFiche/xls"); ?>");
+					$("#exportdisque").submit();
+				});
+		
+			});
+			
+			function CocheTout(ref, name) {
+				var form = ref;
+				
+				while (form.parentNode && form.nodeName.toLowerCase() != 'form'){ 
+				form = form.parentNode; 
+				}
+				
+				var elements = form.getElementsByTagName('input');
+				
+				for (var i = 0; i < elements.length; i++) {
+					if (elements[i].type == 'checkbox' && elements[i].name == name) {
+						elements[i].checked = ref.checked;
+					}
+				}
+			} 
+				
+		
 		</script>
+		
+		<script>
+  $(function(){
+    $("div.holder").jPages({
+      containerID : "disque",
+      previous : "←",
+      next : "→",
+      perPage : 15,
+      delay : 10
+    });
+  });
+  </script>
+		
+		
 		<script type="text/javascript" src="<?php echo js_url('less') ?>"></script>
 		<script>
 			function create_champ_fichier(i) {
