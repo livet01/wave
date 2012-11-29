@@ -29,6 +29,7 @@ class disque extends MY_Controller {
 		//Chargement Librairie
 		$this -> load -> library('form_validation');
 		$this -> load -> library('securite');
+		$this -> load -> library('hachage');
 
 		//Chargement models
 		$this -> load -> model('personne_model', 'persManager');
@@ -159,6 +160,7 @@ class disque extends MY_Controller {
 
 	}
 
+	
 	private function attribution() {
 		$est_auto_production = $this -> input -> post('autopro') == "a";
 		
@@ -187,32 +189,48 @@ class disque extends MY_Controller {
 			 }*/
 			
 			
-			//vérification du format selectionné
-			switch ($this->input->post('format')) {
-				case 'cd' :
-					$this->set_dis_format('CD');
-					break;
-				case 'numerique' :
-					$this->set_dis_format('Numérique');
-					break;
-				case 'Vinyle' :
-					$this->set_dis_format('Vinyle');
-				default :
-					throw new Exception("Le format n'est pas valide");
-					break;
+			// Vérification du format selectionné
+			if($this->verificationFormat($this->input->post('format'))) {
+				$this->set_dis_format($this->input->post('format'));
+			}
+			else {
+				throw new Exception("Le format n'est pas valide");
 			}
 
 			//Vérification de l'emplacement selectionné
 			$this->set_emp_id(rechercherEmplacementByNom($this->input->post('emplacement')));
 				
 								
-			$this->set_mem_id($this->input->post('listenBy'));
+			$this->set_mem_id(rechercherEcouteParByNom($this->input->post('listenBy')));
 		
 			$this->set_dis_style(rechercherStyleByCouleur($this->input->post('style')));
 		}
 		else { // Le titre, artiste est déja en base de données
 			throw new Exception("Le disque $this->dis_libelle est déjà présent dans la base de donnée.");
 		}
+	}
+
+	public function ajouter() {
+		$erreur = "";
+		if($this->verification()) {
+			try {
+				$this->attribution();
+			}
+			catch (Execption $e) {
+				$erreur = $e.getMessage();
+			}
+		}
+		else {
+			$erreur = validation_errors('&nbsp;', '&nbsp;');
+		}
+		echo "<pre>";
+		var_dump($this);
+		echo "</pre>";
+	}
+
+	public function addBDD() {
+		$data['dif_id']=$this->get_dif_id();
+		$this->disqueManager->insert($data);
 	}
 
 	public function rechercheArtisteByNom($nom, $radio, $categorie) {
