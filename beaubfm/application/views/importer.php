@@ -17,6 +17,7 @@
 				</form>
 			</div>
 			<?php if(isset($msgError)) echo $msgError; ?>
+			<?php if(isset($msg)) echo $msg; ?>
 		</div>
 	</div>
 </div>

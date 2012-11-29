@@ -3,6 +3,7 @@ require_once 'disque.php';
 
 class ImporterFiche extends MY_Controller {
 	private $msgError = "";
+	private $msg="";
 
 	public function __construct() {
 		parent::__construct();
@@ -19,10 +20,18 @@ class ImporterFiche extends MY_Controller {
 	public function getMsgError() {
 		return $this -> msgError;
 	}
+	
+	public function setMsg($msg) {
+		$this->msg=$msg;
+	}
+	
+	public function getMsg() {
+		return $this -> msg;
+	}
 
 	public function index() {
 		$this -> load -> library('layout');
-		$this -> layout -> views('menu_principal') -> view('importer', array('msgError' => $this -> getMsgError()));
+		$this -> layout -> views('menu_principal') -> view('importer');
 	}
 
 	public function envoi() {
@@ -40,7 +49,7 @@ class ImporterFiche extends MY_Controller {
 				$config['upload_path'] = './assets/upload';
 
 				//Les extensions acceptées sont les suivantes
-				$config['allowed_types'] = 'csv|xml|xls|xlsx';
+				$config['allowed_types'] = 'csv|xls|xlsx';
 				$config['max_size'] = '2048';
 				$config['overwrite'] = TRUE;
 				$this -> upload -> initialize($config);
@@ -75,8 +84,9 @@ class ImporterFiche extends MY_Controller {
 			}
 		}
 
-		//On recharge l'index et on affiche les éventuels messages d'erreurs
-		$this -> index();
+		//On recharge la vue et on affiche les éventuels messages d'erreurs		
+		$this -> load -> library('layout');
+		$this -> layout -> views('menu_principal')->view('importer', array('msgError' => $this -> getMsgError(),'msg'=>$this->getMsg()));
 	}
 
 	public function excelFile($data) {
@@ -176,8 +186,7 @@ class ImporterFiche extends MY_Controller {
 				$doublon++;
 			}
 		}
-		echo "$invalide album(s) invalides dont $doublon doublon(s) !";
-		echo "sur un total de $i album(s) testés";
+		$this->setMsg("$invalide album(s) invalides dont $doublon doublon(s) sur un total de $i album(s) testés");
 	}
 
 	public function verificationAlbum($disque) {
@@ -195,6 +204,8 @@ class ImporterFiche extends MY_Controller {
 			//Format
 			if (is_null($disque['Format']) || !$disqueControlleur -> verificationFormat($disque['Format'])) {
 				$format = "CD";
+			} else {
+				$format=$disque['Format'];
 			}
 
 			//Mail
@@ -217,7 +228,7 @@ class ImporterFiche extends MY_Controller {
 
 				//Emplacement & EmissionBenevole
 				$valEmp = strtolower($disque['Emplacement']);
-
+				$emb_id=null;
 				try {
 					$emp_id = $disqueControlleur -> rechercheEmplacementByNom($valEmp);
 				} catch (Exception $e) {
@@ -304,8 +315,9 @@ class ImporterFiche extends MY_Controller {
 			//Diffuseur
 			if ($cat_id === 5) {
 				$dif_id = $art_id;
+				$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Artiste'], $this -> user['rad_id'], $mail, $cat_id);
 			} else {
-				$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Diffuseur'], $this -> user['rad_id'], $mail, 4);
+				$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Diffuseur'], $this -> user['rad_id'], $mail, $cat_id);
 			}
 
 			//EcoutePar
