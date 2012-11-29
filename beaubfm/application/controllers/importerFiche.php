@@ -250,7 +250,7 @@ class ImporterFiche extends MY_Controller {
 					try {
 						$genreId = $disqueControlleur -> rechercherStyleByNom($genre);
 					} catch (Exception $e) {
-						echo "Exception reçue : ", $e->getMessage(), "\n";
+						echo "Exception reï¿½ue : ", $e->getMessage(), "\n";
 					}
 					$disque['Emplacement'] = $empId;
 					if ($genreId != null) 
@@ -259,10 +259,18 @@ class ImporterFiche extends MY_Controller {
 				}
 				
 				if ($valide == TRUE) {
-
+					$disqueAjout=new Disque();
+					$disqueAjout->set_art_id($art_id);
+					
 				}
 			}
 
+		}
+		if($valide===FALSE){
+			$this -> load -> model('importer_model', 'importerManager');
+			$this->importerManager->ajoutDisqueImport($disque['Titre'],$disque['Format'],$disque['EcoutePar'],$disque['DateAjout'],$disque['Artiste'],
+														$disque['Diffuseur'],$disque['Mail'],$disque['Emplacement'],$id,
+														$style);
 		}
 		return $valide;
 	}

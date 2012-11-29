@@ -6,6 +6,7 @@
 class Personne_model extends CI_Model {
 	
 	protected $table = 'Personne';
+	protected $tableUti='Utilisateur';
 	protected $vueArt = 'Artiste';
 	protected $vueAutoProd = 'AutoProduction';
 	
@@ -72,6 +73,16 @@ class Personne_model extends CI_Model {
 	public function last_id()
 	{
 		return $this->db->count_all_results($this->table)+1000;
+	}
+	
+	public function getUserInfo($id)
+	{
+			return $this->db->select(array($this->table.'.per_id','per_nom','cat_id','rad_id','uti_prenom','uti_login','uti_tutorial','uti_verrou'))
+							->from($this->table)
+							->join($this->tableUti,$this->table.".per_id=".$this->tableUti.".per_id")
+							->where(array($this->table.'.per_id'=>$id))
+							->get()
+							->result_array();
 	}
 	
 }

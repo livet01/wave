@@ -62,7 +62,6 @@ class Connexion extends CI_Controller {
 		$maintenance = $this -> parametreManager -> select('maintenance');
 		$est_maintenance = (!empty($maintenance) and $maintenance['param_valeur'] == "1");
 		
-		
 		if($this->input->post('login') != "" or $this->input->post('password') !="") {
 			// Validation formulaire
 			$this -> form_validation -> set_rules('login', 'login', 'trim|required|xss_clean');
@@ -167,28 +166,6 @@ class Connexion extends CI_Controller {
 							
 							// On enregistre en session qu'il est loggé
 							$this -> session -> set_userdata('isLogged', TRUE);
-							
-							$prenom = $membre['mem_prenom'];
-							$nom = $membre['mem_nom'];
-							
-							// Attribution du nom et prénom a afficher 
-							if (isset($prenom) && isset($nom)) {
-								if ($prenom == $nom) {
-									$username = $nom;
-								} else {
-									$username = $prenom . " " . $nom;
-								}
-							} else {
-								if ($prenom == null) {
-									$username = $nom;
-								}
-								if ($nom == null) {
-									$username = $prenom;
-								}
-							}
-							
-							// Enregistrement du nom à afficher en base
-							$this -> session -> set_userdata('username', $username);
 							
 							// Enregistrement de l'id en base
 							$this -> session -> set_userdata('mem_id', $id);
