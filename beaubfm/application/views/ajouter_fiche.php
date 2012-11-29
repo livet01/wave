@@ -10,10 +10,13 @@
 		<form  method="post" id="fiche" onsubmit="return verifForm(this)" action="<?php echo site_url("ajoutFiche/envoi"); ?>">
 			<div id="gauche">
 				
-				
 				<p>
 					<label class="mesgReussi"><p class = <?php (empty($reussi)) ? "" : "mesgReussi"; ?>><i class=<?php if (!empty($reussi)) echo "icon-ok-sign";?>></i><?php echo $reussi; ?></p></label>
-				<label class="mesgReussi"><p class = <?php (empty($erreur)) ? "" : "mesgErr"; ?>><?php echo $erreur; ?></p></label>
+					<label class="mesgReussi"><p class = <?php (empty($erreur)) ? "" : "mesgErr"; ?>><?php echo $erreur; ?></p></label>
+					
+				</p>
+				<p>
+					
 					<!-- Message d'erreur -->
 					<label class="mesgErr"><i class=<?php if (form_error('titre')) echo "icon-remove-sign";?>></i><?php echo form_error('titre'); ?></label>
 					
