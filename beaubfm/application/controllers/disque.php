@@ -255,7 +255,7 @@ class disque extends MY_Controller {
 	
 	public function rechercherStyleByNom($nom){
 		$styleId = $this -> styleManager -> select('sty_id', array('sty_couleur' => $nom));
-		
+		var_dump($styleId);
 		if(empty($styleId)){
 			
 			echo "coucou2";
