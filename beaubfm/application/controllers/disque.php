@@ -11,6 +11,7 @@ class Disque extends MY_Controller {
 	private $dis_id;
 	private $dis_libelle;
 	private $dis_format;
+	private $sty_id;
 	private $mem_id;
 	private $dis_date_ajout;
 	private $art_id;
@@ -29,6 +30,7 @@ class Disque extends MY_Controller {
 		//Chargement Librairie
 		$this -> load -> library('form_validation');
 		$this -> load -> library('securite');
+		$this -> load -> library('layout');
 
 		//Chargement models
 		$this -> load -> model('personne_model', 'persManager');
@@ -43,6 +45,7 @@ class Disque extends MY_Controller {
 		$this -> load -> model('disque/ecoute_model', 'ecouteManager');
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
+		$this->output->enable_profiler(TRUE);
 
 	}
 
@@ -64,6 +67,15 @@ class Disque extends MY_Controller {
 	public function set_dis_libelle($dis_libelle) {
 		$this -> dis_libelle = $dis_libelle;
 	}
+
+	public function get_sty_id() {
+		return $this -> sty_id;
+	}
+
+	public function set_sty_id($dis_style) {
+		$this -> sty_id = $dis_style;
+	}
+	
 
 	public function get_dis_format() {
 		return $this -> dis_format;
@@ -136,21 +148,53 @@ class Disque extends MY_Controller {
 	public function set_emp_id($emp_id) {
 		$this -> emp_id = $emp_id;
 	}
-	
+
 	//
-	// Ajouter un disque
-	// 
-	public function ajouter() {
-		
+	// Index
+	//
+	public function index() {
+		redirect(site_url("disque/ajouter"));
 	}
 
-
-
-
-
-
-
-
+	//
+	// Ajouter un disque
+	//
+	public function ajouter() {
+		// Initialisation des données a envoyer en bd
+		$data = array('erreur' => "", 'reussi' => "");
+		
+		// Chargement des formats
+		$formats = $this -> parametreManager -> select('format');
+		$formats = explode(";", $formats['param_valeur']);
+		$data['formats'] = $formats;
+		
+		// Chargement des emplacements
+		$emp_libelles = $this -> emplacementManager -> select_all(array('emp_libelle','emp_plus'));
+		$data['emplacements'] = array();
+		foreach($emp_libelles as $emp_libelle) {
+			array_push($data['emplacements'],array("emp_libelle" =>$emp_libelle->emp_libelle,"emp_plus"=>$emp_libelle->emp_plus));
+		}
+		
+		// Chargement des styles
+		$styles = $this -> styleManager -> select_all(array('sty_couleur','sty_libelle'));
+		$data['styles'] = array();
+		foreach($styles as $style) {
+			array_push($data['styles'],array("couleur" => $style->sty_couleur, "libelle" => $style->sty_libelle));
+		}
+		
+		if ($this -> formulaire_null()) {
+			// Affichage du formulaire 
+			
+			$this -> layout -> views('menu_principal') -> view('disque/ajouter_fiche',$data);
+		} else {
+			// Formulaire envoyé
+			$data['erreur'] = $this->ajouter_disque();
+			if(empty($data['erreur'])) {
+				$data['reussi'] = "Le disque a bien été ajouté.";
+			}
+			$this -> layout -> views('menu_principal') -> view('disque/ajouter_fiche', $data);
+		}
+	}
 
 	private function verification() {
 		// Vérification du titre
@@ -161,103 +205,101 @@ class Disque extends MY_Controller {
 		$this -> form_validation -> set_rules('email', '"Email"', 'trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
 		// Vérification du champs écouté par
 		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+
+		$emplacement = $this->rechercheEmplacementByNom($this -> input -> post('emplacement'));
+		$plus = $this -> parametreManager -> select('emb');
+		
 		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
-		if ($this -> input -> post('emissionBenevole') == "emissionBenevole") {
-			$this -> form_validation -> set_rules('emBev', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		if ($emplacement == $plus['param_valeur']) {
+			$this -> form_validation -> set_rules('emb', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 		}
 		// Vérifiaction du diffuseur si il y n'est pas auto producteur
-		if ($this -> input -> post('autopro') != "a")
-			$this -> form_validation -> set_rules('dif_id', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-
+		if ($this -> input -> post('autoprod') != "a")
+			$this -> form_validation -> set_rules('diffuseur', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		
 		// On renvoi le résultats des vérifications
 		return $this -> form_validation -> run();
 
 	}
 
-	
 	private function attribution() {
-		$est_auto_production = $this -> input -> post('autopro') == "a";
+		$est_auto_production = $this -> input -> post('autoprod') == "a";
+
+		$this -> set_dis_libelle($this -> input -> post('titre'));
+		$this -> set_art_id($this -> rechercheArtisteByNom($this -> input -> post('artiste'), $this -> user['rad_id'], ($est_auto_production) ? 5 : 3));
 		
-		$this->set_dis_libelle($this -> input -> post('titre'));
-		$this->set_dis_art_id($this -> rechercheArtisteByNom($this -> input -> post('artiste'), $this->user['rad_id'], ($est_auto_production)?5:3));
 		
 		// Si le titre et l'artiste ne sont pas présent en base de données.
-		if (!$this -> existeTitreArtiste($this -> dis_libelle, $this -> art_id)) {	
-			
+		if (!$this -> existeTitreArtiste($this -> dis_libelle, $this -> art_id)) {
+
 			// Vérification si autoproduction
 			if ($est_auto_production) {
-				$this->set_dif_id($this->rechercheDiffuseurByNom($this -> input -> post('artiste'),$this->user['rad_id'], $this -> input -> post('email'), 5));
+				$this -> set_dif_id($this -> rechercheDiffuseurByNom($this -> input -> post('artiste'), $this -> user['rad_id'], $this -> input -> post('email'), 5));
 			} else {
-				$this->set_dif_id($this->rechercheDiffuseurByNom($this -> input -> post('diffuseur'),$this->user['rad_id'], $this -> input -> post('email'), 4));
+				$this -> set_dif_id($this -> rechercheDiffuseurByNom($this -> input -> post('diffuseur'), $this -> user['rad_id'], $this -> input -> post('email'), 4));
 			}
 
+			//Vérification de l'emplacement selectionné
+			$this -> set_emp_id($this->rechercheEmplacementByNom($this -> input -> post('emplacement')));
+			$plus =$this -> parametreManager -> select('emb');
 			//Vérification si emission bénévole coché
-			if ($this -> input -> post('emplacement') == "emissionBenevole") {
-				$this->set_emb_id($this->rechercheEmbByNom($this -> input -> post('emb'),$this->user['rad_id']));
-			} 
+			if ($this->get_emp_id() == $plus['param_valeur']) {
+				$this -> set_emb_id($this -> rechercheEmbByNom($this -> input -> post('emb'), $this -> user['rad_id']));
+			}
 
 			/*if($this->input->post('envoiMail')=="0"){
 
 			 }else{
 
 			 }*/
-			
-			
+
 			// Vérification du format selectionné
-			if($this->verificationFormat($this->input->post('format'))) {
-				$this->set_dis_format($this->input->post('format'));
-			}
-			else {
+			if ($this -> verificationFormat($this -> input -> post('format'))) {
+				$this -> set_dis_format($this -> input -> post('format'));
+			} else {
 				throw new Exception("Le format n'est pas valide");
 			}
 
-			//Vérification de l'emplacement selectionné
-			$this->set_emp_id(rechercherEmplacementByNom($this->input->post('emplacement')));
-				
-								
-			$this->set_mem_id(rechercherEcouteParByNom($this->input->post('listenBy')));
-		
-			$this->set_dis_style(rechercherStyleByCouleur($this->input->post('style')));
-		}
-		else { // Le titre, artiste est déja en base de données
+			$this -> set_mem_id($this->rechercherEcouteParByNom($this -> input -> post('listenBy')));
+
+			$this -> set_sty_id($this->rechercherStyleByNom($this -> input -> post('style')));
+		} else {// Le titre, artiste est déja en base de données
 			throw new Exception("Le disque $this->dis_libelle est déjà présent dans la base de donnée.");
 		}
 	}
 
 	private function ajouter_disque() {
 		$erreur = "";
-		if(!$this->formulaire_null()) {
-			if($this->verification()) {
+		if (!$this -> formulaire_null()) {
+			if ($this -> verification()) {
 				try {
-					$this->attribution();
-					$this->addBDD();
+					$this -> attribution();
+					$this -> addBDD();
+				} catch (Exception $e) {
+					$erreur = $e -> getMessage();
 				}
-				catch (Execption $e) {
-					$erreur = $e.getMessage();
-				}
-			}
-			else {
+			} else {
 				$erreur = validation_errors('&nbsp;', '&nbsp;');
 			}
-		}
-		else {
+		} else {
 			$erreur = "Le formulaire envoyé est nul.";
 		}
 		return $erreur;
 	}
 
 	public function addBDD() {
-		
-		$data['dis_libelle'] = $this-> get_dis_libelle();
+
+		$data['dis_libelle'] = $this -> get_dis_libelle();
 		$data['dis_format'] = $this -> get_dis_format();
 		$data['uti_id_ecoute'] = $this -> get_mem_id();
 		$data['per_id_artiste'] = $this -> get_art_id();
 		$data['dif_id'] = $this -> get_dif_id();
-		$data['dis_envoi_ok'] = $this -> get_dis_envoi_ok();
+		$data['dis_envoi_ok'] = 1;
 		$data['emp_id'] = $this -> get_emp_id();
 		$data['emb_id'] = $this -> get_emb_id();
-		
-		if(!$this->disqueManager->insert($data)) {
+		$data['sty_id'] = $this -> get_sty_id();
+
+		if (!$this -> disqueManager -> insert($data)) {
 			throw new Exception("Erreur dans l'ajout");
 		}
 	}
@@ -289,38 +331,36 @@ class Disque extends MY_Controller {
 			$id = $id["emb_id"];
 		return $id;
 	}
-	public function rechercheEmplacementByNom($nom){
+
+	public function rechercheEmplacementByNom($nom) {
 		$empId = $this -> emplacementManager -> select('emp_id', array('emp_libelle' => $nom));
-		if(empty($empId)){
+		if (empty($empId)) {
 			throw new Exception("L'emplacement n'existe pas.");
-		}
-		else {
+		} else {
 			$empId = $empId["emp_id"];
 		}
 		return $empId;
-		
+
 	}
-	
-	public function rechercherStyleByNom($nom){
+
+	public function rechercherStyleByNom($nom) {
 		$styleId = $this -> styleManager -> select('sty_id', array('sty_couleur' => $nom));
-		if(empty($styleId)){
+		if (empty($styleId)) {
 
 			throw new Exception("Le style n'existe pas.");
-		}
-		else {
-			
+		} else {
+
 			$styleId = $styleId["sty_id"];
 		}
 		return $styleId;
-		
-		
+
 	}
-	
+
 	public function existeTitreArtiste($titre, $id_artiste) {
 		$return = $this -> disqueManager -> select('dis_id', array('per_id_artiste' => $id_artiste, 'dis_libelle' => $titre));
 		return !empty($return);
 	}
-	
+
 	public function verificationFormat($nom) {
 		$result = $this -> parametreManager -> select('format');
 		$format = explode(";", $result['param_valeur']);
@@ -332,42 +372,38 @@ class Disque extends MY_Controller {
 		}
 		return $return;
 	}
-	
-	public function rechercherEcouteParByNom($nom){
-		
+
+	public function rechercherEcouteParByNom($nom) {
+
 		$ecouteId = $this -> ecouteManager -> select('per_id', array('per_nom' => $nom));
-		if(empty($ecouteId)){
-			
-			throw new Exception ("L'utilisateur n'existe pas.");
-		}
-		else{
+		if (empty($ecouteId)) {
+
+			throw new Exception("L'utilisateur n'existe pas.");
+		} else {
 			$ecouteId = $ecouteId['per_id'];
 		}
 		return $ecouteId;
-		
-		
+
 	}
-	
-	public function formulaire_null(){
-		$titre = $this -> input ->post('titre') ;
-		$artiste = $this -> input ->post('artiste') ; 
-		$format = $this -> input ->post('format') ;
-		$style = $this -> input ->post('style') ; 
-		$emplacement = $this -> input ->post('emplacement') ;
-		$ecoute = $this -> input ->post('listenBy') ;
-		$diffuseur = $this -> input ->post('diffuseur') ;
-		$email = $this -> input ->post('email') ;
-		
-		
-		if (empty($titre) && empty($artiste) && empty($format) && empty($style) && empty($emplacement)
-			&& empty($ecoute) && empty($diffuseur) && empty($email)){
-				
-				return true;
-		}
-		else {
+
+	public function formulaire_null() {
+		$titre = $this -> input -> post('titre');
+		$artiste = $this -> input -> post('artiste');
+		$format = $this -> input -> post('format');
+		$style = $this -> input -> post('style');
+		$emplacement = $this -> input -> post('emplacement');
+		$ecoute = $this -> input -> post('listenBy');
+		$diffuseur = $this -> input -> post('diffuseur');
+		$email = $this -> input -> post('email');
+
+		if (empty($titre) && empty($artiste) && empty($format) && empty($style) && empty($emplacement) && empty($ecoute) && empty($diffuseur) && empty($email)) {
+
+			return true;
+		} else {
 			return false;
 		}
 	}
+
 	
 	public function suppArtiste($nom=''){
 		

@@ -19,4 +19,11 @@ class Emplacement_model extends CI_Model {
 							->row_array();
 	}
 	
+	function select_all($select) {
+		return $this->db->select($select)
+							->from($this->table)
+							->get()
+							->result();
+	}
+	
 }

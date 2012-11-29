@@ -249,10 +249,10 @@ class Index extends MY_Controller {
 
 			// Parcours du résultat du model et ajout au json_array
 			foreach ($tabs as $tab) {
-				if (empty($tab -> emb_id))
+				if (empty($tab -> emb_libelle))
 					$emb_id = null;
 				else {
-					$emb_id = $tab -> emb_id;
+					$emb_id = $tab -> emb_libelle;
 				}
 				$json_array[] = array("dis_id" => $tab -> dis_id, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
 			}

@@ -29,6 +29,7 @@ class Disque_model extends CI_Model {
 					->set('dis_date_ajout', 'NOW()',false)
 					->set('per_id_artiste', $data['per_id_artiste'])
 					->set('dif_id', $data['dif_id'])
+					->set('sty_id', $data['sty_id'])
 					->set('dis_envoi_ok', $data['dis_envoi_ok'])
 					->set('emp_id', $data['emp_id'])
 					->set('emb_id', (empty($data['emb_id']) ? NULL : $data['emb_id']))

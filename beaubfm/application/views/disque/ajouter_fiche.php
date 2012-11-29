@@ -1,3 +1,21 @@
+<?php if(!empty($reussi)) {
+	?>
+<div id="cadre">
+	<p class="success">
+		<i class="icon-ok-sign"></i><?php echo $reussi; ?>
+	</p>
+</div>
+	<?
+} 
+if(!empty($erreur)) {
+	?>
+<div id="cadre">
+	<p class="error">
+		<i class="icon-remove-sign"></i><?php echo $erreur; ?>
+	</p>
+</div>
+	<?php
+} ?>
 <div id="cadre2">
 	<div id="cadre_action">
 		<a class="btn-large-action" href="javascript: document.forms['fiche'].reset();"><i class="icon-undo"></i> Annuler </a>
@@ -7,12 +25,11 @@
 	<h1>Ajout d'une fiche</h1>
 
 	<div id="formulaire">
-		<form  method="post" id="fiche" onsubmit="return verifForm(this)" action="<?php echo site_url("ajoutFiche/envoi"); ?>">
+		<form  method="post" id="fiche" onsubmit="return verifForm(this)" action="<?php echo site_url("disque/ajouter"); ?>">
 			<div id="gauche">
-				<label class="mesgReussi"><p class = <?php (empty($reussi)) ? "" : "mesgReussi"; ?>><i class=<?php if (!empty($reussi)) echo "icon-ok-sign";?>></i><?php echo $reussi; ?></p></label>
-				<label class="mesgReussi"><p class = <?php (empty($erreur)) ? "" : "mesgErr"; ?>><?php echo $erreur; ?></p></label>
 				
 				<p>
+					
 					<!-- Message d'erreur -->
 					<label class="mesgErr"><i class=<?php if (form_error('titre')) echo "icon-remove-sign";?>></i><?php echo form_error('titre'); ?></label>
 					
@@ -24,53 +41,63 @@
 					<label class="mesgErr"><i class=<?php if (form_error('artiste')) echo "icon-remove-sign";?>></i><?php echo form_error('artiste'); ?></label>
 					
 					<label class="labelGauche" for="artiste"><i class="icon-group"></i> Artiste</label>
-					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire" onblur="verifArtiste(this)" value="<?php if(!empty($value)) { echo $value; } ?>" > <!-- onchange="$('#diffuseur').val($('#artiste').val());" --> 
+					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire" onblur="verifArtiste(this)" value="<?php echo set_value('artiste'); ?>" > <!-- onchange="$('#diffuseur').val($('#artiste').val());" --> 
 					<input class="check" type="checkbox" id="autoprod" name="autoprod" value="a" onclick="GereControle('autoprod', 'diffuseur', 0)" >
 					<label class="labelCheck" for="autoprod">Auto-Production</label>
 				</p>
-				
+				<?php if(empty($formats)) {
+					throw new Exception("Erreur chargement format");
+				}
+				else { 
+					?>
 				<p>
 					<label class="labelGauche" for="format"><i class="icon-file"></i> Format</label>
 					<select name="format">
-						<option value="cd">CD</option>
-						<option value="numerique">Numérique</option>
-						<option value="Vinyle">Vinyle</option>
-					</select>
+					<?php foreach($formats as $format) { ; ?>
+						
+						<option value="<?php echo $format ?>"><?php echo $format ?></option>
+						
+					<?php } ?>
+					</select>	
 				</p>
+				<?php } ?>
+				
+				<?php if(empty($styles)) {
+					throw new Exception("Erreur chargement style");
+				}
+				else { 
+					$i=0;
+					?>
 				<p>
-					<label class="labelGaucheEmplacement" for="style"><i class="icon-file"></i> Style</label>
-					<input type="radio" name="style" id="rouge" value="rouge" checked="checked">
-					<label class="check" for="rouge" >Rock/HardRock/Punk</label>
+					<label class="labelGaucheEmplacement" for="style"><i class="icon-certificate"></i> Style</label>
+					<?php foreach($styles as $style) { $i++; ?>
+					<input type="radio" name="style" id="<?php echo $style['couleur'] ?>" value="<?php echo $style['couleur'] ?>" <?php echo ($i==1)? 'checked="checked"' : ''; ?> >
+					<label class="check <?php echo $style['couleur'] ?>" for="<?php echo $style['couleur'] ?>"><?php echo $style['libelle'] ?></label>
 					<br>
-					<input type="radio" name="style" id="bleu" value="bleu" >
-					<label class="check" for="bleu" >Electro/House/DubStep</label>
-					<br>
-					<input type="radio" name="style" id="vert" value="vert" >
-					<label class="check" for="vert" >HipHop/Slam</label>
-					<br>
-					<input type="radio" name="style" id="jaune" value="jaune" >
-					<label class="check" for="jaune" >Pop/Folk</label>
-					<br>
-					<input type="radio" name="style" id="blanc" value="blanc" >
-					<label class="check" for="blanc" >World/Traditionnelle</label>
-					<br>
+					<?php } while($i<4) {
+						echo '<br>';
+						$i++;
+					} ?>	
 				</p>
-
+				<?php } ?>
+				<?php if(empty($emplacements)) {
+					throw new Exception("Erreur chargement emplacement");
+				}
+				else { 
+					$i=0;
+					?>
 				<p>
 					<label class="labelGaucheEmplacement" for="emplacement"><i class="icon-hdd"></i> Emplacement </label>
-					<input type="radio" name="emplacement" id="emp1" value="airplay" checked="checked"onclick="$('#emb').hide()" >
-					<label class="check" for="emp1" onclick="$('#emb').hide()">AirPlay</label>
+					<?php foreach($emplacements as $emplacement) { $i++; ?>
+					<input type="radio" name="emplacement" id="<?php echo 'emp'.$i ?>" value="<?php echo $emplacement['emp_libelle'] ?>" <?php echo ($i==1)? 'checked="checked"' : ''; ?> <?php echo ($emplacement['emp_plus']==0) ? 'onclick="$(\'#emb\').hide()"' : 'onclick="$(\'#emb\').show()"'; ?> >
+					<label class="check" for="<?php echo 'emp'.$i ?>"  <?php echo ($emplacement['emp_plus']==0) ? 'onclick="$(\'#emb\').hide()"' : 'onclick="$(\'#emb\').show()"'; ?>><?php echo $emplacement['emp_libelle'] ?></label>
 					<br>
-					<input type="radio" name="emplacement" id="emp2" value="nonDiffuse" onclick="$('#emb').hide()">
-					<label class="check" for="emp2"onclick="$('#emb').hide()" >Non Diffusé</label>
-					<br>
-					<input type="radio" name="emplacement" id="emp4" value="archivage" onclick="$('#emb').hide()">
-					<label class="check" for="emp4" onclick="$('#emb').hide()">Archivage</label>
-					<br>
-					<input type="radio" name="emplacement" id="emp3" value="emissionBenevole" onclick="$('#emb').show()">
-					<label class="check" for="emp3" onclick="$('#emb').show()" >Emission Bénévole</label>
-					<br>
+					<?php } while($i<4) {
+						echo '<br>';
+						$i++;
+					} ?>	
 				</p>
+				<?php } ?>
 				<p id="emb" style="display: none;">
 					<!-- Message d'erreur -->
 					<label class="mesgErr"><i class=<?php if (form_error('emBev')) echo "icon-remove-sign";?>></i><?php echo form_error('emBev'); ?></label>
@@ -81,17 +108,17 @@
 				
 				<p>
 					<!-- Message d'erreur -->
-					<!-- <label class="mesgErr"><i class=<?php if (form_error('listenBy')) echo "icon-remove-sign";?>></i><?php echo form_error('listenBy'); ?></label> -->
+					<label class="mesgErr"><i class=<?php if (form_error('listenBy')) echo "icon-remove-sign";?>></i><?php echo form_error('listenBy'); ?></label>
 					
 					<label class="labelGauche" for="listenBy"><i class="icon-headphones"></i> Ecouté par </label>
-					<input type="text" name="listenBy" readonly="readonly" id="listenBy" onblur="verifDiffuseur(this)" value="admin">
+					<input type="text" name="listenBy" id="listenBy" onblur="verifDiffuseur(this)" value="<?php echo set_value('listenBy'); ?>">
 				</p>
 				<p>			
 					<!-- Message d'erreur --> 
 					<label class="mesgErr"><i class=<?php if (form_error('diffuseur')) echo "icon-remove-sign";?>></i><?php echo form_error('diffuseur'); ?></label>
 					
 					<label class="labelGauche" for="diffuseur"><i class="icon-home"></i> Diffuseur </label>
-					<input type="text" id="diffuseur" name="diffuseur" title="Label obligatoire" onblur="verifDiffuseur(this)" value="<?php if(!empty($value)) { echo $value; } ?>">
+					<input type="text" id="diffuseur" name="diffuseur" title="Label obligatoire" onblur="verifDiffuseur(this)" value="<?php echo set_value('diffuseur'); ?>">
 				</p>
 				<p>
 					<!-- Message d'erreur --> 

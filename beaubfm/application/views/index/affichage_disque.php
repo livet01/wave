@@ -27,7 +27,7 @@ if(!empty($data)) {
 	</tr>
 	<tr>
 		<td class="icon"><i class="icon-headphones"></i></td>
-		<td class="detail"><?php echo 'admin'; ?></td>
+		<td class="detail"><?php echo $data['mem_nom']; ?></td>
 	</tr>
 	<tr class="dark">
 		<td class="icon"><i class="icon-comments"></i></td>
