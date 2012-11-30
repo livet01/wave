@@ -48,10 +48,12 @@ class EnvoyerMail extends MY_Controller {
 		
 		//preparation du mail
 		$this->email->subject('Email automatique BeaubFM');
-		$this->email->message("
-		Nous avons bien recu l\'album <strong>$titre</strong> de l\'artiste
-		<strong>$artiste</strong>...
-		");
+		$msg = $this->load->view('email/refuser', '', true);
+		$this->email->message($msg);
+		//$this->email->message("
+		//Nous avons bien recu l\'album <strong>$titre</strong> de l\'artiste
+		//<strong>$artiste</strong>...
+		//");
 		
 		if($data['envoiMail']=='1'){
 			$this->email->send();
