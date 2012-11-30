@@ -38,25 +38,27 @@ class EnvoyerMail extends MY_Controller {
 		$data['artiste']='supertoto';
 		$emp=$this->input->post('emplacement');
 		
-		if($emp='airplay'){
-			$msg = $this->load->view('email/accepter', $data);
-		} 
-		else
-			$msg = $this->load->view('email/refuser', $data);
 		
+		switch ($emp){
+		    case "airplay":
+		        $msg = $this->load->view('email/airplay', $data);
+		        break;
+		    case "nonDiffuse":
+		        $msg = $this->load->view('email/nonDiffuse', $data);
+		        break;
+		    case "archivage":
+		        $msg = $this->load->view('email/archivage', $data);
+		        break;
+			case "emissionBenevole":
+		        $msg = $this->load->view('email/emissionBenevole', $data);
+		        break;
+		}
+		$this->email->subject('Email automatique BeaubFM');
 		$this->email->from('beaubfm@mail.com', 'BeaubFM');
 		$this->email->to($data['email']);
 		//$this->email->to('samir.bouaked@gmail.com');
-		
-		//variables du mail a afficher
-		
-		
-		
-		//preparation du mail
-		$this->email->subject('Email automatique BeaubFM');
-		$msg = $this->load->view('email/refuser', $data, TRUE);
 		$this->email->message($msg);
-
+		
 		if($data['envoiMail']=='1'){
 			$this->email->send();
 			$this->envoyerMail();	
@@ -64,7 +66,7 @@ class EnvoyerMail extends MY_Controller {
 		else{
 			$this->envoyerMail();
 		}
-		echo $this->email->print_debugger();		
+		//echo $this->email->print_debugger();		
 	}
 
 }
