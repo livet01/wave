@@ -302,11 +302,33 @@ class Disque extends MY_Controller {
 				$this -> set_emb_id($this -> rechercheEmbByNom($this -> input -> post('emb'), $this -> user['rad_id']));
 			}
 
-			/*if($this->input->post('envoiMail')=="0"){
+			if($this->input->post('envoiMail')=="1"){
+				$config['charset'] = 'utf-8';
+				$config['mailtype'] = 'html';
+				$config['newline']    = "\r\n";
 
+
+				$this->email->initialize($config);
+				$email = $this -> input -> post('email');
+				$titre= $this->get_dis_libelle();
+				$artiste=$this->get_art_id();
+			
+				$emp=$this->input->post('emplacement');
+				
+				$this->email->from('beaubfm@mail.com', 'BeaubFM');
+				//$this->email->to($data['email']);
+				$this->email->to('samir.bouaked@gmail.com');
+		
+				//preparation du mail
+				$this->email->subject('Email automatique BeaubFM');
+		
+				$this->email->message($msg);
+
+				$this->email->send();
+				$this->envoyerMail();		
 			 }else{
 
-			 }*/
+			 }
 
 			// Vérification du format selectionné
 			if ($this -> verificationFormat($this -> input -> post('format'))) {

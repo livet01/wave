@@ -24,7 +24,7 @@ class EnvoyerMail extends MY_Controller {
 	}
 
 	public function envoi() {
-		
+
 		$config['charset'] = 'utf-8';
 		$config['mailtype'] = 'html';
 		$config['newline']    = "\r\n";
