@@ -36,7 +36,7 @@ class EnvoyerMail extends MY_Controller {
 		$data['email'] = $this->input->post('email');
 		$data['corps'] = $this->input->post('corpsemail');
 		
-		$data['envoiMail'] = $this->input->post('envoiMail');
+		$data['envoiMail'] = (($this->input->post('envoiMail') === "0") ? "1" : "0");
 		$this->email->from('beaubfm@mail.com', 'BeaubFM');
 		$this->email->to($data['email']);
 		
