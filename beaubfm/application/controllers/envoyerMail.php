@@ -64,6 +64,7 @@ class EnvoyerMail extends MY_Controller {
 		$this->email->message($msg);
 
 		if($data['envoiMail']=='1'){
+			$this->load->view('email/confirmation', $data, TRUE);
 			$this->email->send();
 			$this->envoyerMail();	
 		}
