@@ -32,8 +32,11 @@ class EnvoyerMail extends MY_Controller {
 
 		$this->email->initialize($config);
 		
+		
 		$data['email'] = $this->input->post('email');
 		$data['corps'] = $this->input->post('corpsemail');
+		
+		
 		$this->email->from('beaubfm@mail.com', 'BeaubFM');
 		$this->email->to($data['email']);
 		
@@ -46,8 +49,10 @@ class EnvoyerMail extends MY_Controller {
 		<strong>$artiste</strong>...
 		
 		");
+		if($data['envoiMail'] = $this->input->post('envoiMail')){
+			$this->email->send();
+		}
 		
-		$this->email->send();
 		
 		echo $this->email->print_debugger();
 				
