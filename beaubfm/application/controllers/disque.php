@@ -627,11 +627,11 @@ class Disque extends MY_Controller {
 					
 					$tabs = $tabs[0];
 					
-					if($this->artisteManager->compte(array('art_id'=>$tabs['per_id_artiste'])) == 0) {
+					if($this->artisteManager->compte(array('per_id_artiste'=>$tabs['per_id_artiste'])) == 0) {
 						$this->artisteManager->delete($tabs['per_id_artiste']);
 					}
 					
-					if($this->diffuseurManager->compte(array('per_id'=>$tabs['dif_id'])) == 0) {
+					if($this->diffuseurManager->compte(array('dif_id'=>$tabs['dif_id'])) == 0) {
 						$this->diffuseurManager->delete($tabs['dif_id']);
 					}
 				}

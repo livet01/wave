@@ -19,7 +19,7 @@ class Artiste_model extends CI_Model {
 	}
 	
 	function compte($where) {
-		return $this->db	->from($this->table)
+		return $this->db	->from("Disque")
 							->where($where)
 							->count_all_results();
 	}
