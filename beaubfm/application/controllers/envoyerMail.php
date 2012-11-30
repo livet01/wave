@@ -39,7 +39,7 @@ class EnvoyerMail extends MY_Controller {
 		$emp=$this->input->post('emplacement');
 		
 		if($emp='airplay'){
-			$msg = $this->load->view('email/accepter', $data, TRUE);
+			$msg = $this->load->view('email/airplay', $data, TRUE);
 		} 
 		else{
 			$msg = $this->load->view('email/nonDiffuse', $data, TRUE);
