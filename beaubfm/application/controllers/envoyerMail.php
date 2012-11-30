@@ -49,9 +49,15 @@ class EnvoyerMail extends MY_Controller {
 		<strong>$artiste</strong>...
 		
 		");
-		if($data['envoiMail']=='0'){
+		if($data['envoiMail']=='1'){
 			$this->email->send();
+			$this->envoi();
+			
 		}
+		else{
+			$this->envoi();
+		}
+		
 		
 		
 		echo $this->email->print_debugger();
