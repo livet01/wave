@@ -32,10 +32,6 @@ class EnvoyerMail extends MY_Controller {
 
 		$this->email->initialize($config);
 		
-		
-		
-		
-		
 		$data['email'] = $this->input->post('email');
 		$data['envoiMail'] = (($this->input->post('envoiMail') === "0") ? "1" : "0");
 		$data['titre']='toto';
