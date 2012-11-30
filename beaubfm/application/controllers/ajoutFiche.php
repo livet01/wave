@@ -197,10 +197,10 @@ class AjoutFiche extends MY_Controller {
 		
 		if($data['envoiMail']=='1'){
 			$this->email->send();
-			$this->envoyerMail();	
+			$this->formulaire();	
 		}
 		else{
-			$this->envoyerMail();
+			$this->formulaire();
 		}
 		//echo $this->email->print_debugger();		
 	}
