@@ -41,7 +41,7 @@ class EnvoyerMail extends MY_Controller {
 		$artiste='supertoto';
 		
 		$this->email->subject('Email Test');
-		$this->email->message($this->load->view('templateMail', $titre));
+		$this->email->message("<h1>$titre</h1><h1>$artiste</h1>));
 		
 		$this->email->send();
 		
