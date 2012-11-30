@@ -40,8 +40,12 @@ class EnvoyerMail extends MY_Controller {
 		$titre='toto';
 		$artiste='supertoto';
 		
-		$this->email->subject('Email Test');
-		$this->email->message("<h1>$titre</h1><h1>$artiste</h1>");
+		$this->email->subject('Email automatique BeaubFM');
+		$this->email->message("
+		Nous avons bien recu l\'album <strong>$titre</strong> de l\'artiste
+		<strong>$artiste</strong>...
+		
+		");
 		
 		$this->email->send();
 		
