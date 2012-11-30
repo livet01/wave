@@ -5,6 +5,7 @@ class EnvoyerMail extends MY_Controller {
 		parent::__construct();
 		$this->output->enable_profiler(TRUE);
 		$this->load->library('session');
+		$this -> load -> library('email');
 	}
 
 	public function index() {
@@ -23,7 +24,13 @@ class EnvoyerMail extends MY_Controller {
 	}
 
 	public function envoi() {
-		$this -> load -> library('email');
+		
+		$config['charset'] = 'utf-8';
+		$config['mailtype'] = 'html';
+		$config['newline']    = "\r\n";
+
+
+		$this->email->initialize($config);
 		
 		$data['email'] = $this->input->post('email');
 		$data['corps'] = $this->input->post('corpsemail');
