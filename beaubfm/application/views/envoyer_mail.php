@@ -9,7 +9,7 @@
 				<p>
 				<label class="labelGauche" for="email"><i class="icon-envelope-alt"></i> Email de contact </label>
 					<input type="text" id="email" name="email" title="e-mail obligatoire" onblur="verifMail(this)" value="<?php echo set_value('email'); ?>">
-					<input class="check" type="checkbox" id="envoiMail" name="envoiMail" value="0">
+					<input class="check" type="checkbox" id="envoiMail" name="envoiMail">
 					<label class="labelCheck" for="envoiMail" >Envoyer email</label>
 				</p>
 				<p>
