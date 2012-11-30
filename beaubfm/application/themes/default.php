@@ -50,25 +50,9 @@
 					        $('#recherche_form').submit();}
 				});
 		
-			// Fonction d'ajout ou de suppression du "loader"
-			function ajaxBox_loader(pState)
-			{
-			// Ajout d'un élement <img> d'id #ajaxBox_loader
-			if (pState === true)
-			$('#aff-disque').html('').html('<li>&nbsp;</li><li>&nbsp;</li><li><img id="ajaxBox_loader" src="<?php echo img_url('ajax-loader.gif');?>" align="center" /></li><li>&nbsp;</li><li>&nbsp;</li>');
-			// Suppression de l'élement d'id #ajaxBox_loader
-			else
-			$('#ajaxBox_loader').remove();
-			}
 			
+			//Recherche Artiste (autocompl�tion)
 			
-			// Fonction de mise à jour du contenu de la div #ajaxBox
-			// Ajout d'un element <p> contenant le message, dans le div #ajaxBox
-			function ajaxBox_setText(pText)
-			{
-			$('#chargement').append('<p>'+ pText +'</p>');
-			}
-
 			$("#artiste").autocomplete({
 				source : function(request, response) {
 				$.ajax({
@@ -200,7 +184,25 @@
 					}
 				}
 			} 
-				
+				// Fonction d'ajout ou de suppression du "loader"
+			function ajaxBox_loader(pState)
+			{
+			// Ajout d'un élement <img> d'id #ajaxBox_loader
+			if (pState === true)
+			$('#aff-disque').html('').html('<li>&nbsp;</li><li>&nbsp;</li><li><img id="ajaxBox_loader" src="<?php echo img_url('ajax-loader.gif');?>" align="center" /></li><li>&nbsp;</li><li>&nbsp;</li>');
+			// Suppression de l'élement d'id #ajaxBox_loader
+			else
+			$('#ajaxBox_loader').remove();
+			}
+			
+			
+			// Fonction de mise à jour du contenu de la div #ajaxBox
+			// Ajout d'un element <p> contenant le message, dans le div #ajaxBox
+			function ajaxBox_setText(pText)
+			{
+			$('#chargement').append('<p>'+ pText +'</p>');
+			}
+			
 		
 		</script>
 		
