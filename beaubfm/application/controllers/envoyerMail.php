@@ -46,7 +46,7 @@ class EnvoyerMail extends MY_Controller {
 		if($emp='emp2') $msg = $this->load->view('email/refuser', $data);
 		
 		$this->email->from('beaubfm@mail.com', 'BeaubFM');
-		$this->email->to($email);
+		$this->email->to($data['email']);
 		//$this->email->to('samir.bouaked@gmail.com');
 		
 		//variables du mail a afficher
@@ -58,7 +58,7 @@ class EnvoyerMail extends MY_Controller {
 		$msg = $this->load->view('email/refuser', $data, TRUE);
 		$this->email->message($msg);
 
-		if($denvoiMail=='1'){
+		if($data['envoiMail']=='1'){
 			$this->email->send();
 			$this->envoyerMail();	
 		}
