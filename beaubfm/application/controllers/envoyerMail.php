@@ -39,17 +39,17 @@ class EnvoyerMail extends MY_Controller {
 		$emp=$this->input->post('emplacement');
 		
 		if($emp='airplay'){
-			$msg = $this->load->view('email/airplay', $data, TRUE);
+			$msg = $this->load->view('email/airplay', $data);
 		} 
 		else{
 			if($emp='nonDiffuse')
-				$msg = $this->load->view('email/nonDiffuse', $data, TRUE);
+				$msg = $this->load->view('email/nonDiffuse', $data);
 			else{
 				if($emp='archivage')
-					$msg = $this->load->view('email/archivage', $data, TRUE);
+					$msg = $this->load->view('email/archivage', $data);
 				else{
 					if($emp='emissionBenevole')
-						$msg = $this->load->view('email/emissionBenevole', $data, TRUE);
+						$msg = $this->load->view('email/emissionBenevole', $data);
 				}
 			}
 		}
