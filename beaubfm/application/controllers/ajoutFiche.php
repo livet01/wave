@@ -152,26 +152,13 @@ class AjoutFiche extends MY_Controller {
 			$data['diffuseur'] = (($data['autoprod']) ? $artId : $difId);
 
 			if ($result_1 && $result_2 && $result_3) {
-				//envoi email
+				//envoi email ?
 				
 
 				
 				$result = $this -> disqueManager -> ajouterDisque($data);
 				$this -> formulaire(array("reussi" => "Ajout réussi", "erreur" => ""));
-				$this -> load -> library('email');
-		
-		$data['email'] = $this->input->post('email');
-		
-		$this->email->from('beaubfm@mail.com', 'BeaubFM');
-		$this->email->to($data['email']);
-
-		
-		$this->email->subject('Email Test');
-		$this->email->message('Corps du mail...');
-		
-		$this->email->send();
-		
-		echo $this->email->print_debugger();
+				
 			} else {
 				$this -> formulaire(array("erreur" => "Echec de l'ajout", "reussi" => ""));
 			}
