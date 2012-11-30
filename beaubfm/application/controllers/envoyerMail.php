@@ -42,7 +42,16 @@ class EnvoyerMail extends MY_Controller {
 			$msg = $this->load->view('email/airplay', $data, TRUE);
 		} 
 		else{
-			$msg = $this->load->view('email/nonDiffuse', $data, TRUE);
+			if($emp='nonDiffuse')
+				$msg = $this->load->view('email/nonDiffuse', $data, TRUE);
+			else{
+				if($emp='archivage')
+					$msg = $this->load->view('email/archivage', $data, TRUE);
+				else{
+					if($emp='emissionBenevole')
+						$msg = $this->load->view('email/emissionBenevole', $data, TRUE);
+				}
+			}
 		}
 		$this->email->from('beaubfm@mail.com', 'BeaubFM');
 		$this->email->to($data['email']);
@@ -61,7 +70,7 @@ class EnvoyerMail extends MY_Controller {
 		else{
 			$this->envoyerMail();
 		}
-		echo $this->email->print_debugger();		
+		//echo $this->email->print_debugger();		
 	}
 
 }
