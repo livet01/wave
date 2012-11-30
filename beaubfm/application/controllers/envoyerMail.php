@@ -33,7 +33,7 @@ class EnvoyerMail extends MY_Controller {
 
 		
 		$this->email->subject('Email Test');
-		$this->email->message('Testing the email class. <br /> TEST Again <br /> <h1> H1 Heading </h1>');
+		$this->email->message('test');
 		 
 		$this->email->send();
 		
