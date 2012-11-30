@@ -28,11 +28,7 @@ class EnvoyerMail extends MY_Controller {
 		$config['mailtype'] = 'html';
 		$config['newline']    = "\r\n";
 		
-		$this->email->initialize($config);
-		$this->email->subject('Email automatique BeaubFM');
-		$this->email->from('beaubfm@mail.com', 'BeaubFM');
-		$this->email->to($data['email']);
-		
+	
 		$data['email'] = $this->input->post('email');
 		$data['envoiMail'] = (($this->input->post('envoiMail') === "0") ? "1" : "0");
 		$data['titre']='toto';
@@ -58,6 +54,10 @@ class EnvoyerMail extends MY_Controller {
 				$this->email->message($msg);
 		        break;
 		}
+		$this->email->initialize($config);
+		$this->email->subject('Email automatique BeaubFM');
+		$this->email->from('beaubfm@mail.com', 'BeaubFM');
+		$this->email->to($data['email']);
 		
 		//$this->email->to('samir.bouaked@gmail.com');
 		
