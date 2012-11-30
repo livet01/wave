@@ -51,11 +51,11 @@ class EnvoyerMail extends MY_Controller {
 		");
 		if($data['envoiMail']=='1'){
 			$this->email->send();
-			$this->envoi();
+			$this->envoyerMail();
 			
 		}
 		else{
-			$this->envoi();
+			$this->envoyerMail();
 		}
 		
 		
