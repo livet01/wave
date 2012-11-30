@@ -32,4 +32,17 @@ class Diffuseur_model extends CI_Model {
 		}
 		return $id;
 	}
+	
+	function compte($where) {
+		return $this->db	->from($this->table)
+							->where($where)
+							->count_all_results();
+	}
+	
+		
+	function delete ($artiste){
+		
+		return $this -> db ->delete("Personne", array('per_id' => $artiste));
+	}
+	
 }

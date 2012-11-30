@@ -22,7 +22,7 @@ class Membre_model extends CI_Model {
 	
 	// Retourne les infos du membres
 	public function getMembreById($id){
-		return $this->db->select(array('mem_mdp','mem_login','mem_id','mem_nom','mem_prenom','mem_verrou'))
+		return $this->db->select(array('mem_mdp','mem_login','mem_id','mem_nom','mem_verrou'))
 						->from($this->vue)
 						->where(array('mem_id'=>$id))
 						->get()

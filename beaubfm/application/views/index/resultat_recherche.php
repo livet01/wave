@@ -11,8 +11,7 @@
 			</ul>
 		</div>
 		<div id="cadre_action">
-			<a class="btn-large-action-nonActif"><i class="icon-pencil"></i> Modifier la fiche</a>
-			<a class="btn-large-action-nonActif"><i class="icon-trash"></i> Supprimer les fiches</a>
+			<a id="supprimer" class="btn-large-action-nonActif"><i class="icon-trash"></i> Supprimer les fiches</a>
 			<a id="exporter" class="btn-large-action-nonActif" href="#"><i class="icon-signout"></i> Exporter des fiches</a>
 		</div>
 	</div>
@@ -42,7 +41,7 @@
 				<th class="tab-menu-action" colspan="2"><i class="icon-cogs"></i></th>
 			</tr>
 			<tbody id="disque">
-			<form  method="post" id="tdisque" action="<?php echo site_url("exporterFiche"); ?>">
+			<form  method="post" id="tdisque" action="#">
 			<?php
 				$i=0;
 				$j=0;

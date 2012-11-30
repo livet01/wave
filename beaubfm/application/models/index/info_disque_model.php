@@ -35,6 +35,13 @@ class Info_Disque_Model extends CI_Model
 		return $query->result();
     }
 
+  	function GetAllDisqueId()
+    {
+		$this->db->select('dis_id');
+		$query = $this->db->get('Disque');
+		return $query->result_array();
+    }
+
  	function GetArrayDisque($numDisque)
     {
 		$this->db->select(array('Disque.dis_id','dis_libelle','dis_format','Membre.mem_nom','Artiste.art_nom','Personne.per_nom','Emplacement.emp_libelle'))
@@ -42,6 +49,14 @@ class Info_Disque_Model extends CI_Model
 						->join('Emplacement', 'Disque.emp_id=Emplacement.emp_id', 'LEFT')
 						->join('Personne', 'Disque.dif_id=Personne.per_id', 'LEFT')
 						->join('Membre','Disque.uti_id_ecoute=Membre.mem_id', 'LEFT')
+						->where('Disque.dis_id', $numDisque);
+		$query = $this->db->get('Disque');
+		return $query->result_array();
+    }
+	
+	function GetOneDisque($numDisque)
+    {
+		$this->db->select('*')
 						->where('Disque.dis_id', $numDisque);
 		$query = $this->db->get('Disque');
 		return $query->result_array();

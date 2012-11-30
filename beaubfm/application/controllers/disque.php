@@ -31,6 +31,7 @@ class Disque extends MY_Controller {
 		$this -> load -> library('form_validation');
 		$this -> load -> library('securite');
 		$this -> load -> library('layout');
+		$this -> load -> library('layout');
 
 		//Chargement models
 		$this -> load -> model('personne_model', 'persManager');
@@ -43,6 +44,7 @@ class Disque extends MY_Controller {
 		$this -> load -> model('disque/emplacement_model', 'emplacementManager');
 		$this -> load -> model('disque/style_model', 'styleManager');
 		$this -> load -> model('disque/ecoute_model', 'ecouteManager');
+		$this -> load -> model('index/Info_Disque_Model', 'infodisque');
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
 		//$this->output->enable_profiler(TRUE);
@@ -550,7 +552,79 @@ class Disque extends MY_Controller {
 		if(!empty($rows))
 			echo json_encode($rows[0]->lab_mail);
 	}	
+	
+	
+	function supprimer($g_nb_disques = 1, $affichage = 0) {
+			
+		// Chargement des ressources
+
+		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
+		{
+			// Tableau récoltant des données à envoyer à la vue
+			$data = array();
+
+			// Récupération de tout les disques pour la page
+			$id = $this->input->post('choix');
+			
+			$tabs = $this -> infodisque -> GetAll_in($id);
+
+			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
+			foreach ($tabs as $tab) {
+				if (empty($tab -> emb_id))
+					$emb_id = null;
+				else {
+					$emb_id = $tab -> emb_id;
+				}
+				$tab_result[] = array("dis_id" => $tab -> dis_id, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+			}
+
+			// On passe le tableau de disque
+			$data['resultat'] = $tab_result;
+		}
+
+		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
+		$data['affichage'] = $affichage;
+
+		// Chargement de la vue
+		$this -> layout -> views('menu_principal')->view('disque/supprimer', $data);
 		
+	}
+	
+	public function supprimerAll() {
+		$choix = $this->input->post('choix');
+		if(!empty($choix)) {
+			foreach($choix as $id) {
+				// Transtipage en integer
+				$id_disque = intval($id);
+		
+				// On récupère les infos du disque
+				$tabs = $this -> infodisque -> GetOneDisque($id_disque);
+							
+				if(!empty($tabs)) {					
+					//$sup = $this -> disqueManager -> delete($id_disque);
+					
+					$tabs = $tabs[0];
+					
+					if($this->artisteManager->compte(array('art_id'=>$tabs['per_id_artiste'])) == 0) {
+						//$this->artisteManager->delete($tabs['per_id_artiste']);
+					}
+					
+					if($this->diffuseurManager->compte(array('per_id'=>$tabs['dif_id'])) == 0) {
+						//$this->diffuseurManager->delete($tabs['dif_id']);
+					}
+				}
+			}
+			$i=0;
+			$ids = $this->infodisque -> GetAllDisqueId();
+			foreach($ids as $id) {
+				if($i!=$id['dis_id']) {
+					$this->disqueManager->update(array('dis_id'=>$i),array('dis_id'=>$id['dis_id']));
+				}
+				$i++;
+			}
+		}
+		//redirect(site_url('index'));
+	}
 }
 ?>
 

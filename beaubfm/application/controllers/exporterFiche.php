@@ -5,7 +5,6 @@ class ExporterFiche extends MY_Controller {
 	function __construct()
     {
         parent::__construct();
-		//$this->output->enable_profiler(TRUE);
  
         // Here you should add some sort of user validation
         // to prevent strangers from pulling your table data
@@ -78,8 +77,7 @@ class ExporterFiche extends MY_Controller {
 		$data['affichage'] = $affichage;
 
 		// Chargement de la vue
-		$this -> layout -> views('menu_principal')
-						->view('exporter', $data);
+		$this -> layout -> views('menu_principal')->view('exporter', $data);
 		
 	}
     
@@ -90,16 +88,22 @@ class ExporterFiche extends MY_Controller {
 		$this->load->model("exporter_model", "exportManager");
 		
 		date_default_timezone_set("Europe/Paris");
-	
+	   	
+	   	$table_name = 'Disque';
+	    //$query = $this->db->get($table_name);
+	    /*$query = $this->createQueryBuilder('d')
+					->join('d.Artiste', 'a')
+					->getQuery();
+		$result = $query->getResult();*/
 		
 		$query = $this->exportManager->select_export($this->input->post('choix'));
-        
-
+        //var_dump($query->result());
         if(!$query)
             return false;
-
+ 		//return false;
         // Starting the PHPExcel library
         $this->load->library('Excel');
+        //$this->load->library('PHPExcel/IOFactory');
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
@@ -107,12 +111,14 @@ class ExporterFiche extends MY_Controller {
         $objPHPExcel->setActiveSheetIndex(0);
  
         // Field names in the first row
-		$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout', 'Mail diffuseur', 'Emplacement', 'Emission Bénévole', 'Style');
-        $fields = array('dis_libelle', 'art_nom', 'lab_nom', 'dis_format', 'uti_prenom', 'dis_date_ajout', 'lab_mail', 'emp_libelle', 'emb_libelle', 'sty_libelle');
-		
+        $column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout', 'Mail diffuseur', 'Emplacement', 'Emission Bénévole');
+        $fields = array('dis_libelle', 'art_nom', 'lab_nom', 'dis_format', 'dis_date_ajout', 'lab_mail', 'emp_libelle', 'emb_libelle');
+
 		$col = 0;
         foreach ($column as $field)
         {
+           	//var_dump($field);
+			//var_dump($col);
            	$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $field);
             $col++;
         }
@@ -121,7 +127,7 @@ class ExporterFiche extends MY_Controller {
         $row = 2;
         foreach($query->result() as $data)
         {
-           	
+           	//var_dump($data);
             $col = 0;
             foreach ($fields as $field)
             {
@@ -150,39 +156,36 @@ class ExporterFiche extends MY_Controller {
 		
 		header('Content-Type: text/csv;');
 		header('Content-Disposition: attachment; filename="Products_'.date('dMy').'.csv"');
-	
+			
 		$this->load->model("exporter_model", "exportManager");
 
 		$query = $this->exportManager->select_export($this->input->post('choix'));
-		
-		
+
         if(!$query)
             return false;
 		
-		$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout', 'Mail diffuseur', 'Emplacement', 'Emission Bénévole', 'Style');
-        $fields = array('dis_libelle', 'art_nom', 'lab_nom', 'dis_format', 'uti_prenom', 'dis_date_ajout', 'lab_mail', 'emp_libelle', 'emb_libelle', 'sty_libelle');
+		$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout', 'Mail diffuseur', 'Emplacement', 'Emission Bénévole');
+        $fields = array('dis_libelle', 'art_nom', 'lab_nom', 'dis_format', 'dis_date_ajout', 'lab_mail', 'emp_libelle', 'emb_libelle');
 		
 		foreach ($query->result() as $data) {
-			//var_dump($data);	
-			// Attribution, pour chaque colonne, des bonnes valeurs et suppréssion des caractères dérengeant pour le CSV
 			$datas[] = array(
-				'Titre' => str_replace(",","",str_replace("\n","",$data->dis_libelle)),
-				'Artiste' => str_replace(",","",str_replace("\n","",$data->art_nom)),
-				'Diffuseur' => str_replace(",","",str_replace("\n","",$data->lab_nom)),
-				'Format' => str_replace(",","",str_replace("\n","",$data->dis_format)),
-				'Ecouté par' => str_replace(",","",str_replace("\n","",$data->uti_prenom)),
-				'Date d\'ajout' => str_replace(",","",str_replace("\n","",$data->dis_date_ajout)),
-				'Mail diffuseur' => str_replace(",","",str_replace("\n","",$data->lab_mail)),
-				'Emplacement' => str_replace(",","",str_replace("\n","",$data->emp_libelle)),
-				'Emission Bénévole' => str_replace(",","",str_replace("\n","",$data->emb_libelle)),
-				'Style' => str_replace(",","",str_replace("\n", "", $data->sty_libelle))
+				'Titre' => $data->dis_libelle,
+				'Artiste' => $data->art_nom,
+				'Diffuseur' => $data->lab_nom,
+				'Format' => $data->dis_format,
+				'Ecouté par' => $data->per_nom,
+				'Date d\'ajout' => $data->dis_date_ajout,
+				'Mail diffuseur' => $data->lab_mail,
+				'Emplacement' => $data->emp_libelle,
+				'Emission Bénévole' => $data->emb_libelle
 				
 			);
 		}
+		
 		$i = 0;
 		foreach ($datas as $data) {
 			if($i == 0)
-				echo implode(';', array_keys($data)).";\r\n";
+				echo implode(';', array_keys($data))."\r\n";
 			
 			echo implode(';', $data)."\r\n";
 			$i++;

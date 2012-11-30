@@ -8,11 +8,10 @@ class Utilisateur_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function ajouterUtil($id, $prenom, $log, $mdp)
+	public function ajouterUtil($id, $log, $mdp)
 	{
 		//$last_id = $this->db->count_all_results($this->table);
 		return $this->db->set('per_id', $id)
-						->set('uti_prenom', $prenom)
 						->set('uti_login', $log)
 						->set('uti_mdp', md5($mdp))
 						->insert($this->table);

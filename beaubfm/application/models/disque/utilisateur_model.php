@@ -24,7 +24,6 @@ class Utilisateur_model extends CI_Model {
 		$resultat = $this->db->set('per_id', $id)
 						->set('uti_login', $login)
 						->set('uti_mdp', $mdp)
-						->set('uti_prenom', "")
 						->insert("Utilisateur");
 		if(!$resultat) {
 			throw new Exception("L'utilisateur n'a pas été ajouté", 1);

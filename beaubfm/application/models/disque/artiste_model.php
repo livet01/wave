@@ -18,6 +18,12 @@ class Artiste_model extends CI_Model {
 							->row_array();
 	}
 	
+	function compte($where) {
+		return $this->db	->from($this->table)
+							->where($where)
+							->count_all_results();
+	}
+	
 	function insert($nom,$radio,$cat) {
 		$last_id = $this->db->count_all_results("Personne") + 1;
 		
@@ -30,5 +36,10 @@ class Artiste_model extends CI_Model {
 			throw new Exception("La personne n'a pas été ajouté", 1);
 		}
 		return $last_id;
+	}
+	
+	function delete ($artiste){
+		
+		return $this -> db ->delete("Personne", array('per_id' => $artiste));
 	}
 }

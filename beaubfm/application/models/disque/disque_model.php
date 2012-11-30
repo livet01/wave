@@ -22,7 +22,7 @@ class Disque_model extends CI_Model {
 	{
 		if(!empty($data)){
 			$last_id = $this->db->count_all_results($this->table);
-			return $this->db->set('dis_id', $last_id+1)
+			return $this->db->set('dis_id', $this->db->insert_id())
 					->set('dis_libelle', $data['dis_libelle'])
 					->set('dis_format', $data['dis_format'])
 					->set('uti_id_ecoute', $data['uti_id_ecoute'])
@@ -49,9 +49,15 @@ class Disque_model extends CI_Model {
 							
 	}
 	
-	public function suppArtiste ($artiste){
+	public function delete ($artiste){
 		
 		return $this -> db ->delete($this->table, array('dis_id' => $artiste));
+	}
+	
+	public function update ($select,$where){
+		
+		return $this -> db 	->where($where)
+							->update($this->table, $select);
 	}
 	
 }

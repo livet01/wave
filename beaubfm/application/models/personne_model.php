@@ -77,7 +77,7 @@ class Personne_model extends CI_Model {
 	
 	public function getUserInfo($id)
 	{
-			return $this->db->select(array($this->table.'.per_id','per_nom','cat_id','rad_id','uti_prenom','uti_login','uti_tutorial','uti_verrou'))
+			return $this->db->select(array($this->table.'.per_id','per_nom','cat_id','rad_id','uti_login','uti_tutorial','uti_verrou'))
 							->from($this->table)
 							->join($this->tableUti,$this->table.".per_id=".$this->tableUti.".per_id")
 							->where(array($this->table.'.per_id'=>$id))

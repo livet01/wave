@@ -73,7 +73,6 @@
 				if (ui.item) {
 					$('#artiste').val(ui.item.value);
 				}
-				$('#fiche').submit();
 			}
 			});
 			 $("#listenBy").autocomplete({
@@ -96,7 +95,6 @@
 				if (ui.item) {
 					$('#listenBy').val(ui.item.value);
 				}
-				$('#fiche').submit();
 			}
 			});
 			 $("#email")
@@ -121,7 +119,6 @@
 				if (ui.item) {
 					$('#diffuseur').val(ui.item.value);
 				}
-				$('#fiche').submit();
 			}}).blur(function(){
 				$("#email").val("");
 				$.ajax({
@@ -141,16 +138,21 @@
 				function countChecked() {
 				  var n = $("input:checked").length;
 				  if(n >= 1) {
+				  	$("#supprimer").removeClass().addClass("btn-large-action");
+				  	$("#supprimer").click(function(){
+				  		$("#tdisque").attr("action","<?php echo site_url("disque/supprimer"); ?>").submit();
+				  	});
 				  	$("#exporter").removeClass().addClass("btn-large-action");
 				  	$("#exporter").click(function(){
-				  		
-				  		$("#tdisque").submit();
-				  		
+				  		$("#tdisque").attr("action","<?php echo site_url("exporterFiche"); ?>").submit();
 				  	});
 				  }
 				  else {
+				  	$("#supprimer").removeClass().addClass("btn-large-action-nonActif");
+				  	$("#supprimer").attr("href", "#");
 				  	$("#exporter").removeClass().addClass("btn-large-action-nonActif");
 				  	$("#exporter").attr("href", "#");
+				  	$("#tdisque").attr("action","#");
 				  }
 				}
 				countChecked();
@@ -165,6 +167,11 @@
 				$("#linkCSV").click(function(){
 					$("#exportdisque").attr("action","<?php echo site_url("exporterFiche/csv"); ?>");
 					$("#exportdisque").submit();
+				});
+					
+				$("#supprAll").click(function(){
+					$("#supprimerdisque").attr("action","<?php echo site_url("disque/supprimerAll"); ?>");
+					$("#supprimerdisque").submit();
 				});
 		
 			});
@@ -203,10 +210,7 @@
 			$('#chargement').append('<p>'+ pText +'</p>');
 			}
 			
-		
-		</script>
-		
-		<script>
+	
   $(function(){
     $("div.holder").jPages({
       containerID : "disque",
