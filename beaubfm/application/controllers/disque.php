@@ -45,7 +45,7 @@ class Disque extends MY_Controller {
 		$this -> load -> model('disque/ecoute_model', 'ecouteManager');
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
-		$this->output->enable_profiler(TRUE);
+		//$this->output->enable_profiler(TRUE);
 
 	}
 
@@ -154,6 +154,59 @@ class Disque extends MY_Controller {
 	//
 	public function index() {
 		redirect(site_url("disque/ajouter"));
+	}
+
+	//
+	// Modifier un disque
+	//
+	public function modifier($id) {
+		// Initialisation des données a envoyer en bd
+		$data = array('erreur' => "", 'reussi' => "");
+		
+		// Chargement des formats
+		$formats = $this -> parametreManager -> select('format');
+		$formats = explode(";", $formats['param_valeur']);
+		$data['formats'] = $formats;
+		
+		// Chargement des emplacements
+		$emp_libelles = $this -> emplacementManager -> select_all(array('emp_libelle','emp_plus'));
+		$data['emplacements'] = array();
+		foreach($emp_libelles as $emp_libelle) {
+			array_push($data['emplacements'],array("emp_libelle" =>$emp_libelle->emp_libelle,"emp_plus"=>$emp_libelle->emp_plus));
+		}
+		
+		// Chargement des styles
+		$styles = $this -> styleManager -> select_all(array('sty_couleur','sty_libelle'));
+		$data['styles'] = array();
+		foreach($styles as $style) {
+			array_push($data['styles'],array("couleur" => $style->sty_couleur, "libelle" => $style->sty_libelle));
+		}
+		
+		$disque = $this -> disqueManager -> select(array('dis_id','dis_libelle','dis_format','per_id_artiste', 'uti_id_ecoute','dis_libelle','dis_format','sty_id'), array('dis_id' => $id));
+		var_dump($disque);
+		if(!empty($disque)) {
+			$this->set_dif_id($disque["dif_id"]);
+			$this->set_art_id(($disque["per_id_artiste"]));
+			$this->set_dis_format(($disque["format"]));
+			$this->set_dis_id(($disque["dis_id"]));
+			$this->set_dis_libelle(($disque["dis_libelle"]));
+			if(isset($disque["emb_id"])) { $this->set_emb_id(($disque["emb_id"])); }
+			$this->set_sty_id(($disque["sty_id"]));
+			$this->set_mem_id(($disque["uti_id_ecoute"]));
+			$this->set_emp_id(($disque["emp_id"]));
+			$data['infoDisque'] = $disque;
+		}
+		if ($this -> formulaire_null()) {
+			// Affichage du formulaire 
+			var_dump($data);
+			$this -> layout -> views('menu_principal') -> view('disque/ajouter_fiche',$data);
+		} else {
+			// Formulaire envoyé
+			$data['erreur'] = $this->ajouter_disque();
+			if(empty($data['erreur'])) {
+				$data['reussi'] = "Le disque a bien été modifié.";
+			}
+		}
 	}
 
 	//
@@ -304,10 +357,14 @@ class Disque extends MY_Controller {
 		}
 	}
 
-	public function rechercheArtisteByNom($nom, $radio, $categorie) {
+	public function rechercheArtisteByNom($nom, $radio, $categorie, $insertion = TRUE) {
 		$artId = $this -> artisteManager -> select('art_id', array('art_nom' => $nom));
 		if (empty($artId)) {
-			$artId = (int)$this -> artisteManager -> insert($nom, $radio, $categorie);
+			if($insertion)
+				$artId = (int)$this -> artisteManager -> insert($nom, $radio, $categorie);
+			else {
+				$artId = -1;
+			}
 		} else
 			$artId = $artId["art_id"];
 		return $artId;
@@ -420,6 +477,80 @@ class Disque extends MY_Controller {
 		}
 		
 	}
+	
+	//
+	// Méthode de suggestion : ajax et auto-completion.
+	//
+	public function suggestions_artiste() {
+		$this -> load -> model('index/autocomplete_model');
+		$term = $this -> input -> post('term', TRUE);
+
+		$json_array = array();
+		$rows = $this -> autocomplete_model -> GetAutocompleteArtiste(array('keyword' => $term));
+		$i = 0;
+		foreach ($rows as $row) {
+			if ($i < 6) {
+				array_push($json_array, array("label" => $row -> art_nom));
+			}
+			$i++;
+		}
+
+		echo json_encode($json_array);
+	}
+
+	//
+	// Méthode de suggestion : ajax et auto-completion.
+	//
+	public function suggestions_diffuseur() {
+		$this -> load -> model('index/autocomplete_model');
+		$term = $this -> input -> post('term', TRUE);
+
+		$json_array = array();
+		$rows = $this -> autocomplete_model -> GetAutocompleteLabel(array('keyword' => $term));
+		$i = 0;
+		foreach ($rows as $row) {
+			if ($i < 6) {
+				array_push($json_array, array("label" => $row -> lab_nom));
+			}
+			$i++;
+		}
+
+		echo json_encode($json_array);
+	}	
+	
+	//
+	// Méthode de suggestion : ajax et auto-completion.
+	//
+	public function suggestions_ecoute() {
+		$this -> load -> model('index/autocomplete_model');
+		$term = $this -> input -> post('term', TRUE);
+
+		$json_array = array();
+		$rows = $this -> autocomplete_model -> GetAutocompleteMembre(array('keyword' => $term));
+		$i = 0;
+		foreach ($rows as $row) {
+			if ($i < 6) {
+				array_push($json_array, array("label" => $row -> mem_nom));
+			}
+			$i++;
+		}
+
+		echo json_encode($json_array);
+	}
+	
+	//
+	// Méthode de suggestion : ajax et auto-completion.
+	//
+	public function suggestions_email() {
+		$this -> load -> model('index/autocomplete_model');
+		$term = $this -> input -> post('term', TRUE);
+
+		$json_array = array();
+		$rows = $this -> autocomplete_model -> GetAutocompleteLabel(array('keyword' => $term));
+		if(!empty($rows))
+			echo json_encode($rows[0]->lab_mail);
+	}	
+		
 }
 ?>
 

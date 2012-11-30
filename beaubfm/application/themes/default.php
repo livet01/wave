@@ -31,7 +31,7 @@
 	});
 		
 		//Recherche (autocompl�tion)
-    	$(document).ready(function() {
+    	$(document).ready(function() { 		
 				$("#recherche" ).catcomplete({
 						source: function(request, response) {
 								$.ajax({ url: "<?php echo site_url('index/suggestions'); ?>",
@@ -49,7 +49,7 @@
 					        }
 					        $('#recherche_form').submit();}
 				});
-			});
+		
 			// Fonction d'ajout ou de suppression du "loader"
 			function ajaxBox_loader(pState)
 			{
@@ -68,64 +68,92 @@
 			{
 			$('#chargement').append('<p>'+ pText +'</p>');
 			}
-			
-			//Recherche Artiste (autocompl�tion)
-			$(document).ready(function() {
-				$("#artiste").autocomplete({
-					source : function(request, response) {
-					$.ajax({
-							url : "<?php echo site_url('ajoutFiche/suggestions'); ?>",
-							data : {
-							termArtiste : $("#artiste").val()
-							},
-							dataType : "json",
-							type : "POST",
-							success : function(data) {
-							response(data);
-						}
-					});	
-				},
-				minLength : 1,
-				delay : 0,
-				select : function(event, ui) {
-					if (ui.item) {
-						$('#artiste').val(ui.item.value);
+
+			$("#artiste").autocomplete({
+				source : function(request, response) {
+				$.ajax({
+						url : "<?php echo site_url('disque/suggestions_artiste'); ?>",
+						data : {
+						term : $("#artiste").val()
+						},
+						dataType : "json",
+						type : "POST",
+						success : function(data) {
+						response(data);
 					}
-					$('#fiche').submit();
+				});	
+			},
+			minLength : 1,
+			delay : 0,
+			select : function(event, ui) {
+				if (ui.item) {
+					$('#artiste').val(ui.item.value);
 				}
-				});
-			}); 
+				$('#fiche').submit();
+			}
+			});
+			 $("#listenBy").autocomplete({
+				source : function(request, response) {
+				$.ajax({
+						url : "<?php echo site_url('disque/suggestions_ecoute'); ?>",
+						data : {
+						term : $("#listenBy").val()
+						},
+						dataType : "json",
+						type : "POST",
+						success : function(data) {
+						response(data);
+					}
+				});	
+			},
+			minLength : 1,
+			delay : 0,
+			select : function(event, ui) {
+				if (ui.item) {
+					$('#listenBy').val(ui.item.value);
+				}
+				$('#fiche').submit();
+			}
+			});
+			 $("#email")
 			//Recherche Label (autocompl�tion)
-			$(document).ready(function() {
-				$("#diffuseur").autocomplete({
-					source : function(request, response) {
-					$.ajax({
-							url : "<?php echo site_url('ajoutFiche/suggestions'); ?>",
-							data : {
-							termDiffuseur : $("#diffuseur").val()
-							},
-							dataType : "json",
-							type : "POST",
-							success : function(data) {
-							response(data);
-						}
-					});	
-				},
-				minLength : 1,
-				delay : 0,
-				select : function(event, ui) {
-					if (ui.item) {
-						$('#diffuseur').val(ui.item.value);
+			$("#diffuseur").autocomplete({
+				source : function(request, response) {
+				$.ajax({
+						url : "<?php echo site_url('disque/suggestions_diffuseur'); ?>",
+						data : {
+						term : $("#diffuseur").val()
+						},
+						dataType : "json",
+						type : "POST",
+						success : function(data) {
+						response(data);
 					}
-					$('#fiche').submit();
+				});	
+			},
+			minLength : 1,
+			delay : 0,
+			select : function(event, ui) {
+				if (ui.item) {
+					$('#diffuseur').val(ui.item.value);
 				}
-				});
-				
-				/*$("input.chx:checked").each(function() {
-					$("#exporter").removeClass().addClass('btn-large-action');
-					alert("c oucou");
-				});*/
-				
+				$('#fiche').submit();
+			}}).blur(function(){
+				$("#email").val("");
+				$.ajax({
+						url : "<?php echo site_url('disque/suggestions_email'); ?>",
+						data : {
+						term : $("#diffuseur").val()
+						},
+						dataType : "json",
+						type : "POST",
+						success : function(data) {
+							$("#email").val(data);
+						}
+						
+				});	
+			});
+			
 				function countChecked() {
 				  var n = $("input:checked").length;
 				  if(n >= 1) {
@@ -142,6 +170,7 @@
 				  }
 				}
 				countChecked();
+				
 				$(":checkbox").click(countChecked);
 				
 				$("#linkXLS").click(function(){

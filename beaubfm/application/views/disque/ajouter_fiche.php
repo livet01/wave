@@ -1,4 +1,6 @@
-<?php if(!empty($reussi)) {
+<?php 
+
+if(!empty($reussi)) {
 	?>
 <div id="cadre">
 	<p class="success">
@@ -34,14 +36,14 @@ if(!empty($erreur)) {
 					<label class="mesgErr"><i class=<?php if (form_error('titre')) echo "icon-remove-sign";?>></i><?php echo form_error('titre'); ?></label>
 					
 					<label class="labelGauche" for="titre"><i class="icon-music"></i> Titre </label>
-					<input type="text" id="titre" name="titre" title="Titre obligatoire" onblur="verifTitre(this)" value="<?php echo set_value('titre'); ?>">
+					<input type="text" id="titre" name="titre" title="Titre obligatoire" value="<?php echo set_value('titre'); ?>">
 				</p>
 				<p>
 					<!-- Message d'erreur -->
 					<label class="mesgErr"><i class=<?php if (form_error('artiste')) echo "icon-remove-sign";?>></i><?php echo form_error('artiste'); ?></label>
 					
 					<label class="labelGauche" for="artiste"><i class="icon-group"></i> Artiste</label>
-					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire" onblur="verifArtiste(this)" value="<?php echo set_value('artiste'); ?>" > <!-- onchange="$('#diffuseur').val($('#artiste').val());" --> 
+					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire"  value="<?php echo set_value('artiste'); ?>" > <!-- onchange="$('#diffuseur').val($('#artiste').val());" --> 
 					<input class="check" type="checkbox" id="autoprod" name="autoprod" value="a" onclick="GereControle('autoprod', 'diffuseur', 0)" >
 					<label class="labelCheck" for="autoprod">Auto-Production</label>
 				</p>

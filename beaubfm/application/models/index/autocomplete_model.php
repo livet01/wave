@@ -10,9 +10,16 @@ class Autocomplete_Model extends CI_Model
     }
     function GetAutocompleteLabel($options = array())
     {
-	    $this->db->select(array('lab_id','lab_nom'));
+	    $this->db->select(array('lab_id','lab_nom','lab_mail'));
 	    $this->db->like('lab_nom', $options['keyword'], 'both');
    		$query = $this->db->get('Label');
+		return $query->result();
+    }
+    function GetAutocompleteMembre($options = array())
+    {
+	    $this->db->select(array('mem_id','mem_nom'));
+	    $this->db->like('mem_nom', $options['keyword'], 'both');
+   		$query = $this->db->get('Membre');
 		return $query->result();
     }
     function GetAutocompleteDisque($options = array())
