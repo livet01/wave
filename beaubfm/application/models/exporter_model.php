@@ -28,7 +28,9 @@ class Exporter_model extends CI_Model {
 							->join('Utilisateur', 'Disque.uti_id_ecoute = Utilisateur.per_id')
 							->join('Emplacement', 'Disque.emp_id = Emplacement.emp_id')
 							->join('EmBenevole', 'Disque.emb_id = EmBenevole.emb_id','left')
+							->join('Style','Disque.sty_id = Style.sty_id', 'left')
 							->where_in('dis_id', $where)
+							->order_by('dis_libelle', 'asc')
 							->get();
 		}
 	}

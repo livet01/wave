@@ -35,7 +35,6 @@
 				<th><i class="icon-music"></i> Titre</th>
 				<th><i class="icon-group"></i> Artiste</th>
 				<th><i class="icon-home"></i> Label</th>
-				<th class="tab-menu-action" colspan="2"><i class="icon-cogs"></i></th>
 			</tr>
 			<tbody id="disque">
 			<form  method="post" id="exportdisque" action="#">
@@ -51,8 +50,6 @@
 					echo '<td class="left" onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['dis_libelle'].'</td>';
 					echo '<td onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['art_nom'].'</td>';
 					echo '<td onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['per_nom'].'</td>';
-					echo '<td><a class="action-tab" href="#"><i class="icon-pencil"></a></td>';
-					echo '<td><a class="action-tab" href="#"><i class="icon-trash"></a></td>';
 					echo '</tr>';
 					$i++;
 					$j++;
