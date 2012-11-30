@@ -42,8 +42,11 @@ class EnvoyerMail extends MY_Controller {
 		$data['artiste']='supertoto';
 		$emp=$this->input->post('emplacement');
 		
-		if($emp='airplay') $msg = $this->load->view('email/accepter', $data);
-		if($emp='emp2') $msg = $this->load->view('email/refuser', $data);
+		if($emp='airplay'){
+			$msg = $this->load->view('email/accepter', $data);
+		} 
+		else
+			$msg = $this->load->view('email/refuser', $data);
 		
 		$this->email->from('beaubfm@mail.com', 'BeaubFM');
 		$this->email->to($data['email']);
