@@ -154,7 +154,7 @@ class AjoutFiche extends MY_Controller {
 			if ($result_1 && $result_2 && $result_3) {
 				//envoi email ?
 				
-				$this->envoyerMail($data);
+				$this->envoyerMail($data['artiste'],$data['titre'],$data['envoiMail'],$data['email']);
 				
 				$result = $this -> disqueManager -> ajouterDisque($data);
 				$this -> formulaire(array("reussi" => "Ajout réussi", "erreur" => ""));
