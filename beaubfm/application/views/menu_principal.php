@@ -28,6 +28,7 @@
 					<!--<a href="#"><i class="icon-user"></i>Mon profil</a>-->
 					<a href="<?php echo site_url('disque/ajouter') ;?>"><i class="icon-plus-sign"></i>Ajouter disque</a>
 					<a href="<?php echo base_url().'index.php/importerFiche/' ;?>"><i class="icon-signin"></i>Importer</a>
+					<a href="<?php echo base_url().'index.php/envoyerMail/' ;?>"><i class="icon-envelope-alt"></i>Mails</a>
 				</nav>
 			</div>
 </div>

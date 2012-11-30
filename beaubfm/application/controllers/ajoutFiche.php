@@ -20,7 +20,7 @@ class AjoutFiche extends MY_Controller {
 		
 		/*if(!empty($data))
 			echo $data['erreur'];*/
-		// Vues
+		// Vues 
 		$this->load->library('layout');
 		
 		$this->layout->views('menu_principal')
@@ -32,6 +32,7 @@ class AjoutFiche extends MY_Controller {
 		
 		//	Chargement de la bibliothèque
 		$this->load->library('form_validation');
+		
 		//Chargement models
 		$this->load->model('personne_model', 'persManager');
 		$this->load->model('embenevole_model', 'emBevManager');
@@ -151,7 +152,10 @@ class AjoutFiche extends MY_Controller {
 			$data['diffuseur'] = (($data['autoprod']) ? $artId : $difId);
 
 			if ($result_1 && $result_2 && $result_3) {
+				//envoi email
+				
 
+				
 				$result = $this -> disqueManager -> ajouterDisque($data);
 				$this -> formulaire(array("reussi" => "Ajout réussi", "erreur" => ""));
 			} else {
