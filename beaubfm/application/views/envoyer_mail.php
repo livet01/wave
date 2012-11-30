@@ -26,5 +26,9 @@
 					
 				</p>
 				<a href="#?w=500" rel="popup_name" class="poplight">En savoir plus</a>
+				<div id="popup_name" class="popup_block">
+					<h2>Developpez.com</h2>
+					<p>Soh Tanaka est traduit sur developpez.com.</p>
+				</div>
 	</div>
 </div>
