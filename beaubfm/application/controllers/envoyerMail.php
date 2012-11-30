@@ -25,18 +25,17 @@ class EnvoyerMail extends MY_Controller {
 	public function envoi() {
 		$this -> load -> library('email');
 		
+		$data['email'] = $this->input->post('email');
+		$this->email->from('beaubfmddddd@gmail.com', 'BeaubFM');
+		$this->email->to($data['email']);
 
-$this->email->from('your@example.com', 'Your Name');
-$this->email->to('samir.bouaked@gmail.com');
-$this->email->cc('another@another-example.com');
-$this->email->bcc('them@their-example.com');
-
-$this->email->subject('Email Test');
-$this->email->message('Testing the email class.');
-
-$this->email->send();
-
-echo $this->email->print_debugger();
+		
+		$this->email->subject('Email Test');
+		$this->email->message('Corps du mail...');
+		
+		$this->email->send();
+		
+		echo $this->email->print_debugger();
 				
 	}
 
