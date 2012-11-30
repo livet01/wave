@@ -3,7 +3,7 @@ class EnvoyerMail extends MY_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(FALSE);
 		$this->load->library('session');
 		$this -> load -> library('email');
 	}
