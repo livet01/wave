@@ -24,17 +24,15 @@ class EnvoyerMail extends MY_Controller {
 
 	public function envoi() {
 		$this -> load -> library('email');
-
 		
 		$data['email'] = $this->input->post('email');
-		
 		$this->email->from('beaubfm@mail.com', 'BeaubFM');
 		$this->email->to($data['email']);
 
 		
 		$this->email->subject('Email Test');
-		$this->email->message('test');
-		 
+		$this->email->message('Corps du mail...');
+		
 		$this->email->send();
 		
 		echo $this->email->print_debugger();
