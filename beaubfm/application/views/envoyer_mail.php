@@ -13,6 +13,14 @@
 					<label class="labelCheck" for="envoiMail" >Envoyer email</label>
 				</p>
 				<p>
+				<label class="labelGaucheEmplacement" for="emplacement"><i class="icon-hdd"></i> Emplacement </label>
+					<input type="radio" name="emplacement" id="emp1" value="airplay" checked="checked"onclick="$('#emb').hide()" >
+					<label class="check" for="emp1" onclick="$('#emb').hide()">AirPlay</label>
+					<input type="radio" name="emplacement" id="emp2" value="nonDiffuse" onclick="$('#emb').hide()">
+					<label class="check" for="emp2"onclick="$('#emb').hide()" >Non Diffusé</label>
+					<br>
+				</p>	
+				<p>
 					<label class="labelGauche" for="corpsemail"> Message </label><br>
 					<textarea name="corpsemail" cols="74" rows="20" style="resize: none;"></textarea>
 					

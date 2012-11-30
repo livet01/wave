@@ -195,6 +195,7 @@ class AjoutFiche extends MY_Controller {
 		<strong>$artiste</strong>...
 		");
 		
+		
 		if($data['envoiMail']=='1'){
 			$this->email->send();
 			$this->formulaire();	

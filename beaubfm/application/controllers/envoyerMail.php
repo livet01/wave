@@ -33,36 +33,39 @@ class EnvoyerMail extends MY_Controller {
 		$this->email->initialize($config);
 		
 		
+		
+		
+		
 		$data['email'] = $this->input->post('email');
-		$data['corps'] = $this->input->post('corpsemail');
 		$data['envoiMail'] = (($this->input->post('envoiMail') === "0") ? "1" : "0");
+		$data['titre']='toto';
+		$data['artiste']='supertoto';
+		$emp=$this->input->post('emplacement');
+		
+		if($emp='emp1') $msg = $this->load->view('email/accepter', $data);
+		if($emp='emp2') $msg = $this->load->view('email/refuser', $data);
 		
 		$this->email->from('beaubfm@mail.com', 'BeaubFM');
-		//$this->email->to($data['email']);
-		$this->email->to('samir.bouaked@gmail.com');
+		$this->email->to($email);
+		//$this->email->to('samir.bouaked@gmail.com');
 		
 		//variables du mail a afficher
-		$titre='toto';
-		$artiste='supertoto';
+		
 		
 		
 		//preparation du mail
 		$this->email->subject('Email automatique BeaubFM');
-		$msg = $this->load->view('email/refuser', '', true);
+		$msg = $this->load->view('email/refuser', $data, TRUE);
 		$this->email->message($msg);
-		//$this->email->message("
-		//Nous avons bien recu l\'album <strong>$titre</strong> de l\'artiste
-		//<strong>$artiste</strong>...
-		//");
-		
-		if($data['envoiMail']=='1'){
+
+		if($denvoiMail=='1'){
 			$this->email->send();
 			$this->envoyerMail();	
 		}
 		else{
 			$this->envoyerMail();
 		}
-		//echo $this->email->print_debugger();		
+		echo $this->email->print_debugger();		
 	}
 
 }
