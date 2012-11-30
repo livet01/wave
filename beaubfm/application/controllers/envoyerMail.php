@@ -29,7 +29,9 @@ class EnvoyerMail extends MY_Controller {
 		$data['corps'] = $this->input->post('corpsemail');
 		$this->email->from('beaubfm@mail.com', 'BeaubFM');
 		$this->email->to($data['email']);
-
+		
+		$titre='toto';
+		$artiste='supertoto';
 		
 		$this->email->subject('Email Test');
 		$this->email->message($data['corps']);
