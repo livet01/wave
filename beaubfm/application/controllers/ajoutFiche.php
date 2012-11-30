@@ -5,7 +5,7 @@ class AjoutFiche extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->output->enable_profiler(TRUE);
-		
+		$this -> load -> library('email');
 		$this->load->library('session');
 	}
 
@@ -154,7 +154,7 @@ class AjoutFiche extends MY_Controller {
 			if ($result_1 && $result_2 && $result_3) {
 				//envoi email ?
 				
-
+				$this->envoyerMail($data);
 				
 				$result = $this -> disqueManager -> ajouterDisque($data);
 				$this -> formulaire(array("reussi" => "Ajout réussi", "erreur" => ""));
@@ -171,7 +171,39 @@ class AjoutFiche extends MY_Controller {
 
 		}
 	}
-
+	public function envoyerMail($data) {
+		
+		$config['charset'] = 'utf-8';
+		$config['mailtype'] = 'html';
+		$config['newline']    = "\r\n";
+		$this->email->initialize($config);
+		
+		
+		$this->email->from('beaubfm@mail.com', 'BeaubFM');
+		//$this->email->to($data['email']);
+		$this->email->to('samir.bouaked@gmail.com');
+		
+		//variables du mail a afficher
+		$titre=$data['titre'];
+		$artiste=$data['artiste'];
+		
+		
+		//preparation du mail
+		$this->email->subject('Email automatique BeaubFM');
+		$this->email->message("
+		Nous avons bien recu l\'album <strong>$titre</strong> de l\'artiste
+		<strong>$artiste</strong>...
+		");
+		
+		if($data['envoiMail']=='1'){
+			$this->email->send();
+			$this->envoyerMail();	
+		}
+		else{
+			$this->envoyerMail();
+		}
+		//echo $this->email->print_debugger();		
+	}
 	////////////////////////////////>>///////////////
 	///////////////////////////////////////////////
 	//METHODES DE MISE EN PLACE DE L'AUTOCOMPLETION

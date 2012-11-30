@@ -35,33 +35,32 @@ class EnvoyerMail extends MY_Controller {
 		
 		$data['email'] = $this->input->post('email');
 		$data['corps'] = $this->input->post('corpsemail');
-		
 		$data['envoiMail'] = (($this->input->post('envoiMail') === "0") ? "1" : "0");
-		$this->email->from('beaubfm@mail.com', 'BeaubFM');
-		$this->email->to($data['email']);
 		
+		$this->email->from('beaubfm@mail.com', 'BeaubFM');
+		//$this->email->to($data['email']);
+		$this->email->to('samir.bouaked@gmail.com');
+		
+		//variables du mail a afficher
 		$titre='toto';
 		$artiste='supertoto';
 		
+		
+		//preparation du mail
 		$this->email->subject('Email automatique BeaubFM');
 		$this->email->message("
 		Nous avons bien recu l\'album <strong>$titre</strong> de l\'artiste
 		<strong>$artiste</strong>...
-		
 		");
+		
 		if($data['envoiMail']=='1'){
 			$this->email->send();
-			$this->envoyerMail();
-			
+			$this->envoyerMail();	
 		}
 		else{
 			$this->envoyerMail();
 		}
-		
-		
-		
-		echo $this->email->print_debugger();
-				
+		//echo $this->email->print_debugger();		
 	}
 
 }
