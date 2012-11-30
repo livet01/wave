@@ -10,7 +10,7 @@
 				<label class="labelGauche" for="email"><i class="icon-envelope-alt"></i> Email de contact </label>
 					<input type="text" id="email" name="email" title="e-mail obligatoire" onblur="verifMail(this)" value="<?php echo set_value('email'); ?>">
 					<input class="check" type="checkbox" id="envoiMail" name="envoiMail" value="0">
-					<label class="labelCheck" for="envoiMail" > <a onclick="$('#show').avgrund();">Envoyer email</a></label>
+					<label id="show" class="labelCheck" for="envoiMail" > Envoyer email</label>
 				</p>
 				<p>
 				<label class="labelGaucheEmplacement" for="emplacement"><i class="icon-hdd"></i> Emplacement </label>
@@ -20,24 +20,18 @@
 					<label class="check" for="emp2"onclick="$('#emb').hide()" >Non Diffusé</label>
 					<br>
 				</p>	
-				<p>
-					<label class="labelGauche" for="corpsemail"> Message </label><br>
-					<textarea name="corpsemail" cols="74" rows="20" style="resize: none;"></textarea>
-					
-				</p>
+				
 				<script>
 				$(function() {
 					$('#show').avgrund({
-						height: 200,
+						height: 100,
 						holderClass: 'custom',
 						showClose: true,
 						showCloseText: 'Close',
 						enableStackAnimation: true,
 						onBlurContainer: '.container',
-						template: '<p>Voici le mail qui va être envoyé : </p>' +
-						'<div>' +
+						template: '<p> Vous allez envoyer un mail au distributeur </p>'
 						
-						'</div>'
 					});
 				});
 	</script>
