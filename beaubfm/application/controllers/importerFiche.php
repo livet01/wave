@@ -164,7 +164,7 @@ class ImporterFiche extends MY_Controller {
 			$j = 0;
 			foreach ($listeKeys as $libelleKeys) {
 				if ($keys[$libelleKeys] !== false) {
-					$arrayEpure[$i][$listeKeysFinal[$j]] = $arrayFichier[$i][$keys[$libelleKeys]];
+					$arrayEpure[$i][$listeKeysFinal[$j]] = utf8_encode($arrayFichier[$i][$keys[$libelleKeys]]);
 				}
 				$j++;
 			}
@@ -311,11 +311,14 @@ class ImporterFiche extends MY_Controller {
 			$art_id = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $this -> user['rad_id'], $cat_id);
 
 			//Titre
-			if ($disqueControlleur -> existeTitreArtiste($disque['Titre'], $art_id)) {
+			$disqueExist=$disqueControlleur -> existeTitreArtiste($disque['Titre'], $art_id);
+			
+			if (isset($disqueExist)) {
 				$valide = FALSE;
 				$doublon = TRUE;
 			} else {
 				$titre = $disque['Titre'];
+				echo "Erreur";
 			}
 
 			//Diffuseur
