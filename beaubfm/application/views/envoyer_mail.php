@@ -1,6 +1,6 @@
 <div id="cadre2">
 	<div id="cadre_action">
-		<a class="btn-large-action" href="javascript: document.forms['fiche'].reset();"><i class="icon-undo"></i> Annuler </a>
+		<a id="show" class="btn-large-action" href="javascript: document.forms['fiche'].reset();"><i class="icon-undo"></i> Annuler </a>
 		<a class="btn-large-action" href="javascript: document.forms['fiche'].submit();"><i class="icon-ok"></i> Valider </a>
 	</div>
 	<div id="resultat_recherche">
@@ -25,10 +25,21 @@
 					<textarea name="corpsemail" cols="74" rows="20" style="resize: none;"></textarea>
 					
 				</p>
-				<a href="#?w=500" rel="popup_name" class="poplight">En savoir plus</a>
-				<div id="popup_name" class="popup_block">
-					<h2>Developpez.com</h2>
-					<p>Soh Tanaka est traduit sur developpez.com.</p>
-				</div>
+				<script>
+				$(function() {
+					$('#show').avgrund({
+						height: 200,
+						holderClass: 'custom',
+						showClose: true,
+						showCloseText: 'Close',
+						enableStackAnimation: true,
+						onBlurContainer: '.container',
+						template: '<p>Voici le mail qui va être envoyé : </p>' +
+						'<div>' +
+						
+						'</div>'
+					});
+				});
+	</script>
 	</div>
 </div>
