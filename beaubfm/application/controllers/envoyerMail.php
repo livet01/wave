@@ -24,6 +24,7 @@ class EnvoyerMail extends MY_Controller {
 
 	public function envoi() {
 		$this -> load -> library('email');
+
 		
 		$data['email'] = $this->input->post('email');
 		
@@ -32,8 +33,8 @@ class EnvoyerMail extends MY_Controller {
 
 		
 		$this->email->subject('Email Test');
-		$this->email->message('Corps du mail...');
-		
+		$this->email->message('Testing the email class. <br /> TEST Again <br /> <h1> H1 Heading </h1>');
+		 
 		$this->email->send();
 		
 		echo $this->email->print_debugger();
