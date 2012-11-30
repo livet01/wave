@@ -30,7 +30,7 @@
 						showCloseText: 'Close',
 						enableStackAnimation: true,
 						onBlurContainer: '.container',
-						template: '<p> Vous allez envoyer un mail au distributeur </p>'
+						template: '<p> Vous allez envoyer un mail! </p>'
 						
 					});
 				});
