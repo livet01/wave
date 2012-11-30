@@ -26,7 +26,8 @@ class EnvoyerMail extends MY_Controller {
 		$this -> load -> library('email');
 		
 		$data['email'] = $this->input->post('email');
-		$this->email->from('beaubfmddddd@gmail.com', 'BeaubFM');
+		
+		$this->email->from('beaubfm@mail.com', 'BeaubFM');
 		$this->email->to($data['email']);
 
 		
