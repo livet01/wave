@@ -601,29 +601,21 @@ class Disque extends MY_Controller {
 				$tabs = $this -> infodisque -> GetOneDisque($id_disque);
 							
 				if(!empty($tabs)) {					
-					//$sup = $this -> disqueManager -> delete($id_disque);
+					$sup = $this -> disqueManager -> delete($id_disque);
 					
 					$tabs = $tabs[0];
 					
 					if($this->artisteManager->compte(array('art_id'=>$tabs['per_id_artiste'])) == 0) {
-						//$this->artisteManager->delete($tabs['per_id_artiste']);
+						$this->artisteManager->delete($tabs['per_id_artiste']);
 					}
 					
 					if($this->diffuseurManager->compte(array('per_id'=>$tabs['dif_id'])) == 0) {
-						//$this->diffuseurManager->delete($tabs['dif_id']);
+						$this->diffuseurManager->delete($tabs['dif_id']);
 					}
 				}
 			}
-			$i=0;
-			$ids = $this->infodisque -> GetAllDisqueId();
-			foreach($ids as $id) {
-				if($i!=$id['dis_id']) {
-					$this->disqueManager->update(array('dis_id'=>$i),array('dis_id'=>$id['dis_id']));
-				}
-				$i++;
-			}
 		}
-		//redirect(site_url('index'));
+		redirect(site_url('index'));
 	}
 }
 ?>
