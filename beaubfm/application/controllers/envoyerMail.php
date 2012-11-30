@@ -24,11 +24,14 @@ class EnvoyerMail extends MY_Controller {
 	}
 
 	public function envoi() {
+		
 		$config['charset'] = 'utf-8';
 		$config['mailtype'] = 'html';
 		$config['newline']    = "\r\n";
+
+
+		$this->email->initialize($config);
 		
-	
 		$data['email'] = $this->input->post('email');
 		$data['envoiMail'] = (($this->input->post('envoiMail') === "0") ? "1" : "0");
 		$data['titre']='toto';
@@ -36,30 +39,19 @@ class EnvoyerMail extends MY_Controller {
 		$emp=$this->input->post('emplacement');
 		
 		
-		switch ($emp){
-		    case "airplay":
-		        $msg = $this->load->view('email/airplay', $data);
-				$this->email->message($msg);
-		        break;
-		    case "nonDiffuse":
-		        $msg = $this->load->view('email/nonDiffuse', $data);
-				$this->email->message($msg);
-		        break;
-		    case "archivage":
-		        $msg = $this->load->view('email/archivage', $data);
-				$this->email->message($msg);
-		        break;
-			case "emissionBenevole":
-		        $msg = $this->load->view('email/emissionBenevole', $data);
-				$this->email->message($msg);
-		        break;
-		}
-		$this->email->initialize($config);
+		
+		if($emp='airplay'){
+			$msg = $this->load->view('email/airplay', $data);
+		} 
+		else
+			$msg = $this->load->view('email/refuser', $data);
+		
+		
 		$this->email->subject('Email automatique BeaubFM');
 		$this->email->from('beaubfm@mail.com', 'BeaubFM');
 		$this->email->to($data['email']);
-		
 		//$this->email->to('samir.bouaked@gmail.com');
+		$this->email->message($msg);
 		
 		if($data['envoiMail']=='1'){
 			$this->email->send();
