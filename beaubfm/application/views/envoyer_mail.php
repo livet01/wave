@@ -25,5 +25,6 @@
 					<textarea name="corpsemail" cols="74" rows="20" style="resize: none;"></textarea>
 					
 				</p>
+				<a href="#?w=500" rel="popup_name" class="poplight">En savoir plus</a>
 	</div>
 </div>
