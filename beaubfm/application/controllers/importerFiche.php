@@ -81,7 +81,7 @@ class ImporterFiche extends MY_Controller {
 				$arrayDisqueEpure = $this -> getTabFinal($arrayFichier);
 				$this -> ctrlAjoutFiche($arrayDisqueEpure);
 				unlink($data[$i]['upload_data']['full_path']);
-				$this -> setMsg($this -> getMsg()." (fichier ".$i.")");
+				$this -> setMsg($this -> getMsg() . " (fichier " . $i . ")");
 			}
 		}
 
@@ -175,7 +175,7 @@ class ImporterFiche extends MY_Controller {
 	public function ctrlAjoutFiche($array) {
 		$invalide = 0;
 		$doublon = 0;
-		$valide=0;
+		$valide = 0;
 		$nb = 0;
 
 		//$array = tableau recensant tous les albums / $i = ligne / $album = tableau contenant informations propres � chaque album
@@ -188,11 +188,11 @@ class ImporterFiche extends MY_Controller {
 			if ($result['doublon']) {
 				$doublon++;
 			}
-			if(!$result['doublon'] && $result['valide']){
+			if (!$result['doublon'] && $result['valide']) {
 				$valide++;
 			}
 		}
-		$this -> setMsg($this->getMsg()."$invalide album(s) invalides dont $doublon doublon(s) sur un total de $nb album(s) testés, $valide ajoutés en base");
+		$this -> setMsg($this -> getMsg() . "$invalide album(s) invalides dont $doublon doublon(s) sur un total de $nb album(s) testés, $valide ajoutés en base");
 	}
 
 	public function verificationAlbum($disque) {
@@ -222,6 +222,7 @@ class ImporterFiche extends MY_Controller {
 
 			//Cas d'un fichier exporté depuis gcstar
 			if (!isset($disque['EmissionBenevole'])) {
+				$style = null;
 
 				//Catégorie
 				$cat_id = 3;
@@ -255,8 +256,9 @@ class ImporterFiche extends MY_Controller {
 						}
 					} else {
 						$emp_id = 4;
-						$emb_id = $disqueControlleur -> rechercheEmbByNom($valEmp, $this -> user['rad_id']);
-						if (empty($emb_id)) {
+						try {
+							$emb_id = $disqueControlleur -> rechercheEmBevByNom($valEmp);
+						} catch (Exception $e) {
 							$valide = FALSE;
 						}
 					}
@@ -289,8 +291,18 @@ class ImporterFiche extends MY_Controller {
 				}
 
 				//Emission Bénévole
-				if (!empty($emp_id) && $emp_id === 4) {
-					$emb_id = $disqueControlleur -> rechercheEmbByNom($valEmp, $this -> user['rad_id']);
+				if (!empty($emp_id)) {
+					if ($emp_id === 4) {
+						try {
+							$emb_id = $disqueControlleur -> rechercheEmBevByNom($disque['EmissionBenevole']);
+						} catch (Exception $e) {
+							$valide = FALSE;
+						}
+					} else {
+						$emb_id=null;
+					}
+				} else {
+					$valide = FALSE;
 				}
 
 				//Style
@@ -306,31 +318,30 @@ class ImporterFiche extends MY_Controller {
 
 			}
 
+			//Titre
+			$titre = $disque['Titre'];
+
 			//Artiste
 			$art_id = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $this -> user['rad_id'], $cat_id);
 
-			//Titre
-			$disqueExist=$disqueControlleur -> existeTitreArtiste($disque['Titre'], $art_id);
-			
-			if (isset($disqueExist)) {
+			if (!$disqueControlleur -> existeTitreArtiste($disque['Titre'], $art_id)) {
+
+				//Diffuseur
+				if ($cat_id === 5) {
+					$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Artiste'], $this -> user['rad_id'], $mail, $cat_id);
+				} else {
+					$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Diffuseur'], $this -> user['rad_id'], $mail, 4);
+				}
+
+				//EcoutePar
+				try {
+					$ecoute_id = $disqueControlleur -> rechercherEcouteParByNom($disque['EcoutePar']);
+				} catch (Exception $e) {
+					$ecoute_id = 0;
+				}
+			} else {
 				$valide = FALSE;
 				$doublon = TRUE;
-			} else {
-				$titre = $disque['Titre'];
-			}
-
-			//Diffuseur
-			if ($cat_id === 5) {
-				$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Artiste'], $this -> user['rad_id'], $mail, $cat_id);
-			} else {
-				$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Diffuseur'], $this -> user['rad_id'], $mail,4);
-			}
-
-			//EcoutePar
-			try {
-				$ecoute_id = $disqueControlleur -> rechercherEcouteParByNom($disque['EcoutePar']);
-			} catch (Exception $e) {
-				$ecoute_id = 0;
 			}
 
 			if ($valide === TRUE && $doublon === FALSE) {
@@ -352,10 +363,13 @@ class ImporterFiche extends MY_Controller {
 			}
 		}
 
+		//A enlever quand Valentin mettra les styles dans l'export//
+		$disque['Style']=null;
+
 		if ($valide === FALSE && $doublon === FALSE) {
 			//Cas d'un fichier exporté depuis gcstar
 			if (!isset($disque['EmissionBenevole'])) {
-				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this -> user['per_id'], null, null);
+				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this -> user['per_id'], $style, null);
 			} else {
 				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this -> user['per_id'], $disque['Style'], $disque['EmissionBenevole']);
 			}

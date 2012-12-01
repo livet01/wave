@@ -412,6 +412,17 @@ class Disque extends MY_Controller {
 			$id = $id["emb_id"];
 		return $id;
 	}
+	
+	public function rechercheEmBevByNom($nom) {
+		$embId = $this -> embManager -> select('emb_id', array('emb_libelle' => $nom));
+		if (empty($embId)) {
+			throw new Exception("L'émission bénévole n'existe pas.");
+		} else {
+			$embId = $embId["emb_id"];
+		}
+		return $embId;
+
+	}
 
 	public function rechercheEmplacementByNom($nom) {
 		$empId = $this -> emplacementManager -> select('emp_id', array('emp_libelle' => $nom));
