@@ -204,7 +204,6 @@ class ImporterFiche extends MY_Controller {
 		if (is_null($disque['Artiste']) || is_null($disque['Titre']) || is_null($disque['Diffuseur']) || is_null($disque['Emplacement'])) {
 			$valide = FALSE;
 		} else {
-			$listeKeysFinal = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "DateAjout", "EcoutePar", "Mail", "EmissionBenevole", "Style");
 			//Insertion de valeurs par défaut sur certains champs non renseignés
 
 			//Format
@@ -318,15 +317,13 @@ class ImporterFiche extends MY_Controller {
 				$doublon = TRUE;
 			} else {
 				$titre = $disque['Titre'];
-				echo "Erreur";
 			}
 
 			//Diffuseur
 			if ($cat_id === 5) {
-				$dif_id = $art_id;
 				$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Artiste'], $this -> user['rad_id'], $mail, $cat_id);
 			} else {
-				$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Diffuseur'], $this -> user['rad_id'], $mail, $cat_id);
+				$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Diffuseur'], $this -> user['rad_id'], $mail,4);
 			}
 
 			//EcoutePar
