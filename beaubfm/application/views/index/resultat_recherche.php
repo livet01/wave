@@ -22,8 +22,9 @@
 			if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 			<p>Veuillez saisir au moins une lettre pour faire une recherche.</p>
 		<?php }
-		if(empty($resultat) && $affichage!=0 && $affichage!=1 && $affichage!=2){ ?>
-		<p>Bienvenue, il n'y a aucun disque dans la base de données. Pour commener veuillez ajouter un titre.</p>
+			if(!isset($resultat) && $affichage==0){ ?>
+			<p>Bienvenue, il n'y a aucun disque dans la base de données.</p>
+			<p>Veuillez ajouter un titre pour commencer.</p>
 		<?php }
 			if(($affichage==0 || $affichage==1) && !empty($resultat)){ ?>		
 		<div id="box"></div>
