@@ -13,14 +13,6 @@ class ImporterFiche extends MY_Controller {
 		$this -> load -> model('importer/importer_model', 'importerManager');
 	}
 
-	public function setMsgError($msgError) {
-		$this -> msgError = $msgError;
-	}
-
-	public function getMsgError() {
-		return $this -> msgError;
-	}
-
 	public function setMsg($msg) {
 		$this -> msg = $msg;
 	}
@@ -58,7 +50,7 @@ class ImporterFiche extends MY_Controller {
 				//Si l'upload ne fonctionne pas
 				if (!$this -> upload -> do_upload($form_name)) {
 					//On récupère l'erreur
-					$this -> setMsgError($this -> getMsgError() . "Fichier " . $i . " : " . $this -> upload -> display_errors());
+					$data['erreur'][$i]=str_replace(array('<p>','</p>'),"","Fichier " . $i . " : " .$this -> upload -> display_errors()." Fichier autorisé : XLS, XLSX, CSV.");
 				} else {
 					//Sinon on récupère les informations de l'upload
 					$data[$i] = array('upload_data' => $this -> upload -> data());
@@ -84,11 +76,14 @@ class ImporterFiche extends MY_Controller {
 				$this -> setMsg($this -> getMsg() . " (fichier " . $i . ")");
 			}
 		}
+		
+		//On met dans data ce qu'on veut renvoyer a la vue
+		$data['msg']=$this -> getMsg();
 
 		//On recharge la vue et on affiche les éventuels messages d'erreurs
 		parent::__construct();
 		$this -> load -> library('layout');
-		$this -> layout -> views('menu_principal') -> view('importer', array('msgError' => $this -> getMsgError(), 'msg' => $this -> getMsg()));
+		$this -> layout -> views('menu_principal') -> view('importer',$data);
 	}
 
 	public function excelFile($data) {

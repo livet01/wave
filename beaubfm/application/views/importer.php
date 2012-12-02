@@ -1,3 +1,22 @@
+<?php
+	if(!empty($reussi)) {
+		foreach($reussi as $i) { ?>
+			<div id="cadre">
+				<p class="success">
+					<i class="icon-ok-sign"></i><?php echo $i; ?>
+				</p>
+			</div>
+<?php 	}
+	}
+	if(!empty($erreur)) { 
+		foreach($erreur as $i) { ?>
+			<div id="cadre">
+				<p class="error">
+					<i class="icon-remove-sign"></i><?php echo $i; ?>
+				</p>
+			</div>
+<?php 	}
+	} ?>
 <div id="cadre2">
 	<div id="cadre_action">
 		<a class="btn-large-action" href="javascript:document.forms[0].reset()"><i class="icon-undo"></i> Annuler </a>
@@ -16,7 +35,6 @@
 					</p>
 				</form>
 			</div>
-			<?php if(isset($msgError)) echo $msgError; ?>
 			<?php if(isset($msg)) echo $msg; ?>
 		</div>
 	</div>
