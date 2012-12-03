@@ -56,7 +56,7 @@
 					echo '<td onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['art_nom'].'</td>';
 					echo '<td onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['per_nom'].'</td>';
 					echo '<td><a class="action-tab" href="#"><i class="icon-pencil"></a></td>';
-					echo '<td><a class="action-tab" onclick="$(\'#chx'.$j.'\').attr(\'checked\',\'checked\');$(\'#tdisque\').attr(\'action\',\''.site_url("disque/supprimer").'\').submit();" href="#"><i class="icon-trash"></a></td>';
+					echo '<td><a class="action-tab" onclick="CocheTout(this,\'choix[]\');CocheTout(this,\'choix[]\');$(\'#chx'.$j.'\').attr(\'checked\',\'checked\');$(\'#tdisque\').attr(\'action\',\''.site_url("disque/supprimer").'\').submit();" href="#"><i class="icon-trash"></a></td>';
 					echo '</tr>';
 					$i++;
 					$j++;

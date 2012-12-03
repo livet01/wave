@@ -32,7 +32,7 @@ class Artiste_model extends CI_Model {
 		if(!$resultat) {
 			throw new Exception("La personne n'a pas été ajouté", 1);
 		}
-		return $last_id;
+		return $this->db->insert_id();
 	}
 	
 	function delete ($artiste){

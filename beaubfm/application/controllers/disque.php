@@ -278,71 +278,81 @@ class Disque extends MY_Controller {
 	}
 
 	private function attribution() {
-		$est_auto_production = $this -> input -> post('autoprod') == "a";
-
-		$this -> set_dis_libelle($this -> input -> post('titre'));
-		$this -> set_art_id($this -> rechercheArtisteByNom($this -> input -> post('artiste'), $this -> user['rad_id'], ($est_auto_production) ? 5 : 3));
-		
-		
-		// Si le titre et l'artiste ne sont pas présent en base de données.
-		if (!$this -> existeTitreArtiste($this -> dis_libelle, $this -> art_id)) {
-
-			// Vérification si autoproduction
-			if ($est_auto_production) {
-				$this -> set_dif_id($this -> rechercheDiffuseurByNom($this -> input -> post('artiste'), $this -> user['rad_id'], $this -> input -> post('email'), 5));
-			} else {
-				$this -> set_dif_id($this -> rechercheDiffuseurByNom($this -> input -> post('diffuseur'), $this -> user['rad_id'], $this -> input -> post('email'), 4));
-			}
-
-			//Vérification de l'emplacement selectionné
-			$this -> set_emp_id($this->rechercheEmplacementByNom($this -> input -> post('emplacement')));
-			$plus =$this -> parametreManager -> select('emb');
-			//Vérification si emission bénévole coché
-			if ($this->get_emp_id() == $plus['param_valeur']) {
-				$this -> set_emb_id($this -> rechercheEmbByNom($this -> input -> post('emb'), $this -> user['rad_id']));
-			}
-
-			if($this->input->post('envoiMail')=="1"){
-				$config['charset'] = 'utf-8';
-				$config['mailtype'] = 'html';
-				$config['newline']    = "\r\n";
-
-
-				$this->email->initialize($config);
-				$email = $this -> input -> post('email');
-				$titre= $this->get_dis_libelle();
-				$artiste=$this->get_art_id();
+		$this->db->trans_begin();
+		try {
+			$est_auto_production = $this -> input -> post('autoprod') == "a";
+	
+			$this -> set_dis_libelle($this -> input -> post('titre'));
+			$this -> set_art_id($this -> rechercheArtisteByNom($this -> input -> post('artiste'), $this -> user['rad_id'], ($est_auto_production) ? 5 : 3));
 			
-				$emp=$this->input->post('emplacement');
+			
+			// Si le titre et l'artiste ne sont pas présent en base de données.
+			if (!$this -> existeTitreArtiste($this -> dis_libelle, $this -> art_id)) {
+	
+				// Vérification si autoproduction
+				if ($est_auto_production) {
+					$this -> set_dif_id($this -> rechercheDiffuseurByNom($this -> input -> post('artiste'), $this -> user['rad_id'], $this -> input -> post('email'), 5));
+				} else {
+					$this -> set_dif_id($this -> rechercheDiffuseurByNom($this -> input -> post('diffuseur'), $this -> user['rad_id'], $this -> input -> post('email'), 4));
+				}
+	
+				//Vérification de l'emplacement selectionné
+				$this -> set_emp_id($this->rechercheEmplacementByNom($this -> input -> post('emplacement')));
+				$plus =$this -> parametreManager -> select('emb');
+				//Vérification si emission bénévole coché
+				if ($this->get_emp_id() == $plus['param_valeur']) {
+					$this -> set_emb_id($this -> rechercheEmbByNom($this -> input -> post('emb'), $this -> user['rad_id']));
+				}
+	
+				if($this->input->post('envoiMail')=="1"){
+					$config['charset'] = 'utf-8';
+					$config['mailtype'] = 'html';
+					$config['newline']    = "\r\n";
+	
+	
+					$this->email->initialize($config);
+					$email = $this -> input -> post('email');
+					$titre= $this->get_dis_libelle();
+					$artiste=$this->get_art_id();
 				
-				$this->email->from('beaubfm@mail.com', 'BeaubFM');
-				//$this->email->to($data['email']);
-				$this->email->to('samir.bouaked@gmail.com');
-		
-				//preparation du mail
-				$this->email->subject('Email automatique BeaubFM');
-		
-				$this->email->message($msg);
-
-				$this->email->send();
-				$this->envoyerMail();		
-			 }else{
-
-			 }
-
-			// Vérification du format selectionné
-			if ($this -> verificationFormat($this -> input -> post('format'))) {
-				$this -> set_dis_format($this -> input -> post('format'));
-			} else {
-				throw new Exception("Le format n'est pas valide");
+					$emp=$this->input->post('emplacement');
+					
+					$this->email->from('beaubfm@mail.com', 'BeaubFM');
+					//$this->email->to($data['email']);
+					$this->email->to('samir.bouaked@gmail.com');
+			
+					//preparation du mail
+					$this->email->subject('Email automatique BeaubFM');
+			
+					$this->email->message($msg);
+	
+					$this->email->send();
+					$this->envoyerMail();		
+				 }else{
+	
+				 }
+	
+				// Vérification du format selectionné
+				if ($this -> verificationFormat($this -> input -> post('format'))) {
+					$this -> set_dis_format($this -> input -> post('format'));
+				} else {
+					throw new Exception("Le format n'est pas valide");
+				}
+	
+				$this -> set_mem_id($this->rechercherEcouteParByNom($this -> input -> post('listenBy')));
+	
+				$this -> set_sty_id($this->rechercherStyleByNom($this -> input -> post('style')));
+			} else {// Le titre, artiste est déja en base de données
+				throw new Exception("Le disque $this->dis_libelle est déjà présent dans la base de donnée.");
 			}
-
-			$this -> set_mem_id($this->rechercherEcouteParByNom($this -> input -> post('listenBy')));
-
-			$this -> set_sty_id($this->rechercherStyleByNom($this -> input -> post('style')));
-		} else {// Le titre, artiste est déja en base de données
-			throw new Exception("Le disque $this->dis_libelle est déjà présent dans la base de donnée.");
+		    $this->db->trans_commit();
 		}
+		catch(Exception $e) {
+			$this->db->trans_rollback();
+		}
+
+		    
+
 	}
 
 	private function ajouter_disque() {
