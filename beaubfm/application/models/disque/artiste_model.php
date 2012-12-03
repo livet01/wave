@@ -25,10 +25,7 @@ class Artiste_model extends CI_Model {
 	}
 	
 	function insert($nom,$radio,$cat) {
-		$last_id = $this->db->count_all_results("Personne") + 1;
-		
-		$resultat = $this->db->set('per_id', $last_id)
-						->set('per_nom', $nom)
+		$resultat = $this->db->set('per_nom', $nom)
 						->set('cat_id', $cat)
 						->set('rad_id', $radio)
 						->insert("Personne");
