@@ -407,8 +407,15 @@ class Disque extends MY_Controller {
 	public function rechercheDiffuseurByNom($nom, $radio, $email, $categorie) {
 		$difId = $this -> diffuseurManager -> select('Diffuseur.per_id', array('Personne.per_nom' => $nom, ));
 		if (empty($difId)) {
-			$utiId = (int)$this -> utilisateurManager -> insert($this -> rechercheArtisteByNom($nom, $radio, $categorie), $nom, $this -> securite -> crypt($nom));
-			$difId = (int)$this -> diffuseurManager -> insert($utiId, $email);
+			$this->db->trans_begin();
+			try {
+				$utiId = (int)$this -> utilisateurManager -> insert($this -> rechercheArtisteByNom($nom, $radio, $categorie), $nom, $this -> securite -> crypt($nom));
+				$difId = (int)$this -> diffuseurManager -> insert($utiId, $email);
+			    $this->db->trans_commit();
+			}
+			catch(Exception $e) {
+				$this->db->trans_rollback();
+			}
 		} else
 			$difId = $difId["per_id"];
 		return $difId;
