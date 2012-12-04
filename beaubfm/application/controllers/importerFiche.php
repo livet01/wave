@@ -60,10 +60,18 @@ class ImporterFiche extends MY_Controller {
 				if ($data[$i]['upload_data']['file_ext'] == '.xml') {
 					$arrayFichier = $this -> xmlFile($data[$i]);
 				}
-				$arrayDisqueEpure = $this -> getTabFinal($arrayFichier);
-				$msgRetour = $this -> ctrlAjoutFiche($arrayDisqueEpure);
 				unlink($data[$i]['upload_data']['full_path']);
-				$data['reussi'][$i] = "Fichier " . $i . " : " . $msgRetour;
+				$arrayDisqueEpure = $this -> getTabFinal($arrayFichier);
+				$msgValide = $this -> ctrlTableauFinal($arrayDisqueEpure);
+				if ($msgValide === TRUE) {
+					$msgRetour = $this -> ctrlAjoutFiche($arrayDisqueEpure);
+					$data['reussi'][$i] = "Fichier " . $i . " : " . $msgRetour['reussi'];
+					if ($msgRetour['erreur'] !== null) {
+						$data['erreur'][$i] = "Fichier" . $i . " : " . $msgRetour['erreur'];
+					}
+				} else {
+					$data['erreur'][$i] = "Fichier" . $i . " : Le fichier est illisible, il lui manque une colonne ou il n'est pas compatible.";
+				}
 			}
 		}
 
@@ -145,7 +153,7 @@ class ImporterFiche extends MY_Controller {
 		for ($i = 1; $i <= $longueurArray; $i++) {
 			$j = 0;
 			foreach ($listeKeys as $libelleKeys) {
-				if ($keys[$libelleKeys] !== false) {					
+				if ($keys[$libelleKeys] !== false) {
 					$arrayEpure[$i][$listeKeysFinal[$j]] = utf8_decode($arrayFichier[$i][$keys[$libelleKeys]]);
 				}
 				$j++;
@@ -154,27 +162,72 @@ class ImporterFiche extends MY_Controller {
 		return $arrayEpure;
 	}
 
+	public function ctrlTableauFinal($arrayDisque) {
+		$valide = TRUE;
+		$i = 0;
+		$listeKeysCommunes = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "DateAjout", "EcoutePar", "Mail");
+		$keys = array_keys($arrayDisque[1]);
+		foreach ($listeKeysCommunes as $key) {
+			if ($key !== $keys[$i]) {
+				$valide = FALSE;
+			}
+			$i++;
+		}
+		return $valide;
+	}
+
 	public function ctrlAjoutFiche($array) {
 		$invalide = 0;
 		$doublon = 0;
 		$valide = 0;
+		$enAttente = 0;
+		$dejaEnAttente = 0;
 		$nb = 0;
+		$nbErreur = null;
 
 		//$array = tableau recensant tous les albums / $i = ligne / $album = tableau contenant informations propres � chaque album
 		foreach ($array as $i => $album) {
 			$nb++;
-			$result = $this -> verificationAlbum($album);
-			if (!$result['valide']) {
-				$invalide++;
+			$this -> db -> trans_begin();
+			try {
+				$result = $this -> verificationAlbum($album);
+				$this -> db -> trans_commit();
+				if (!$result['valide']) {
+					$invalide++;
+				}
+				if ($result['doublon']) {
+					$doublon++;
+				}
+				if (!$result['doublon'] && $result['valide']) {
+					$valide++;
+				}
+				if ($result['enAttente']) {
+					$enAttente++;
+				}
+				if ($result['dejaEnAttente']) {
+					$dejaEnAttente++;
+				}
+			} catch(Exception $e) {
+				$this -> db -> trans_rollback();
+				$nbErreur[] = $nb;
 			}
-			if ($result['doublon']) {
-				$doublon++;
-			}
-			if (!$result['doublon'] && $result['valide']) {
-				$valide++;
+
+		}
+		$msgOk = "Sur <b>$nb</b> album(s) <b>testé(s)</b> :<br/>
+				<b>$valide valide(s)</b>, ajouté(s) en base.<br/>
+				<b>$invalide invalide(s)</b> dont :<br/>
+				<b>$doublon doublon(s)</b> déjà rentré(s) en base<br/>
+				<b>$enAttente</b> mis <b>en attente</b><br/>
+				<b>$dejaEnAttente déjà</b> mis <b>en attente</b>.";
+
+		$msgNonOk = null;
+		if ($nbErreur !== null) {
+			foreach ($nbErreur as $nb) {
+				$msgNonOk = $msgNonOK . "<b>Problème de lecture</b> de la ligne <b>$nb</b>. Cette ligne a été ignorée.<br/>";
 			}
 		}
-		return "Sur $nb albums testés : $invalide album(s) invalides dont $doublon doublon(s), $valide ont été ajoutés en base";
+
+		return array('reussi' => $msgOk, 'erreur' => $msgNonOk);
 	}
 
 	public function verificationAlbum($disque) {
@@ -186,11 +239,11 @@ class ImporterFiche extends MY_Controller {
 		if (is_null($disque['Artiste']) || is_null($disque['Titre']) || is_null($disque['Diffuseur']) || is_null($disque['Emplacement']) || str_replace(array("/", "!", "?", '"'), "", $disque['Artiste']) == "" || str_replace(array("/", "!", "?", '"'), "", $disque['Diffuseur']) == "") {
 			$valide = FALSE;
 		} else {
-			$search = array ('@[éèêëÊË]@i','@[àâäÂÄ]@i','@[îïÎÏ]@i','@[ûùüÛÜ]@i','@[ôöÔÖ]@i','@[ç]@i','@[ ]@i','@[^a-zA-Z0-9_]@');
-			$replace = array ('e','a','i','u','o','c','_','');
-			$disque['Artiste']=preg_replace($search,$replace,$disque['Artiste']);
-			$disque['Diffuseur']=preg_replace($search,$replace,$disque['Diffuseur']);
-			$disque['Titre']=preg_replace($search,$replace,$disque['Titre']);
+			$search = array('@[éèêëÊË]@i', '@[àâäÂÄ]@i', '@[îïÎÏ]@i', '@[ûùüÛÜ]@i', '@[ôöÔÖ]@i', '@[ç]@i', '@[^a-zA-Z0-9_]@');
+			$replace = array('e', 'a', 'i', 'u', 'o', 'c', '');
+			$disque['Artiste'] = preg_replace($search, $replace, $disque['Artiste']);
+			$disque['Diffuseur'] = preg_replace($search, $replace, $disque['Diffuseur']);
+			$disque['Titre'] = preg_replace($search, $replace, $disque['Titre']);
 			//Insertion de valeurs par défaut sur certains champs non renseignés
 
 			//Format
@@ -337,7 +390,7 @@ class ImporterFiche extends MY_Controller {
 					$this -> db -> trans_commit();
 				} catch(Exception $e) {
 					$this -> db -> trans_rollback();
-					$valide=FALSE;
+					$valide = FALSE;
 				}
 			} else {
 				$valide = FALSE;
@@ -366,15 +419,26 @@ class ImporterFiche extends MY_Controller {
 		//A enlever quand Valentin mettra les styles dans l'export//
 		$disque['Style'] = null;
 
-		if ($valide === FALSE && $doublon === FALSE) {
+		$dejaEnAttente = FALSE;
+		$enAttente = FALSE;
+
+		$testDoublonImport = $this -> importerManager -> existImport($disque['Titre'], $disque['Artiste'], $disque['Diffuseur']);
+
+		if ($valide === FALSE && $doublon === FALSE && empty($testDoublonImport)) {
 			//Cas d'un fichier exporté depuis gcstar
 			if (!isset($disque['EmissionBenevole'])) {
+				$enAttente = TRUE;
 				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this -> user['per_id'], null, null);
 			} else {
+				$enAttente = TRUE;
 				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this -> user['per_id'], $disque['Style'], $disque['EmissionBenevole']);
 			}
+		} else {
+			if ($doublon === FALSE && $valide === FALSE) {
+				$dejaEnAttente = TRUE;
+			}
 		}
-		return array('valide' => $valide, 'doublon' => $doublon);
+		return array('valide' => $valide, 'doublon' => $doublon, 'enAttente' => $enAttente, 'dejaEnAttente' => $dejaEnAttente);
 	}
 
 }

@@ -7,9 +7,8 @@ class Importer_model extends CI_Model {
 	
 	public $table="ImportDisque";
 	
-	public function ajoutDisqueImport($libelle,$format, $ecoute,$dateAjout,$artiste,$diffuseur,$email,$emplacement,$perId,$style,$emBev)
+	public function ajoutDisqueImport($libelle,$format,$ecoute,$dateAjout,$artiste,$diffuseur,$email,$emplacement,$perId,$style,$emBev)
 	{
-		
 		return $this->db->set('imp_libelle', $libelle)
 						->set('imp_format', $format)
 						->set('imp_ecoute', $ecoute)
@@ -23,5 +22,13 @@ class Importer_model extends CI_Model {
 						->set('imp_style', $style)
 						->set('imp_em_bev',$emBev)
 						->insert($this->table);
+	}
+	
+	function existImport($libelle,$artiste,$diffuseur) {
+		return $this->db->select('imp_id')
+							->from($this->table)
+							->where(array('imp_libelle'=>$libelle,'imp_artiste'=>$artiste,'imp_diffuseur'=>$diffuseur))
+							->get()
+							->row_array();
 	}
 }
