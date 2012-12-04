@@ -143,9 +143,8 @@ class ExporterFiche extends MY_Controller {
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
  		
         // Sending headers to force the user to download the file
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="Products_'.date('dMy').'.xls"');
-        header('Cache-Control: max-age=0');
+        header('Content-Type: application/ms-excel');
+        header('Content-Disposition: attachment; filename="BeaubFm_'.date('dMy').'.xls"');
  		
         $objWriter->save('php://output');
 	}
@@ -155,7 +154,7 @@ class ExporterFiche extends MY_Controller {
 		date_default_timezone_set("Europe/Paris");
 		
 		header('Content-Type: text/csv;');
-		header('Content-Disposition: attachment; filename="Products_'.date('dMy').'.csv"');
+		header('Content-Disposition: attachment; filename="BeaubFm_'.date('dMy').'.csv"');
 			
 		$this->load->model("exporter_model", "exportManager");
 
