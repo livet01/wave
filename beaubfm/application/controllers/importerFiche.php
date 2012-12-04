@@ -332,7 +332,7 @@ class ImporterFiche extends MY_Controller {
 					try {
 						$ecoute_id = $disqueControlleur -> rechercherEcouteParByNom($disque['EcoutePar']);
 					} catch (Exception $e) {
-						$ecoute_id = 0;
+						$ecoute_id = $this -> user['per_id'];
 					}
 					$this -> db -> trans_commit();
 				} catch(Exception $e) {
