@@ -10,9 +10,9 @@
 
 $mimes = array(
     			'hqx'	=>	'application/mac-binhex40',
-				'csv'	=>	array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel'),
-				'xlsx'	=>	array('application/excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/zip'),
-				'xls'	=>	array('application/excel', 'application/vnd.ms-excel', 'application/vnd.ms-excel [official]', 'application/x-msexcel', 'application/x-ms-excel', 'application/x-excel', 'application/x-dos_ms_excel', 'application/msexcel','application/octet-stream', 'application/xls', 'application/x-xls', 'application/download'),
+				'csv'	=>	array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel','text/plain'),
+				'xlsx'	=>	array('application/excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/zip','application/vnd.ms-excel'),
+				'xls'	=>	array('application/excel', 'application/vnd.ms-excel', 'application/vnd.ms-excel [official]', 'application/x-msexcel', 'application/x-ms-excel', 'application/x-excel', 'application/x-dos_ms_excel', 'application/msexcel','application/octet-stream', 'application/xls', 'application/x-xls', 'application/download','application/msword'),
 				'cpt'	=>	'application/mac-compactpro',
 				'bin'	=>	'application/macbinary',
 				'dms'	=>	'application/octet-stream',

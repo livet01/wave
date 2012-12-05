@@ -39,14 +39,18 @@ class ImporterFiche extends MY_Controller {
 
 				//Si l'upload ne fonctionne pas
 				if (!$this -> upload -> do_upload($form_name)) {
+					//Pour tester le type du fichier
+					//$dataTest=$this->upload->data();
+					//var_dump($dataTest['file_type']);
+					
 					//On récupère l'erreur					
-					$dataTest=$this->upload->data();
-					var_dump($dataTest['file_type']);
 					$data['erreur'][$i] = str_replace(array('<p>', '</p>'), "", "Fichier " . $i . " : " . $this -> upload -> display_errors() . " Fichier autorisé : XLS, XLSX, CSV.");
 				} else {
 					//Sinon on récupère les informations de l'upload
 					$data[$i] = array('upload_data' => $this -> upload -> data());
-					var_dump($data[$i]['upload_data']['file_type']);
+					
+					//Pour tester le type du fichier
+					//var_dump($data[$i]['upload_data']['file_type']);
 				}
 			}
 		}
