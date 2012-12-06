@@ -246,7 +246,7 @@ class ImporterFiche extends MY_Controller {
 		if (is_null($disque['Artiste']) || is_null($disque['Titre']) || is_null($disque['Diffuseur']) || is_null($disque['Emplacement']) || str_replace(array("/", "!", "?", '"'), "", $disque['Artiste']) == "" || str_replace(array("/", "!", "?", '"'), "", $disque['Diffuseur']) == "") {
 			$valide = FALSE;
 		} else {
-			$search = array('@[éèêëÊË]@i', '@[àâäÂÄ]@i', '@[îïÎÏ]@i', '@[ûùüÛÜ]@i', '@[ôöÔÖ]@i', '@[ç]@i', '@[^a-zA-Z0-9 _]@');
+			$search = array('@[éèêëÊË]@i', '@[àâäÂÄ]@i', '@[îïÎÏ]@i', '@[ûùüÛÜ]@i', '@[ôöÔÖ]@i', '@[ç]@i', '@[^a-zA-Z0-9 -_]@');
 			$replace = array('e', 'a', 'i', 'u', 'o', 'c', '');
 			$disque['Artiste'] = preg_replace($search, $replace, $disque['Artiste']);
 			$disque['Diffuseur'] = preg_replace($search, $replace, $disque['Diffuseur']);
