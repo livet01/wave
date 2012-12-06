@@ -44,7 +44,7 @@ class ImporterFiche extends MY_Controller {
 					//var_dump($dataTest['file_type']);
 					
 					//On récupère l'erreur					
-					$data['erreur'][$i] = str_replace(array('<p>', '</p>'), "", "Fichier " . $i . " : " . $this -> upload -> display_errors() . " Fichier autorisé : XLS, XLSX, CSV.");
+					$data['erreur'][$i] = str_replace(array('<p>', '</p>'), "", "Fichier " . $i . " : " . $this -> upload -> display_errors() . "<br/>Fichier autorisé : XLS, XLSX, CSV d'une taille maximum de 2048 KO.");
 				} else {
 					//Sinon on récupère les informations de l'upload
 					$data[$i] = array('upload_data' => $this -> upload -> data());
@@ -155,6 +155,8 @@ class ImporterFiche extends MY_Controller {
 		foreach ($listeKeys as $libelleKeys) {
 			$keys[$libelleKeys] = array_search($libelleKeys, $arrayFichier[0]);
 		}
+		
+		$arrayEpure=null;
 
 		$longueurArray = count($arrayFichier) - 1;
 		for ($i = 1; $i <= $longueurArray; $i++) {
@@ -173,7 +175,10 @@ class ImporterFiche extends MY_Controller {
 		$valide = TRUE;
 		$i = 0;
 		$listeKeysCommunes = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "DateAjout", "EcoutePar", "Mail");
-		$keys = array_keys($arrayDisque[1]);
+		$keys=null;
+		if($arrayDisque!==null){
+			$keys = array_keys($arrayDisque[1]);
+		}
 		foreach ($listeKeysCommunes as $key) {
 			if ($key !== $keys[$i]) {
 				$valide = FALSE;

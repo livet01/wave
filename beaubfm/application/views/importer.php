@@ -1,21 +1,19 @@
 <?php
-	if(!empty($reussi)) {
-		foreach($reussi as $i) { ?>
+	for ($i=1; $i <= 7; $i++) { 
+		if(!empty($reussi[$i])) { ?>
 			<div id="cadre">
 				<p class="success">
-					<i class="icon-ok-sign"></i><?php echo $i; ?>
+					<i class="icon-ok-sign"></i><?php echo $reussi[$i]; ?>
 				</p>
 			</div>
 <?php 	}
-	}
-	if(!empty($erreur)) { 
-		foreach($erreur as $i) { ?>
+		if(!empty($erreur[$i])) { ?>
 			<div id="cadre">
 				<p class="error">
-					<i class="icon-remove-sign"></i><?php echo $i; ?>
+					<i class="icon-remove-sign"></i><?php echo $erreur[$i]; ?>
 				</p>
 			</div>
-<?php 	}
+<?php 	} 
 	} ?>
 <div id="cadre2">
 	<div id="cadre_action">
