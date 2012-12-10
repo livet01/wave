@@ -164,7 +164,7 @@ class ExporterFiche extends MY_Controller {
             return false;
 		
 		$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout', 'Mail diffuseur', 'Emplacement', 'Emission Bénévole');
-        $fields = array('dis_libelle', 'art_nom', 'lab_nom', 'dis_format', 'dis_date_ajout', 'lab_mail', 'emp_libelle', 'emb_libelle');
+        $fields = array('dis_libelle', 'art_nom', 'per_nom', 'dis_format', 'per_nom', 'dis_date_ajout', 'dif_mail', 'emp_libelle', 'emb_libelle');
 		
 		foreach ($query->result() as $data) {
 			$datas[] = array(
