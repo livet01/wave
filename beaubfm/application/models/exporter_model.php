@@ -24,7 +24,7 @@ class Exporter_model extends CI_Model {
 			return $this->db->select('*')
 							->from('Disque')
 							->join('Artiste','Disque.per_id_artiste = Artiste.art_id')
-							->join('Label', 'Disque.dif_id = Label.lab_id')
+							->join('Diffuseur', 'Disque.dif_id = Utilisateur.per_id')
 							->join('Utilisateur', 'Disque.uti_id_ecoute = Utilisateur.per_id')
 							->join('Emplacement', 'Disque.emp_id = Emplacement.emp_id')
 							->join('EmBenevole', 'Disque.emb_id = EmBenevole.emb_id','left')
