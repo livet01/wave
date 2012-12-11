@@ -3,7 +3,8 @@
 	<head>
 		<title>BeaubFM</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this -> config -> item('charset'); ?>" />
-		<!--	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />	-->
+		<!--	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />	-->		
+		<noscript>Votre navigateur ne supporte pas le Javascript !</noscript> 
 		<script src="<?php echo js_url('jquery-1.8.2'); ?>"></script>
 		<link href="<?php echo css_url('jquery-ui'); ?>" rel="stylesheet" type="text/css"/>
 		<link href="<?php echo css_url('jPages'); ?>" rel="stylesheet" type="text/css"/>
