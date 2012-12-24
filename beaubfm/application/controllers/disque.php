@@ -267,6 +267,10 @@ class Disque extends MY_Controller {
 		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
 		if ($emplacement == $plus['param_valeur']) {
 			$this -> form_validation -> set_rules('emb', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+			$this -> form_validation -> set_rules('autoprod', 'Autoproduction', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+			$this -> form_validation -> set_rules('label', 'Label', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+			$this -> formulaire($data);
+			
 		}
 		// Vérifiaction du diffuseur si il y n'est pas auto producteur
 		if ($this -> input -> post('autoprod') != "a")
