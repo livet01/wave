@@ -12,10 +12,12 @@ class Exporter_model extends CI_Model {
 			return $this->db->select('*')
 						->from('Disque')
 						->join('Artiste','Disque.per_id_artiste = Artiste.art_id')
-						->join('Label', 'Disque.dif_id = Label.lab_id')
+						->join('Diffuseur', 'Disque.dif_id = Diffuseur.per_id')
+						->join('Personne', 'Disque.dif_id = Personne.per_id')
 						->join('Utilisateur', 'Disque.uti_id_ecoute = Utilisateur.per_id')
 						->join('Emplacement', 'Disque.emp_id = Emplacement.emp_id')
 						->join('EmBenevole', 'Disque.emb_id = EmBenevole.emb_id','left')
+						->join('Style','Disque.sty_id = Style.sty_id', 'left')
 						->get();
 		}
 		elseif(!empty($where))
@@ -24,7 +26,8 @@ class Exporter_model extends CI_Model {
 			return $this->db->select('*')
 							->from('Disque')
 							->join('Artiste','Disque.per_id_artiste = Artiste.art_id')
-							->join('Diffuseur', 'Disque.dif_id = Label.lab_id')
+							->join('Diffuseur', 'Disque.dif_id = Diffuseur.per_id')
+							->join('Personne', 'Disque.dif_id = Personne.per_id')
 							->join('Utilisateur', 'Disque.uti_id_ecoute = Utilisateur.per_id')
 							->join('Emplacement', 'Disque.emp_id = Emplacement.emp_id')
 							->join('EmBenevole', 'Disque.emb_id = EmBenevole.emb_id','left')

@@ -5,7 +5,7 @@ class ExporterFiche extends MY_Controller {
 	function __construct()
     {
         parent::__construct();
- 
+ 		
         // Here you should add some sort of user validation
         // to prevent strangers from pulling your table data
     }
@@ -17,6 +17,8 @@ class ExporterFiche extends MY_Controller {
 		$this -> load -> model('index/Info_Disque_Model');
 		$this -> load -> library('pagination');
 
+		
+		
 		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
 		{
 			// Tableau récoltant des données à envoyer à la vue
@@ -111,8 +113,8 @@ class ExporterFiche extends MY_Controller {
         $objPHPExcel->setActiveSheetIndex(0);
  
         // Field names in the first row
-        $column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout', 'Mail diffuseur', 'Emplacement', 'Emission Bénévole');
-        $fields = array('dis_libelle', 'art_nom', 'lab_nom', 'dis_format', 'dis_date_ajout', 'lab_mail', 'emp_libelle', 'emb_libelle');
+		$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Emplacement', 'Date d\'ajout', 'Ecouté par', 'Mail diffuseur', 'Emission Bénévole', 'Style');
+        $fields = array('dis_libelle', 'art_nom', 'per_nom', 'dis_format', 'emp_libelle', 'dis_date_ajout', 'uti_login', 'dif_mail', 'emb_libelle', 'sty_libelle');
 
 		$col = 0;
         foreach ($column as $field)
@@ -163,20 +165,21 @@ class ExporterFiche extends MY_Controller {
         if(!$query)
             return false;
 		
-		$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout', 'Mail diffuseur', 'Emplacement', 'Emission Bénévole');
-        $fields = array('dis_libelle', 'art_nom', 'per_nom', 'dis_format', 'per_nom', 'dis_date_ajout', 'dif_mail', 'emp_libelle', 'emb_libelle');
+		$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Emplacement', 'Date d\'ajout', 'Ecouté par', 'Mail diffuseur', 'Emission Bénévole', 'Style');
+        $fields = array('dis_libelle', 'art_nom', 'per_nom', 'dis_format', 'emp_libelle', 'dis_date_ajout', 'uti_login', 'dif_mail', 'emb_libelle', 'sty_libelle');
 		
 		foreach ($query->result() as $data) {
 			$datas[] = array(
 				'Titre' => $data->dis_libelle,
 				'Artiste' => $data->art_nom,
-				'Diffuseur' => $data->lab_nom,
+				'Diffuseur' => $data->per_nom,
 				'Format' => $data->dis_format,
-				'Ecouté par' => $data->per_nom,
+				'Ecouté par' => $data->uti_login,
 				'Date d\'ajout' => $data->dis_date_ajout,
-				'Mail diffuseur' => $data->lab_mail,
+				'Mail diffuseur' => $data->dif_mail,
 				'Emplacement' => $data->emp_libelle,
-				'Emission Bénévole' => $data->emb_libelle
+				'Emission Bénévole' => $data->emb_libelle,
+				'Style' => $data->sty_libelle
 				
 			);
 		}
