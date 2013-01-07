@@ -18,11 +18,11 @@
 		<link rel="stylesheet/less" type="text/css" href="<?php echo less_url('bootstrap/bootstrap'); ?>">
 
 		<script ype="text/javascript" src="<?php echo js_url('jquery.avgrund'); ?>"></script>
-		<style>
-			body {
-				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-			}
-		</style>
+ 		<style>
+	    body {
+	    	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+	    }
+    	</style>
 
 		<link rel="shortcut icon" href="assets/ico/favicon.png">
 
