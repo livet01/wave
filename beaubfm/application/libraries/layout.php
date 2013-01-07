@@ -24,7 +24,7 @@ class Layout {
 	public function view($name, $data = array())
 	{
 	$this->output .= $this->CI->load->view($name, $data, true);
-	$this->CI->load->view('../themes/default', array('output' => $this->output));
+	$this->CI->load->view('../themes/bootstrap', array('output' => $this->output));
 	}
 
 	public function views($name, $data = array())
