@@ -287,7 +287,7 @@ class Disque extends Base_Controller {
 			$est_auto_production = $this -> input -> post('autoprod') == "a";
 	
 			$this -> set_dis_libelle($this -> input -> post('titre'));
-			$this -> set_art_id($this -> rechercheArtisteByNom($this -> input -> post('artiste'), $this -> user['rad_id'], ($est_auto_production) ? 5 : 3));
+			$this -> set_art_id($this -> rechercheArtisteByNom($this -> input -> post('artiste'), $this->current_user->rad_id, ($est_auto_production) ? 5 : 3));
 			
 			
 			// Si le titre et l'artiste ne sont pas présent en base de données.
@@ -295,9 +295,9 @@ class Disque extends Base_Controller {
 	
 				// Vérification si autoproduction
 				if ($est_auto_production) {
-					$this -> set_dif_id($this -> rechercheDiffuseurByNom($this -> input -> post('artiste'), $this -> user['rad_id'], $this -> input -> post('email'), 5));
+					$this -> set_dif_id($this -> rechercheDiffuseurByNom($this -> input -> post('artiste'), $this->current_user->rad_id, $this -> input -> post('email'), 5));
 				} else {
-					$this -> set_dif_id($this -> rechercheDiffuseurByNom($this -> input -> post('diffuseur'), $this -> user['rad_id'], $this -> input -> post('email'), 4));
+					$this -> set_dif_id($this -> rechercheDiffuseurByNom($this -> input -> post('diffuseur'), $this->current_user->rad_id, $this -> input -> post('email'), 4));
 				}
 	
 				//Vérification de l'emplacement selectionné
@@ -305,7 +305,7 @@ class Disque extends Base_Controller {
 				$plus =$this -> parametreManager -> select('emb');
 				//Vérification si emission bénévole coché
 				if ($this->get_emp_id() == $plus['param_valeur']) {
-					$this -> set_emb_id($this -> rechercheEmbByNom($this -> input -> post('emb'), $this -> user['rad_id']));
+					$this -> set_emb_id($this -> rechercheEmbByNom($this -> input -> post('emb'), $this->current_user->rad_id));
 				}
 	
 				if($this->input->post('envoiMail')=="1"){
@@ -409,19 +409,18 @@ class Disque extends Base_Controller {
 	}
 
 	public function rechercheDiffuseurByNom($nom, $radio, $email, $categorie) {
-		$difId = $this -> diffuseurManager -> select('Diffuseur.per_id', array('Personne.per_nom' => $nom, ));
+		$difId = $this -> diffuseurManager -> select('Users.id', array('Users.username' => $nom, ));
 		if (empty($difId)) {
 			$this->db->trans_begin();
 			try {
-				$utiId = (int)$this -> utilisateurManager -> insert($this -> rechercheArtisteByNom($nom, $radio, $categorie), $nom, $this -> securite -> crypt($nom));
-				$difId = (int)$this -> diffuseurManager -> insert($utiId, $email);
+				$difId = (int)$this -> utilisateurManager -> insert(null, $nom,$nom,4,$email);
 			    $this->db->trans_commit();
 			}
 			catch(Exception $e) {
 				$this->db->trans_rollback();
 			}
 		} else
-			$difId = $difId["per_id"];
+			$difId = $difId["id"];
 		return $difId;
 	}
 
@@ -488,12 +487,12 @@ class Disque extends Base_Controller {
 
 	public function rechercherEcouteParByNom($nom) {
 
-		$ecouteId = $this -> ecouteManager -> select('per_id', array('per_nom' => $nom));
+		$ecouteId = $this -> ecouteManager -> select('id', array('username' => $nom));
 		if (empty($ecouteId)) {
 
 			throw new Exception("L'utilisateur n'existe pas.");
 		} else {
-			$ecouteId = $ecouteId['per_id'];
+			$ecouteId = $ecouteId['id'];
 		}
 		return $ecouteId;
 
@@ -566,7 +565,7 @@ class Disque extends Base_Controller {
 		$i = 0;
 		foreach ($rows as $row) {
 			if ($i < 6) {
-				array_push($json_array, array("label" => $row -> lab_nom));
+				array_push($json_array, array("label" => $row -> username));
 			}
 			$i++;
 		}
@@ -586,7 +585,7 @@ class Disque extends Base_Controller {
 		$i = 0;
 		foreach ($rows as $row) {
 			if ($i < 6) {
-				array_push($json_array, array("label" => $row -> mem_nom));
+				array_push($json_array, array("label" => $row -> username));
 			}
 			$i++;
 		}
@@ -604,7 +603,7 @@ class Disque extends Base_Controller {
 		$json_array = array();
 		$rows = $this -> autocomplete_model -> GetAutocompleteLabel(array('keyword' => $term));
 		if(!empty($rows))
-			echo json_encode($rows[0]->lab_mail);
+			echo json_encode($rows[0]->email);
 	}	
 	
 	

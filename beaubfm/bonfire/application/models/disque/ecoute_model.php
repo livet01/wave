@@ -5,7 +5,7 @@
  */
 class Ecoute_model extends CI_Model {
 	
-	protected $table = 'Personne';
+	protected $table = 'Users';
 	
 	function __construct() {
 		parent::__construct();

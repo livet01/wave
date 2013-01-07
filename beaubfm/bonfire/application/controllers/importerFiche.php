@@ -27,7 +27,7 @@ class ImporterFiche extends Base_Controller {
 			if (!empty($_FILES['fichier_' . $i]['name'])) {
 
 				//Le nom sera du type "login_fichier_NUMFICHIER"
-				$config['file_name'] = $this -> user['uti_login'] . '_fichier_' . $i;
+				$config['file_name'] = $this->current_user->username . '_fichier_' . $i;
 				$config['upload_path'] = './assets/upload';
 
 				//Les extensions acceptées sont les suivantes
@@ -380,7 +380,7 @@ class ImporterFiche extends Base_Controller {
 			$titre = $disque['Titre'];
 
 			//Artiste
-			$art_id = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $this -> user['rad_id'], $cat_id);
+			$art_id = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $this->current_user->rad_id, $cat_id);
 
 			if (!$disqueControlleur -> existeTitreArtiste($disque['Titre'], $art_id)) {
 				$this -> db -> trans_begin();
@@ -388,16 +388,16 @@ class ImporterFiche extends Base_Controller {
 
 					//Diffuseur
 					if ($cat_id === 5) {
-						$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Artiste'], $this -> user['rad_id'], $mail, $cat_id);
+						$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Artiste'], $this->current_user->rad_id, $mail, $cat_id);
 					} else {
-						$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Diffuseur'], $this -> user['rad_id'], $mail, 4);
+						$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Diffuseur'], $this->current_user->rad_id, $mail, 4);
 					}
 
 					//EcoutePar
 					try {
 						$ecoute_id = $disqueControlleur -> rechercherEcouteParByNom($disque['EcoutePar']);
 					} catch (Exception $e) {
-						$ecoute_id = $this -> user['per_id'];
+						$ecoute_id = $this->current_user->id;
 					}
 					$this -> db -> trans_commit();
 				} catch(Exception $e) {
@@ -440,10 +440,10 @@ class ImporterFiche extends Base_Controller {
 			//Cas d'un fichier exporté depuis gcstar
 			if (!isset($disque['EmissionBenevole'])) {
 				$enAttente = TRUE;
-				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this -> user['per_id'], null, null);
+				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this->current_user->id, null, null);
 			} else {
 				$enAttente = TRUE;
-				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this -> user['per_id'], $disque['Style'], $disque['EmissionBenevole']);
+				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this->current_user->id, $disque['Style'], $disque['EmissionBenevole']);
 			}
 		} else {
 			if ($doublon === FALSE && $valide === FALSE) {

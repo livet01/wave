@@ -10,16 +10,19 @@ class Autocomplete_Model extends CI_Model
     }
     function GetAutocompleteLabel($options = array())
     {
-	    $this->db->select(array('lab_id','lab_nom','lab_mail'));
-	    $this->db->like('lab_nom', $options['keyword'], 'both');
-   		$query = $this->db->get('Label');
+	    $this->db->select(array('id','username','email'));
+		$this->db->where('role_id',4);
+	    $this->db->like('username', $options['keyword'], 'both');
+   		$query = $this->db->get('Users');
 		return $query->result();
     }
     function GetAutocompleteMembre($options = array())
     {
-	    $this->db->select(array('mem_id','mem_nom'));
-	    $this->db->like('mem_nom', $options['keyword'], 'both');
-   		$query = $this->db->get('Membre');
+	    $this->db->select(array('id','username'));
+	    $this->db->like('username', $options['keyword'], 'both');
+		$this->db->where('role_id',1);
+		$this->db->or_where('role_id',2);
+   		$query = $this->db->get('Users');
 		return $query->result();
     }
     function GetAutocompleteDisque($options = array())
