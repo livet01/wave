@@ -17,13 +17,7 @@
 
 		<script ype="text/javascript" src="<?php echo js_url('jquery.avgrund'); ?>"></script>
 
-		 
 
-
-		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-      	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-      	<link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
        	<link rel="shortcut icon" href="assets/ico/favicon.png">
 
    		
@@ -295,7 +289,7 @@
 		</div>
 	</footer>
 	
-	</body>
+
 	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <script src="<?php echo js_url('jquery'); ?>assets/js/jquery.js"></script>
     <script src="<?php echo js_url('bootstrap-transition'); ?>"></script>
@@ -306,15 +300,13 @@
     <script src="<?php echo js_url('bootstrap-tab'); ?>"></script>
     <script src="<?php echo js_url('bootstrap-tooltip'); ?>"></script>
     <script src="<?php echo js_url('bootstrap-popover'); ?>"></script>
-    <script src="<?php echo js_url('bootstrap-button'); ?>
-		></script>
-		<script src="
-<?php echo js_url('bootstrap-collapse'); ?>"></script><script src="<?php echo js_url('bootstrap-carousel'); ?>"></script>
+    <script src="<?php echo js_url('bootstrap-button'); ?>></script>
+	<script src="<?php echo js_url('bootstrap-collapse'); ?>"></script>
+	<script src="<?php echo js_url('bootstrap-carousel'); ?>"></script>
     <script src="<?php echo js_url('bootstrap-typeahead'); ?>"></script>
     <script src="<?php echo js_url('bootstrap-affix'); ?>"></script>
     <script src="<?php echo js_url('holder'); ?>"></script>
     <script src="<?php echo js_url('google-code-prettify/prettify'); ?>"></script>
     <script src="<?php echo js_url('application'); ?>"></script>
-
-	
+	</body>
 </html>
