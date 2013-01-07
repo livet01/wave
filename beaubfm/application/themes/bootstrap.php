@@ -5,8 +5,10 @@
 		<title>BeaubFM</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this -> config -> item('charset'); ?>" />
-		<!--	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />	-->		
-		<noscript>Votre navigateur ne supporte pas le Javascript !</noscript> 
+		<!--	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />	-->
+		<noscript>
+			Votre navigateur ne supporte pas le Javascript !
+		</noscript>
 		<script src="<?php echo js_url('jquery-1.8.2'); ?>"></script>
 		<link href="<?php echo css_url('jquery-ui'); ?>" rel="stylesheet" type="text/css"/>
 		<link href="<?php echo css_url('jPages'); ?>" rel="stylesheet" type="text/css"/>
@@ -16,219 +18,197 @@
 		<link rel="stylesheet/less" type="text/css" href="<?php echo less_url('bootstrap/bootstrap'); ?>">
 
 		<script ype="text/javascript" src="<?php echo js_url('jquery.avgrund'); ?>"></script>
- <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
+		<style>
+			body {
+				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+			}
+		</style>
 
-       	<link rel="shortcut icon" href="assets/ico/favicon.png">
+		<link rel="shortcut icon" href="assets/ico/favicon.png">
 
-   		
 		<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>
 		<script type="text/javascript">
-	
-				$.widget( "custom.catcomplete", $.ui.autocomplete, {
-		_renderMenu: function( ul, items ) {
+						$.widget( "custom.catcomplete", $.ui.autocomplete, {
+			_renderMenu: function( ul, items ) {
 			var that = this,
-				currentCategory = "";
+			currentCategory = "";
 			$.each( items, function( index, item ) {
-				if ( item.category != currentCategory ) {
-					ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
-					currentCategory = item.category;
-				}
-				that._renderItemData( ul, item );
+			if ( item.category != currentCategory ) {
+			ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+			currentCategory = item.category;
+			}
+			that._renderItemData( ul, item );
 			});
-		}
-	});
-		
-		//Recherche (autocompl�tion)
-    	$(document).ready(function() { 		
-				$("#recherche" ).catcomplete({
-						source: function(request, response) {
-								$.ajax({ url: "<?php echo site_url('index/suggestions'); ?>
-							",
-							data: { term: $("#recherche").val()},
-							dataType: "json",
-							type: "POST",
-							success: function(data){response(data);}
-							});
-							},
-							minLength: 1,
-							delay:0,
-							select: function(event, ui) {
-							if(ui.item){
-							$('#recherche').val(ui.item.value);
-							}
-							$('#recherche_form').submit();}
-							});
+			}
+			});
 
-							//Recherche Artiste (autocompl�tion)
+			//Recherche (autocompl�tion)
+			$(document).ready(function() {
+			$("#recherche" ).catcomplete({
+			source: function(request, response) {
+			$.ajax({ url: "<?php echo site_url('index/suggestions'); ?>
+				",
+				data: { term: $("#recherche").val()},
+				dataType: "json",
+				type: "POST",
+				success: function(data){response(data);}
+				});
+				},
+				minLength: 1,
+				delay:0,
+				select: function(event, ui) {
+				if(ui.item){
+				$('#recherche').val(ui.item.value);
+				}
+				$('#recherche_form').submit();}
+				});
 
-							$("#artiste").autocomplete({
-							source : function(request, response) {
-							$.ajax({
-							url : "
-<?php echo site_url('disque/suggestions_artiste'); ?>
-					",
-					data : {
-					term : $("#artiste").val()
-					},
-					dataType : "json",
-					type : "POST",
-					success : function(data) {
-					response(data);
-					}
-					});
-					},
-					minLength : 1,
-					delay : 0,
-					select : function(event, ui) {
-					if (ui.item) {
-					$('#artiste').val(ui.item.value);
-					}
-					}
-					});
-					$("#listenBy").autocomplete({
-					source : function(request, response) {
-					$.ajax({
-					url : "
-<?php echo site_url('disque/suggestions_ecoute'); ?>
-					",
-					data : {
-					term : $("#listenBy").val()
-					},
-					dataType : "json",
-					type : "POST",
-					success : function(data) {
-					response(data);
-					}
-					});
-					},
-					minLength : 1,
-					delay : 0,
-					select : function(event, ui) {
-					if (ui.item) {
-					$('#listenBy').val(ui.item.value);
-					}
-					}
-					});
-					$("#email")
-					//Recherche Label (autocompl�tion)
-					$("#diffuseur").autocomplete({
-					source : function(request, response) {
-					$.ajax({
-					url : "
-<?php echo site_url('disque/suggestions_diffuseur'); ?>
-					",
-					data : {
-					term : $("#diffuseur").val()
-					},
-					dataType : "json",
-					type : "POST",
-					success : function(data) {
-					response(data);
-					}
-					});
-					},
-					minLength : 1,
-					delay : 0,
-					select : function(event, ui) {
-					if (ui.item) {
-					$('#diffuseur').val(ui.item.value);
-					}
-					}}).blur(function(){
-					$("#email").val("");
-					$.ajax({
-					url : "
-<?php echo site_url('disque/suggestions_email'); ?>
-					",
-					data : {
-					term : $("#diffuseur").val()
-					},
-					dataType : "json",
-					type : "POST",
-					success : function(data) {
-					$("#email").val(data);
-					}
+				//Recherche Artiste (autocompl�tion)
 
-					});
-					});
+				$("#artiste").autocomplete({
+				source : function(request, response) {
+				$.ajax({
+				url : "<?php echo site_url('disque/suggestions_artiste'); ?>",
+				data : {
+				term : $("#artiste").val()
+				},
+				dataType : "json",
+				type : "POST",
+				success : function(data) {
+				response(data);
+				}
+				});
+				},
+				minLength : 1,
+				delay : 0,
+				select : function(event, ui) {
+				if (ui.item) {
+				$('#artiste').val(ui.item.value);
+				}
+				}
+				});
+				$("#listenBy").autocomplete({
+				source : function(request, response) {
+				$.ajax({
+				url : "<?php echo site_url('disque/suggestions_ecoute'); ?>",
+				data : {
+				term : $("#listenBy").val()
+				},
+				dataType : "json",
+				type : "POST",
+				success : function(data) {
+				response(data);
+				}
+				});
+				},
+				minLength : 1,
+				delay : 0,
+				select : function(event, ui) {
+				if (ui.item) {
+				$('#listenBy').val(ui.item.value);
+				}
+				}
+				});
+				$("#email")
+				//Recherche Label (autocompl�tion)
+				$("#diffuseur").autocomplete({
+				source : function(request, response) {
+				$.ajax({
+				url : "<?php echo site_url('disque/suggestions_diffuseur'); ?>",
+				data : {
+				term : $("#diffuseur").val()
+				},
+				dataType : "json",
+				type : "POST",
+				success : function(data) {
+				response(data);
+				}
+				});
+				},
+				minLength : 1,
+				delay : 0,
+				select : function(event, ui) {
+				if (ui.item) {
+				$('#diffuseur').val(ui.item.value);
+				}
+				}}).blur(function(){
+				$("#email").val("");
+				$.ajax({
+				url : "<?php echo site_url('disque/suggestions_email'); ?>",
+				data : {
+				term : $("#diffuseur").val()
+				},
+				dataType : "json",
+				type : "POST",
+				success : function(data) {
+				$("#email").val(data);
+				}
 
-					function countChecked() {
-					var n = $("input:checked").length;
-					if(n >= 1) {
-					$("#supprimer").removeClass().addClass("btn-large-action");
-					$("#supprimer").click(function(){
-					$("#tdisque").attr("action","
-<?php echo site_url("disque/supprimer"); ?>
-						").submit();
-						});
-						$("#exporter").removeClass().addClass("btn-large-action");
-						$("#exporter").click(function(){
-						$("#tdisque").attr("action","
-<?php echo site_url("exporterFiche"); ?>
-						").submit();
-						});
-						}
-						else {
-						$("#supprimer").removeClass().addClass("btn-large-action-nonActif");
-						$("#supprimer").attr("href", "#");
-						$("#exporter").removeClass().addClass("btn-large-action-nonActif");
-						$("#exporter").attr("href", "#");
-						$("#tdisque").attr("action","#");
-						}
-						}
-						countChecked();
+				});
+				});
 
-						$(":checkbox").click(countChecked);
+				function countChecked() {
+				var n = $("input:checked").length;
+				if(n >= 1) {
+				$("#supprimer").removeClass().addClass("btn-large-action");
+				$("#supprimer").click(function(){
+				$("#tdisque").attr("action","<?php echo site_url("disque/supprimer"); ?>").submit();
+				});
+				$("#exporter").removeClass().addClass("btn-large-action");
+				$("#exporter").click(function(){
+				$("#tdisque").attr("action","<?php echo site_url("exporterFiche"); ?>").submit();
+				});
+				}
+				else {
+				$("#supprimer").removeClass().addClass("btn-large-action-nonActif");
+				$("#supprimer").attr("href", "#");
+				$("#exporter").removeClass().addClass("btn-large-action-nonActif");
+				$("#exporter").attr("href", "#");
+				$("#tdisque").attr("action","#");
+				}
+				}
+				countChecked();
 
-						$("#linkXLS").click(function(){
-						$("#exportdisque").attr("action","
-<?php echo site_url("exporterFiche/xls"); ?>
-					");
-					$("#exportdisque").submit();
-					});
+				$(":checkbox").click(countChecked);
 
-					$("#linkCSV").click(function(){
-					$("#exportdisque").attr("action","
-<?php echo site_url("exporterFiche/csv"); ?>
-					");
-					$("#exportdisque").submit();
-					});
+				$("#linkXLS").click(function(){
+				$("#exportdisque").attr("action","<?php echo site_url("exporterFiche/xls"); ?>");
+				$("#exportdisque").submit();
+				});
 
-					$("#supprAll").click(function(){
-					$("#supprimerdisque").attr("action","
-<?php echo site_url("disque/supprimerAll"); ?>
-					");
-					$("#supprimerdisque").submit();
-					});
+				$("#linkCSV").click(function(){
+				$("#exportdisque").attr("action","<?php echo site_url("exporterFiche/csv"); ?>");
+				$("#exportdisque").submit();
+				});
 
-					});
+				$("#supprAll").click(function(){
+				$("#supprimerdisque").attr("action","<?php echo site_url("disque/supprimerAll"); ?>");
+				$("#supprimerdisque").submit();
+				});
 
-					function CocheTout(ref, name) {
-					var form = ref;
+				});
 
-					while (form.parentNode && form.nodeName.toLowerCase() != 'form'){
-					form = form.parentNode;
-					}
+				function CocheTout(ref, name) {
+				var form = ref;
 
-					var elements = form.getElementsByTagName('input');
+				while (form.parentNode && form.nodeName.toLowerCase() != 'form'){
+				form = form.parentNode;
+				}
 
-					for (var i = 0; i < elements.length; i++) {
-					if (elements[i].type == 'checkbox' && elements[i].name == name) {
-					elements[i].checked = ref.checked;
-					}
-					}
-					}
-					// Fonction d'ajout ou de suppression du "loader"
-					function ajaxBox_loader(pState)
-					{
-					// Ajout d'un élement <img> d'id #ajaxBox_loader
-					if (pState === true)
-					$('#aff-disque').html('').html('<li>&nbsp;</li><li>&nbsp;</li><li><img id="ajaxBox_loader" src="
-<?php echo img_url('ajax-loader.gif'); ?>
-				" align="center" /></li><li>&nbsp;</li><li>&nbsp;</li>');
+				var elements = form.getElementsByTagName('input');
+
+				for (var i = 0; i < elements.length; i++) {
+				if (elements[i].type == 'checkbox' && elements[i].name == name) {
+				elements[i].checked = ref.checked;
+				}
+				}
+				}
+				// Fonction d'ajout ou de suppression du "loader"
+				function ajaxBox_loader(pState)
+				{
+				// Ajout d'un élement <img> d'id #ajaxBox_loader
+				if (pState === true)
+				$('#aff-disque').html('').html('<li>&nbsp;</li><li>&nbsp;</li><li><img id="ajaxBox_loader" src="<?php echo img_url('ajax-loader.gif'); ?>" align="center" /></li><li>&nbsp;</li><li>&nbsp;</li>');
 				// Suppression de l'élement d'id #ajaxBox_loader
 				else
 				$('#ajaxBox_loader').remove();
@@ -250,9 +230,8 @@
 				delay : 10
 				});
 				});
-  </script>
-		
-		
+		</script>
+
 		<script type="text/javascript" src="<?php echo js_url('less') ?>"></script>
 		<script>
 			function create_champ_fichier(i) {
@@ -277,20 +256,18 @@
 		-->
 	</head>
 	<body data-spy="scroll" data-target=".bs-docs-sidebar">
-	<div class="container">
+		<div class="container">
 			<?php echo $output; ?>
-	</div>
-	<footer class="footer">
-      <div class="container">
-			<img src="<?php echo img_url('valide_html5.png'); ?>" id="valideHtml5" alt=" valide HTML5 " />
-			<img src="<?php echo img_url('valide_css.png'); ?>" id="valideCSS"  alt=" valide CSS " />
-			<p style="font-size: 9px;">
-				Page générée en <strong>{elapsed_time}</strong> seconde(s)
-			</p>
 		</div>
-	</footer>
-	
-
+		<footer class="footer">
+			<div class="container">
+				<img src="<?php echo img_url('valide_html5.png'); ?>" id="valideHtml5" alt=" valide HTML5 " />
+				<img src="<?php echo img_url('valide_css.png'); ?>" id="valideCSS"  alt=" valide CSS " />
+				<p style="font-size: 9px;">
+					Page générée en <strong>{elapsed_time}</strong> seconde(s)
+				</p>
+			</div>
+		</footer>
 	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <script src="<?php echo js_url('bootstrap-transition'); ?>"></script>
     <script src="<?php echo js_url('bootstrap-alert'); ?>"></script>
