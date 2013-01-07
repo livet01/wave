@@ -291,6 +291,28 @@
 	</footer>
 	
 
-
+	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+   
+    <script src="<?php echo js_url('bootstrap-transition'); ?>"></script>
+    <script src="<?php echo js_url('bootstrap-alert'); ?>"></script>
+    <script src="<?php echo js_url('bootstrap-modal'); ?>"></script>
+    <script src="<?php echo js_url('bootstrap-dropdown'); ?>"></script>
+    <script src="<?php echo js_url('bootstrap-scrollspy'); ?>"></script>
+    <script src="<?php echo js_url('bootstrap-tab'); ?>"></script>
+    <script src="<?php echo js_url('bootstrap-tooltip'); ?>"></script>
+    <script src="<?php echo js_url('bootstrap-popover'); ?>"></script>
+    <script src="<?php echo js_url('bootstrap-button'); ?>"></script>
+	<script src="<?php echo js_url('bootstrap-collapse'); ?>"></script>
+	<script src="<?php echo js_url('bootstrap-carousel'); ?>"></script>
+    <script src="<?php echo js_url('bootstrap-typeahead'); ?>"></script>
+    <script src="<?php echo js_url('bootstrap-affix'); ?>"></script>
+    
+   
+   <!-- 
+   	 <script src="<?php echo js_url('jquery'); ?>"></script>
+   	<script src="<?php echo js_url('holder'); ?>"></script>
+   	<script src="<?php echo js_url('application'); ?>"></script>
+   	 <script src="<?php echo js_url('google-code-prettify/prettify'); ?>"></script>
+   	-->
 	</body>
 </html>

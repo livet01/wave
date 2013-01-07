@@ -1,9 +1,6 @@
 <!-- <script src="<?php echo js_url('resultatRech'); ?>"></script> -->
 <div id="cadre2">
-	
-	
 	<div class="row-fluid">
-		
 	<div class="span9">
 	<div id="resultat_recherche">
 		<?php if($affichage==2){ ?>
@@ -74,8 +71,8 @@
 			</ul>
 		</div>
 		<div id="cadre_action">
-			<a id="supprimer" class="btn  disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a>
-			<a id="exporter" class="btn  disabled" href="#"><i class="icon-signout"></i> Exporter des fiches</a>
+			<a id="supprimer" class="btn btn-block disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a>
+			<a id="exporter" class="btn btn-block disabled" href="#"><i class="icon-signout"></i> Exporter des fiches</a>
 		</div>
 		</div>
 	</div>
