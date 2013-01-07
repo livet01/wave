@@ -1,20 +1,10 @@
 <!-- <script src="<?php echo js_url('resultatRech'); ?>"></script> -->
 <div id="cadre2">
-	<div id="selection">
-		<div class="infos-disque">
-			<ul class="icons" <?php if(($affichage==1 && isset($resultat)) || $affichage==0) { ?> id="aff-disque" <?php } ?>>
-				<li>&nbsp;</li>
-				<li>&nbsp;</li>
-				<li id="chargement" class="chargement"><img src="<?php echo img_url('search.png'); ?>"> </li>
-				<li>&nbsp;</li>
-				<li>&nbsp;</li>
-			</ul>
-		</div>
-		<div id="cadre_action">
-			<a id="supprimer" class="btn-large-action-nonActif"><i class="icon-trash"></i> Supprimer les fiches</a>
-			<a id="exporter" class="btn-large-action-nonActif" href="#"><i class="icon-signout"></i> Exporter des fiches</a>
-		</div>
-	</div>
+	
+	
+	<div class="row-fluid">
+		
+	<div class="span9">
 	<div id="resultat_recherche">
 		<?php if($affichage==2){ ?>
 			<p>La recherche n'a renvoyé aucun résultat.</p>
@@ -72,5 +62,22 @@
 			</nav>
 	<?php }
 	}?>
+	</div>
+	</div>
+	<div class="span3">
+			<div id="selection">
+			<div class="infos-disque">
+			<ul class="icons" <?php if(($affichage==1 && isset($resultat)) || $affichage==0) { ?> id="aff-disque" <?php } ?>>
+				
+				<li id="chargement" class="chargement"><img src="<?php echo img_url('search.png'); ?>"> </li>
+			
+			</ul>
+		</div>
+		<div id="cadre_action">
+			<a id="supprimer" class="btn  disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a>
+			<a id="exporter" class="btn  disabled" href="#"><i class="icon-signout"></i> Exporter des fiches</a>
+		</div>
+		</div>
+	</div>
 	</div>
 </div>
