@@ -21,7 +21,7 @@ if (!function_exists('js_url')) {
 }
 if (!function_exists('img_url')) {
 	function img_url($nom) {
-		return base_url() . 'assets/img/' . $nom;
+		return base_url() . 'assets/images/' . $nom;
 	}
 
 }

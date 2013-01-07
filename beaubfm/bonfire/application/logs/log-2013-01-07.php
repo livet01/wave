@@ -48,3 +48,129 @@ ERROR - 2013-01-07 15:56:32 --> 404 Page Not Found -->
 ERROR - 2013-01-07 15:56:32 --> 404 Page Not Found --> 
 ERROR - 2013-01-07 16:04:26 --> 404 Page Not Found --> importerFiche/assets
 ERROR - 2013-01-07 16:04:26 --> 404 Page Not Found --> importerFiche/assets
+ERROR - 2013-01-07 15:35:25 --> 404 Page Not Found --> index/assets
+ERROR - 2013-01-07 15:39:18 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:40:27 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:54:37 --> Severity: Notice  --> Array to string conversion C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\database\DB_active_rec.php 1407
+ERROR - 2013-01-07 15:56:00 --> Severity: Warning  --> mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() C:\wamp\www\Projet_tut\beaubfm\bonfire\codeigniter\libraries\Email.php 1553
+ERROR - 2013-01-07 15:58:00 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 15:58:53 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:01:12 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:01:13 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:01:31 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:01:31 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:02:33 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:02:34 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:06:01 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:08:04 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:08:59 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:03 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:05 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:07 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:09 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:11 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:15 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:17 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:19 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:23 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:25 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:27 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:29 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:09:30 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:10:50 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:11:32 --> 404 Page Not Found --> index/assets
+ERROR - 2013-01-07 16:11:33 --> 404 Page Not Found --> disque/assets
+ERROR - 2013-01-07 16:11:35 --> 404 Page Not Found --> index/assets
+ERROR - 2013-01-07 17:11:47 --> 404 Page Not Found --> importerFiche/assets
+ERROR - 2013-01-07 17:13:29 --> Severity: Notice  --> Undefined property: CI::$user C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\MX\Controller.php 58
+ERROR - 2013-01-07 17:13:30 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:30 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:31 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:31 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:31 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:31 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:32 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:34 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:34 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:35 --> Severity: Notice  --> iconv(): Detected an illegal character in input string C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\PHPExcel\Shared\String.php 386
+ERROR - 2013-01-07 17:13:38 --> Severity: Notice  --> Undefined property: CI::$user C:\wamp\www\Projet_tut\beaubfm\bonfire\application\third_party\MX\Controller.php 58
+ERROR - 2013-01-07 17:13:38 --> Query error: Column 'rad_id' cannot be null
+ERROR - 2013-01-07 16:13:54 --> 404 Page Not Found --> 
+ERROR - 2013-01-07 16:13:56 --> 404 Page Not Found --> index/assets
