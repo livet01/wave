@@ -29,7 +29,7 @@
 			if(($affichage==0 || $affichage==1) && !empty($resultat)){ ?>		
 		<div id="box"></div>
 		
-		<table class="table table-condensed">
+		<table class="table table-striped">
 			<caption>
 				<?php if($affichage==0) { ?> Listes des disques <?php } ?>
 				<?php if($affichage==1) { echo count($resultat); ?> résultat(s) trouvé(s).<?php } ?>

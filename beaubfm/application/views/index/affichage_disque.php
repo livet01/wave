@@ -4,7 +4,7 @@ if(!empty($data)) {
 
 ?>
 
-<table>
+<table class="table table-striped">
 	<caption>
 		<?php echo $data['dis_libelle']; ?>
 	</caption>

@@ -16,7 +16,11 @@
 		<link rel="stylesheet/less" type="text/css" href="<?php echo less_url('bootstrap/bootstrap'); ?>">
 
 		<script ype="text/javascript" src="<?php echo js_url('jquery.avgrund'); ?>"></script>
-
+ <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
 
        	<link rel="shortcut icon" href="assets/ico/favicon.png">
 
@@ -273,12 +277,9 @@
 		-->
 	</head>
 	<body data-spy="scroll" data-target=".bs-docs-sidebar">
-		
-
-
+	<div class="container">
 			<?php echo $output; ?>
-
-	
+	</div>
 	<footer class="footer">
       <div class="container">
 			<img src="<?php echo img_url('valide_html5.png'); ?>" id="valideHtml5" alt=" valide HTML5 " />
@@ -290,23 +291,6 @@
 	</footer>
 	
 
-	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-    <script src="<?php echo js_url('jquery'); ?>assets/js/jquery.js"></script>
-    <script src="<?php echo js_url('bootstrap-transition'); ?>"></script>
-    <script src="<?php echo js_url('bootstrap-alert'); ?>"></script>
-    <script src="<?php echo js_url('bootstrap-modal'); ?>"></script>
-    <script src="<?php echo js_url('bootstrap-dropdown'); ?>"></script>
-    <script src="<?php echo js_url('bootstrap-scrollspy'); ?>"></script>
-    <script src="<?php echo js_url('bootstrap-tab'); ?>"></script>
-    <script src="<?php echo js_url('bootstrap-tooltip'); ?>"></script>
-    <script src="<?php echo js_url('bootstrap-popover'); ?>"></script>
-    <script src="<?php echo js_url('bootstrap-button'); ?>></script>
-	<script src="<?php echo js_url('bootstrap-collapse'); ?>"></script>
-	<script src="<?php echo js_url('bootstrap-carousel'); ?>"></script>
-    <script src="<?php echo js_url('bootstrap-typeahead'); ?>"></script>
-    <script src="<?php echo js_url('bootstrap-affix'); ?>"></script>
-    <script src="<?php echo js_url('holder'); ?>"></script>
-    <script src="<?php echo js_url('google-code-prettify/prettify'); ?>"></script>
-    <script src="<?php echo js_url('application'); ?>"></script>
+
 	</body>
 </html>
