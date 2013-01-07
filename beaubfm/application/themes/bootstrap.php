@@ -292,7 +292,6 @@
 	
 
 	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-   
     <script src="<?php echo js_url('bootstrap-transition'); ?>"></script>
     <script src="<?php echo js_url('bootstrap-alert'); ?>"></script>
     <script src="<?php echo js_url('bootstrap-modal'); ?>"></script>
