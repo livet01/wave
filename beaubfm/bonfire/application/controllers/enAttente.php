@@ -19,7 +19,7 @@ class EnAttente extends Authenticated_Controller {
 		$this -> load -> model('importer/importer_model', 'importerManager');
 		$this -> load -> library('layout');
 		$this -> load -> library('pagination');
-		
+
 	}
 
 	//
@@ -28,7 +28,6 @@ class EnAttente extends Authenticated_Controller {
 	public function index($g_nb_disques = 1, $affichage = 0) {
 		// Chargement des ressources
 
-		
 		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
 		{
 			// Tableau récoltant des données à envoyer à la vue
@@ -37,7 +36,7 @@ class EnAttente extends Authenticated_Controller {
 			// On récupère le nombre de disque présent dans la base
 			$tabs = $this->importerManager->selectImport(); 
 			$nb_disques_total = count($tabs);
-			
+
 			// On vérifie la cohérence de la variable $_GET
 			if ($g_nb_disques > 1) {
 				// La variable $_GET semblent être correcte. On doit maintenant
@@ -56,8 +55,11 @@ class EnAttente extends Authenticated_Controller {
 			}
 
 			// Récupération de tout les disques de importdisque pour la page
+
 			
 			
+
+			$this -> importerManager -> selectImport();
 
 			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
 			foreach ($tabs as $tab) {
@@ -68,9 +70,9 @@ class EnAttente extends Authenticated_Controller {
 				}
 				$tab_result[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "dis_format" => $tab -> imp_format, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab -> imp_diffuseur, "emp_libelle" => $tab -> imp_emplacement, "emb_id" => $tab->imp_em_bev);
 			}
-			if(!empty($tab_result)){
+			if (!empty($tab_result)) {
 				// On passe le tableau de disque
-				$data['resultat'] = $tab_result;		
+				$data['resultat'] = $tab_result;
 			}
 		}
 
@@ -80,12 +82,28 @@ class EnAttente extends Authenticated_Controller {
 		// Chargement de la vue
 		Template::set_view('index/resultat_recherche');
 		//Template::set_view('index/resultat_recherche');
-		Template::set('value',$this -> input -> post('recherche'));
-		Template::set('data',$data);
+		Template::set('value', $this -> input -> post('recherche'));
+		Template::set('data', $data);
 		Template::render();
 		//$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', $data);
-		
+
 	}
 
-	
+	public function modifDisquesEnAttente() {
+		
+		// Récupération de tous les disques enAttente de modification
+		//Tableau contenant les id des cases des disques s�lectionn�s
+		$id = $this -> input -> post('choix');
+		
+		//Tableau contenant les disques s�lectionn�s pour la modification
+		$tabs = $this -> importer_model -> GetAll_in($id);
+		
+		$data['imp_libelle'] = $tabs[0]['imp_libelle'];
+
+		// Chargement de la vue
+		Template::set('data', $data);
+		Template::set_view('ajouter_fiche.php');
+		Template::render();
+	}
+
 }
