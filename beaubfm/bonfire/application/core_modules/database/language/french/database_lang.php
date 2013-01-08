@@ -22,83 +22,83 @@
 */
 
 $lang['db_maintenance']			= 'Maintenance';
-$lang['db_backups']				= 'Backups';
+$lang['db_backups']				= 'Sauvegardes';
 
-$lang['db_backup_warning']		= 'Note: Due to the limited execution time and memory available to PHP, backing up very large databases may not be possible. If your database is very large you might need to backup directly from your SQL server via the command line, or have your server admin do it for you if you do not have root privileges.';
-$lang['db_filename']			= 'File Name';
+$lang['db_backup_warning']		= 'Remarque: En raison du temps d\'exécution limité et de la mémoire disponible pour PHP, la sauvegarde des bases de données très volumineuses peuvent ne pas être possible. Si votre base de données est très grande, vous pourriez avoir besoin de sauvegarder directement à partir de votre serveur SQL via la ligne de commande, ou demandez à votre administrateur serveur de le faire pour vous si vous n\'avez pas les privilèges root.';
+$lang['db_filename']			= 'Nom du fichier';
 
-$lang['db_drop_question']		= 'Add &lsquo;Drop Tables&rsquo; command to SQL?';
+$lang['db_drop_question']		= 'Ajouter la commande &lsquo;Drop Tables&rsquo pour SQL?';
 $lang['db_drop_tables']			= 'Drop Tables';
-$lang['db_compress_question']	= 'Compression type?';
-$lang['db_compress_type']		= 'Compression type';
-$lang['db_insert_question']		= 'Add &lsquo;Inserts&rsquo; for data to SQL?';
-$lang['db_add_inserts']			= 'Add Inserts';
+$lang['db_compress_question']	= 'Type de compression?';
+$lang['db_compress_type']		= 'Type de compression';
+$lang['db_insert_question']		= 'Ajouter &lsquo;Inserts&rsquo; pour les données en SQL?';
+$lang['db_add_inserts']			= 'Ajouter Inserts';
 
-$lang['db_restore_note']		= 'The Restore option is only capable of reading un-compressed files. Gzip and Zip compression is good if you just want a backup to download and store on your computer.';
+$lang['db_restore_note']		= 'L\'option Restaurer est seulement capable de lire les fichiers non compressés. La compression Gzip et Zip est bonne si vous voulez juste une sauvegarde pour télécharger et stocker sur votre ordinateur.';
 
-$lang['db_apply']				= 'Apply';
+$lang['db_apply']				= 'Appliquer';
 $lang['db_gzip']				= 'gzip';
 $lang['db_zip']					= 'zip';
-$lang['db_backup']				= 'Backup';
+$lang['db_backup']				= 'Sauvegarde';
 $lang['db_tables']				= 'Tables';
-$lang['db_restore']				= 'Restore';
-$lang['db_database']			= 'Database';
+$lang['db_restore']				= 'Restaurer';
+$lang['db_database']			= 'Base de données';
 $lang['db_drop']				= 'Drop';
-$lang['db_repair']				= 'Repair';
-$lang['db_optimize']			= 'Optimize';
+$lang['db_repair']				= 'Réparer';
+$lang['db_optimize']			= 'Optimiser';
 $lang['db_migrations']			= 'Migrations';
 
-$lang['db_delete_note']			= 'Delete selected backup files: ';
-$lang['db_no_backups']			= 'No previous backups were found.';
-$lang['db_backup_delete_confirm']	= 'Really delete the following backup files?';
-$lang['db_backup_delete_none']	= 'No backup files were selected for deletion';
-$lang['db_drop_confirm']		= 'Really delete the following database tables?';
-$lang['db_drop_none']			= 'No tables were selected to drop';
-$lang['db_drop_attention']		= '<p>Deleting tables from the database will result in loss of data.</p><p><strong>This may make your application non-functional.</strong></p>';
-$lang['db_repair_none']			= 'No tables were selected to repair';
+$lang['db_delete_note']			= 'Supprimer les fichiers de sauvegarde sélectionnées: ';
+$lang['db_no_backups']			= 'Aucunes sauvegardes précédentes ont été trouvés.';
+$lang['db_backup_delete_confirm']	= 'Voulez-vous vraiment supprimer les fichiers de sauvegarde suivants?';
+$lang['db_backup_delete_none']	= 'Aucun fichiers de sauvegarde sélectionnés pour être supprimés';
+$lang['db_drop_confirm']		= 'Voulez-vous vraiment supprimer les tables des bases de données suivantes?';
+$lang['db_drop_none']			= 'Aucune tables sélectionnées pour être supprimées';
+$lang['db_drop_attention']		= '<p>La suppression des tables de la base de données se traduira par la perte de données.</p><p><strong>Cela peut rendre votre application non fonctionnelle.</strong></p>';
+$lang['db_repair_none']			= 'Aucune tables sélectionnées pour être réparées';
 
-$lang['db_table_name']			= 'Table Name';
-$lang['db_records']				= 'Records';
-$lang['db_data_size']			= 'Data Size';
-$lang['db_index_size']			= 'Index Size';
-$lang['db_data_free']			= 'Data Free';
-$lang['db_engine']				= 'Engine';
-$lang['db_no_tables']			= 'No tables were found for the current database.';
+$lang['db_table_name']			= 'Nom de la Table';
+$lang['db_records']				= 'Archives';
+$lang['db_data_size']			= 'Taille des données';
+$lang['db_index_size']			= 'Taille de l\'Index';
+$lang['db_data_free']			= 'Données libres';
+$lang['db_engine']				= 'Moteur';
+$lang['db_no_tables']			= 'Pas de tables trouvées pour la base de données actuelle.';
 
-$lang['db_restore_results']		= 'Restore Results';
-$lang['db_back_to_tools']		= 'Back to Database Tools';
-$lang['db_restore_file']		= 'Restore database from file';
-$lang['db_restore_attention']	= '<p>Restoring a database from a backup file will result in some or all of your database being erased before restoring.</p><p><strong>This may result in a loss of data</strong>.</p>';
+$lang['db_restore_results']		= 'Restaurer les résultats';
+$lang['db_back_to_tools']		= 'Retour aux Outils de base de données';
+$lang['db_restore_file']		= 'Restaurer la base de données à partir du fichier';
+$lang['db_restore_attention']	= '<p>La restauration d\'une base de données à partir d\'un fichier de sauvegarde se traduira par une supression d\'une partie ou de la totalité de votre base de données avant la restauration.</p><p><strong>Il peut en résulter une perte de données</strong>.</p>';
 
-$lang['db_database_settings']	= 'Database Settings';
-$lang['db_server_type']			= 'Server Type';
-$lang['db_hostname']			= 'Hostname';
-$lang['db_dbname']				= 'Database Name';
-$lang['db_advanced_options']	= 'Advanced Options';
-$lang['db_persistant_connect']	= 'Persistant Connection';
-$lang['db_display_errors']		= 'Display Database Errors';
-$lang['db_enable_caching']		= 'Enable Query Caching';
-$lang['db_cache_dir']			= 'Cache Directory';
-$lang['db_prefix']				= 'Prefix';
+$lang['db_database_settings']	= 'Réglages de base de données';
+$lang['db_server_type']			= 'Type de Serveur';
+$lang['db_hostname']			= 'Nom d\'hôte';
+$lang['db_dbname']				= 'Nom de la base de données';
+$lang['db_advanced_options']	= 'Options avancées';
+$lang['db_persistant_connect']	= 'Connexion persistante';
+$lang['db_display_errors']		= 'Afficher les erreurs de base de données';
+$lang['db_enable_caching']		= 'Activer la mise en cache de requêtes';
+$lang['db_cache_dir']			= 'Répertoire du cache';
+$lang['db_prefix']				= 'Préfixe';
 
-$lang['db_servers']				= 'Servers';
+$lang['db_servers']				= 'Serveurs';
 $lang['db_driver']				= 'Driver';
 $lang['db_persistant']			= 'Persistant';
-$lang['db_debug_on']			= 'Debug On';
-$lang['db_strict_mode']			= 'Strict Mode';
-$lang['db_running_on_1']		= 'You are currently running on the';
-$lang['db_running_on_2']		= 'server.';
-$lang['db_serv_dev']			= 'Development';
-$lang['db_serv_test']			= 'Testing';
+$lang['db_debug_on']			= 'Débogage sur';
+$lang['db_strict_mode']			= 'Mode strict';
+$lang['db_running_on_1']		= 'Vous êtes en cours d\'exécution sur le';
+$lang['db_running_on_2']		= 'serveur.';
+$lang['db_serv_dev']			= 'Developpement';
+$lang['db_serv_test']			= 'Test';
 $lang['db_serv_prod']			= 'Production';
 
-$lang['db_successful_save']		= 'Your settings were successfully saved.';
-$lang['db_erroneous_save']		= 'There was an error saving the settings.';
-$lang['db_successful_save_act']	= 'Database settings were successfully saved';
-$lang['db_erroneous_save_act']	= 'Database settings did not save correctly';
+$lang['db_successful_save']		= 'Vos paramètres ont été correctement sauvegardées.';
+$lang['db_erroneous_save']		= 'Une erreur s\'est produite lors de l\'enregistrement des paramètres.';
+$lang['db_successful_save_act']	= 'Les paramètres de la base de données ont été enregistrés avec succès';
+$lang['db_erroneous_save_act']	= 'Les paramètres de la base de données n\'ont pas été enregistrés correctement';
 
-$lang['db_sql_query']			= 'SQL Query';
-$lang['db_total_results']		= 'Total Results';
-$lang['db_no_rows']				= 'No data found for table.';
-$lang['db_browse']				= 'Browse';
-$lang['db_apply']               = 'Apply';
+$lang['db_sql_query']			= 'Requête SQL';
+$lang['db_total_results']		= 'Total des résultats';
+$lang['db_no_rows']				= 'Aucune donnée trouvée pour la table.';
+$lang['db_browse']				= 'Naviguer';
+$lang['db_apply']               = 'Appliquer';

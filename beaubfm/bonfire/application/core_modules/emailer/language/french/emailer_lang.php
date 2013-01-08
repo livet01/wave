@@ -21,59 +21,59 @@
 	THE SOFTWARE.
 */
 
-$lang['em_template']			= 'Template';
-$lang['em_email_template']		= 'Email Template';
-$lang['em_emailer_queue']		= 'Email Queue';
+$lang['em_template']			= 'Modèle';
+$lang['em_email_template']		= 'Modèle d\'Email';
+$lang['em_emailer_queue']		= 'Queue d\'Email';
 
-$lang['em_system_email']		= 'System Email';
-$lang['em_system_email_note']	= 'The email that all system-generated emails are sent from.';
-$lang['em_email_server']		= 'Email Server';
-$lang['em_settings']			= 'Email Settings';
-$lang['em_settings_note']		= '<b>Mail</b> uses the standard PHP mail function, so no settings are necessary.';
-$lang['em_location']			= 'location';
-$lang['em_server_address']		= 'Server Address';
+$lang['em_system_email']		= 'Email du système';
+$lang['em_system_email_note']	= 'L\'email où tous les courriels générés par le système sont envoyés à partir.';
+$lang['em_email_server']		= 'Serveur d\'Email';
+$lang['em_settings']			= 'Réglages des Email';
+$lang['em_settings_note']		= '<b>Mail</b> utilise la fonction mail standard de PHP, donc aucun réglage est nécessaire.';
+$lang['em_location']			= 'emplacement';
+$lang['em_server_address']		= 'Adresse du serveur';
 $lang['em_port']				= 'Port';
-$lang['em_timeout_secs']		= 'Timeout (seconds)';
-$lang['em_email_type']			= 'Email Type';
-$lang['em_test_settings']		= 'Test Email Settings';
+$lang['em_timeout_secs']		= 'Temps (secondes)';
+$lang['em_email_type']			= 'Type d\'Email';
+$lang['em_test_settings']		= 'Tester les réglages d\'Email';
 
-$lang['em_template_note']		= 'Emails are sent in HTML format. They can be customized by editing the header and footer, below.';
-$lang['em_header']				= 'Header';
-$lang['em_footer']				= 'Footer';
+$lang['em_template_note']		= 'Les emails sont envoyés au format HTML. Ils peuvent être personnalisés en éditant l\'en-tête et le pied de page, ci-dessous.';
+$lang['em_header']				= 'En-tête de page';
+$lang['em_footer']				= 'Pied de page';
 
-$lang['em_test_header']			= 'Test Your Settings';
-$lang['em_test_intro']			= 'Enter an email address below to verify that your email settings are working.<br/>Please save the current settings before testing.';
-$lang['em_test_button']			= 'Send Test Email';
-$lang['em_test_result_header']	= 'Test Results';
-$lang['em_test_no_results']		= 'Either the test did not run, or did not return any results.';
-$lang['em_test_debug_header']	= 'Debug Information';
-$lang['em_test_success']		= 'The email appears to be set correctly. If you do not see the email in your inbox, try looking in your Spam box or Junk mail.';
-$lang['em_test_error']			= 'The email looks like it is not set correctly.';
+$lang['em_test_header']			= 'Tester vos réglages';
+$lang['em_test_intro']			= 'Entrez une adresse email ci-dessous pour vérifier que vos paramètres de messagerie fonctionnent. <br/> Veuillez enregistrer les paramètres actuels avant l\'essai.';
+$lang['em_test_button']			= 'Envoyez un message de test';
+$lang['em_test_result_header']	= 'Résultats des tests';
+$lang['em_test_no_results']		= 'Soit le test ne s\'exécute pas, ou ne retourne aucun résultat.';
+$lang['em_test_debug_header']	= 'Information de débogage';
+$lang['em_test_success']		= 'L\'email semble être réglé correctement. Si vous ne voyez pas le message dans votre boîte de réception, essayez de regarder dans votre boîte de spam ou de courrier indésirable.';
+$lang['em_test_error']			= 'L\'email semble ne pas être réglé correctement.';
 
-$lang['em_test_mail_subject']	= 'Congratulations! Your Bonfire Emailer is working!';
-$lang['em_test_mail_body']		= 'If you are seeing this email, then it appears your Bonfire Emailer is working!';
+$lang['em_test_mail_subject']	= 'Félicitations! Votre Emailer Bonfire fonctionne!';
+$lang['em_test_mail_body']		= 'Si vous voyez ce message, il semble que votre Emailer Bonfire fonctionne!';
 
-$lang['em_stat_no_queue']		= 'You do not currently have any emails in the queue.';
-$lang['em_total_in_queue']		= 'Total Emails in Queue:';
-$lang['em_total_sent']			= 'Total Emails Sent:';
+$lang['em_stat_no_queue']		= 'Vous ne possédez aucun emails dans la file d\'attente.';
+$lang['em_total_in_queue']		= 'Total des Emails dans la queue:';
+$lang['em_total_sent']			= 'Total des Emails expédiés:';
 
-$lang['em_sent']				= 'Sent';
-$lang['em_attempts']			= 'Attempts';
+$lang['em_sent']				= 'Expédié';
+$lang['em_attempts']			= 'Tentatives';
 $lang['em_id']					= 'ID';
-$lang['em_to']					= 'To';
-$lang['em_subject']				= 'Subject';
+$lang['em_to']					= 'Pour';
+$lang['em_subject']				= 'Sujet';
 
-$lang['em_missing_data']		= 'One or more required fields are missing.';
-$lang['em_no_debug']			= 'Email was queued. No debug data is available.';
+$lang['em_missing_data']		= 'Un ou plusieurs champs requis sont manquants.';
+$lang['em_no_debug']			= 'L\'Email a été mis en attente. Pas de données de débogage disponible.';
 
-$lang['em_delete_success']      = '%d records deleted.';
-$lang['em_delete_failure']		= 'Could not delete records : ';
-$lang['em_delete_error']		= 'Error deleting records : ';
-$lang['em_delete_confirm']		= 'Are you sure you want to delete these emails? ';
+$lang['em_delete_success']      = '%d enregistrements supprimés.';
+$lang['em_delete_failure']		= 'Impossible de supprimer les enregistrements:';
+$lang['em_delete_error']		= 'Erreur de suppression des enregistrements:';
+$lang['em_delete_confirm']		= 'Êtes-vous sûr de vouloir supprimer ces emails?';
 
-$lang['em_create_email']		= 'Send New Email';
-$lang['em_create_setting']		= 'Email Configure';
-$lang['em_create_email_error']	= 'Error in creating emails : ';
-$lang['em_create_email_success']= 'Email(s) are inserted into email queue.';
-$lang['em_create_email_failure']= 'Fail in creating emails : ';
-$lang['em_create_email_cancel']	= 'Cancel';
+$lang['em_create_email']		= 'Envoyer un nouvel email';
+$lang['em_create_setting']		= 'Configurer l\'email';
+$lang['em_create_email_error']	= 'Erreur dans la création d\'emails:';
+$lang['em_create_email_success']= 'Les email(s) sont insérés dans la file d\'attente.';
+$lang['em_create_email_failure']= 'Échec dans la création d\'emails:';
+$lang['em_create_email_cancel']	= 'Annuler';

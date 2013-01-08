@@ -1,0 +1,30 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+$lang['emplacement_manage']			= 'Gérer les Emplacements';
+$lang['emplacement_edit']				= 'Editer';
+$lang['emplacement_true']				= 'Vrai';
+$lang['emplacement_false']				= 'Faux';
+$lang['emplacement_create']			= 'Créer';
+$lang['emplacement_list']				= 'Lister';
+$lang['emplacement_new']				= 'Nouveau';
+$lang['emplacement_edit_text']			= 'Modifier cela pour répondre à vos besoins';
+$lang['emplacement_no_records']			= 'Il n\'y a aucun Emplacement dans le système.';
+$lang['emplacement_create_new']			= 'Créer un nouvel Emplacement.';
+$lang['emplacement_create_success']			= 'L\'Emplacement a bien été créé.';
+$lang['emplacement_create_failure']			= 'Il y a un problème de création de l\'Emplacement:';
+$lang['emplacement_create_new_button']			= 'Créer un nouvel Emplacement';
+$lang['emplacement_invalid_id']			= 'L\'ID de l\'Emplacement est invalide.';
+$lang['emplacement_edit_success']			= 'L\'Emplacement a été correctement enregistré.';
+$lang['emplacement_edit_failure']			= 'Il y a un problème de sauvegarde de l\'Emplacement:';
+$lang['emplacement_delete_success']			= 'réponse(s) supprimée(s) avec succès.';
+$lang['emplacement_delete_failure']			= 'Impossible de supprimer l\'enregistrement:';
+$lang['emplacement_delete_error']			= 'Vous n\'avez sélectionné aucun enregistrements à supprimer.';
+$lang['emplacement_actions']			= 'Actions';
+$lang['emplacement_cancel']			= 'Annuler';
+$lang['emplacement_delete_record']			= 'Supprimer cet Emplacement';
+$lang['emplacement_delete_confirm']			= 'Etes vous sur de vouloir supprimer cet emplacement ?';
+$lang['emplacement_edit_heading']			= 'Editer l\'Emplacement';
+
+// Activities
+$lang['emplacement_act_create_record']			= 'Enregistrement créé avec avec l\'ID';
+$lang['emplacement_act_edit_record']			= 'Enregistrement mis à jour avec l\'ID';
+$lang['emplacement_act_delete_record']			= 'Enregistrement supprimé avec l\'ID';
