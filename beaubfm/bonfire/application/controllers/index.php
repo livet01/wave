@@ -23,8 +23,7 @@ class Index extends Authenticated_Controller {
 	// Méthode index : affichage de l'ensemble des disques
 	//
 	public function index($g_nb_disques = 1, $affichage = 0) {
-		// Chargement des ressources		$this -> load -> library('layout');
-		$this -> load -> model('index/Info_Disque_Model');
+		// Chargement des ressources		$this -> load -> model('index/Info_Disque_Model');
 		$this -> load -> library('pagination');
 		
 		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
@@ -186,9 +185,13 @@ class Index extends Authenticated_Controller {
 				// On renvoi sur l'index avec un affichage de 2
 				else {
 					// On charge la vue avec un affichage de 1
-					$this -> load -> library('layout');
-					$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', array('resultat' => $tab_resultDisque, 'affichage' => 1));
-
+					Template::set_view('index/resultat_recherche');
+					//Template::set_view('index/resultat_recherche');
+					Template::set('value',$this -> input -> post('recherche'));
+					Template::set('resultat',$tab_resultDisque);
+					Template::set('affichage',1);
+					
+					Template::render();
 				}
 			}
 
@@ -266,9 +269,7 @@ class Index extends Authenticated_Controller {
 				}
 				$json_array[] = array("dis_id" => $tab -> dis_id, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
 			}
-
-			// Envoi des données à la vue
-			$this -> load -> view('index/affichage_disque', array('data' => $json_array[0]));
+			// Passage a la vue manquante
 		}
 	}
 

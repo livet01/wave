@@ -2,7 +2,7 @@
 <center>
 <form class="form-search" action="<?php echo site_url('index/recherche'); ?>" method="post" name="form_recherche" id="recherche_form">   
 	<div class="input-append">
-		<input type="text" class="span6 search-query"  name="recherche" id="recherche" value="<?php if(!empty($value)) { echo $value; } ?>"  placeholder="Recherchez un titre, un album, un artiste...">
+		<input type="text" class="span6 search-query" data-provide="typeahead" name="recherche" id="recherche" value="<?php if(!empty($value)) { echo $value; } ?>"  placeholder="Recherchez un titre, un album, un artiste...">
 		<input type="hidden" name="recherche_id" id="recherche_id" value="">
 		<button type="submit" class="btn">Search</button>
 	</div>
@@ -41,6 +41,7 @@
 				<th><i class="icon-wrench"></i> Actions</th>
 			</tr>
 			<tbody id="disque">
+				
 			<form  method="post" id="tdisque" action="#">
 			<?php
 				$i=0;
@@ -48,10 +49,11 @@
 				foreach ($resultat as $ligne) {
 					if ($i % 2 == 0)
 						echo '<tr class="bis">';
-					else
+					else	
 						echo '<tr>';
+							
 					echo '<td class="checkbox"><input id="chx'.$j.'" class="chx" type="checkbox" name="choix[]" value="'.$ligne['dis_id'].'"></td>';
-					echo '<td class="left" onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['dis_libelle'].'</td>';
+					echo '<td class="left" onclick="; }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['dis_libelle'].'</td>';
 					echo '<td onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['art_nom'].'</td>';
 					echo '<td onclick="ajaxBox_loader(true);$.get(\''.site_url("index/affichage_disque/".$ligne['dis_id']).'\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['per_nom'].'</td>';
 					echo '<td><a class="btn btn-info btn-mini" href="#"><i class="icon-pencil"></a> <a class="btn btn-danger btn-mini" onclick="CocheTout(this,\'choix[]\');CocheTout(this,\'choix[]\');$(\'#chx'.$j.'\').attr(\'checked\',\'checked\');$(\'#tdisque\').attr(\'action\',\''.site_url("disque/supprimer").'\').submit();" href="#"><i class="icon-trash"></a></td>';
