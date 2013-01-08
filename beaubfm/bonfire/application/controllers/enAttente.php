@@ -80,9 +80,8 @@ class EnAttente extends Authenticated_Controller {
 		$data['affichage'] = $affichage;
 
 		// Chargement de la vue
-		Template::set_view('index/resultat_recherche');
+		Template::set_view('enAttente/resultat');
 		//Template::set_view('index/resultat_recherche');
-		Template::set('value', $this -> input -> post('recherche'));
 		Template::set('data', $data);
 		Template::render();
 		//$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', $data);
@@ -92,10 +91,10 @@ class EnAttente extends Authenticated_Controller {
 	public function modifDisquesEnAttente() {
 		
 		// RÃ©cupÃ©ration de tous les disques enAttente de modification
-		//Tableau contenant les id des cases des disques sélectionnés
+		//Tableau contenant les id des cases des disques sï¿½lectionnï¿½s
 		$id = $this -> input -> post('choix');
 		
-		//Tableau contenant les disques sélectionnés pour la modification
+		//Tableau contenant les disques sï¿½lectionnï¿½s pour la modification
 		$tabs = $this -> importer_model -> GetAll_in($id);
 		
 		$data['imp_libelle'] = $tabs[0]['imp_libelle'];
