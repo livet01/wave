@@ -1,26 +1,26 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-$lang['tr_translate_title']		= 'Translate';
-$lang['tr_no_modules']			= 'No Modules found with language files.';
-$lang['tr_no_core']				= 'No Core language files found.';
+$lang['tr_translate_title']		= 'Traduction';
+$lang['tr_no_modules']			= 'Aucun modules trouvés avec les fichiers de langue.';
+$lang['tr_no_core']				= 'Pas de fichiers de langue Core trouvé.';
 
 $lang['tr_core']				= 'Core';
 $lang['tr_modules']				= 'Modules';
-$lang['tr_current_lang']		= 'Translate to';
-$lang['tr_language']			= 'Language';
-$lang['tr_other']				= 'Other...';
-$lang['tr_select_lang']			= 'Select';
-$lang['tr_edit_title']			= 'Translate';
-$lang['tr_save_success']		= 'Language file saved successfully.';
-$lang['tr_save_fail']			= 'There was an error trying to save language file. Check file permissions.';
-$lang['tr_translate_file']		= 'File';
+$lang['tr_current_lang']		= 'Traduire en';
+$lang['tr_language']			= 'Langue';
+$lang['tr_other']				= 'Autre...';
+$lang['tr_select_lang']			= 'Selectionner';
+$lang['tr_edit_title']			= 'Traduire';
+$lang['tr_save_success']		= 'Fichier de langue enregistré avec succès.';
+$lang['tr_save_fail']			= 'Il y a une erreur de sauvegarde du fichier de langue. Vérifiez les permissions du fichier.';
+$lang['tr_translate_file']		= 'Fichier';
 
-$lang['tr_translate']			= 'Translate';
-$lang['tr_export']				= 'Export Language Files';
-$lang['tr_export_short']		= 'Export';
+$lang['tr_translate']			= 'Traduire';
+$lang['tr_export']				= 'Exporter les fichiers de langues';
+$lang['tr_export_short']		= 'Exporter';
 
-$lang['tr_export_note']			= 'Exporting language files provides you with a .zip file with all of the language files for that particular language so that you can easily share.';
+$lang['tr_export_note']			= 'Exporter les fichiers de langue vous fournit un fichier .zip avec tous les fichiers de langue pour que le langage se partage facilement.';
 
-$lang['tr_include']				= 'Select Parts';
-$lang['tr_include_core']		= 'Include Core';
-$lang['tr_include_mods']		= 'Include Custom Modules';
+$lang['tr_include']				= 'Sélectionnez les parties';
+$lang['tr_include_core']		= 'Inclure Core';
+$lang['tr_include_mods']		= 'Inclure les modules personnalisés';

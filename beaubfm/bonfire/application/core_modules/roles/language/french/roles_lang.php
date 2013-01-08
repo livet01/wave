@@ -21,44 +21,44 @@
 	THE SOFTWARE.
 */
 
-$lang['role_intro']					= 'Roles allow you to define the abilities that a user can have.';
-$lang['role_manage']				= 'Manage User Roles';
-$lang['role_no_roles']				= 'There are not any roles in the system.';
-$lang['role_create_button']			= 'Create a new role.';
-$lang['role_create_note']			= 'Every user needs a role. Make sure you have all that you need.';
-$lang['role_account_type']			= 'Account Type';
+$lang['role_intro']					= 'Les rôles vous permettent de définir les actions possibles qu\'un utilisateur peut avoir.';
+$lang['role_manage']				= 'Gérer les rôles des utilisateurs';
+$lang['role_no_roles']				= 'Il n\'y a pas de rôles dans le système.';
+$lang['role_create_button']			= 'Créer un nouveau rôle.';
+$lang['role_create_note']			= 'Chaque utilisateur a besoin d\'un rôle. Assurez-vous que vous avez tout ce dont vous avez besoin.';
+$lang['role_account_type']			= 'Type de compte';
 $lang['role_description']			= 'Description';
-$lang['role_details']				= 'Role Details';
+$lang['role_details']				= 'Détails du rôle';
 
-$lang['role_name']					= 'Role Name';
-$lang['role_max_desc_length']		= 'Max. 255 characters.';
-$lang['role_default_role']			= 'Default Role';
-$lang['role_default_note']			= 'This role should be assigned to all new users.';
+$lang['role_name']					= 'Nom du Role';
+$lang['role_max_desc_length']		= 'Max. 255 caractères.';
+$lang['role_default_role']			= 'Rôle par défaut';
+$lang['role_default_note']			= 'Ce rôle doit être attribué à tous les nouveaux utilisateurs.';
 $lang['role_permissions']			= 'Permissions';
-$lang['role_permissions_check_note']= 'Check all permissions that apply to this Role.';
-$lang['role_save_role']				= 'Save Role';
-$lang['role_delete_role']			= 'Delete this Role';
-$lang['role_delete_confirm']		= 'Are you sure you want to delete these logs?';
-$lang['role_delete_note']			= 'Deleting this role will convert all users that are currently assigned it to the site&rsquo;s default role.';
-$lang['role_can_delete_role']   	= 'Removable';
-$lang['role_can_delete_note']    	= 'Can this role be deleted?';
+$lang['role_permissions_check_note']= 'Vérifiez toutes les permissions qui s\'appliquent à ce rôle.';
+$lang['role_save_role']				= 'Sauvegarder le rôle';
+$lang['role_delete_role']			= 'Supprimer ce rôle';
+$lang['role_delete_confirm']		= 'Etes vous sur de vouloir supprimer ces journaux?';
+$lang['role_delete_note']			= 'La suppression de ce rôle vous permet de convertir tous les utilisateurs qui sont actuellement affectés à ce rôle par le rôle par défaut du site.';
+$lang['role_can_delete_role']   	= 'Peut être supprimé';
+$lang['role_can_delete_note']    	= 'Ce rôle peut être supprimé?';
 
-$lang['role_roles']					= 'Roles';
-$lang['role_new_role']				= 'New Role';
-$lang['role_new_permission_message']	= 'You will be able to edit permissions once the role has been created.';
-$lang['role_not_used']				= 'Not used';
+$lang['role_roles']					= 'Rôles';
+$lang['role_new_role']				= 'Nouveau rôle';
+$lang['role_new_permission_message']	= 'Vous serez en mesure de modifier les permissions une fois le rôle créé.';
+$lang['role_not_used']				= 'Non utilisé';
 
-$lang['role_login_destination']		= 'Login Destination';
-$lang['role_destination_note']		= 'The site URL to redirect to on successful login.';
-$lang['role_default_context']		= 'Default Admin Context';
-$lang['role_default_context_note']	= 'The admin context to load when no context is specified (I.E. http://yoursite.com/admin/)';
+$lang['role_login_destination']		= 'Destination de l\'identifiant';
+$lang['role_destination_note']		= 'L\'URL de redirection du site lors de la réussite de la connexion.';
+$lang['role_default_context']		= 'Contexte de l\'Admin par défaut';
+$lang['role_default_context_note']	= 'Le contexte admin à charger lorsque aucun contexte n\'est spécifié (I.E. http://votresite.com/admin/)';
 
-$lang['matrix_header']				= 'Permission Matrix';
+$lang['matrix_header']				= 'Matrice de la Permission';
 $lang['matrix_permission']			= 'Permission';
-$lang['matrix_role']				= 'Role';
-$lang['matrix_note']				= 'Instant permission editing. Toggle a checkbox to add or remove that permission for that role.';
-$lang['matrix_insert_success']		= 'Permission added for role.';
-$lang['matrix_insert_fail']			= 'There was a problem adding the permission for the role: ';
-$lang['matrix_delete_success']		= 'Permission removed from the role.';
-$lang['matrix_delete_fail']			= 'There was a problem deleting the permission for the role: ';
-$lang['matrix_auth_fail']			= 'Authentication: You do not have the ability to manage the access control for this role.';
+$lang['matrix_role']				= 'Rôle';
+$lang['matrix_note']				= 'Édition des permissions instantanée. Basculer une case à cocher pour ajouter ou retirer cette permission pour ce rôle.';
+$lang['matrix_insert_success']		= 'Permission ajoutée pour le rôle.';
+$lang['matrix_insert_fail']			= 'Il y a un problème pour ajouter la permission pour le rôle:';
+$lang['matrix_delete_success']		= 'Permission supprimée pour le rôle.';
+$lang['matrix_delete_fail']			= 'Il y a un problème pour supprimer la permission pour le rôle:';
+$lang['matrix_auth_fail']			= 'Authentification: Vous n\'avez pas la capacité de gérer le contrôle d\'accès pour ce rôle.';
