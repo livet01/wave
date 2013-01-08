@@ -2,7 +2,7 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-class Index extends Base_Controller {
+class Index extends Authenticated_Controller {
 	//
 	// Constante d'affichage : réglage du nombre de disque par parge à afficher dans le tableau
 	//

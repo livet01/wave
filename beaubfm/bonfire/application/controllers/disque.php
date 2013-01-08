@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-class Disque extends Base_Controller {
+class Disque extends Authenticated_Controller {
 
 	//
 	// Attributs
@@ -26,7 +26,6 @@ class Disque extends Base_Controller {
 	//
 	public function __construct() {
 		parent::__construct();
-
 		//Chargement Librairie
 		$this -> load -> library('form_validation');
 		$this -> load -> library('securite');
@@ -216,6 +215,7 @@ class Disque extends Base_Controller {
 	// Ajouter un disque
 	//
 	public function ajouter() {
+		
 		// Initialisation des données a envoyer en bd
 		$data = array('erreur' => "", 'reussi' => "");
 		
@@ -240,9 +240,10 @@ class Disque extends Base_Controller {
 		
 		if (!$this -> formulaire_null()) {
 			// Formulaire envoyé
-			$data['erreur'] = $this->ajouter_disque();
-			if(empty($data['erreur'])) {
-				$data['reussi'] = "Le disque a bien été ajouté.";
+			$is_erreur = $this->ajouter_disque();
+			Template::set_message($this->ajouter_disque(), 'error');
+			if(empty($is_erreur)) {
+				Template::set_message('Le disque a bien été ajouté', 'success');
 			}
 		}
 		Template::set('data',$data);

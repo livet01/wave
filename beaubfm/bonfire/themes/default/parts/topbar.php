@@ -69,7 +69,13 @@
 
 					<?php endif; ?>
 				</ul>
-
+				<ul class="nav">
+				  <li>
+				    <a href="<?php echo site_url("index"); ?>">Recherche</a>
+				  </li>
+				  <li><a href="<?php echo site_url("disque/ajouter"); ?>">Ajouter un disque</a></li>
+				  <li><a href="<?php echo site_url("importerFiche"); ?>">Importer</a></li>
+				</ul>
 			</div><!--/.nav-collapse -->
 		</div>	<!-- /.container -->
 	</div>	<!-- /.navbar-inner -->
