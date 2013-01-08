@@ -21,27 +21,27 @@
 	THE SOFTWARE.
 */
 
-$lang['ui_keyboard_shortcuts']	= 'Keyboard shortcuts are setup in the application config. The currently available shortcuts are:';
-$lang['ui_add_shortcut']		= 'Add Shortcut';
-$lang['ui_remove_shortcut']		= 'Remove';
-$lang['ui_no_shortcuts']		= 'There are no shortcut options setup in the application config.';
-$lang['ui_update_shortcuts']	= 'Save';
+$lang['ui_keyboard_shortcuts']	= 'Les raccourcis clavier sont configurés dans la configuration de l\'application. Les raccourcis disponibles sont les suivants:';
+$lang['ui_add_shortcut']		= 'Ajouter un raccourci';
+$lang['ui_remove_shortcut']		= 'Supprimer';
+$lang['ui_no_shortcuts']		= 'Il n\'y a pas de raccourci d\'options de configuration dans la configuration de l\'application.';
+$lang['ui_update_shortcuts']	= 'Sauvegarder';
 
 $lang['ui_action']				= 'Action';
 $lang['ui_actions']				= 'Actions';
 
-$lang['ui_shortcut']			= 'Shortcut Key';
-$lang['ui_shortcut_help']       = 'Enter your preferred keys in the field below, e.g. alt+j - see more examples on the <a href="http://keithcirkel.co.uk/jwerty/" target="_blank">Jwerty project page</a>';
-$lang['ui_shortcuts']			= 'Shortcut Keys';
-$lang['ui_current_shortcuts']	= 'Current Shortcuts';
+$lang['ui_shortcut']			= 'Touche de raccourci';
+$lang['ui_shortcut_help']       = 'Saisissez vos clés préférés dans le champ ci-dessous, par exemple alt+j - voir plus d\'exemples sur la <a href="http://keithcirkel.co.uk/jwerty/" target="_blank">page du projet Jwerty</a>';
+$lang['ui_shortcuts']			= 'Touches de raccourci';
+$lang['ui_current_shortcuts']	= 'Raccourcis actuels';
 
-$lang['ui_shortcut_success']			= 'Shortcut inserted';
-$lang['ui_shortcut_add_error']			= 'There was an error saving your shortcuts.';
-$lang['ui_shortcut_remove_success']		= 'Your shortcut was successfully removed.';
-$lang['ui_shortcut_remove_error']		= 'There was an error removing your shortcut.';
-$lang['ui_shortcut_save_success']		= 'Your shortcuts were successfully saved.';
-$lang['ui_shortcut_save_error']			= 'There was an error saving your shortcuts.';
-$lang['ui_shortcut_error_exists']		= 'Shortcut already exists';
-$lang['ui_shortcut_error_unavailable']	= 'Action is unavailable';
-$lang['ui_shortcut_error']				= 'Spaces are not allowed in the shortcut keys';
+$lang['ui_shortcut_success']			= 'Raccourci inséré';
+$lang['ui_shortcut_add_error']			= 'Une erreur s\'est produite lors de l\'ajout de vos raccourcis.';
+$lang['ui_shortcut_remove_success']		= 'Votre raccourci a été supprimé avec succès.';
+$lang['ui_shortcut_remove_error']		= 'Il y a eu une erreur de suppression de votre raccourci.';
+$lang['ui_shortcut_save_success']		= 'Vos raccourcis ont été enregistrées avec succès.';
+$lang['ui_shortcut_save_error']			= 'Une erreur s\'est produite lors de l\'enregistrement de vos raccourcis.';
+$lang['ui_shortcut_error_exists']		= 'Le raccourci existe déjà';
+$lang['ui_shortcut_error_unavailable']	= 'L\'Action n\'est pas disponible';
+$lang['ui_shortcut_error']				= 'Les espaces ne sont pas autorisés dans les touches de raccourci';
 

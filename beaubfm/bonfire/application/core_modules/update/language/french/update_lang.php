@@ -21,14 +21,14 @@
 	THE SOFTWARE.
 */
 
-$lang['up_toolbar_title']			= 'Update Manager';
+$lang['up_toolbar_title']			= 'Manager de mise à jour';
 
-$lang['up_update_off_message']		= 'Update Checks are turned off in the config/application.php file.';
-$lang['up_curl_disabled_message']	= 'cURL <strong>is not</strong> presently enabled as a PHP extension. Bonfire will not be able to check for updates until it is enabled.';
+$lang['up_update_off_message']		= 'Les contrôles de mise à jour sont désactivées dans le fichier config/application.php.';
+$lang['up_curl_disabled_message']	= 'cURL <strong>n\'est pas</strong> actuellement activé comme une extension PHP. Bonfire ne sera pas en mesure de vérifier les mises à jour jusqu\'à ce qu\'il soit activé.';
 $lang['up_edge_commits']			= 'New Bleeding Edge Commits';
-$lang['up_branch']					= 'Branch: <b>develop</b>';
+$lang['up_branch']					= 'Branche: <b>developpement</b>';
 
-$lang['up_author']					= 'Author';
+$lang['up_author']					= 'Auteur';
 $lang['up_committed']				= 'Committed';
 $lang['up_message']					= 'Message';
 
