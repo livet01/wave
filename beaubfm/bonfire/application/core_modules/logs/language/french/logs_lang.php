@@ -21,37 +21,37 @@
 	THE SOFTWARE.
 */
 
-$lang['log_no_logs'] 			= 'No logs found.';
-$lang['log_not_enabled']		= 'Logging is not currently enabled.';
-$lang['log_the_following']		= 'Log the following:';
-$lang['log_what_0']				= '0 - Nothing';
-$lang['log_what_1']				= '1 - Error Message (including PHP Errors)';
-$lang['log_what_2']				= '2 - Debug Messages';
-$lang['log_what_3']				= '3 - Information Messages';
-$lang['log_what_4']				= '4 - All Messages';
-$lang['log_what_note']			= 'The higher log values also include all messages from the lower numbers. So, logging 2 - Debug Messages also logs 1 - Error Messages.';
+$lang['log_no_logs'] 			= 'Pas de journaux trouvés.';
+$lang['log_not_enabled']		= 'La journalisation n\'est actuellement pas activé.';
+$lang['log_the_following']		= 'Journaliser ce qui suit:';
+$lang['log_what_0']				= '0 - Rien';
+$lang['log_what_1']				= '1 - Message d\'Erreur (inclus les erreurs PHP)';
+$lang['log_what_2']				= '2 - Messages de débogage';
+$lang['log_what_3']				= '3 - Messages d\'Information';
+$lang['log_what_4']				= '4 - Tous les Messages';
+$lang['log_what_note']			= 'Les valeurs des log les plus élevés inclus tous les messages provenant de numéros inférieurs. Ainsi, la journalisation 2 - messages de débogage avec aussi les journaux 1 - Messages d\'erreur.';
 
-$lang['log_save_button']		= 'Save Log Settings';
-$lang['log_delete_button']		= 'Delete Log Files';
-$lang['log_delete1_button']		= 'Delete This Log File?';
-$lang['logs_delete_confirm']	= 'Are you sure you want to delete these logs?';
+$lang['log_save_button']		= 'Sauvegarder les réglages de Journalisation';
+$lang['log_delete_button']		= 'Supprimer les fichiers de Journalisation';
+$lang['log_delete1_button']		= 'Supprimer ce fichier de Journalisation?';
+$lang['logs_delete_confirm']	= 'Êtes-vous sûr de vouloir supprimer ces journaux?';
 
-$lang['log_big_file_note']		= 'Logging can rapidly create very large files, if you log too much information. For live sites, you should probably log only Errors.';
-$lang['log_delete_note']		= 'Deleting log files is permanent. There is no going back, so please make sure.';
-$lang['log_delete1_note']		= 'Deleting log files is a permanent action. There is no going back, so please make sure you understand what you are doing.';
-$lang['log_delete_confirm'] = 'Are you sure you want to delete this log file?';
+$lang['log_big_file_note']		= 'La journalisation peut créer rapidement de très gros fichiers, si vous journalisez trop d\'informations. Pour les sites en direct, vous devriez probablement journaliser uniquement les erreurs.';
+$lang['log_delete_note']		= 'La suppression des fichiers journaux est permanente. Il n\'y a pas de retour en arrière, assurez vous que vous voulez bien le faire.';
+$lang['log_delete1_note']		= 'La suppression des fichiers journaux est une action définitive. Il n\'y a pas de retour en arrière, assurez vous de savoir ce que vous faites.';
+$lang['log_delete_confirm'] = 'Êtes-vous sûr de vouloir supprimer ce fichier de journalisation?';
 
-$lang['log_not_found']			= 'Either the log file could not be located, or it was empty.';
-$lang['log_show_all_entries']	= 'All entries';
-$lang['log_show_errors']		= 'Errors only';
+$lang['log_not_found']			= 'Soit le fichier journal n\'a pas pu être localisé, soit il était vide.';
+$lang['log_show_all_entries']	= 'Toutes les entrées';
+$lang['log_show_errors']		= 'Erreurs seulement';
 
 $lang['log_date']				= 'Date';
-$lang['log_file']				= 'Filename';
-$lang['log_logs']				= 'Logs';
-$lang['log_settings']			= 'Settings';
+$lang['log_file']				= 'Nom du fichier';
+$lang['log_logs']				= 'Journaux';
+$lang['log_settings']			= 'Réglages';
 
-$lang['log_title']				= 'System Logs';
-$lang['log_title_settings']		= 'System Log Settings';
-$lang['log_deleted']			= '%d log files deleted';
-$lang['log_filter_label'] = 'View';
-$lang['log_intro']        = 'These are your error and debug logs....';
+$lang['log_title']				= 'Journaux du système';
+$lang['log_title_settings']		= 'Réglages des journaux du système';
+$lang['log_deleted']			= '%d fichiers journaux supprimés';
+$lang['log_filter_label'] = 'Vue';
+$lang['log_intro']        = 'Il s\'agit de vos journaux d\'erreurs et de débogages';
