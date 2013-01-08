@@ -86,8 +86,8 @@ class Index extends Authenticated_Controller {
 		$data['affichage'] = $affichage;
 
 		// Chargement de la vue
-		Template::set_view('index/barre_recherche');
-		//Template::set_view('index/resultat_recherche');
+		//Template::set_view('index/barre_recherche');
+		Template::set_view('index/resultat_recherche');
 		Template::set('value',$this -> input -> post('recherche'));
 		Template::set('data',$data);
 		Template::render();
