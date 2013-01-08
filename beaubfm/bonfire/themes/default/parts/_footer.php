@@ -7,6 +7,8 @@
 			<?php endif; ?>
 	
 			<p>Copyright Wave 2012- 2013</p>
+			<img src="<?php echo img_url('valide_html5.png'); ?>" id="valideHtml5" alt=" valide HTML5 " />
+			<img src="<?php echo img_url('valide_css.png'); ?>" id="valideCSS"  alt=" valide CSS " />
 		</div>
 	</footer>
 	
