@@ -1,11 +1,10 @@
 
 <div class="container">
 
-	<div class="hero-unit">
-		<h1>Welcome to Bonfire.</h1>
 
-		<p>Kickstart your CodeIgniter applications.</p>
-	</div>
+      <div class="hero-unit">
+      </div>
+     
 
 <p>If you're new to Bonfire, but familiar with <a href="http://www.codeigniter.com" target="_blank">CodeIgniter</a>, then you should be up an running within the system in no time.</p>
 

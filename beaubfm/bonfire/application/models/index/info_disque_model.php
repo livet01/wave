@@ -24,12 +24,13 @@ class Info_Disque_Model extends CI_Model
 
     function GetDisque($numDisque)
     {
-			$this->db->select(array('Disque.dis_id','dis_libelle','dis_format','u2.username as mem_nom','Artiste.art_nom','u1.username as per_nom','Emplacement.emp_libelle','EmBenevole.emb_libelle'))
+			$this->db->select(array('Disque.dis_id','dis_envoi_ok','sty_libelle','dis_libelle','dis_format','u2.username as mem_nom','Artiste.art_nom','u1.username as per_nom', 'u1.email as mail','Emplacement.emp_libelle','EmBenevole.emb_libelle'))
 						->join('Artiste', 'Disque.per_id_artiste=Artiste.art_id', 'LEFT')
 						->join('Emplacement', 'Disque.emp_id=Emplacement.emp_id', 'LEFT')
 						->join('Users AS u1', 'Disque.dif_id=u1.id', 'LEFT')
 						->join('Users AS u2','Disque.uti_id_ecoute=u2.id', 'LEFT')
 						->join('EmBenevole','Disque.emb_id=EmBenevole.emb_id', 'LEFT')
+						->join('Style','Disque.sty_id=Style.sty_id', 'LEFT')
 						->where('Disque.dis_id', $numDisque);
 		$query = $this->db->get('Disque');
 		return $query->result();

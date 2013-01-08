@@ -20,7 +20,7 @@ class Disque extends Authenticated_Controller {
 	private $dis_disponible;
 	private $emb_id;
 	private $emp_id;
-
+	private $old_disque;
 	//
 	// Constructeur
 	//
@@ -182,32 +182,57 @@ class Disque extends Authenticated_Controller {
 		foreach($styles as $style) {
 			array_push($data['styles'],array("couleur" => $style->sty_couleur, "libelle" => $style->sty_libelle));
 		}
-		
-		$disque = $this -> disqueManager -> select(array('dis_id','dis_libelle','dis_format','per_id_artiste', 'uti_id_ecoute','dis_libelle','dis_format','sty_id'), array('dis_id' => $id));
-		var_dump($disque);
-		if(!empty($disque)) {
-			$this->set_dif_id($disque["dif_id"]);
-			$this->set_art_id(($disque["per_id_artiste"]));
-			$this->set_dis_format(($disque["format"]));
-			$this->set_dis_id(($disque["dis_id"]));
-			$this->set_dis_libelle(($disque["dis_libelle"]));
-			if(isset($disque["emb_id"])) { $this->set_emb_id(($disque["emb_id"])); }
-			$this->set_sty_id(($disque["sty_id"]));
-			$this->set_mem_id(($disque["uti_id_ecoute"]));
-			$this->set_emp_id(($disque["emp_id"]));
-			$data['infoDisque'] = $disque;
-		}
-		if ($this -> formulaire_null()) {
-			// Affichage du formulaire 
-			Template::set('data',$data);
-			Template::set_view('disque/ajouter_fiche');
-			Template::render();
-		} else {
-			// Formulaire envoyé
-			$data['erreur'] = $this->ajouter_disque();
-			if(empty($data['erreur'])) {
-				$data['reussi'] = "Le disque a bien été modifié.";
+		$id_disque = $id;
+		// id_dis doit être >= à 0
+		assert($id_disque >= 0);
+
+		// Transtipage en integer
+		$id_disque = intval($id_disque);
+
+		// On récupère les infos du disque
+		$tabs = $this -> infodisque -> GetDisque($id_disque);
+
+		// Tableau contenant les données à envoyé
+		$json_array = array();
+
+		// Parcours du résultat du model et ajout au json_array
+		foreach ($tabs as $tab) {
+			if (empty($tab -> emb_libelle))
+				$emb_id = null;
+			else {
+				$emb_id = $tab -> emb_libelle;
 			}
+			$json_array[] = array("dis_id" => $tab -> dis_id,"dis_envoi_ok" => $tab->dis_envoi_ok, "sty_libelle" => $tab->sty_libelle, "mail" => $tab-> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+		}
+		if(!empty($json_array[0])) {
+			$disque = $json_array[0];
+			$data['infoDisque'] = $disque;
+			$this->old_disque = $disque;
+			if (!$this -> formulaire_null()) {
+				// Formulaire envoyé
+				$this->set_dis_id($id);
+				$is_erreur = $this->modifier_disque();
+				if(empty($is_erreur)) {
+					Template::set_message('Le disque a bien été modifié', 'success');
+					Template::redirect('index');
+				}
+				else {
+					Template::set_message($is_erreur, 'error');
+					Template::set('data',$data);
+					Template::set_view('disque/ajouter_fiche');
+					Template::render();
+				}
+			}
+			else {
+				Template::set('data',$data);
+				Template::set_view('disque/ajouter_fiche');
+				Template::render();
+			}
+		}
+		else
+		{
+			Template::set_message('Le disque à modifier est introuvable.', 'error');
+			Template::redirect('index');
 		}
 	}
 
@@ -241,9 +266,11 @@ class Disque extends Authenticated_Controller {
 		if (!$this -> formulaire_null()) {
 			// Formulaire envoyé
 			$is_erreur = $this->ajouter_disque();
-			Template::set_message($this->ajouter_disque(), 'error');
 			if(empty($is_erreur)) {
 				Template::set_message('Le disque a bien été ajouté', 'success');
+			}
+			else {
+				Template::set_message($is_erreur, 'error');
 			}
 		}
 		Template::set('data',$data);
@@ -281,18 +308,20 @@ class Disque extends Authenticated_Controller {
 
 	}
 
-	private function attribution() {
+	private function attribution($unique = TRUE) {
 		$this->db->trans_begin();
+		
+		$est_auto_production = $this -> input -> post('autoprod') == "a";
+		
 		try {
-			$est_auto_production = $this -> input -> post('autoprod') == "a";
-	
-			$this -> set_dis_libelle($this -> input -> post('titre'));
-			$this -> set_art_id($this -> rechercheArtisteByNom($this -> input -> post('artiste'), $this->current_user->rad_id, ($est_auto_production) ? 5 : 3));
-			
+			$art_id = $this -> rechercheArtisteByNom($this -> input -> post('artiste'), $this->current_user->rad_id, ($est_auto_production) ? 5 : 3);
 			
 			// Si le titre et l'artiste ne sont pas présent en base de données.
-			if (!$this -> existeTitreArtiste($this -> dis_libelle, $this -> art_id)) {
+			if (!$this -> existeTitreArtiste($this -> input -> post('titre'), $art_id) || !$unique || ($this -> input -> post('titre')==$this->old_disque['dis_libelle'] && $this -> input -> post('artiste') == $this->old_disque['art_nom'])) {
 	
+				$this -> set_dis_libelle($this -> input -> post('titre'));
+				$this -> set_art_id($art_id);
+			
 				// Vérification si autoproduction
 				if ($est_auto_production) {
 					$this -> set_dif_id($this -> rechercheDiffuseurByNom($this -> input -> post('artiste'), $this->current_user->rad_id, $this -> input -> post('email'), 5));
@@ -309,6 +338,8 @@ class Disque extends Authenticated_Controller {
 				}
 	
 				if($this->input->post('envoiMail')=="1"){
+					
+					$this->set_dis_envoi_ok(1);
 					$config['charset'] = 'utf-8';
 					$config['mailtype'] = 'html';
 					$config['newline']    = "\r\n";
@@ -333,7 +364,7 @@ class Disque extends Authenticated_Controller {
 					$this->email->send();
 					$this->envoyerMail();		
 				 }else{
-	
+					$this->set_dis_envoi_ok(0);
 				 }
 	
 				// Vérification du format selectionné
@@ -353,6 +384,7 @@ class Disque extends Authenticated_Controller {
 		}
 		catch(Exception $e) {
 			$this->db->trans_rollback();
+			throw new Exception($e->getMessage());
 		}
 
 		    
@@ -377,15 +409,33 @@ class Disque extends Authenticated_Controller {
 		}
 		return $erreur;
 	}
+	
+	private function modifier_disque() {
+		$erreur = "";
+		if (!$this -> formulaire_null()) {			
+			if ($this -> verification()) {
+				try {
+					$this -> attribution(FALSE);
+					$this -> updateBDD();
+				} catch (Exception $e) {
+					$erreur = $e -> getMessage();
+				}
+			} else {
+				$erreur = validation_errors('&nbsp;', '&nbsp;');
+			}
+		} else {
+			$erreur = "Le formulaire envoyé est nul.";
+		}
+		return $erreur;
+	}
 
-	public function addBDD() {
-
+	private function addBDD() {
 		$data['dis_libelle'] = $this -> get_dis_libelle();
 		$data['dis_format'] = $this -> get_dis_format();
 		$data['uti_id_ecoute'] = $this -> get_mem_id();
 		$data['per_id_artiste'] = $this -> get_art_id();
 		$data['dif_id'] = $this -> get_dif_id();
-		$data['dis_envoi_ok'] = 1;
+		$data['dis_envoi_ok'] =  $this -> get_dis_envoi_ok();
 		$data['emp_id'] = $this -> get_emp_id();
 		$data['emb_id'] = $this -> get_emb_id();
 		$data['sty_id'] = $this -> get_sty_id();
@@ -395,6 +445,15 @@ class Disque extends Authenticated_Controller {
 		}
 	}
 
+	public function updateBDD() {
+		$erreur = $this->ajouter_disque();
+		if($erreur!="") {
+			throw new Exception($erreur);
+		}
+		$this->supprimerOneDisque($this->get_dis_id());
+		
+	}
+		
 	public function rechercheArtisteByNom($nom, $radio, $categorie, $insertion = TRUE) {
 		$artId = $this -> artisteManager -> select('art_id', array('art_nom' => $nom));
 		if (empty($artId)) {
@@ -643,32 +702,36 @@ class Disque extends Authenticated_Controller {
 		
 	}
 	
-	public function supprimerAll() {
+	public function supprimerAll($choix = null) {
 		$choix = $this->input->post('choix');
 		if(!empty($choix)) {
 			foreach($choix as $id) {
-				// Transtipage en integer
-				$id_disque = intval($id);
-		
-				// On récupère les infos du disque
-				$tabs = $this -> infodisque -> GetOneDisque($id_disque);
-							
-				if(!empty($tabs)) {					
-					$sup = $this -> disqueManager -> delete($id_disque);
-					
-					$tabs = $tabs[0];
-					
-					if($this->artisteManager->compte(array('per_id_artiste'=>$tabs['per_id_artiste'])) == 0) {
-						$this->artisteManager->delete($tabs['per_id_artiste']);
-					}
-					
-					if($this->diffuseurManager->compte(array('dif_id'=>$tabs['dif_id'])) == 0) {
-						$this->diffuseurManager->delete($tabs['dif_id']);
-					}
-				}
+				$this->supprimerOneDisque($id);
 			}
 		}
 		redirect(site_url('index'));
+	}
+	
+	private function supprimerOneDisque($id) {
+		// Transtipage en integer
+		$id_disque = intval($id);
+
+		// On récupère les infos du disque
+		$tabs = $this -> infodisque -> GetOneDisque($id_disque);
+			
+		if(!empty($tabs)) {					
+			$sup = $this -> disqueManager -> delete($id_disque);
+			
+			$tabs = $tabs[0];
+			
+			if($this->artisteManager->compte(array('per_id_artiste'=>$tabs['per_id_artiste'])) == 0) {
+				$this->artisteManager->delete($tabs['per_id_artiste']);
+			}
+			
+			if($this->diffuseurManager->compte(array('dif_id'=>$tabs['dif_id'])) == 0) {
+				$this->diffuseurManager->delete($tabs['dif_id']);
+			}
+		}
 	}
 }
 ?>

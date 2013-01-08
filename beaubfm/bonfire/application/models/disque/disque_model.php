@@ -21,8 +21,12 @@ class Disque_model extends CI_Model {
 	public function insert($data)
 	{
 		if(!empty($data)){
-			$last_id = $this->db->count_all_results($this->table);
-			return $this->db->set('dis_id', $this->db->insert_id())
+			if(isset($data['dis_id']))
+				$id = $data['dis_id'];
+			else {
+				$id = $this->db->insert_id();
+			}
+			return $this->db->set('dis_id', $id)
 					->set('dis_libelle', $data['dis_libelle'])
 					->set('dis_format', $data['dis_format'])
 					->set('uti_id_ecoute', $data['uti_id_ecoute'])
@@ -54,10 +58,25 @@ class Disque_model extends CI_Model {
 		return $this -> db ->delete($this->table, array('dis_id' => $artiste));
 	}
 	
-	public function update ($select,$where){
-		
-		return $this -> db 	->where($where)
-							->update($this->table, $select);
+	public function update ($data){
+		if(!empty($data))
+		{
+			return $this -> db 
+					->set('dis_libelle', $data['dis_libelle'])
+					->set('dis_format', $data['dis_format'])
+					->set('uti_id_ecoute', $data['uti_id_ecoute'])
+					->set('dis_date_ajout', 'NOW()',false)
+					->set('per_id_artiste', $data['per_id_artiste'])
+					->set('dif_id', $data['dif_id'])
+					->set('sty_id', $data['sty_id'])
+					->set('dis_envoi_ok', $data['dis_envoi_ok'])
+					->set('emp_id', $data['emp_id'])
+					->set('emb_id', (empty($data['emb_id']) ? NULL : $data['emb_id']))
+					->where('dis_id',$data['dis_id'])
+					->update($this->table);
+		}
+		else
+			return false;
 	}
 	
 }
