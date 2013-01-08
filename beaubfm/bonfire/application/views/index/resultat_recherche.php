@@ -1,6 +1,6 @@
 <!-- <script src="<?php echo js_url('resultatRech'); ?>"></script> -->
 
-    <form class="form-search" action="<?php echo site_url('index/recherche'); ?>" method="post" name="form_recherche" id="recherche_form">   
+ <form class="form-search" action="<?php echo site_url('index/recherche'); ?>" method="post" name="form_recherche" id="recherche_form">   
  <div class="input-append">
 <input type="text" class="span6 search-query"  name="recherche" id="recherche" value="<?php if(!empty($value)) { echo $value; } ?>"  placeholder="Recherchez un titre, un album, un artiste...">
 <input type="hidden" name="recherche_id" id="recherche_id" value="">
@@ -73,14 +73,12 @@
 			<div id="selection">
 			<div class="infos-disque">
 			<ul class="icons" <?php if(($affichage==1 && isset($resultat)) || $affichage==0) { ?> id="aff-disque" <?php } ?>>
-				
 				<li id="chargement" class="chargement"><img src="<?php echo img_url('search.png'); ?>"> </li>
-			
 			</ul>
 		</div>
 		<div id="cadre_action">
-			<a id="supprimer" class="btn btn-block disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a>
-			<a id="exporter" class="btn btn-block disabled" href="#"><i class="icon-signout"></i> Exporter des fiches</a>
+			<a id="supprimer" class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a>
+			<a id="exporter" class="btn btn-large btn-block disabled" href="#"><i class="icon-share-alt"></i> Exporter des fiches</a>
 		</div>
 		</div>
 	</div>
