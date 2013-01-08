@@ -228,7 +228,7 @@ class Index extends Authenticated_Controller {
 						array_push($json_array, array("label" => $row -> art_nom, "category" => "<i class='icon-group'></i> Artiste"));
 					}
 					if ($j == 3) {
-						array_push($json_array, array("label" => $row -> lab_nom, "category" => "<i class='icon-home'></i> Diffuseur"));
+						array_push($json_array, array("label" => $row -> username, "category" => "<i class='icon-home'></i> Diffuseur"));
 					}
 				}
 				$i++;

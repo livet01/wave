@@ -7,25 +7,25 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-				<script src="<?php echo Template::theme_url('js/modernizr-2.5.3.js') ?>"></script>
-
-				<?php echo Assets::css(); ?>
+	<script src="<?php echo Template::theme_url('js/modernizr-2.5.3.js') ?>"></script>
+	<?php echo Assets::css(); ?>
 
     <!-- iPhone and Mobile favicon's and touch icons -->
     <script src="<?php echo js_url('jquery-1.8.2'); ?>"></script>
-		<link href="<?php echo css_url('jquery-ui'); ?>" rel="stylesheet" type="text/css"/>
-		<link href="<?php echo css_url('jPages'); ?>" rel="stylesheet" type="text/css"/>
-		<script type="text/javascript" src="<?php echo js_url('jquery-ui'); ?>"></script>
-		<script type="text/javascript" src="<?php echo js_url('ajoutfiche'); ?>"></script>
-		<script type="text/javascript" src="<?php echo js_url('jPages'); ?>"></script>
+	<link href="<?php echo css_url('jquery-ui'); ?>" rel="stylesheet" type="text/css"/>
+	<link href="<?php echo css_url('jPages'); ?>" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="<?php echo js_url('jquery-ui'); ?>"></script>
+	<script type="text/javascript" src="<?php echo js_url('ajoutfiche'); ?>"></script>
+	<script type="text/javascript" src="<?php echo js_url('jPages'); ?>"></script>
 
-		<script ype="text/javascript" src="<?php echo js_url('jquery.avgrund'); ?>"></script>
+	<script ype="text/javascript" src="<?php echo js_url('jquery.avgrund'); ?>"></script>
     <link rel="shortcut icon" href="<?php echo base_url(); ?>favicon.ico">
     <link rel="apple-touch-icon" href="<?php echo base_url(); ?>assets/images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="<?php echo base_url(); ?>assets/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="<?php echo base_url(); ?>assets/images/apple-touch-icon-114x114.png">
-<script type="text/javascript">
-						$.widget( "custom.catcomplete", $.ui.autocomplete, {
+	
+	<script type="text/javascript">
+			$.widget( "custom.catcomplete", $.ui.autocomplete, {
 			_renderMenu: function( ul, items ) {
 			var that = this,
 			currentCategory = "";
@@ -40,7 +40,7 @@
 			});
 
 			//Recherche (autocompl�tion)
-			$(document).ready(function() {
+			jQuery(document).ready(function($) {
 			$("#recherche" ).catcomplete({
 			source: function(request, response) {
 			$.ajax({ url: "<?php echo site_url('index/suggestions'); ?>
@@ -182,7 +182,14 @@
 				$("#supprimerdisque").attr("action","<?php echo site_url("disque/supprimerAll"); ?>");
 				$("#supprimerdisque").submit();
 				});
-
+				
+				$("div.holder").jPages({
+				containerID : "disque",
+				previous : "←",
+				next : "→",
+				perPage : 15,
+				delay : 10
+				});
 				});
 
 				function CocheTout(ref, name) {
@@ -218,15 +225,6 @@
 				$('#chargement').append('<p>'+ pText +'</p>');
 				}
 
-				$(function(){
-				$("div.holder").jPages({
-				containerID : "disque",
-				previous : "←",
-				next : "→",
-				perPage : 15,
-				delay : 10
-				});
-				});
 		</script>
 
 		<script type="text/javascript" src="<?php echo js_url('less') ?>"></script>
