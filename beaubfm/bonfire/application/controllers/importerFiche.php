@@ -252,7 +252,8 @@ class ImporterFiche extends Authenticated_Controller{
 		//on vérifie si les champs obligatoires sont renseignés
 		if (is_null($disque['Artiste']) || is_null($disque['Titre']) || is_null($disque['Diffuseur']) || is_null($disque['Emplacement']) || str_replace(array("/", "!", "?", '"'), "", $disque['Artiste']) == "" || str_replace(array("/", "!", "?", '"'), "", $disque['Diffuseur']) == "") {
 			$valide = FALSE;
-		} else {
+		}
+			
 			$search = array('@[éèêëÊË]@i', '@[àâäÂÄ]@i', '@[îïÎÏ]@i', '@[ûùüÛÜ]@i', '@[ôöÔÖ]@i', '@[ç]@i','@[_]@i', "@[^a-zA-Z0-9 -']@");
 			$replace = array('e', 'a', 'i', 'u', 'o', 'c',' ', '');
 			$disque['Artiste'] = preg_replace($search, $replace, $disque['Artiste']);
@@ -287,51 +288,56 @@ class ImporterFiche extends Authenticated_Controller{
 				}
 
 				//Emplacement & EmissionBenevole
-				$valEmp = strtolower($disque['Emplacement']);
-				$emb_id = null;
-				$emp_id = null;
-				try {
-					$emp_id = $disqueControlleur -> rechercheEmplacementByNom($valEmp);
-				} catch (Exception $e) {
-					if (strlen($valEmp) > 0) {
-						if ((substr_compare($valEmp, "arch", 0, 4)) == 0) {
-							$emp_id = 2;
-
-							if (strstr($valEmp, "rouge")) {
-								$style = "rouge";
-							} else if (strstr($valEmp, "jaune")) {
-								$style = "jaune";
-							} else if (strstr($valEmp, "blanc")) {
-								$style = "blanc";
-							} else if (strstr($valEmp, "vert")) {
-								$style = "vert";
-							} else if (strstr($valEmp, "bleu")) {
-								$style = "bleu";
-							} else {
+				if(!is_null($disque['Emplacement']))
+				{
+					$valEmp = strtolower($disque['Emplacement']);
+					$emb_id = null;
+					$emp_id = null;
+					try {
+						$emp_id = $disqueControlleur -> rechercheEmplacementByNom($valEmp);
+					} catch (Exception $e) {
+						if (strlen($valEmp) > 0) {
+							if ((substr_compare($valEmp, "arch", 0, 4)) == 0) {
+								$emp_id = 2;
+	
+								if (strstr($valEmp, "rouge")) {
+									$style = "rouge";
+								} else if (strstr($valEmp, "jaune")) {
+									$style = "jaune";
+								} else if (strstr($valEmp, "blanc")) {
+									$style = "blanc";
+								} else if (strstr($valEmp, "vert")) {
+									$style = "vert";
+								} else if (strstr($valEmp, "bleu")) {
+									$style = "bleu";
+								} else {
+									$valide = FALSE;
+								}
+							}
+						} else {
+							$disque['Emplacement'] = NULL;
+							$emp_id = 4;
+							try {
+								$emb_id = $disqueControlleur -> rechercheEmBevByNom($valEmp);
+							} catch (Exception $e) {
 								$valide = FALSE;
 							}
 						}
-					} else {
-						$emp_id = 4;
-						try {
-							$emb_id = $disqueControlleur -> rechercheEmBevByNom($valEmp);
-						} catch (Exception $e) {
-							$valide = FALSE;
+						
+						
+						//Style
+						if (!empty($style)) {
+							try {
+								$style_id = $disqueControlleur -> rechercherStyleByNom($style);
+							} catch (Exception $e) {
+								$valide = FALSE;
+								$style_id = NULL;
+							}
 						}
 					}
-
-					//Style
-					if (!empty($style)) {
-						try {
-							$style_id = $disqueControlleur -> rechercherStyleByNom($style);
-						} catch (Exception $e) {
-							$valide = FALSE;
-							$style_id = NULL;
-						}
+					if ($emp_id == null) {
+						$valide = FALSE;
 					}
-				}
-				if ($emp_id == null) {
-					$valide = FALSE;
 				}
 
 			} else {
@@ -430,7 +436,6 @@ class ImporterFiche extends Authenticated_Controller{
 				}
 
 			}
-		}
 
 		//A enlever quand Valentin mettra les styles dans l'export//
 		$disque['Style'] = null;
@@ -444,10 +449,10 @@ class ImporterFiche extends Authenticated_Controller{
 			//Cas d'un fichier exporté depuis gcstar
 			if (!isset($disque['EmissionBenevole'])) {
 				$enAttente = TRUE;
-				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this->current_user->id, null, null);
+				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], NULL, $this->current_user->id, $style, NULL);
 			} else {
 				$enAttente = TRUE;
-				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], $disque['Emplacement'], $this->current_user->id, $disque['Style'], $disque['EmissionBenevole']);
+				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], NULL, $this->current_user->id, $style, $disque['EmissionBenevole']);
 			}
 		} else {
 			if ($doublon === FALSE && $valide === FALSE) {
@@ -458,45 +463,5 @@ class ImporterFiche extends Authenticated_Controller{
 		
 		return array('valide' => $valide, 'doublon' => $doublon, 'enAttente' => $enAttente, 'dejaEnAttente' => $dejaEnAttente);
 	}
-
-
-	public function ctrlImportDisque() {
-
-		$import = $this->importerManager->selectImport();
-		
-		$i = 0;
-		
-		do
-		{
-			$search = array('@[éèêëÊË]@i', '@[àâäÂÄ]@i', '@[îïÎÏ]@i', '@[ûùüÛÜ]@i', '@[ôöÔÖ]@i', '@[ç]@i','@[_]@i');
-			$replace = array('e', 'a', 'i', 'u', 'o', 'c',' ');
-			
-			$searchIden = array('@[éèêëÊË]@i', '@[àâäÂÄ]@i', '@[îïÎÏ]@i', '@[ûùüÛÜ]@i', '@[ôöÔÖ]@i', '@[ç]@i','@[_]@i', '@[ ]@i');
-			$replaceIden = array('e', 'a', 'i', 'u', 'o', 'c','','');
-			
-			
-			//var_dump($import);
-			if(1){
-				$sty = 1;
-			}
-				
-			if(1){
-				var_dump(addslashes(NULL));
-			}
-			
-			return false;
-			
-		}while(1);
-	}
-	
-	public function importAttente()
-	{
-		$import = $this->importerManager->selectImport();
-		
-		
-		
-	}
-	
-
 }
 ?>
