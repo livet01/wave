@@ -66,7 +66,7 @@
 				else { 
 					$i=0;
 					?>
-					<?php foreach($emplacements as $emplacement) { $i++; ?>
+					<?php foreach($emplacements as $emplacement) { $i++; if($emplacement['emp_plus']==1) { $name_emp = $emplacement['emp_libelle']; } ?>
 					<label class="radio" for="<?php echo 'emp'.$i ?>"  <?php echo ($emplacement['emp_plus']==0) ? 'onclick="$(\'#emb\').hide()"' : 'onclick="$(\'#emb\').show()"'; ?>>
 						<input type="radio" name="emplacement" id="<?php echo 'emp'.$i ?>" value="<?php echo $emplacement['emp_libelle'] ?>" <?php echo ($i==1)? 'checked="checked"' : ''; ?> <?php echo ($emplacement['emp_plus']==0) ? 'onclick="$(\'#emb\').hide()"' : 'onclick="$(\'#emb\').show()"'; ?> >
 						<?php echo $emplacement['emp_libelle'] ?>
@@ -83,7 +83,7 @@
 							<!-- Message d'erreur -->
 							<label class="mesgErr"><i class=<?php if (form_error('emBev')) echo "icon-remove-sign";?>></i><?php echo form_error('emBev'); ?></label>
 							
-							<label class="labelGauche" for="emb"><i class="icon-comments"></i> Emission Bénévole </label>
+							<label class="labelGauche" for="emb"><i class="icon-comments"></i><?php echo $name_emp; ?></label>
 							<input type="text" name="emb" id="emb" onblur="verifEmBen(this)" value="<?php echo set_value('emb'); ?>">
 						</p>
 					</div>

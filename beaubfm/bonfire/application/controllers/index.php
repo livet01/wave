@@ -121,10 +121,11 @@ class Index extends Authenticated_Controller {
 			// On récupère pour le mot clé saisie, l'id de tout les disques correspondant
 			$rowsDisque = $this -> autocomplete_model -> GetAutocompleteArrayDisque(array('keyword' => $this -> input -> post('recherche')));
 
-			if (empty($rows) and empty($rowsLabel) and empty($rowsDisque))// Aucun disque, artiste, label a été trouvé
+			if (empty($rows) and empty($rowsLabel) and empty($rowsDisque)){// Aucun disque, artiste, label a été trouvé
+				Template::set_message("La recherche n'a renvoyé aucun résultat","error");
 				$this -> index(1, 2);
 			// On revoi sur l'index avec un affichage de 2
-			else {
+			} else {
 				// On stoque dans la variable term le mot clé
 				$term = $this -> input -> post('recherche', TRUE);
 
@@ -177,8 +178,11 @@ class Index extends Authenticated_Controller {
 				}
 
 				// Si il n'y a pas de disque dans tab_resultDisque
-				if (count($tab_resultDisque) == 0 || !isset($tab_resultDisque))
+				if (count($tab_resultDisque) == 0 || !isset($tab_resultDisque)){
+					Template::set_message("La recherche n'a renvoyé aucun résultat","error");
 					$this -> index(1, 2);
+				}
+					
 				// On renvoi sur l'index avec un affichage de 2
 				else {
 					// On charge la vue avec un affichage de 1
