@@ -2,7 +2,7 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-class Index extends Authenticated_Controller {
+class EnAttente extends Authenticated_Controller {
 	//
 	// Constante d'affichage : réglage du nombre de disque par parge à afficher dans le tableau
 	//
@@ -35,7 +35,8 @@ class Index extends Authenticated_Controller {
 			$data = array();
 
 			// On récupère le nombre de disque présent dans la base
-			$nb_disques_total = $this -> Info_Disque_Model -> count();
+			$tabs = $this->importerManager->selectImport(); 
+			$nb_disques_total = count($tabs);
 			
 			// On vérifie la cohérence de la variable $_GET
 			if ($g_nb_disques > 1) {
@@ -56,7 +57,7 @@ class Index extends Authenticated_Controller {
 
 			// Récupération de tout les disques de importdisque pour la page
 			
-			$this->importerManager->selectImport(); 
+			
 
 			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
 			foreach ($tabs as $tab) {
@@ -65,7 +66,7 @@ class Index extends Authenticated_Controller {
 				else {
 					$emb_id = $tab -> emb_id;
 				}
-				$tab_result[] = array("dis_id" => $tab -> dis_id, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+				$tab_result[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "dis_format" => $tab -> imp_format, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab -> imp_diffuseur, "emp_libelle" => $tab -> imp_emplacement, "emb_id" => $tab->imp_em_bev);
 			}
 			if(!empty($tab_result)){
 				// On passe le tableau de disque
@@ -85,4 +86,6 @@ class Index extends Authenticated_Controller {
 		//$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', $data);
 		
 	}
+
+	
 }
