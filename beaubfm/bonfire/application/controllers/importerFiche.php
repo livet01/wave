@@ -1,7 +1,7 @@
 <?php
 require_once 'disque.php';
 
-class ImporterFiche extends Base_Controller {
+class ImporterFiche extends Authenticated_Controller{
 
 	public function __construct() {
 		parent::__construct();
@@ -12,8 +12,8 @@ class ImporterFiche extends Base_Controller {
 	}
 
 	public function index() {
-		$this -> load -> library('layout');
-		$this -> layout -> views('menu_principal') -> view('importer');
+		Template::set_view('importer.php');
+		Template::render();
 	}
 
 	public function envoi() {
@@ -84,8 +84,9 @@ class ImporterFiche extends Base_Controller {
 
 		//On recharge la vue et on affiche les éventuels messages d'erreurs
 		parent::__construct();
-		$this -> load -> library('layout');
-		$this -> layout -> views('menu_principal') -> view('importer', $data);
+		Template::set('data',$data);
+		Template::set_view('importer.php');
+		Template::render();
 	}
 
 	public function excelFile($data) {

@@ -79,8 +79,9 @@ class ExporterFiche extends Base_Controller {
 		$data['affichage'] = $affichage;
 
 		// Chargement de la vue
-		$this -> layout -> views('menu_principal')->view('exporter', $data);
-		
+		Template::set('data',$data);
+		Template::set_view('exporter.php');
+		Template::render();
 	}
     
     

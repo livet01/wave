@@ -200,8 +200,9 @@ class Disque extends Base_Controller {
 		}
 		if ($this -> formulaire_null()) {
 			// Affichage du formulaire 
-			var_dump($data);
-			$this -> layout -> views('menu_principal') -> view('disque/ajouter_fiche',$data);
+			Template::set('data',$data);
+			Template::set_view('disque/ajouter_fiche');
+			Template::render();
 		} else {
 			// Formulaire envoyé
 			$data['erreur'] = $this->ajouter_disque();
@@ -237,18 +238,16 @@ class Disque extends Base_Controller {
 			array_push($data['styles'],array("couleur" => $style->sty_couleur, "libelle" => $style->sty_libelle));
 		}
 		
-		if ($this -> formulaire_null()) {
-			// Affichage du formulaire 
-			
-			$this -> layout -> views('menu_principal') -> view('disque/ajouter_fiche',$data);
-		} else {
+		if (!$this -> formulaire_null()) {
 			// Formulaire envoyé
 			$data['erreur'] = $this->ajouter_disque();
 			if(empty($data['erreur'])) {
 				$data['reussi'] = "Le disque a bien été ajouté.";
 			}
-			$this -> layout -> views('menu_principal') -> view('disque/ajouter_fiche', $data);
 		}
+		Template::set('data',$data);
+		Template::set_view('disque/ajouter_fiche');
+		Template::render();
 	}
 
 	private function verification() {

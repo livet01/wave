@@ -26,7 +26,7 @@ class Index extends Base_Controller {
 		// Chargement des ressources		$this -> load -> library('layout');
 		$this -> load -> model('index/Info_Disque_Model');
 		$this -> load -> library('pagination');
-
+		
 		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
 		{
 			// Tableau récoltant des données à envoyer à la vue
@@ -86,7 +86,13 @@ class Index extends Base_Controller {
 		$data['affichage'] = $affichage;
 
 		// Chargement de la vue
-		$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', $data);
+		Template::set_view('index/barre_recherche');
+		//Template::set_view('index/resultat_recherche');
+		Template::set('value',$this -> input -> post('recherche'));
+		Template::set('data',$data);
+		Template::render();
+		//$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', $data);
+		
 	}
 
 	//
