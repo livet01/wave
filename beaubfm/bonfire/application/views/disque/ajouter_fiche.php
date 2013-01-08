@@ -1,34 +1,6 @@
-<?php 
-
-if(!empty($reussi)) {
-	?>
-<div id="cadre">
-	<p class="success">
-		<i class="icon-ok-sign"></i><?php echo $reussi; ?>
-	</p>
-</div>
-	<?
-} 
-if(!empty($erreur)) {
-	?>
-<div id="cadre">
-	<p class="error">
-		<i class="icon-remove-sign"></i><?php echo $erreur; ?>
-	</p>
-</div>
-	<?php
-} ?>
 <div id="Container">
-	<div id="cadre_action">
-		<a class="btn-large-action" href="javascript: document.forms['fiche'].reset();"><i class="icon-undo"></i> Annuler </a>
-		<a class="btn-large-action" href="javascript: document.forms['fiche'].submit();"><i class="icon-ok"></i> Valider </a>
-	</div>
-	<div id="resultat_recherche">
-	<h1>Ajout d'une fiche</h1>
-
-	<div id="formulaire">
+		<h1>Ajout d'une fiche</h1>
 		<form class="form-horizontal" method="post" id="fiche" onsubmit="return verifForm(this)" action="<?php echo site_url("disque/ajouter"); ?>">
-			
 			<div class="control-group <?php if (form_error('titre')) echo "error";?>">
 				<label class="control-label" for="titre"><i class="icon-music"></i> Titre </label>
 				<div class="controls">
@@ -37,7 +9,7 @@ if(!empty($erreur)) {
 				</div>
 			</div>
 			<div class="control-group <?php if (form_error('artiste')) echo "error";?>">
-				<label class="control-label" for="artiste"><i class="icon-group"></i> Artiste</label>
+				<label class="control-label" for="artiste"><i class="icon-user"></i> Artiste</label>
 				<div class="controls">
 					<input type="text" id="artiste" name="artiste" title="Artiste obligatoire"  value="<?php echo set_value('artiste'); ?>" > <!-- onchange="$('#diffuseur').val($('#artiste').val());" --> 
 					<span class="help-inline"><?php echo form_error('artiste'); ?></span>
@@ -46,10 +18,6 @@ if(!empty($erreur)) {
 					<label class="checkbox" for="autoprod"><input class="check" type="checkbox" id="autoprod" name="autoprod" value="a" onclick="GereControle('autoprod', 'diffuseur', 0)" > Auto-Production</label>
 				</div>
 			</div>
-					
-					
-					
-				
 				<?php if(empty($formats)) {
 					throw new Exception("Erreur chargement format");
 				}
@@ -138,20 +106,17 @@ if(!empty($erreur)) {
 				</div>
 				
 				<div class="control-group <?php if (form_error('listenBy')) echo "error";?>">
-					<label class="control-label" for="email"><i class="icon-envelope-alt"></i> Email de contact </label>
+					<label class="control-label" for="email"><i class="icon-envelope"></i> Email de contact </label>
 					<div class="controls">
 						<input type="text" id="email" name="email" title="e-mail obligatoire" onblur="verifMail(this)" value="<?php echo set_value('email'); ?>">
 						<span class="help-inline"><?php echo form_error('email'); ?></span>
 						<label class="checkbox" for="envoiMail" ><input class="check" type="checkbox" id="envoiMail" name="envoiMail" value="0">Envoyer email</label>
 					</div>
 				</div>
-				
 
-					
-					
-				</p>
-			</div>
+				<div class="form-actions">
+					<a class="btn btn-primary" href="javascript: document.forms['fiche'].submit();"><i class="icon-ok icon-white"></i> Valider </a>
+					<a class="btn " href="javascript: document.forms['fiche'].reset();"><i class="icon-repeat"></i> Annuler </a>
+				</div>
 		</form>
-		</div>
 	</div>
-</div>
