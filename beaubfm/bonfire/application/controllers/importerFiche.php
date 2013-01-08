@@ -247,7 +247,8 @@ class ImporterFiche extends Authenticated_Controller{
 		$disqueControlleur = new Disque();
 		$valide = TRUE;
 		$doublon = FALSE;
-
+		$style_id = null;
+		
 		//on vérifie si les champs obligatoires sont renseignés
 		if (is_null($disque['Artiste']) || is_null($disque['Titre']) || is_null($disque['Diffuseur']) || is_null($disque['Emplacement']) || str_replace(array("/", "!", "?", '"'), "", $disque['Artiste']) == "" || str_replace(array("/", "!", "?", '"'), "", $disque['Diffuseur']) == "") {
 			$valide = FALSE;
@@ -268,7 +269,7 @@ class ImporterFiche extends Authenticated_Controller{
 
 			//Mail
 			if (!empty($disque['Mail']) && !preg_match("/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i", $disque['Mail'])) {
-				$mail = null;
+				$mail = "";
 			} else {
 				$mail = $disque['Mail'];
 			}
@@ -325,6 +326,7 @@ class ImporterFiche extends Authenticated_Controller{
 							$style_id = $disqueControlleur -> rechercherStyleByNom($style);
 						} catch (Exception $e) {
 							$valide = FALSE;
+							$style_id = NULL;
 						}
 					}
 				}
@@ -412,14 +414,15 @@ class ImporterFiche extends Authenticated_Controller{
 
 			if ($valide === TRUE && $doublon === FALSE) {
 				$disqueControlleur -> set_dis_libelle($titre);
-				$disqueControlleur -> set_dis_format($format);
-				$disqueControlleur -> set_mem_id($ecoute_id);
-				$disqueControlleur -> set_art_id($art_id);
-				$disqueControlleur -> set_dif_id($dif_id);
+				$disqueControlleur -> set_dis_format(addslashes($format));
+				$disqueControlleur -> set_mem_id(addslashes($ecoute_id));
+				$disqueControlleur -> set_art_id(addslashes($art_id));
+				$disqueControlleur -> set_dif_id(addslashes($dif_id));
 				$disqueControlleur -> set_dis_envoi_ok(TRUE);
-				$disqueControlleur -> set_emp_id($emp_id);
-				$disqueControlleur -> set_emb_id($emb_id);
-
+				$disqueControlleur -> set_emp_id(addslashes($emp_id));
+				$disqueControlleur -> set_emb_id(addslashes($emb_id));
+				$disqueControlleur -> set_sty_id($style_id);
+				
 				try {
 					$disqueControlleur -> addBDD();
 				} catch (Exception $e) {
@@ -451,8 +454,49 @@ class ImporterFiche extends Authenticated_Controller{
 				$dejaEnAttente = TRUE;
 			}
 		}
+		
+		
 		return array('valide' => $valide, 'doublon' => $doublon, 'enAttente' => $enAttente, 'dejaEnAttente' => $dejaEnAttente);
 	}
+
+
+	public function ctrlImportDisque() {
+
+		$import = $this->importerManager->selectImport();
+		
+		$i = 0;
+		
+		do
+		{
+			$search = array('@[éèêëÊË]@i', '@[àâäÂÄ]@i', '@[îïÎÏ]@i', '@[ûùüÛÜ]@i', '@[ôöÔÖ]@i', '@[ç]@i','@[_]@i');
+			$replace = array('e', 'a', 'i', 'u', 'o', 'c',' ');
+			
+			$searchIden = array('@[éèêëÊË]@i', '@[àâäÂÄ]@i', '@[îïÎÏ]@i', '@[ûùüÛÜ]@i', '@[ôöÔÖ]@i', '@[ç]@i','@[_]@i', '@[ ]@i');
+			$replaceIden = array('e', 'a', 'i', 'u', 'o', 'c','','');
+			
+			
+			//var_dump($import);
+			if(1){
+				$sty = 1;
+			}
+				
+			if(1){
+				var_dump(addslashes(NULL));
+			}
+			
+			return false;
+			
+		}while(1);
+	}
+	
+	public function importAttente()
+	{
+		$import = $this->importerManager->selectImport();
+		
+		
+		
+	}
+	
 
 }
 ?>

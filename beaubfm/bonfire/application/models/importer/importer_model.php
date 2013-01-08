@@ -24,11 +24,25 @@ class Importer_model extends CI_Model {
 						->insert($this->table);
 	}
 	
-	function existImport($libelle,$artiste,$diffuseur) {
+	public function existImport($libelle,$artiste,$diffuseur) {
 		return $this->db->select('imp_id')
 							->from($this->table)
 							->where(array('imp_libelle'=>$libelle,'imp_artiste'=>$artiste,'imp_diffuseur'=>$diffuseur))
 							->get()
 							->row_array();
+	}
+	
+	public function selectImport()
+	{
+		return $this->db->select('*')
+						->from($this->table)
+						->order_by('imp_libelle', 'asc')
+						->get()
+						->result();
+	}
+	
+	public function deleteImport($id)
+	{
+		return $this->db->delete($this->table, array('imp_id' => $id));
 	}
 }
