@@ -69,7 +69,7 @@ class Base_Controller extends MX_Controller
 	public function __construct()
 	{
 		Events::trigger('before_controller', get_class($this));
-
+		
 		parent::__construct();
        
 		// Load Activity Model Since it's used everywhere.
@@ -78,8 +78,9 @@ class Base_Controller extends MX_Controller
 		// Auth setup
 		$this->load->model('users/User_model', 'user_model');
 		$this->load->library('users/auth');
-
-		// Load our current logged in user so we can access it anywhere.
+		
+		
+		
 		if ($this->auth->is_logged_in())
 		{
 			$this->current_user = $this->user_model->find($this->auth->user_id());
@@ -146,13 +147,22 @@ class Base_Controller extends MX_Controller
 			$this->previous_page = $this->session->userdata('previous_page');
 			$this->requested_page = $this->session->userdata('requested_page');
 		}
+		
+		$this->load->model('importer/importer_model', 'importerManager');
+		$this->load->library('session');
 
+		// Load our current logged in user so we can access it anywhere.
+		
+		$this->session->set_userdata(array("nbU" => $this->importerManager->compteU($this->current_user->id), "nbNU" => $this->importerManager->compteNU($this->current_user->id)));
+		
 		// Pre-Controller Event
 		Events::trigger('after_controller_constructor', get_class($this));
+		
+		
 	}//end __construct()
 
 	//--------------------------------------------------------------------
-
+		
 }//end Base_Controller
 
 

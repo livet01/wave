@@ -34,6 +34,9 @@ class EnAttente extends Authenticated_Controller {
 	public function index($g_nb_disques = 1, $affichage = 0) {
 		// Chargement des ressources
 		
+		
+		
+		
 		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
 		{
 			// Tableau récoltant des données à envoyer à la vue
@@ -159,7 +162,14 @@ class EnAttente extends Authenticated_Controller {
 	
 	public function compteIDisque()
 	{
-		;
+		var_dump("hvjk", "jhbjk");	
+		$this->output->enable_profiler(TRUE);
+			
+		$c1 = $this->importerManager->compteU($this->current_user->id);
+		$c2 = $this->importerManager->compteNU($this->current_user->id);
+		
+		var_dump($c1, $c2);
+		
 	}
 	
 	public function modifDisquesEnAttente($id) {
@@ -218,7 +228,7 @@ class EnAttente extends Authenticated_Controller {
 				$is_erreur = $disqueModif->ajouter_disque();
 				if(empty($is_erreur)) {
 					Template::set_message('Le disque a bien été modifié', 'success');
-					//On enl�ve de la base import le disque ajout�
+					//On enl�ve de la base import le disque ajout�
 					$this->importerManager->deleteImport($id);
 					Template::redirect('enAttente/index');
 				}

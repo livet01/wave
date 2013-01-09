@@ -69,4 +69,18 @@ class Importer_model extends CI_Model {
 	{
 		return $this->db->delete($this->table, array('imp_id' => $id));
 	}
+	
+	public function compteNU($id)
+	{
+		return $this->db->where('per_id_import !=', $id)
+						->from($this->table)
+	                    ->count_all_results();
+	}
+	
+	public function compteU($id)
+	{
+		return $this->db->where('per_id_import', $id)
+						->from($this->table)
+	                    ->count_all_results();
+	}
 }
