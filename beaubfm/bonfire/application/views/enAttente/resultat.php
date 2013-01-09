@@ -16,7 +16,7 @@
 			</tr>
 			<tbody id="disque">
 				
-			<form  method="post" id="tdisque" action="#">
+			<form  method="post" id="tdisqueI" action="#">
 			<?php
 				$i=0;
 				$j=0;
@@ -55,8 +55,8 @@
 			</ul>
 		</div>
 		<div class="form-actions">
-			<a id="supprimer" class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a>
-			<a id="modifier" class="btn btn-large btn-block disabled" href="modifDisquesEnAttente"><i class="icon-share-alt"></i> Modifier les fiches</a>
+			<a id="supprimerI" class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a>
+			<a id="modifier" class="btn btn-large btn-block disabled" href="#"><i class="icon-share-alt"></i> Modifier les fiches</a>
 		</div>
 	
 

@@ -48,10 +48,11 @@ class Importer_model extends CI_Model {
 			return $this->selectImport();
 		}
 		else {
-			$this->db->select('*')
-					->where_in('imp_id', $iddisque);
-			$query = $this->db->get('Disque');
-			return $query->result();
+			return $this->db->select('*')
+							->from($this->table)
+							->where_in('imp_id', $iddisque)
+							->get()
+							->result();
 		}
     }
 	

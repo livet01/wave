@@ -148,23 +148,39 @@
 				});
 
 				function countChecked() {
+				// Pour les disques normales et correctes
 				var n = $("input:checked").length;
 				if(n >= 1) {
-				$("#supprimer").removeClass().addClass("btn-large-action");
-				$("#supprimer").click(function(){
-				$("#tdisque").attr("action","<?php echo site_url("disque/supprimer"); ?>").submit();
-				});
-				$("#exporter").removeClass().addClass("btn-large-action");
-				$("#exporter").click(function(){
-				$("#tdisque").attr("action","<?php echo site_url("exporterFiche"); ?>").submit();
+			  	$("#supprimer").removeClass().addClass("btn-large-action");
+			  	$("#supprimer").click(function(){
+			  		$("#tdisque").attr("action","<?php echo site_url("disque/supprimer"); ?>").submit();
+			  	});
+			  	
+			  	$("#exporter").removeClass().addClass("btn-large-action");
+			  	$("#exporter").click(function(){
+			  		$("#tdisque").attr("action","<?php echo site_url("exporterFiche"); ?>").submit();
+			  	});
+			  	
+			  	$("#modifier").removeClass().addClass("btn-large-action");
+			  	$("#modifier").click(function(){
+			  		$("#tdisqueI").attr("action","<?php echo site_url("enAttente/modifDisquesEnAttente"); ?>").submit();
+			  	});
+				  	
+			  	$("#supprimerI").removeClass().addClass("btn-large-action");
+			  	$("#supprimerI").click(function(){
+			  		$("#tdisqueI").attr("action","<?php echo site_url("enAttente/supprimmerDisquesEnAttente"); ?>").submit();
 				});
 				}
 				else {
-				$("#supprimer").removeClass().addClass("btn-large-action-nonActif");
-				$("#supprimer").attr("href", "#");
-				$("#exporter").removeClass().addClass("btn-large-action-nonActif");
-				$("#exporter").attr("href", "#");
-				$("#tdisque").attr("action","#");
+			  	$("#supprimer").removeClass().addClass("btn-large-action-nonActif");
+			  	$("#supprimer").attr("href", "#");
+			  	$("#supprimerI").removeClass().addClass("btn-large-action-nonActif");
+			  	$("#supprimerI").attr("href", "#");
+			  	$("#exporter").removeClass().addClass("btn-large-action-nonActif");
+			  	$("#exporter").attr("href", "#");
+			  	$("#modifier").removeClass().addClass("btn-large-action-nonActif");
+			  	$("#modifier").attr("href", "#");
+			  	$("#tdisque").attr("action","#");
 				}
 				}
 				countChecked();
