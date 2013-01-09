@@ -161,7 +161,7 @@ class EnAttente extends Authenticated_Controller {
 	{
 		;
 	}
-
+	
 	public function modifDisquesEnAttente($id) {
 
 		// Chargement des formats
@@ -212,13 +212,14 @@ class EnAttente extends Authenticated_Controller {
 			$disque = $json_array[0];
 			$data['infoDisque'] = $disque;
 			$data['import'] = true;
-			$disqueModif->old_disque = $disque;
 			if (!$disqueModif -> formulaire_null()) {
 				// Formulaire envoyé
 				$disqueModif->set_dis_id($id);
-				$is_erreur = $disqueModif->modifier_disque();
+				$is_erreur = $disqueModif->ajouter_disque();
 				if(empty($is_erreur)) {
 					Template::set_message('Le disque a bien été modifié', 'success');
+					//On enl�ve de la base import le disque ajout�
+					$this->importerManager->deleteImport($id);
 					Template::redirect('enAttente/index');
 				}
 				else {
@@ -241,7 +242,7 @@ class EnAttente extends Authenticated_Controller {
 		}
 		
 		// Chargement de la vue
-		Template::set_view('ajouter_fiche');
+		Template::set_view('disque/ajouter_fiche');
 		Template::set('data', $data);
 		Template::render();
 	}

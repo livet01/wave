@@ -509,7 +509,7 @@ class Disque extends Authenticated_Controller {
 
 	}
 
-	private function ajouter_disque() {
+	public function ajouter_disque() {
 		$erreur = "";
 		if (!$this -> formulaire_null()) {
 			if ($this -> verification()) {
