@@ -74,11 +74,11 @@ class EnAttente extends Authenticated_Controller {
 				//var_dump($this->current_user->id, $tab->per_id_import);
 				
 				if((int)$tab->per_id_import == $this->current_user->id){
-					$tab_result1[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste);
+					$tab_result1[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab->imp_diffuseur);
 					//var_dump("==");
 				}
 				else{
-					$tab_result2[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste);
+					$tab_result2[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab->imp_diffuseur);
 					//var_dump("!=");
 				}
 			}
@@ -104,20 +104,19 @@ class EnAttente extends Authenticated_Controller {
 
 	}
 
-	public function supprimmerDisquesEnAttente($g_nb_disques = 1, $affichage = 0) {
+	public function supprimmerDisquesEnAttente($idsupp = 0, $g_nb_disques = 1, $affichage = 0) {
 		// Chargement des ressources
 
 		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
 		{
 			// Tableau récoltant des données à envoyer à la vue
 			$data = array();
-
-			// Récupération de tout les disques pour la page
 			$id = $this -> input -> post('choix');
-
+			// Récupération de tout les disques pour la page
+			if(empty($id))
+				$id = $idsupp;
+			
 			$tabs = $this -> importerManager -> GetAll_in($id);
-
-			var_dump($tabs, $id);
 
 			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
 			foreach ($tabs as $tab) {
@@ -126,20 +125,21 @@ class EnAttente extends Authenticated_Controller {
 				else {
 					$emb_id = $tab -> emb_id;
 				}
-				$tab_result[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste);
+				$tab_result[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab->imp_diffuseur);
 			}
 
 			// On passe le tableau de disque
 			$data['resultat'] = $tab_result;
 		}
-
+		$data['liens'][0] = array("id" => "supprAllI", "icon" => "icon-trash", "text" => " Tout supprimer", "href" => "#");
+		$data['liens'][1] = array("id" => "", "icon" => "icon-undo", "text" => " Annuler", "href" => site_url("enAttente/"));
 		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
 		$data['affichage'] = $affichage;
 
 		// Chargement de la vue
 		//$this -> layout -> views('menu_principal')->view('disque/supprimer', $data);
 		// Chargement de la vue
-		Template::set_view('enAttente/supprimer');
+		Template::set_view('confirmation');
 		//Template::set_view('index/resultat_recherche');
 		Template::set('data', $data);
 		Template::render();
@@ -183,7 +183,7 @@ class EnAttente extends Authenticated_Controller {
 			array_push($data['styles'], array("couleur" => $style -> sty_couleur, "libelle" => $style -> sty_libelle));
 		}
 		
-		//Cr�ation d'un objet Disque
+		//Cr�ation d'un objet Disque
 		$disqueModif = new Disque();
 		
 		$id_disque = $id;

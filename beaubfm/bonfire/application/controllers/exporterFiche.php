@@ -77,10 +77,12 @@ class ExporterFiche extends Base_Controller {
 
 		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
 		$data['affichage'] = $affichage;
-
+		$data['liens'][0] = array("id" => "linkCSV", "icon" => "icon-download-alt", "text" => " Exporter en CSV", "href" => "#");
+		$data['liens'][1] = array("id" => "linkXLS", "icon" => "icon-download-alt", "text" => " Exporter en XLS", "href" => "#");
+		$data['liens'][2] = array("id" => "", "icon" => "icon-undo", "text" => " Annuler", "href" => site_url("index/"));
 		// Chargement de la vue
 		Template::set('data',$data);
-		Template::set_view('exporter.php');
+		Template::set_view('confirmation');
 		Template::render();
 	}
     
