@@ -8,20 +8,18 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-
-			<a href="<?php site_url('/'); ?>" class="brand">
+			<a href="<?php echo site_url('index'); ?>" class="brand">
 				<?php e($this->settings_lib->item('site.title')); ?>
 			</a>
-
+			
 			<!-- Everything you want hidden at 940px or less, place within here -->
 			<div class="nav-collapse collapse">
 				<ul class="nav pull-right">
 					<li class="divider-vertical"></li>
-<?php //style="height:40px" ?>
 					<?php if (isset($current_user->email)) : ?>
 					<li class="dropdown" >
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<?php echo $current_user->user_img; ?>
+						<i class="icon-user icon-white"></i>
 						<b class="caret"></b></a>
 
 						<ul class="dropdown-menu">
@@ -57,11 +55,6 @@
 					<?php else :  ?>
 
 						<li>
-							<a href="<?php echo site_url('register');?>">
-								<?php echo lang('bf_action_register') ?>
-							</a>
-						</li>
-						<li>
 							<a href="<?php echo site_url('login');?>" class="login-btn">
 								<?php echo lang('bf_action_login') ?>
 							</a>
@@ -78,7 +71,7 @@
 				 if (has_permission('Wave.Ajouter.Disque')) { ?>
 				  <li><a href="<?php echo site_url("disque/ajouter"); ?>">Ajouter un disque <?php if(isset($valeur['user_id']) && isset($valeur['auth_custom'])) { if(file_exists('./assets/upload/'.$valeur['user_id'].'-'.$valeur['auth_custom'])) { ?><span class="badge badge-important">1</span><?php }} ?></a></li>
 				  <?php } if (has_permission('Wave.Importer.Disque')) {  ?><li><a href="<?php echo site_url("importerFiche"); ?>">Importer</a></li>
-					<?php if((NBU+NBNU)!=0) { ?>
+					<?php if(defined('NBU') && defined('NBNU') && (NBU+NBNU)!=0) { ?>
 					<li><a href="<?php echo site_url("enAttente"); ?>">En attente  <?php if(NBU != 0) { ?><span class="badge badge-important"><?php echo NBU; ?></span> <?php } if(NBNU != 0) { ?><span class="badge badge-info"><?php echo NBNU; ?></span><?php } ?></a></li>
 					<?php } }  ?>
 				</ul>

@@ -8,7 +8,7 @@
 		
 		<table class="table table-striped table-condensed">
 			<caption>
-				<?php if($affichage==0) { ?> <h2>Listes des disques en attente de <?php echo $username; ?></h2> <?php } ?>
+				<?php if($affichage==0) { ?> <h2>Listes des disques en attente de <?php echo $username; ?><?php if(defined('NBU') && NBU != 0) { ?><span class="badge badge-important"><?php echo NBU; ?></span> <?php } ?></h2> <?php } ?>
 			</caption>
 			<tr>
 				<th><input type="checkbox" onclick="CocheTout(this,'choix[]');" value="1" ></th>
