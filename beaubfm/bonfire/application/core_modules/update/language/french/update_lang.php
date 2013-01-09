@@ -24,16 +24,16 @@
 $lang['up_toolbar_title']			= 'Manager de mise à jour';
 
 $lang['up_update_off_message']		= 'Les contrôles de mise à jour sont désactivées dans le fichier config/application.php.';
-$lang['up_curl_disabled_message']	= 'cURL <strong>n\'est pas</strong> actuellement activé comme une extension PHP. Bonfire ne sera pas en mesure de vérifier les mises à jour jusqu\'à ce qu\'il soit activé.';
-$lang['up_edge_commits']			= 'New Bleeding Edge Commits';
+$lang['up_curl_disabled_message']	= 'cURL <strong>n\'est actuellement pas</strong> activé comme une extension PHP. Bonfire ne sera pas en mesure de vérifier les mises à jour jusqu\'à ce qu\'il soit activé.';
+$lang['up_edge_commits']			= 'Nouvelle mise à jour engagée';
 $lang['up_branch']					= 'Branche: <b>developpement</b>';
 
 $lang['up_author']					= 'Auteur';
-$lang['up_committed']				= 'Committed';
+$lang['up_committed']				= 'Engagé';
 $lang['up_message']					= 'Message';
 
-$lang['up_update_message_bleeding'] = 'A <b>bleeding edge</b> update to Bonfire is available.';
-$lang['up_update_message_new']      = ' Version %s of Bonfire is available. You are currently running '; //requires the spaces at the start and end of the string
-$lang['up_update_message_latest']   = 'You are running Bonfire version %s. This is the latest available version of Bonfire.';
-$lang['up_update_message_old']      = 'You are running Bonfire version %s. The latest available <b>stable</b> version is %s.';
-$lang['up_update_message_unable']   = 'You are running Bonfire version %s. <b>Unable to retrieve the latest version at this time.</b>';
+$lang['up_update_message_bleeding'] = 'Une <b>mise à jour</b> de Bonfire est disponible.';
+$lang['up_update_message_new']      = ' Version %s de Bonfire est disponible. Vous fonctionnez actuellement sur la version '; //requires the spaces at the start and end of the string
+$lang['up_update_message_latest']   = 'Vous fonctionnez actuellement sur la version %s de Bonfire. Vous avez la dernière version disponible de Bonfire.';
+$lang['up_update_message_old']      = 'Vous fonctionnez actuellement sur la version %s de Bonfire. La dernière version <b>stable</b> est la version %s.';
+$lang['up_update_message_unable']   = 'Vous fonctionnez actuellement sur la version %s de Bonfire. <b>Impossible de récupérer la dernière version en ce moment.</b>';
