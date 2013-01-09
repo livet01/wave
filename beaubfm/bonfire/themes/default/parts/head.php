@@ -202,8 +202,29 @@
 				$("#supprimerdisque").submit();
 				});
 				
+				$("#supprAllI").click(function(){
+				$("#supprimerdisque").attr("action","<?php echo site_url("enAttente/supprimerAll"); ?>");
+				$("#supprimerdisque").submit();
+				});
+				
 				$("div.holder").jPages({
 				containerID : "disque",
+				previous : "←",
+				next : "→",
+				perPage : 15,
+				delay : 10
+				});
+				
+				$("div.holder1").jPages({
+				containerID : "disque1",
+				previous : "←",
+				next : "→",
+				perPage : 15,
+				delay : 10
+				});
+				
+				$("div.holder2").jPages({
+				containerID : "disque2",
 				previous : "←",
 				next : "→",
 				perPage : 15,

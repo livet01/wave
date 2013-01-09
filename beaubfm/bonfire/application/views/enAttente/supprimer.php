@@ -10,7 +10,7 @@
 			</ul>
 		</div>
 		<div id="cadre_action">
-			<a id="supprAll" class="btn-large-action" href="#"><i class="icon-download-alt"></i> Tout supprimer</a>
+			<a id="supprAllI" class="btn-large-action" href="#"><i class="icon-download-alt"></i> Tout supprimer</a>
 			<a class="btn-large-action" href="<?php echo site_url("index"); ?>"><i class="icon-undo"></i> Annuler</a>
 		</div>
 	</div>

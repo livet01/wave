@@ -27,7 +27,7 @@ class EnAttente extends Authenticated_Controller {
 	//
 	public function index($g_nb_disques = 1, $affichage = 0) {
 		// Chargement des ressources
-
+		
 		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
 		{
 			// Tableau récoltant des données à envoyer à la vue
@@ -55,12 +55,8 @@ class EnAttente extends Authenticated_Controller {
 			}
 
 			// Récupération de tout les disques de importdisque pour la page
-
-			
-			
-
 			$this -> importerManager -> selectImport();
-
+			var_dump("expression","exp");
 			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
 			foreach ($tabs as $tab) {
 				if (empty($tab -> emb_id))
@@ -68,17 +64,36 @@ class EnAttente extends Authenticated_Controller {
 				else {
 					$emb_id = $tab -> emb_id;
 				}
-				$tab_result[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "dis_format" => $tab -> imp_format, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab -> imp_diffuseur, "emp_libelle" => $tab -> imp_emplacement, "emb_id" => $tab->imp_em_bev);
+				
+				//var_dump($this->current_user->id, $tab->per_id_import);
+				
+				if((int)$tab->per_id_import == $this->current_user->id){
+					$tab_result1[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste);
+					//var_dump("==");
+				}
+				else{
+					$tab_result2[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste);
+					//var_dump("!=");
+				}
 			}
-			if (!empty($tab_result)) {
+			if (!empty($tab_result1)) {
 				// On passe le tableau de disque
-				$data['resultat'] = $tab_result;
+				$data['resultat1'] = $tab_result1;
+			}
+			
+			if (!empty($tab_result2)) {
+				// On passe le tableau de disque
+				$data['resultat2'] = $tab_result2;
 			}
 		}
 
 		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
 		$data['affichage'] = $affichage;
-
+		$data['username'] = $this->current_user->username;
+	
+		
+		//var_dump($data['resultat2']);
+		
 		// Chargement de la vue
 		Template::set_view('enAttente/resultat');
 		//Template::set_view('index/resultat_recherche');
@@ -101,7 +116,7 @@ class EnAttente extends Authenticated_Controller {
 			
 			$tabs = $this -> importerManager -> GetAll_in($id);
 			
-			var_dump($tabs, $id);
+			//var_dump($tabs, $id);
 			
 			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
 			foreach ($tabs as $tab) {
@@ -110,7 +125,7 @@ class EnAttente extends Authenticated_Controller {
 				else {
 					$emb_id = $tab -> emb_id;
 				}
-				$tab_result[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "dis_format" => $tab -> imp_format, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab -> imp_diffuseur, "emp_libelle" => $tab -> imp_emplacement, "emb_id" => $tab->imp_em_bev);
+				$tab_result[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste);
 			}
 
 			// On passe le tableau de disque
@@ -123,11 +138,27 @@ class EnAttente extends Authenticated_Controller {
 		// Chargement de la vue
 		//$this -> layout -> views('menu_principal')->view('disque/supprimer', $data);
 		// Chargement de la vue
-		Template::set_view('disque/supprimer');
+		Template::set_view('enAttente/supprimer');
 		//Template::set_view('index/resultat_recherche');
 		Template::set('data', $data);
 		Template::render();
 		
+	}
+
+	public function supprimerAll($choix = null) {
+			
+		$choix = $this->input->post('choix');
+		if(!empty($choix)) {
+			foreach($choix as $id) {
+				$r = $this->importerManager->deleteImport($id);
+			}
+		}
+		redirect(site_url('enAttente'));
+	}
+	
+	public function compteIDisque()
+	{
+		;
 	}
 	
 	public function modifDisquesEnAttente() {

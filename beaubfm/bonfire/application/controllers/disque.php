@@ -471,7 +471,7 @@ class Disque extends Authenticated_Controller {
 			Template::redirect('index');
 	}
 	
-	private function addBDD() {
+	public function addBDD() {
 		$data['dis_libelle'] = $this -> get_dis_libelle();
 		$data['dis_format'] = $this -> get_dis_format();
 		$data['uti_id_ecoute'] = $this -> get_mem_id();
