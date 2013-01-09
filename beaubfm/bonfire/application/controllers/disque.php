@@ -428,31 +428,9 @@ class Disque extends Authenticated_Controller {
 				}
 	
 				if($this->input->post('envoiMail')=="1"){
+					///TRAVAIL
 					
-					$this->set_dis_envoi_ok(1);
-					$config['charset'] = 'utf-8';
-					$config['mailtype'] = 'html';
-					$config['newline']    = "\r\n";
-	
-	
-					$this->email->initialize($config);
-					$email = $this -> input -> post('email');
-					$titre= $this->get_dis_libelle();
-					$artiste=$this->get_art_id();
-				
-					$emp=$this->input->post('emplacement');
-					
-					$this->email->from('beaubfm@mail.com', 'BeaubFM');
-					//$this->email->to($data['email']);
-					$this->email->to('samir.bouaked@gmail.com');
-			
-					//preparation du mail
-					$this->email->subject('Email automatique BeaubFM');
-			
-					$this->email->message($msg);
-	
-					$this->email->send();
-					$this->envoyerMail();		
+							
 				 }else{
 					$this->set_dis_envoi_ok(0);
 				 }

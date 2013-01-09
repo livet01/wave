@@ -47,7 +47,7 @@
 						<div class="controls">
 							<?php foreach($styles as $style) { $i++; ?>
 								<label class="radio <?php echo $style['couleur'] ?>" for="<?php echo $style['couleur'] ?>"><?php echo $style['libelle'] ?>
-									<input type="radio" name="style" id="<?php echo $style['couleur'] ?>" value="<?php echo $style['couleur'] ?>" <?php echo ($i==1 || (!empty($infoDisque['sty_libelle']) && $infoDisque['sty_libelle'] == $style['libelle']) || (!empty($sauv['style']) && $sauv['style'] == $style['couleur']) )? 'checked="checked"' : ''; ?> >
+									<input type="radio" name="style" id="<?php echo $style['couleur'] ?>" value="<?php echo $style['couleur'] ?>" <?php echo ((!empty($infoDisque['sty_libelle']) && $infoDisque['sty_libelle'] == $style['libelle']) || (!empty($sauv['style']) && $sauv['style'] == $style['couleur']) )? 'checked="checked"' : ''; ?> >
 								</label>
 					<?php } while($i<4) {
 						echo '<br>';
@@ -68,7 +68,7 @@
 					?>
 					<?php foreach($emplacements as $emplacement) { $i++; if($emplacement['emp_plus']==1) { $name_emp = $emplacement['emp_libelle']; } ?>
 					<label class="radio" for="<?php echo 'emp'.$i ?>"  <?php echo ($emplacement['emp_plus']==0) ? 'onclick="$(\'#emb\').hide()"' : 'onclick="$(\'#emb\').show()"'; ?>>
-						<input type="radio" name="emplacement" id="<?php echo 'emp'.$i ?>" value="<?php echo $emplacement['emp_libelle'] ?>" <?php echo ($i==1 || (!empty($infoDisque['emp_libelle']) && $infoDisque['emp_libelle'] == $emplacement['emp_libelle']) || (!empty($sauv['emplacement']) && $sauv['emplacement'] == $emplacement['emp_libelle']) )? 'checked="checked"' : ''; ?> <?php echo ($emplacement['emp_plus']==0) ? 'onclick="$(\'#emb\').hide()"' : 'onclick="$(\'#emb\').show()"'; ?> >
+						<input type="radio" name="emplacement" id="<?php echo 'emp'.$i ?>" value="<?php echo $emplacement['emp_libelle'] ?>" <?php echo ((!empty($infoDisque['emp_libelle']) && $infoDisque['emp_libelle'] == $emplacement['emp_libelle']) || (!empty($sauv['emplacement']) && $sauv['emplacement'] == $emplacement['emp_libelle']) )? 'checked="checked"' : ''; ?> <?php echo ($emplacement['emp_plus']==0) ? 'onclick="$(\'#emb\').hide()"' : 'onclick="$(\'#emb\').show()"'; ?> >
 						<?php echo $emplacement['emp_libelle'] ?>
 					</label>
 					<?php } while($i<4) {
