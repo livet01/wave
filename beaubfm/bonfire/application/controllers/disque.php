@@ -231,6 +231,7 @@ class Disque extends Authenticated_Controller {
 	// Modifier un disque
 	//
 	public function modifier($id) {
+		$this->auth->restrict('Wave.Modifier.Disque');
 		// Initialisation des données a envoyer en bd
 		$data = array('erreur' => "", 'reussi' => "");
 		
@@ -313,7 +314,7 @@ class Disque extends Authenticated_Controller {
 	// Ajouter un disque
 	//
 	public function ajouter() {
-
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		// Initialisation des données a envoyer en bd
 		$data = array('erreur' => "", 'reussi' => "");
 		
@@ -488,6 +489,8 @@ class Disque extends Authenticated_Controller {
 	}
 
 	public function ajouter_disque() {
+		
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$erreur = "";
 		if (!$this -> formulaire_null()) {
 			if ($this -> verification()) {
@@ -525,6 +528,7 @@ class Disque extends Authenticated_Controller {
 		return $erreur;
 	}
 	public function supprimer_sauvegarde() {
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		if (file_exists('./assets/upload/'.$this->current_user->id.'-'.$this->current_user->username))
 		{
 			unlink('./assets/upload/'.$this->current_user->id.'-'.$this->current_user->username);
@@ -537,6 +541,7 @@ class Disque extends Authenticated_Controller {
 			Template::redirect('index');
 	}
 	public function sauvegarde() {
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$data['titre'] =  $this -> input -> post('titre');
 		$data['format'] = $this -> input -> post('format');
 		$data['listenBy'] =  $this -> input -> post('listenBy');
@@ -564,6 +569,7 @@ class Disque extends Authenticated_Controller {
 	}
 	
 	public function addBDD() {
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$data['dis_libelle'] = $this -> get_dis_libelle();
 		$data['dis_format'] = $this -> get_dis_format();
 		$data['uti_id_ecoute'] = $this -> get_mem_id();
@@ -603,6 +609,7 @@ class Disque extends Authenticated_Controller {
 	}
 
 	public function updateBDD() {
+		$this->auth->restrict('Wave.Modifier.Disque');
 		$erreur = $this->ajouter_disque();
 		if($erreur!="") {
 			throw new Exception($erreur);
@@ -612,6 +619,7 @@ class Disque extends Authenticated_Controller {
 	}
 		
 	public function rechercheArtisteByNom($nom, $radio, $categorie, $insertion = TRUE) {
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$artId = $this -> artisteManager -> select('art_id', array('art_nom' => $nom));
 		if (empty($artId)) {
 			if($insertion)
@@ -625,6 +633,7 @@ class Disque extends Authenticated_Controller {
 	}
 
 	public function rechercheDiffuseurByNom($nom, $radio, $email, $categorie) {
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$difId = $this -> diffuseurManager -> select('Users.id', array('Users.username' => $nom, ));
 		if (empty($difId)) {
 			$this->db->trans_begin();
@@ -641,6 +650,7 @@ class Disque extends Authenticated_Controller {
 	}
 
 	public function rechercheEmbByNom($nom, $radio) {
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$id = $this -> embManager -> select('emb_id', array('emb_libelle' => $nom));
 		if (empty($id)) {
 			$id = (int)$this -> embManager -> insert($nom, $radio);
@@ -650,6 +660,7 @@ class Disque extends Authenticated_Controller {
 	}
 	
 	public function rechercheEmBevByNom($nom) {
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$embId = $this -> embManager -> select('emb_id', array('emb_libelle' => $nom));
 		if (empty($embId)) {
 			throw new Exception("L'émission bénévole n'existe pas.");
@@ -661,6 +672,7 @@ class Disque extends Authenticated_Controller {
 	}
 
 	public function rechercheEmplacementByNom($nom) {
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$empId = $this -> emplacementManager -> select('emp_id', array('emp_libelle' => $nom));
 		if (empty($empId)) {
 			throw new Exception("L'emplacement n'existe pas.");
@@ -672,6 +684,7 @@ class Disque extends Authenticated_Controller {
 	}
 
 	public function rechercherStyleByNom($nom) {
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$styleId = $this -> styleManager -> select('sty_id', array('sty_couleur' => $nom));
 		if (empty($styleId)) {
 
@@ -685,11 +698,13 @@ class Disque extends Authenticated_Controller {
 	}
 
 	public function existeTitreArtiste($titre, $id_artiste) {
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$return = $this -> disqueManager -> select('dis_id', array('per_id_artiste' => $id_artiste, 'dis_libelle' => $titre));
 		return !empty($return);
 	}
 
 	public function verificationFormat($nom) {
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$result = $this -> parametreManager -> select('format');
 		$format = explode(";", $result['param_valeur']);
 		$return = false;
@@ -702,7 +717,7 @@ class Disque extends Authenticated_Controller {
 	}
 
 	public function rechercherEcouteParByNom($nom) {
-
+		$this->auth->restrict('Wave.Ajouter.Disque');
 		$ecouteId = $this -> ecouteManager -> select('id', array('username' => $nom));
 		if (empty($ecouteId)) {
 
@@ -733,25 +748,11 @@ class Disque extends Authenticated_Controller {
 	}
 
 	
-	public function suppArtiste($nom=''){
-		
-		$artiste = $this -> disqueManager -> nombreArtiste('per_id_artiste', array('dis_id' => $nom));
-		if($artiste =='0' || '1'){
-			
-			$sup = $this -> disqueManager -> suppArtiste($artiste);
-		}
-		else {
-				echo "coucou";
-			
-			
-		}
-		
-	}
-	
 	//
 	// Méthode de suggestion : ajax et auto-completion.
 	//
 	public function suggestions_artiste() {
+		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
 
@@ -772,6 +773,7 @@ class Disque extends Authenticated_Controller {
 	// Méthode de suggestion : ajax et auto-completion.
 	//
 	public function suggestions_diffuseur() {
+		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
 
@@ -792,6 +794,7 @@ class Disque extends Authenticated_Controller {
 	// Méthode de suggestion : ajax et auto-completion.
 	//
 	public function suggestions_ecoute() {
+		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
 
@@ -812,6 +815,7 @@ class Disque extends Authenticated_Controller {
 	// Méthode de suggestion : ajax et auto-completion.
 	//
 	public function suggestions_email() {
+		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
 
@@ -823,6 +827,7 @@ class Disque extends Authenticated_Controller {
 	
 	
 	function supprimer($g_nb_disques = 1, $affichage = 0) {
+		$this->auth->restrict('Wave.Supprimer.Disque');
 			
 		// Chargement des ressources
 
@@ -861,6 +866,7 @@ class Disque extends Authenticated_Controller {
 	}
 	
 	public function supprimerAll($choix = null) {
+		$this->auth->restrict('Wave.Supprimer.Disque');
 		$choix = $this->input->post('choix');
 		if(!empty($choix)) {
 			foreach($choix as $id) {

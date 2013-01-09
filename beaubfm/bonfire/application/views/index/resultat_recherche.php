@@ -72,8 +72,14 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 				echo '<td class="left" onclick="; }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['dis_libelle'] . '</td>';
 				echo '<td onclick="ajaxBox_loader(true);$.get(\'' . site_url("index/affichage_disque/" . $ligne['dis_id']) . '\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['art_nom'] . '</td>';
 				echo '<td onclick="ajaxBox_loader(true);$.get(\'' . site_url("index/affichage_disque/" . $ligne['dis_id']) . '\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['per_nom'] . '</td>';
-				echo '<td><a class="action-tab" href="' . site_url("disque/modifier/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a></td>';
-				echo '<td><a class="action-tab" onclick="CocheTout(this,\'choix[]\');CocheTout(this,\'choix[]\');$(\'#chx' . $j . '\').attr(\'checked\',\'checked\');$(\'#tdisque\').attr(\'action\',\'' . site_url("disque/supprimer") . '\').submit();" href="#"><i class="icon-trash"></a></td>';
+				echo '<td>';
+				if (has_permission('Wave.Modifier.Disque'))
+					echo '<a class="action-tab" href="' . site_url("disque/modifier/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a>';
+				echo '</td>';
+				echo '<td>';
+				if (has_permission('Wave.Supprimer.Disque'))	
+					echo '<a class="action-tab" onclick="CocheTout(this,\'choix[]\');CocheTout(this,\'choix[]\');$(\'#chx' . $j . '\').attr(\'checked\',\'checked\');$(\'#tdisque\').attr(\'action\',\'' . site_url("disque/supprimer") . '\').submit();" href="#"><i class="icon-trash"></a>';
+				echo '</td>';
 				echo '
 			</tr>';
 				$i++;
@@ -96,8 +102,13 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 <div class="infos-disque">
 	<ul class="icons" <?php if(($affichage==1 && isset($resultat)) || $affichage==0) { ?> id="aff-disque" <?php } ?>></ul>
 </div>
+
+<?php if (has_permission('Wave.Supprimer.Disque') || has_permission('Wave.Exporter.Disque')) { ?>
 <div class="form-actions">
-	<a id="supprimer" class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a>
-	<a id="exporter" class="btn btn-large btn-block disabled" href="#"><i class="icon-share-alt"></i> Exporter des fiches</a>
+	<?php if (has_permission('Wave.Supprimer.Disque')) { ?>
+	<a id="supprimer" class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a><?php } ?>
+	<?php if (has_permission('Wave.Exporter.Disque')) {?>
+	<a id="exporter" class="btn btn-large btn-block disabled" href="#"><i class="icon-share-alt"></i> Exporter des fiches</a><?php } ?>
 </div>
+<?php } ?>
 

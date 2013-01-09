@@ -12,11 +12,13 @@ class ImporterFiche extends Authenticated_Controller{
 	}
 
 	public function index() {
+		$this->auth->restrict('Wave.Importer.Disque');
 		Template::set_view('importer.php');
 		Template::render();
 	}
 
 	public function envoi() {
+		$this->auth->restrict('Wave.Importer.Disque');
 		//On déclare ici le nombre de fichier possible à uploader depuis la vue
 		$nombreFichier = array('1', '2', '3', '4', '5', '6', '7');
 
@@ -90,6 +92,7 @@ class ImporterFiche extends Authenticated_Controller{
 	}
 
 	public function excelFile($data) {
+		$this->auth->restrict('Wave.Importer.Disque');
 		//On instancie un objet PHPExcel
 		$objPHPExcel = new PHPExcel();
 
@@ -125,6 +128,7 @@ class ImporterFiche extends Authenticated_Controller{
 	 * Le tableau retourné possède comme index les valeurs de l'array $listeKeysFinal
 	 */
 	public function getTabFinal($arrayFichier) {
+		$this->auth->restrict('Wave.Importer.Disque');
 		//liste de clés utilisées pour le tableau de retour
 		$listeKeysFinal = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "DateAjout", "EcoutePar", "Mail", "EmissionBenevole", "Style");
 
@@ -173,6 +177,7 @@ class ImporterFiche extends Authenticated_Controller{
 	}
 
 	public function ctrlTableauFinal($arrayDisque) {
+		$this->auth->restrict('Wave.Importer.Disque');
 		$valide = TRUE;
 		$i = 0;
 		$listeKeysCommunes = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "DateAjout", "EcoutePar", "Mail");
@@ -190,6 +195,7 @@ class ImporterFiche extends Authenticated_Controller{
 	}
 
 	public function ctrlAjoutFiche($array) {
+		$this->auth->restrict('Wave.Importer.Disque');
 		$invalide = 0;
 		$doublon = 0;
 		$valide = 0;
@@ -244,6 +250,7 @@ class ImporterFiche extends Authenticated_Controller{
 	}
 
 	public function verificationAlbum($disque) {
+		$this->auth->restrict('Wave.Importer.Disque');
 		$disqueControlleur = new Disque();
 		$valide = TRUE;
 		$doublon = FALSE;

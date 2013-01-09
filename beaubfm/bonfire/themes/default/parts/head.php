@@ -187,7 +187,7 @@
 
 				$(":checkbox").click(countChecked);
 
-				$("#linkXLS").click(function(){
+					$("#linkXLS").click(function(){
 				$("#exportdisque").attr("action","<?php echo site_url("exporterFiche/xls"); ?>");
 				$("#exportdisque").submit();
 				});

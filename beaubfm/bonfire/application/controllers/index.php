@@ -23,6 +23,7 @@ class Index extends Authenticated_Controller {
 	// Méthode index : affichage de l'ensemble des disques
 	//
 	public function index($g_nb_disques = 1, $affichage = 0) {
+		$this->auth->restrict('Wave.Recherche.Disque');
 		// Chargement des ressources		$this -> load -> model('index/Info_Disque_Model');
 		$this -> load -> library('pagination');
 		
@@ -98,6 +99,7 @@ class Index extends Authenticated_Controller {
 	// Méthode recherche : affichage des résultats de la recherche
 	//
 	public function recherche($g_nb_disques = 1) {
+		$this->auth->restrict('Wave.Recherche.Disque');
 		// On vérifie si la variable post contient des erreurs
 		$this -> form_validation -> set_rules('recherche', 'recherche', 'trim|required|xss_clean');
 
@@ -203,6 +205,7 @@ class Index extends Authenticated_Controller {
 	// Méthode de suggestion : ajax et auto-completion.
 	//
 	public function suggestions() {
+		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
 
@@ -243,6 +246,7 @@ class Index extends Authenticated_Controller {
 	// Méthode d'affichage des renseingements d'un disque : ajax.
 	//
 	public function affichage_disque($id_disque) {
+		$this->auth->restrict('Wave.Recherche.Disque');
 		if (!empty($id_disque))// Si le id_disque n'est pas nul
 		{
 			// On charge le model

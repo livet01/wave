@@ -148,13 +148,15 @@ class Base_Controller extends MX_Controller
 			$this->requested_page = $this->session->userdata('requested_page');
 		}
 		
-		$this->load->model('importer/importer_model', 'importerManager');
-		$this->load->library('session');
-
-		// Load our current logged in user so we can access it anywhere.
-		
-		$this->session->set_userdata(array("nbU" => $this->importerManager->compteU($this->current_user->id), "nbNU" => $this->importerManager->compteNU($this->current_user->id)));
-		
+		if ($this->auth->is_logged_in())
+		{
+			$this->load->model('importer/importer_model', 'importerManager');
+			$this->load->library('session');
+	
+			// Load our current logged in user so we can access it anywhere.
+			
+			$this->session->set_userdata(array("nbU" => $this->importerManager->compteU($this->current_user->id), "nbNU" => $this->importerManager->compteNU($this->current_user->id)));
+		}
 		// Pre-Controller Event
 		Events::trigger('after_controller_constructor', get_class($this));
 		

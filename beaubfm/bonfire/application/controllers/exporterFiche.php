@@ -11,6 +11,7 @@ class ExporterFiche extends Base_Controller {
     }
  
     function index($g_nb_disques = 1, $affichage = 0) {
+		$this->auth->restrict('Wave.Exporter.Disque');
 			
 		// Chargement des ressources
 		$this -> load -> library('layout');
@@ -90,6 +91,7 @@ class ExporterFiche extends Base_Controller {
    
 	public function xls($id = '')
 	{
+		$this->auth->restrict('Wave.Exporter.Disque');
 		$this->load->model("exporter_model", "exportManager");
 		
 		date_default_timezone_set("Europe/Paris");
@@ -156,6 +158,7 @@ class ExporterFiche extends Base_Controller {
 
 	public function csv()
 	{
+		$this->auth->restrict('Wave.Exporter.Disque');
 		date_default_timezone_set("Europe/Paris");
 		
 		header('Content-Type: text/csv;');
