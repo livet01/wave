@@ -81,7 +81,7 @@
 					echo '<td>'.$ligne['art_nom'].'</td>';
 					echo '<td>'.$ligne['per_nom'].'</td>';
 					echo '<td><a class="btn btn-info btn-mini" href="'.site_url("enAttente/modifDisquesEnAttente/".$ligne['dis_id']).'"><i class="icon-pencil"></a> 
-						<a class="btn btn-danger btn-mini" href="'.site_url("enAttente/".$ligne['dis_id']).'"><i class="icon-trash"></a></td>';
+						<a class="btn btn-danger btn-mini" href="'.site_url("enAttente/supprimmerDisquesEnAttente/".$ligne['dis_id']).'"><i class="icon-trash"></a></td>';
 					echo '</tr>';
 					$i++;
 					$j++;

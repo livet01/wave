@@ -79,7 +79,7 @@ class Base_Controller extends MX_Controller
 		$this->load->model('users/User_model', 'user_model');
 		$this->load->library('users/auth');
 		
-		
+		$this->output->enable_profiler(TRUE);
 		
 		if ($this->auth->is_logged_in())
 		{
@@ -94,12 +94,10 @@ class Base_Controller extends MX_Controller
 			}
 
 			$this->load->model('importer/importer_model', 'importerManager');
-			$this->load->library('session');
-	
 			// Load our current logged in user so we can access it anywhere.
+			define('NBU', $this->importerManager->compteU($this->current_user->id));
+			define('NBNU', $this->importerManager->compteNU($this->current_user->id));
 			
-			$this->session->set_userdata(array("nbU" => $this->importerManager->compteU($this->current_user->id), "nbNU" => $this->importerManager->compteNU($this->current_user->id)));
-		
 		}
 
 		// Make the current user available in the views
