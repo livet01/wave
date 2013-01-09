@@ -56,6 +56,15 @@ class Importer_model extends CI_Model {
 		}
     }
 	
+	function GetDisqueImport($id)
+    {
+			return $this->db->select('*')
+							->from($this->table)
+							->where_in('imp_id', $id)
+							->get()
+							->result();
+    }
+	
 	public function deleteImport($id)
 	{
 		return $this->db->delete($this->table, array('imp_id' => $id));

@@ -17,6 +17,10 @@ class EnAttente extends Authenticated_Controller {
 		$this -> load -> database();
 		$this -> load -> library('form_validation');
 		$this -> load -> model('importer/importer_model', 'importerManager');
+		$this -> load -> model('parametre_model', 'parametreManager');
+		$this -> load -> model('disque/emplacement_model', 'emplacementManager');
+		$this -> load -> model('disque/style_model', 'styleManager');
+		$this -> load -> model('index/Info_Disque_Model', 'infodisque');
 		$this -> load -> library('layout');
 		$this -> load -> library('pagination');
 
@@ -34,7 +38,7 @@ class EnAttente extends Authenticated_Controller {
 			$data = array();
 
 			// On récupère le nombre de disque présent dans la base
-			$tabs = $this->importerManager->selectImport(); 
+			$tabs = $this -> importerManager -> selectImport();
 			$nb_disques_total = count($tabs);
 
 			// On vérifie la cohérence de la variable $_GET
@@ -55,8 +59,9 @@ class EnAttente extends Authenticated_Controller {
 			}
 
 			// Récupération de tout les disques de importdisque pour la page
+
 			$this -> importerManager -> selectImport();
-			var_dump("expression","exp");
+
 			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
 			foreach ($tabs as $tab) {
 				if (empty($tab -> emb_id))
@@ -64,7 +69,6 @@ class EnAttente extends Authenticated_Controller {
 				else {
 					$emb_id = $tab -> emb_id;
 				}
-				
 				//var_dump($this->current_user->id, $tab->per_id_import);
 				
 				if((int)$tab->per_id_import == $this->current_user->id){
@@ -80,20 +84,15 @@ class EnAttente extends Authenticated_Controller {
 				// On passe le tableau de disque
 				$data['resultat1'] = $tab_result1;
 			}
-			
-			if (!empty($tab_result2)) {
+			if (!empty($tab_result)) {
 				// On passe le tableau de disque
-				$data['resultat2'] = $tab_result2;
+				$data['resultat'] = $tab_result;
 			}
 		}
 
 		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
 		$data['affichage'] = $affichage;
-		$data['username'] = $this->current_user->username;
-	
-		
-		//var_dump($data['resultat2']);
-		
+
 		// Chargement de la vue
 		Template::set_view('enAttente/resultat');
 		//Template::set_view('index/resultat_recherche');
@@ -102,8 +101,8 @@ class EnAttente extends Authenticated_Controller {
 		//$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', $data);
 
 	}
-	
-	public function supprimmerDisquesEnAttente($g_nb_disques = 1, $affichage = 0){
+
+	public function supprimmerDisquesEnAttente($g_nb_disques = 1, $affichage = 0) {
 		// Chargement des ressources
 
 		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
@@ -112,12 +111,12 @@ class EnAttente extends Authenticated_Controller {
 			$data = array();
 
 			// Récupération de tout les disques pour la page
-			$id = $this->input->post('choix');
-			
+			$id = $this -> input -> post('choix');
+
 			$tabs = $this -> importerManager -> GetAll_in($id);
-			
-			//var_dump($tabs, $id);
-			
+
+			var_dump($tabs, $id);
+
 			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
 			foreach ($tabs as $tab) {
 				if (empty($tab -> emb_id))
@@ -142,7 +141,7 @@ class EnAttente extends Authenticated_Controller {
 		//Template::set_view('index/resultat_recherche');
 		Template::set('data', $data);
 		Template::render();
-		
+
 	}
 
 	public function supprimerAll($choix = null) {
@@ -160,21 +159,85 @@ class EnAttente extends Authenticated_Controller {
 	{
 		;
 	}
-	
-	public function modifDisquesEnAttente() {
-		
-		// Récupération de tous les disques enAttente de modification
-		//Tableau contenant les id des cases des disques s�lectionn�s
-		$id = $this -> input -> post('choix');
-		
-		//Tableau contenant les disques s�lectionn�s pour la modification
-		$tabs = $this -> importer_model -> GetAll_in($id);
-		
-		$data['imp_libelle'] = $tabs[0]['imp_libelle'];
 
+	public function modifDisquesEnAttente($id) {
+
+		// Chargement des formats
+		$formats = $this -> parametreManager -> select('format');
+		$formats = explode(";", $formats['param_valeur']);
+		$data['formats'] = $formats;
+
+		// Chargement des emplacements
+		$emp_libelles = $this -> emplacementManager -> select_all(array('emp_libelle', 'emp_plus'));
+		$data['emplacements'] = array();
+		foreach ($emp_libelles as $emp_libelle) {
+			array_push($data['emplacements'], array("emp_libelle" => $emp_libelle -> emp_libelle, "emp_plus" => $emp_libelle -> emp_plus));
+		}
+
+		// Chargement des styles
+		$styles = $this -> styleManager -> select_all(array('sty_couleur', 'sty_libelle'));
+		$data['styles'] = array();
+		foreach ($styles as $style) {
+			array_push($data['styles'], array("couleur" => $style -> sty_couleur, "libelle" => $style -> sty_libelle));
+		}
+		
+		$id_disque = $id;
+		// id_dis doit être >= à 0
+		assert($id_disque >= 0);
+
+		// Transtipage en integer
+		$id_disque = intval($id_disque);
+
+		// On récupère les infos du disque
+		$tabs = $this -> infodisque -> GetDisqueImport($id_disque);
+
+		// Tableau contenant les données à envoyé
+		$json_array = array();
+
+		// Parcours du résultat du model et ajout au json_array
+		foreach ($tabs as $tab) {
+			if (empty($tab -> imp_em_bev))
+				$emb_id = null;
+			else {
+				$emb_id = $tab -> imp_em_bev;
+			}
+			$json_array[] = array("dis_id" => $tab -> imp_id,"dis_envoi_ok" => $tab->imp_envoi_ok, "sty_libelle" => $tab->imp_style, "mail" => $tab-> imp_email_diffuseur, "dis_libelle" => $tab -> imp_libelle, "dis_format" => $tab -> imp_format, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab -> imp_diffuseur, "emp_libelle" => $tab -> imp_emplacement, "emb_id" => $emb_id);
+		}
+		if(!empty($json_array[0])) {
+			$disque = $json_array[0];
+			$data['infoDisque'] = $disque;
+			$data['import'] = true;
+			$this->old_disque = $disque;
+			if (!$this -> formulaire_null()) {
+				// Formulaire envoyé
+				$this->set_dis_id($id);
+				$is_erreur = $this->modifier_disque();
+				if(empty($is_erreur)) {
+					Template::set_message('Le disque a bien été modifié', 'success');
+					Template::redirect('enAttente/index');
+				}
+				else {
+					Template::set_message($is_erreur, 'error');
+					Template::set('data',$data);
+					Template::set_view('disque/ajouter_fiche');
+					Template::render();
+				}
+			}
+			else {
+				Template::set('data',$data);
+				Template::set_view('disque/ajouter_fiche');
+				Template::render();
+			}
+		}
+		else
+		{
+			Template::set_message('Le disque à modifier est introuvable.', 'error');
+			Template::redirect('enAttente/index');
+		}
+		
 		// Chargement de la vue
+		Template::set_view('ajouter_fiche');
 		Template::set('data', $data);
-		Template::set_view('ajouter_fiche.php');
 		Template::render();
 	}
 
