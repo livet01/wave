@@ -140,10 +140,13 @@
 				success : function(data) {
 				$("#email").val(data);
 				}
-
+				
 				});
+					
 				});
-
+				$('#sauvegarder-btn').click(function(){
+						$('#fiche').attr("action","<?php echo site_url("disque/sauvegarde"); ?>").submit();
+					});
 				function countChecked() {
 				// Pour les disques normales et correctes
 				var n = $("input:checked").length;

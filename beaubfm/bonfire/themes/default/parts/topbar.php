@@ -72,8 +72,8 @@
 				<ul class="nav">
 				  <li>
 				    <a href="<?php echo site_url("index"); ?>">Recherche</a>
-				  </li>
-				  <li><a href="<?php echo site_url("disque/ajouter"); ?>">Ajouter un disque</a></li>
+				  </li><?php $valeur = unserialize($_COOKIE['bf_session']); ?>
+				  <li><a href="<?php echo site_url("disque/ajouter"); ?>">Ajouter un disque <?php if(isset($valeur['user_id']) && isset($valeur['auth_custom'])) { if(file_exists('./assets/upload/'.$valeur['user_id'].'-'.$valeur['auth_custom'])) { ?><span class="badge badge-important">1</span><?php }} ?></a></li>
 				  <li><a href="<?php echo site_url("importerFiche"); ?>">Importer</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->

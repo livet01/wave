@@ -240,7 +240,7 @@ class Disque extends Authenticated_Controller {
 	// Ajouter un disque
 	//
 	public function ajouter() {
-		
+
 		// Initialisation des données a envoyer en bd
 		$data = array('erreur' => "", 'reussi' => "");
 		
@@ -263,16 +263,25 @@ class Disque extends Authenticated_Controller {
 			array_push($data['styles'],array("couleur" => $style->sty_couleur, "libelle" => $style->sty_libelle));
 		}
 		
+		
 		if (!$this -> formulaire_null()) {
 			// Formulaire envoyé
 			$is_erreur = $this->ajouter_disque();
 			if(empty($is_erreur)) {
 				Template::set_message('Le disque a bien été ajouté', 'success');
+				if(file_exists('./assets/upload/'.$this->current_user->id.'-'.$this->current_user->username))
+					delete_files('./assets/upload/'.$this->current_user->id.'-'.$this->current_user->username);
 			}
 			else {
 				Template::set_message($is_erreur, 'error');
 			}
 		}
+		else if(file_exists('./assets/upload/'.$this->current_user->id.'-'.$this->current_user->username)) {
+			$this->load->helper('file');
+			$sauv = read_file('./assets/upload/'.$this->current_user->id.'-'.$this->current_user->username);
+			$data['sauv'] = unserialize($sauv);
+		}
+			
 		Template::set('data',$data);
 		Template::set_view('disque/ajouter_fiche');
 		Template::render();
@@ -428,7 +437,40 @@ class Disque extends Authenticated_Controller {
 		}
 		return $erreur;
 	}
-
+	public function supprimer_sauvegarde() {
+		if (file_exists('./assets/upload/'.$this->current_user->id.'-'.$this->current_user->username))
+		{
+			unlink('./assets/upload/'.$this->current_user->id.'-'.$this->current_user->username);
+			Template::set_message('Sauvegarde supprimé', 'success');
+		}
+		else
+		{
+			Template::set_message('Aucune sauvegarde à supprimer', 'error');
+		}
+			Template::redirect('index');
+	}
+	public function sauvegarde() {
+		$data['titre'] =  $this -> input -> post('titre');
+		$data['format'] = $this -> input -> post('format');
+		$data['listenBy'] =  $this -> input -> post('listenBy');
+		$data['artiste'] =  $this -> input -> post('artiste');
+		$data['diffuseur'] = $this -> input -> post('diffuseur');
+		$data['envoiMail'] =    $this -> input -> post('envoiMail');
+		$data['emplacement'] =  $this -> input -> post('emplacement');
+		$data['emb'] =  $this -> input -> post('emb');
+		$data['style'] =   $this -> input -> post('style');
+		$this->load->helper('file');
+		if ( ! write_file('./assets/upload/'.$this->current_user->id.'-'.$this->current_user->username,serialize($data)))
+		{
+			Template::set_message('Sauvegarde impossible', 'error');
+		}
+		else
+		{
+			Template::set_message('Le disque a bien été sauvgardé', 'success');
+		}
+			Template::redirect('index');
+	}
+	
 	private function addBDD() {
 		$data['dis_libelle'] = $this -> get_dis_libelle();
 		$data['dis_format'] = $this -> get_dis_format();
@@ -582,7 +624,6 @@ class Disque extends Authenticated_Controller {
 		if($artiste =='0' || '1'){
 			
 			$sup = $this -> disqueManager -> suppArtiste($artiste);
-			var_dump($sup);
 		}
 		else {
 				echo "coucou";
