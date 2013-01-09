@@ -2,6 +2,8 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
+require_once 'disque.php';
+
 class EnAttente extends Authenticated_Controller {
 	//
 	// Constante d'affichage : réglage du nombre de disque par parge à afficher dans le tableau
@@ -16,11 +18,11 @@ class EnAttente extends Authenticated_Controller {
 		// Chargement des ressources pour tout le contrôleur
 		$this -> load -> database();
 		$this -> load -> library('form_validation');
+		
 		$this -> load -> model('importer/importer_model', 'importerManager');
 		$this -> load -> model('parametre_model', 'parametreManager');
 		$this -> load -> model('disque/emplacement_model', 'emplacementManager');
 		$this -> load -> model('disque/style_model', 'styleManager');
-		$this -> load -> model('index/Info_Disque_Model', 'infodisque');
 		$this -> load -> library('layout');
 		$this -> load -> library('pagination');
 
@@ -84,15 +86,15 @@ class EnAttente extends Authenticated_Controller {
 				// On passe le tableau de disque
 				$data['resultat1'] = $tab_result1;
 			}
-			if (!empty($tab_result)) {
+			if (!empty($tab_result2)) {
 				// On passe le tableau de disque
-				$data['resultat'] = $tab_result;
+				$data['resultat2'] = $tab_result2;
 			}
 		}
 
 		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
 		$data['affichage'] = $affichage;
-
+		$data['username'] = $this->current_user->username;
 		// Chargement de la vue
 		Template::set_view('enAttente/resultat');
 		//Template::set_view('index/resultat_recherche');
@@ -181,6 +183,9 @@ class EnAttente extends Authenticated_Controller {
 			array_push($data['styles'], array("couleur" => $style -> sty_couleur, "libelle" => $style -> sty_libelle));
 		}
 		
+		//Cr�ation d'un objet Disque
+		$disqueModif = new Disque();
+		
 		$id_disque = $id;
 		// id_dis doit être >= à 0
 		assert($id_disque >= 0);
@@ -189,7 +194,7 @@ class EnAttente extends Authenticated_Controller {
 		$id_disque = intval($id_disque);
 
 		// On récupère les infos du disque
-		$tabs = $this -> infodisque -> GetDisqueImport($id_disque);
+		$tabs = $this -> importerManager -> GetDisqueImport($id_disque);
 
 		// Tableau contenant les données à envoyé
 		$json_array = array();
@@ -207,11 +212,11 @@ class EnAttente extends Authenticated_Controller {
 			$disque = $json_array[0];
 			$data['infoDisque'] = $disque;
 			$data['import'] = true;
-			$this->old_disque = $disque;
-			if (!$this -> formulaire_null()) {
+			$disqueModif->old_disque = $disque;
+			if (!$disqueModif -> formulaire_null()) {
 				// Formulaire envoyé
-				$this->set_dis_id($id);
-				$is_erreur = $this->modifier_disque();
+				$disqueModif->set_dis_id($id);
+				$is_erreur = $disqueModif->modifier_disque();
 				if(empty($is_erreur)) {
 					Template::set_message('Le disque a bien été modifié', 'success');
 					Template::redirect('enAttente/index');

@@ -47,6 +47,8 @@
 			</div>
 		
 	<?php }
+		if(!empty($resultat2)){
+		
 	?>
 		<table class="table table-striped table-condensed">
 			<caption>
@@ -91,6 +93,7 @@
 			</nav>
 			</div>
 	<?php
+		}
 	}
 	}?>
 	
