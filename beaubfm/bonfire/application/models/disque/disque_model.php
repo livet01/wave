@@ -37,6 +37,12 @@ class Disque_model extends CI_Model {
 					->set('dis_envoi_ok', $data['dis_envoi_ok'])
 					->set('emp_id', $data['emp_id'])
 					->set('emb_id', (empty($data['emb_id']) ? NULL : $data['emb_id']))
+					->set('col1', (empty($data['col1']) ? NULL : $data['col1']))
+					->set('col2', (empty($data['col2']) ? NULL : $data['col2']))
+					->set('col3', (empty($data['col3']) ? NULL : $data['col3']))
+					->set('col4', (empty($data['col4']) ? NULL : $data['col4']))
+					->set('col5', (empty($data['col5']) ? NULL : $data['col5']))
+					->set('col6', (empty($data['col6']) ? NULL : $data['col6']))
 					->insert($this->table);
 		}
 		else {
@@ -72,6 +78,12 @@ class Disque_model extends CI_Model {
 					->set('dis_envoi_ok', $data['dis_envoi_ok'])
 					->set('emp_id', $data['emp_id'])
 					->set('emb_id', (empty($data['emb_id']) ? NULL : $data['emb_id']))
+					->set('col1', (empty($data['col1']) ? NULL : $data['col1']))
+					->set('col2', (empty($data['col2']) ? NULL : $data['col2']))
+					->set('col3', (empty($data['col3']) ? NULL : $data['col3']))
+					->set('col4', (empty($data['col4']) ? NULL : $data['col4']))
+					->set('col5', (empty($data['col5']) ? NULL : $data['col5']))
+					->set('col6', (empty($data['col6']) ? NULL : $data['col6']))
 					->where('dis_id',$data['dis_id'])
 					->update($this->table);
 		}

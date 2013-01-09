@@ -114,6 +114,21 @@
 					</div>
 				</div>
 
+				<?php if(isset($colonnes)) {
+					$i=1; 
+						foreach($colonnes as $colonne) { ; ?>
+									<div class="control-group <?php if (form_error('col'.$i)) echo "error";?>">
+										<label class="control-label" for="<?php echo 'col'.$i; ?>"><i class="icon-plus"></i> <?php echo $colonne; ?> </label>
+										<div class="controls">
+											<input type="text" id="<?php echo 'col'.$i; ?>" name="<?php echo 'col'.$i; ?>"  value="<?php echo (!empty($infoDisque['col'.$i]))? $infoDisque['col'.$i] : ((!empty($sauv['col'.$i])) ? $sauv['col'.$i] : set_value('col'.$i)); ?>">
+											<span class="help-inline"><?php echo form_error('col'.$i); ?></span>
+										</div>
+									</div>
+								<?php $i++; } ?>
+				
+				
+				<?php } ?>
+
 				<div class="form-actions">
 					<a class="btn btn-primary" href="javascript: document.forms['fiche'].submit();"><i class="icon-ok icon-white"></i> Valider </a>
 					<a class="btn " href="<?php echo site_url('index'); ?>"><i class="icon-repeat"></i> Annuler </a>

@@ -16,19 +16,10 @@ $id = isset($parametre['param_id']) ? $parametre['param_id'] : '';
     <h3>Parametre</h3>
 <?php echo form_open($this->uri->uri_string(), 'class="form-horizontal"'); ?>
     <fieldset>
-        <div class="control-group <?php echo form_error('parametre_param_libelle') ? 'error' : ''; ?>">
-            <?php echo form_label('libelle du parametre', 'parametre_param_libelle', array('class' => "control-label") ); ?>
-            <div class='controls'>
-        <input id="parametre_param_libelle" type="text" name="parametre_param_libelle" maxlength="100" value="<?php echo set_value('parametre_param_libelle', isset($parametre['parametre_param_libelle']) ? $parametre['parametre_param_libelle'] : ''); ?>"  />
-        <span class="help-inline"><?php echo form_error('parametre_param_libelle'); ?></span>
-        </div>
-
-
-        </div>
         <div class="control-group <?php echo form_error('parametre_param_valeur') ? 'error' : ''; ?>">
             <?php echo form_label('valeur du parametre', 'parametre_param_valeur', array('class' => "control-label") ); ?>
             <div class='controls'>
-        <input id="parametre_param_valeur" type="text" name="parametre_param_valeur" maxlength="100" value="<?php echo set_value('parametre_param_valeur', isset($parametre['parametre_param_valeur']) ? $parametre['parametre_param_valeur'] : ''); ?>"  />
+        <input id="parametre_param_valeur" type="text" name="parametre_param_valeur" maxlength="100" value="<?php echo set_value('param_valeur', isset($parametre['param_valeur']) ? $parametre['param_valeur'] : ''); ?>"  />
         <span class="help-inline"><?php echo form_error('parametre_param_valeur'); ?></span>
         </div>
 

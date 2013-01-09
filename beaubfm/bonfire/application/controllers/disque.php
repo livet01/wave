@@ -21,6 +21,14 @@ class Disque extends Authenticated_Controller {
 	private $emb_id;
 	private $emp_id;
 	private $old_disque;
+	private $col1;
+    private $col2;
+    private $col3;
+    private $col4;
+    private $col5;
+    private $col6;
+	private $colonnes;
+	
 	//
 	// Constructeur
 	//
@@ -31,7 +39,7 @@ class Disque extends Authenticated_Controller {
 		$this -> load -> library('securite');
 		$this -> load -> library('layout');
 		$this -> load -> library('layout');
-
+		
 		//Chargement models
 		$this -> load -> model('personne_model', 'persManager');
 		$this -> load -> model('parametre_model', 'parametreManager');
@@ -47,7 +55,11 @@ class Disque extends Authenticated_Controller {
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
 		//$this->output->enable_profiler(TRUE);
-
+		
+		
+		// Chargement des colones supplémentaire
+		$this->colonnes = $this -> parametreManager -> select('colonnes');
+		$this->colonnes = explode(";", $this->colonnes['param_valeur']);
 	}
 
 	//
@@ -149,7 +161,65 @@ class Disque extends Authenticated_Controller {
 	public function set_emp_id($emp_id) {
 		$this -> emp_id = $emp_id;
 	}
+	   public function get_col1()
+    {
+        return $this->col1;
+    }
 
+    public function set_col1($col1)
+    {
+        $this->col1 = $col1;
+    }
+
+    public function get_col2()
+    {
+        return $this->col2;
+    }
+
+    public function set_col2($col2)
+    {
+        $this->col2 = $col2;
+    }
+
+    public function get_col3()
+    {
+        return $this->col3;
+    }
+
+    public function set_col3($col3)
+    {
+        $this->col3 = $col3;
+    }
+
+    public function get_col4()
+    {
+        return $this->col4;
+    }
+
+    public function set_col4($col4)
+    {
+        $this->col4 = $col4;
+    }
+
+    public function get_col5()
+    {
+        return $this->col5;
+    }
+
+    public function set_col5($col5)
+    {
+        $this->col5 = $col5;
+    }
+
+    public function get_col6()
+    {
+        return $this->col6;
+    }
+
+    public function set_col6($col6)
+    {
+        $this->col6 = $col6;
+    }
 	//
 	// Index
 	//
@@ -168,6 +238,9 @@ class Disque extends Authenticated_Controller {
 		$formats = $this -> parametreManager -> select('format');
 		$formats = explode(";", $formats['param_valeur']);
 		$data['formats'] = $formats;
+		
+		// Colones sup
+		$data['colonnes'] = $this->colonnes;
 		
 		// Chargement des emplacements
 		$emp_libelles = $this -> emplacementManager -> select_all(array('emp_libelle','emp_plus'));
@@ -202,7 +275,7 @@ class Disque extends Authenticated_Controller {
 			else {
 				$emb_id = $tab -> emb_libelle;
 			}
-			$json_array[] = array("dis_id" => $tab -> dis_id,"dis_envoi_ok" => $tab->dis_envoi_ok, "sty_libelle" => $tab->sty_libelle, "mail" => $tab-> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+			$json_array[] = array("dis_id" => $tab -> dis_id,"dis_envoi_ok" => $tab->dis_envoi_ok, "sty_libelle" => $tab->sty_libelle, "mail" => $tab-> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3,"col4" => $tab -> col4,"col5" => $tab -> col5,"col6" => $tab -> col6);
 		}
 		if(!empty($json_array[0])) {
 			$disque = $json_array[0];
@@ -256,6 +329,9 @@ class Disque extends Authenticated_Controller {
 			array_push($data['emplacements'],array("emp_libelle" =>$emp_libelle->emp_libelle,"emp_plus"=>$emp_libelle->emp_plus));
 		}
 		
+		// Colonne sup
+		$data['colonnes'] = $this->colonnes;
+		
 		// Chargement des styles
 		$styles = $this -> styleManager -> select_all(array('sty_couleur','sty_libelle'));
 		$data['styles'] = array();
@@ -296,9 +372,14 @@ class Disque extends Authenticated_Controller {
 		$this -> form_validation -> set_rules('email', '"Email"', 'trim|min_length[5]|max_length[50]|valid_email|xss_clean');
 		// Vérification du champs écouté par
 		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-
+		
 		$emplacement = $this->rechercheEmplacementByNom($this -> input -> post('emplacement'));
 		$plus = $this -> parametreManager -> select('emb');
+		$i = 1;
+		foreach ($this->colonnes as $colonne ) {
+			$this -> form_validation -> set_rules('col'.$i, '"'.$colonne.'"', 'trim|encode_php_tags|xss_clean');
+			$i++;
+		}
 		
 		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
 		if ($emplacement == $plus['param_valeur']) {
@@ -386,6 +467,34 @@ class Disque extends Authenticated_Controller {
 				$this -> set_mem_id($this->rechercherEcouteParByNom($this -> input -> post('listenBy')));
 	
 				$this -> set_sty_id($this->rechercherStyleByNom($this -> input -> post('style')));
+				
+				$i = 1;
+				foreach ($this->colonnes as $colonne ) {
+					switch ($i) {
+						case 1:
+							$this -> set_col1($this -> input -> post('col'.$i));
+							break;
+						case 2:
+							$this -> set_col2($this -> input -> post('col'.$i));
+							break;
+						case 3:
+							$this -> set_col3($this -> input -> post('col'.$i));
+							break;
+						case 4:
+							$this -> set_col4($this -> input -> post('col'.$i));
+							break;
+						case 5:
+							$this -> set_col5($this -> input -> post('col'.$i));
+							break;
+						case 6:
+							$this -> set_col6($this -> input -> post('col'.$i));
+							break;	
+					}
+					$i++;
+				}
+		
+		
+				
 			} else {// Le titre, artiste est déja en base de données
 				throw new Exception("Le disque $this->dis_libelle est déjà présent dans la base de donnée.");
 			}
@@ -459,6 +568,11 @@ class Disque extends Authenticated_Controller {
 		$data['emplacement'] =  $this -> input -> post('emplacement');
 		$data['emb'] =  $this -> input -> post('emb');
 		$data['style'] =   $this -> input -> post('style');
+		$i=1;
+		foreach ($this->colonnes as $colonne ) {
+			$data['col'.$i] = $this -> input -> post('col'.$i);
+			$i++;
+		}
 		$this->load->helper('file');
 		if ( ! write_file('./assets/upload/'.$this->current_user->id.'-'.$this->current_user->username,serialize($data)))
 		{
@@ -481,7 +595,30 @@ class Disque extends Authenticated_Controller {
 		$data['emp_id'] = $this -> get_emp_id();
 		$data['emb_id'] = $this -> get_emb_id();
 		$data['sty_id'] = $this -> get_sty_id();
-
+		$i = 1;
+		foreach ($this->colonnes as $colonne ) {
+			switch ($i) {
+				case 1:
+					$data['col1'] = $this -> get_col1();
+					break;
+				case 2:
+					$data['col2'] = $this -> get_col2();
+					break;
+				case 3:
+					$data['col3'] = $this -> get_col3();
+					break;
+				case 4:
+					$data['col4'] = $this -> get_col4();
+					break;
+				case 5:
+					$data['col5'] = $this -> get_col5();
+					break;
+				case 6:
+					$data['col6'] = $this -> get_col6();
+					break;	
+			}
+			$i++;
+		}
 		if (!$this -> disqueManager -> insert($data)) {
 			throw new Exception("Erreur dans l'ajout");
 		}
