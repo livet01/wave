@@ -21,138 +21,128 @@
 	THE SOFTWARE.
 */
 
-$lang['us_account_deleted']			= 'Unfortunately your account has been deleted. It has not yet been purged and <strong>may still</strong> be restored. Contact the administrator at %s.';
+$lang['us_account_deleted']			= 'Malheureusement, votre compte a été supprimé. Il n\'a pas encore été purgé et <strong>peut encore</strong> être restauré. Contactez l\'administrateur à %s.';
 
-$lang['us_bad_email_pass']			= 'Incorrect email or password.';
-$lang['us_must_login']				= 'You must be logged in to view that page.';
-$lang['us_no_permission']			= 'You do not have permission to access that page.';
-$lang['us_fields_required']         = '%s and Password fields must be filled out.';
+$lang['us_bad_email_pass']			= 'Email ou mot de passe incorrect.';
+$lang['us_must_login']				= 'Vous devez être connecté pour voir cette page.';
+$lang['us_no_permission']			= 'Vous n\'avez pas la permission d\'accéder à cette page.';
+$lang['us_fields_required']         = 'Les champs %s et mot de passe doivent être remplis.';
 
-$lang['us_access_logs']				= 'Access Logs';
-$lang['us_logged_in_on']			= 'logged in on';
-$lang['us_no_access_message']		= '<p>Congratulations!</p><p>All of your users have good memories!</p>';
-$lang['us_log_create']				= 'created a new';
-$lang['us_log_edit']				= 'modified user';
-$lang['us_log_delete']				= 'deleted user';
-$lang['us_log_logged']				= 'logged in from';
-$lang['us_log_logged_out']			= 'logged out from';
-$lang['us_log_reset']				= 'reset their password.';
-$lang['us_log_register']			= 'registered a new account.';
-$lang['us_log_edit_profile']		= 'updated their profile';
-
-
-$lang['us_deleted_users']			= 'Deleted Users';
-$lang['us_purge_del_accounts']		= 'Purge Deleted Accounts';
-$lang['us_purge_del_note']			= '<p>Purging deleted accounts is a permanent action. There is no going back, so please make sure.</p>';
-$lang['us_purge_del_confirm']		= 'Are you sure you want to completely remove the user account(s) - there is no going back?';
-$lang['us_action_purged']			= 'Users purged.';
-$lang['us_action_deleted']			= 'The User was successfully deleted.';
-$lang['us_action_not_deleted']		= 'We could not delete the user: ';
-$lang['us_delete_account']			= 'Delete Account';
-$lang['us_delete_account_note']		= '<h3>Delete this Account</h3><p>Deleting this account will revoke all of their privileges on the site.</p>';
-$lang['us_delete_account_confirm']	= 'Are you sure you want to delete the user account(s)?';
-
-$lang['us_restore_account']			= 'Restore Account';
-$lang['us_restore_account_note']	= '<h3>Restore this Account</h3><p>Un-delete this user\'s account.</p>';
-$lang['us_restore_account_confirm']	= 'Restore this users account?';
-
-$lang['us_role']					= 'Role';
-$lang['us_role_lower']				= 'role';
-$lang['us_no_users']				= 'No users found.';
-$lang['us_create_user']				= 'Create New User';
-$lang['us_create_user_note']		= '<h3>Create A New User</h3><p>Create new accounts for other users in your circle.</p>';
-$lang['us_edit_user']				= 'Edit User';
-$lang['us_restore_note']			= 'Restore the user and allow them access to the site again.';
-$lang['us_unban_note']				= 'Un-Ban the user and all them access to the site.';
-$lang['us_account_status']			= 'Account Status';
-
-$lang['us_failed_login_attempts']	= 'Failed Login Attempts';
-$lang['us_failed_logins_note']		= '<p>Congratulations!</p><p>All of your users have good memories!</p>';
-
-$lang['us_banned_admin_note']		= 'This user has been banned from the site.';
-$lang['us_banned_msg']				= 'This account does not have permission to enter the site.';
-
-$lang['us_first_name']				= 'First Name';
-$lang['us_last_name']				= 'Last Name';
-$lang['us_address']					= 'Address';
-$lang['us_street_1']				= 'Street 1';
-$lang['us_street_2']				= 'Street 2';
-$lang['us_city']					= 'City';
-$lang['us_state']					= 'State';
-$lang['us_no_states']				= 'There are no states/provences/counties/regions for this country. Create them in the address config file';
-$lang['us_country']					= 'Country';
-$lang['us_zipcode']					= 'Zipcode';
-
-$lang['us_user_management']			= 'User Management';
-$lang['us_email_in_use']			= 'The %s address is already in use. Please choose another.';
-
-$lang['us_edit_profile']			= 'Edit Profile';
-$lang['us_edit_note']				= 'Enter your details below and click Save.';
-
-$lang['us_reset_password']			= 'Reset Password';
-$lang['us_reset_note']				= 'Enter your email and we will send a temporary password to you.';
-
-$lang['us_login']					= 'My Name Is...';
-$lang['us_remember_note']			= 'Remember me for two weeks';
-$lang['us_no_account']				= 'Don&rsquo;t have an account?';
-$lang['us_sign_up']					= 'Sign up today';
-$lang['us_forgot_your_password']	= 'Forgot Your Password?';
-
-$lang['us_password_mins']			= 'Minimum 8 characters.';
-$lang['us_register']				= 'Register';
-$lang['us_already_registered']		= 'Already registered?';
-
-$lang['us_action_save']				= 'Save User';
-$lang['us_unauthorized']			= 'Unauthorized. Sorry you do not have the appropriate permission to manage the "%s" role.';
-$lang['us_empty_id']				= 'No userid provided. You must provide a userid to perform this action.';
-$lang['us_self_delete']				= 'Unauthorized. Sorry, you can not delete yourself.';
-
-$lang['us_filter_first_letter']		= 'Username starts with: ';
-$lang['us_account_details']			= 'Account Details';
-$lang['us_last_login']				= 'Last Login';
+$lang['us_access_logs']				= 'Journaux d\'accès';
+$lang['us_logged_in_on']			= 'Connecté sur';
+$lang['us_no_access_message']		= '<p>Félicitations!</p><p>Tous vos utilisateurs ont eu de bons souvenirs!</p>';
+$lang['us_log_create']				= 'Crée un nouveau';
+$lang['us_log_edit']				= 'Utilisateur modifié';
+$lang['us_log_delete']				= 'Utilisateur supprimé';
+$lang['us_log_logged']				= 'Connecté à partir de';
+$lang['us_log_logged_out']			= 'Déconnecté de';
+$lang['us_log_reset']				= 'Réinitialiser leur mot de passe.';
+$lang['us_log_register']			= 'Enregistrer un nouveau compte.';
+$lang['us_log_edit_profile']		= 'Mettre à jour leur profil';
 
 
+$lang['us_deleted_users']			= 'Utilisateurs supprimés';
+$lang['us_purge_del_accounts']		= 'Comptes supprimés de la purge';
+$lang['us_purge_del_note']			= '<p>La suppression des comptes de la purge est une action définitive. Il n\'y a pas de retour en arrière possible, donc assurez-vous de bien vouloir le faire.</p>';
+$lang['us_purge_del_confirm']		= 'Êtes-vous sûr de vouloir supprimer complètement le(s) compte(s) utilisateur(s) - il n\'y a pas de retour en arrière?';
+$lang['us_action_purged']			= 'Utilisateurs purgés.';
+$lang['us_action_deleted']			= 'L\'utilisateur a été supprimé avec succès.';
+$lang['us_action_not_deleted']		= 'Impossible de supprimer l\'utilisateur: ';
+$lang['us_delete_account']			= 'Supprimer le compte';
+$lang['us_delete_account_note']		= '<h3>Supprimer ce compte</h3><p>La suppression de ce compte révoquera tous les privilèges du site.</p>';
+$lang['us_delete_account_confirm']	= 'Êtes-vous sûr de vouloir supprimer le(s) compte(s) utilisateur(s)?';
 
-$lang['us_no_password']             = 'No Password present.';
-$lang['us_no_email']                = 'No Email given.';
-$lang['us_email_taken']             = 'Email already exists.';
-$lang['us_invalid_user_id']         = 'Invalid User ID';
+$lang['us_restore_account']			= 'Restaurer le compte';
+$lang['us_restore_account_note']	= '<h3>Restaurer ce compte</h3><p>Restaurer ce compte utilisateur.</p>';
+$lang['us_restore_account_confirm']	= 'Restaurer ce compte utilisateur?';
 
-$lang['us_no_password']             = 'No Password present.';
+$lang['us_role']					= 'Rôle';
+$lang['us_role_lower']				= 'rôle';
+$lang['us_no_users']				= 'Aucun utilisateurs trouvés.';
+$lang['us_create_user']				= 'Créer un nouvel utilisateur';
+$lang['us_create_user_note']		= '<h3>Créer un nouvel utilisateur</h3><p>Créer de nouveaux comptes pour les autres utilisateurs de votre entourage.</p>';
+$lang['us_edit_user']				= 'Editer l\'utilisateur';
+$lang['us_restore_note']			= 'Restaurer l\'utilisateur et lui permettre d\'accéder de nouveau au site.';
+$lang['us_unban_note']				= 'Débannir l\'utilisateur et tous les accès au site.';
+$lang['us_account_status']			= 'Statut des comptes';
 
-$lang['us_no_email']                = 'No Email given.';
+$lang['us_failed_login_attempts']	= 'Tentatives de connexion échouées';
+$lang['us_failed_logins_note']		= '<p>Félicitations!</p><p>Tous vos utilisateurs ont eu de bons souvenirs!</p>Tentatives de connexion échouées';
 
-$lang['us_email_taken']             = 'Email already exists.';
-$lang['us_invalid_user_id']         = 'Invalid User ID';
+$lang['us_banned_admin_note']		= 'Cet utilisateur a été banni du site.';
+$lang['us_banned_msg']				= 'Ce compte n\'a pas la permission d\'entrer dans le site.';
+
+$lang['us_first_name']				= 'Prénom';
+$lang['us_last_name']				= 'Nom';
+$lang['us_address']					= 'Adresse';
+$lang['us_street_1']				= 'Rue 1';
+$lang['us_street_2']				= 'Rue 2';
+$lang['us_city']					= 'Ville';
+$lang['us_state']					= 'Etat';
+$lang['us_no_states']				= 'Il n\'y a pas de régions/départements pour ce pays. Les créer dans le fichier de configuration d\'adresse';
+$lang['us_country']					= 'Pays';
+$lang['us_zipcode']					= 'Code postal';
+
+$lang['us_user_management']			= 'Gestion des utilisateurs';
+$lang['us_email_in_use']			= 'L\'adresse %s est déjà utilisée. En choisir une autre s\'il vous plaît.';
+
+$lang['us_edit_profile']			= 'Editer le Profil';
+$lang['us_edit_note']				= 'Entrez vos coordonnées ci-dessous et cliquez sur Enregistrer.';
+
+$lang['us_reset_password']			= 'Réinitialiser le mot de passe';
+$lang['us_reset_note']				= 'Entrez votre email et nous vous enverrons un mot de passe temporaire.';
+
+$lang['us_login']					= 'Connexion';
+$lang['us_remember_note']			= 'Se souvenir de moi pour 2 semaines';
+$lang['us_no_account']				= 'Vous n\'avez pas de compte?';
+$lang['us_sign_up']					= 'Inscrivez-vous aujourd\'hui';
+$lang['us_forgot_your_password']	= 'Mot de passe oublié?';
+
+$lang['us_password_mins']			= '8 caractères minimum.';
+$lang['us_register']				= 'S\'inscrire';
+$lang['us_already_registered']		= 'Déjà inscrit?';
+
+$lang['us_action_save']				= 'Sauvegarder l\'utilisateur';
+$lang['us_unauthorized']			= 'Non autorisé. Désolé vous n\'avez pas la permission appropriée pour gérer le rôle "%s".';
+$lang['us_empty_id']				= 'Aucun id utilisateur fourni. Vous devez fournir un nom d\'utilisateur pour effectuer cette action.';
+$lang['us_self_delete']				= 'Non autorisé. Désolé, vous ne pouvez pas vous supprimer.';
+
+$lang['us_filter_first_letter']		= 'Nom d\'utilisateur commence par: ';
+$lang['us_account_details']			= 'Détails du compte';
+$lang['us_last_login']				= 'Dernière connexion';
 
 
 
-$lang['us_account_created_success'] = 'Your account has been created. Please log in.';
+$lang['us_no_password']             = 'Aucun mot de passe actuellement.';
+$lang['us_no_email']                = 'Aucune donnée email.';
+$lang['us_email_taken']             = 'L\'email existe déjà.';
+$lang['us_invalid_user_id']         = 'ID utilisateur invalide';
 
-$lang['us_email_already_used']      = 'That email address is already in use.';
-$lang['us_username_already_used']   = 'That username is already in use.';
-$lang['us_invalid_user_id']         = 'Invalid user id.';
-$lang['us_invalid_email']           = 'Cannot find that email in our records.';
+$lang['us_account_created_success'] = 'Votre compte a été créé. Connectez-vous s\'il vous plaît';
 
-$lang['us_reset_invalid_email']     = 'That did not appear to be a valid password reset request.';
-$lang['us_reset_pass_subject']      = 'Your Temporary Password';
-$lang['us_reset_pass_message']      = 'Please check your email for instructions to reset your password.';
-$lang['us_reset_pass_error']        = 'Unable to send an email: ';
-$lang['us_reset_password_success']  = 'Please login using your new password.';
-$lang['us_reset_password_error']    = 'There was an error resetting your password: ';
+$lang['us_email_already_used']      = 'Cette adresse email est déjà utilisée.';
+$lang['us_username_already_used']   = 'Ce nom d\'utilisateur est déjà utilisé.';
+$lang['us_invalid_email']           = 'Impossible de trouver cet email dans nos dossiers.';
 
-
-$lang['us_profile_updated_success'] = 'Profile successfully updated.';
-$lang['us_profile_updated_error']   = 'There was a problem updating your profile ';
-
-$lang['us_register_disabled']       = 'New account registrations are not allowed.';
+$lang['us_reset_invalid_email']     = 'Cela ne semble pas être une demande valide de réinitialisation de mot de passe.';
+$lang['us_reset_pass_subject']      = 'Votre mot de passe temporaire';
+$lang['us_reset_pass_message']      = 'Consulter votre boite email pour obtenir les instructions pour réinitialiser votre mot de passe.';
+$lang['us_reset_pass_error']        = 'Impossible d\'envoyer un email: ';
+$lang['us_reset_password_success']  = 'Connectez-vous en utilisant votre nouveau mot de passe.';
+$lang['us_reset_password_error']    = 'Il y a une erreur de réinitialisation de votre mot de passe: ';
 
 
-$lang['us_user_created_success']    = 'User successfully created.';
-$lang['us_user_update_success']     = 'User successfully updated.';
+$lang['us_profile_updated_success'] = 'Profil mis à jour avec succès.';
+$lang['us_profile_updated_error']   = 'Il y a un problème de mise à jour de votre profil ';
 
-$lang['us_user_restored_success']   = 'User successfully restored.';
-$lang['us_user_restored_error']     = 'Unable to restore user: ';
+$lang['us_register_disabled']       = 'Les nouvelles ouvertures de comptes ne sont pas autorisées.';
+
+
+$lang['us_user_created_success']    = 'Utilisateur crée avec succès.';
+$lang['us_user_update_success']     = 'Utilisateur mis à jour avec succès.';
+
+$lang['us_user_restored_success']   = 'Utilisateur restauré avec succès.';
+$lang['us_user_restored_error']     = 'Impossible de restaurer l\'utilisateur: ';
 
 
 /* Activations */
