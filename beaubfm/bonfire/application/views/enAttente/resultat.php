@@ -1,10 +1,12 @@
 <!-- <script src="<?php echo js_url('resultatRech'); ?>"></script> -->
 <center>
-		<?php
-			if(($affichage==0 || $affichage==1) && !empty($resultat1)){ ?>		
+			
 		<div id="box"></div>
 		
 		<form  method="post" id="tdisqueI" action="#">
+		
+		<?php
+			if(($affichage==0 || $affichage==1) && !empty($resultat1)){ ?>	
 		
 		<table class="table table-striped table-condensed">
 			<caption>
@@ -50,7 +52,8 @@
 			</div>
 		
 	<?php }
-		if(!empty($resultat2)){
+	}
+		if(($affichage==0 || $affichage==1) && !empty($resultat2)){
 		
 	?>
 		<table class="table table-striped table-condensed">
@@ -58,7 +61,7 @@
 				<?php if($affichage==0) { ?> <h2>Listes des disques en attente</h2> <?php } ?>
 			</caption>
 			<tr>
-				<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th><?php echo (!empty($resultat1)) ? "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" : "<input type=\"checkbox\" onclick=\"CocheTout(this,'choix[]');\" value=\"1\" >"; ?></th>
 				<th><i class="icon-music"></i> Titre</th>
 				<th><i class="icon-user"></i> Artiste</th>
 				<th><i class="icon-home"></i> Label</th>
@@ -68,7 +71,8 @@
 				
 			<?php
 				//var_dump($resultat2);
-				
+				if(empty($resultat1))
+					$j= 0;
 				$i=0;
 				foreach ($resultat2 as $ligne) {
 					if ($i % 2 == 0)
@@ -101,7 +105,7 @@
 	<?php
 		}
 	}
-	}?>
+	?>
 	
 
 

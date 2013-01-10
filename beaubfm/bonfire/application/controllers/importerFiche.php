@@ -46,7 +46,8 @@ class ImporterFiche extends Authenticated_Controller{
 					//var_dump($dataTest['file_type']);
 					
 					//On récupère l'erreur					
-					$data['erreur'][$i] = str_replace(array('<p>', '</p>'), "", "Fichier " . $i . " : " . $this -> upload -> display_errors() . "<br/>Fichier autorisé : XLS, XLSX, CSV d'une taille maximum de 2048 KO.");
+					$msg['error'] = str_replace(array('<p>', '</p>'), "", "Fichier " . $i . " : " . $this -> upload -> display_errors() . "<br/>Fichier autorisé : XLS, XLSX, CSV d'une taille maximum de 2048 KO.");
+					$data = "";
 				} else {
 					//Sinon on récupère les informations de l'upload
 					$data[$i] = array('upload_data' => $this -> upload -> data());
@@ -74,19 +75,28 @@ class ImporterFiche extends Authenticated_Controller{
 				$msgValide = $this -> ctrlTableauFinal($arrayDisqueEpure);
 				if ($msgValide === TRUE) {
 					$msgRetour = $this -> ctrlAjoutFiche($arrayDisqueEpure);
-					$data['reussi'][$i] = "Fichier " . $i . " : " . $msgRetour['reussi'];
+					$msg['success'] = "Fichier " . $i . " : " . $msgRetour['reussi'];
 					if ($msgRetour['erreur'] !== null) {
 						$data['erreur'][$i] = "Fichier" . $i . " : " . $msgRetour['erreur'];
 					}
 				} else {
-					$data['erreur'][$i] = "Fichier" . $i . " : Le fichier est illisible, il lui manque une colonne ou il n'est pas compatible.";
+					$msg['error'] = "Fichier" . $i . " : Le fichier est illisible, il lui manque une colonne ou il n'est pas compatible.";
 				}
 			}
 		}
-
+		
 		//On recharge la vue et on affiche les éventuels messages d'erreurs
 		parent::__construct();
-		Template::set('data',$data);
+		if(isset($data)){
+			Template::set('data',$data);
+			if(empty($msg['error']))
+				Template::set_message($msg['success'], "success");
+			else
+				Template::set_message($msg['error'], "error");
+		}
+		else
+			$s1 = Template::set_message("Veuillez choisir un fichier.", "warning");
+
 		Template::set_view('importer.php');
 		Template::render();
 	}
