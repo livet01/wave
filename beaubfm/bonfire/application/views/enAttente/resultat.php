@@ -10,7 +10,7 @@
 		
 		<table class="table table-striped table-condensed">
 			<caption>
-				<?php if($affichage==0) { ?> <h2>Listes des disques en attente de <?php echo $username; ?><?php if(defined('NBU') && NBU != 0) { ?><span class="badge badge-important"><?php echo NBU; ?></span> <?php } ?></h2> <?php } ?>
+				<?php if($affichage==0) { ?> <h2>Listes des disques en attente de <?php echo $username; ?> <?php if(defined('NBU') && NBU != 0) { ?><span class="badge badge-important"><?php echo NBU; ?></span> <?php } ?></h2> <?php } ?>
 			</caption>
 			<tr>
 				<th><input type="checkbox" onclick="CocheTout(this,'choix[]');" value="1" ></th>
@@ -34,7 +34,7 @@
 					echo '<td class="left" onclick="; }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">'.$ligne['dis_libelle'].'</td>';
 					echo '<td>'.$ligne['art_nom'].'</td>';
 					echo '<td>'.$ligne['per_nom'].'</td>';
-					echo '<td><a class="btn btn-info btn-mini" href="'.site_url("enAttente/modifDisquesEnAttente/".$ligne['dis_id']).'"><i class="icon-pencil"></a> 
+					echo '<td><a class="btn btn-info btn-mini ajaxify" href="'.site_url("enAttente/modifDisquesEnAttente/".$ligne['dis_id']).'"><i class="icon-pencil"></a> 
 						<a class="btn btn-danger btn-mini" href="'.site_url("enAttente/supprimmerDisquesEnAttente/".$ligne['dis_id']).'"><i class="icon-trash"></a></td>';
 					echo '</tr>';
 					$i++;
@@ -58,7 +58,7 @@
 	?>
 		<table class="table table-striped table-condensed">
 			<caption>
-				<?php if($affichage==0) { ?> <h2>Listes des disques en attente</h2> <?php } ?>
+				<?php if($affichage==0) { ?> <h2>Listes des disques en attente <?php if(defined('NBU') && NBNU != 0) { ?><span class="badge badge-info"><?php echo NBNU; ?></span></h2> 
 			</caption>
 			<tr>
 				<th><?php echo (!empty($resultat1)) ? "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" : "<input type=\"checkbox\" onclick=\"CocheTout(this,'choix[]');\" value=\"1\" >"; ?></th>

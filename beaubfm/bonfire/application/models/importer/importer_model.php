@@ -5,7 +5,7 @@ class Importer_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public $table="ImportDisque";
+	public $table="importdisque";
 	
 	public function ajoutDisqueImport($libelle,$format,$ecoute,$dateAjout,$artiste,$diffuseur,$email,$emplacement,$perId,$style,$emBev)
 	{
