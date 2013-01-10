@@ -3946,11 +3946,8 @@ h1, h2, h3, h4, h5, h6 {
 	background: url("../images/fond/10.jpg") no-repeat center ;
 	margin:auto;
 	
-    -webkit-box-shadow: 0 0 65px #fff inset, 0 0 20px #fff inset;  
-    -moz-box-shadow:    0 0 65px #fff inset, 0 0 20px #fff inset;  
-      -moz-box-shadow: 0 0 65px #fff inset, 0 0 20px #fff inset, 0 0 5px #fff;  
-    -webkit-box-shadow: 0 0 65px #fff inset, 0 0 20px #fff inset, 0 0 5px #fff;  
-    box-shadow: 0 0 65px #fff inset, 0 0 20px #fff inset, 0 0 5px #fff;  
+	border-radius:10px;
+	-moz-border-radius:10px;
  
 }
 .indexRecherche{
@@ -3967,7 +3964,7 @@ h1.home {
 }
 
 .resuRecherche{
-	width: 90%;
+	width: 100%;
 	height: 90px;
 	background: url("../images/fond/10.jpg") no-repeat center ;
 	margin-bottom:10px;
