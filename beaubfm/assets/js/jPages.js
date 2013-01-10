@@ -119,7 +119,7 @@
     },
 
     setNav : function() {
-      var navhtml = this.writeNav();
+      var navhtml = "<div class=\"pagination\"><ul>"+this.writeNav()+"</ul></div>";
 
       this._holder.each(this.bind(function(index, element) {
         var holder = $(element);
@@ -138,7 +138,7 @@
       navhtml = this.writeBtn("first") + this.writeBtn("previous");
 
       for (; i <= this._numPages; i++) {
-        if (i === 1 && this.options.startRange === 0) navhtml += "<span>...</span>";
+        if (i === 1 && this.options.startRange === 0) navhtml += "";
         if (i > this.options.startRange && i <= this._numPages - this.options.endRange)
           navhtml += "<li><a href='#' class='jp-hidden'>";
         else
@@ -158,9 +158,9 @@
 
         navhtml += "</a></li>";
         if (i === this.options.startRange || i === this._numPages - this.options.endRange)
-          navhtml += "<span>...</span>";
+          navhtml += "";
       }
-      navhtml += this.writeBtn("next") + this.writeBtn("last") + "</div>";
+      navhtml += this.writeBtn("next") + this.writeBtn("last") ;
       return navhtml;
     },
 

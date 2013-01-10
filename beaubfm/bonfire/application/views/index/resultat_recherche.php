@@ -84,11 +84,10 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 </table>
 <?php if(count($resultat)>15){ ?>
 
-<center>
-	<div class="pagination">
-		<ul class="holder"></ul>
-	</div>
-</center>
+
+<div class="holder">
+</div>
+
 <?php }
 	}
 ?>
