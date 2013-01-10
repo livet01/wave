@@ -65,7 +65,7 @@
 	
 }
 .ui-autocomplete-category > li {
-	font-size: 1.2em;
+	font-size: 4em;
 	vertical-align: middle;
 	margin-bottom: 5px;
 	margin-top : -20px;
@@ -79,8 +79,8 @@
 }
 
 .ui-autocomplete-category > i {
-	font-size: 1.5em;
-	padding-right: 10px;
+
+	padding-right: 5px;
 	padding-left: 2px;
 	color :#838992;
 }
@@ -89,38 +89,37 @@
 
 .ui-menu {
 	list-style: none;
-	margin-left: 0;
+	padding-left: 5px;
 	border-left: 1px solid #ccc;
-	-webkit-border-bottom-right-radius: 10px;
-	-webkit-border-bottom-left-radius: 10px;
-	-moz-border-radius-bottomright: 10px;
-	-moz-border-radius-bottomleft: 10px;
-	border-bottom-right-radius: 10px;
-	border-bottom-left-radius: 10px;
+	
+	background-color: red;
 	
 }
 
 .ui-menu .ui-menu-item {
-	margin: 0;
-	padding-left: 0;
-	zoom: 1;
-	width: 100%;
-	background-color: #FFF;
-	border-top: 1px solid #E7E7E7;
+  min-height: 5px;
+  padding: 2px;
+  margin-bottom: 2px;
+  background-color: #f5f5f5;
+
+
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  margin-left: 25px;
+  margin-right: 5px;
 
 }
 
-.ui-menu .ui-menu-item a {
-	text-decoration: none;
-	display: block;
-	padding: 2px;
-	line-height: 1.4;
-	zoom: 1;
-	font-weight: normal;
+.ui-menu-item a:hover  {
+	color:white;
+}
+.ui-menu-item:hover{
+		background-color: #007FBE;
+
 }
 .ui-menu .ui-menu-item a.ui-state-focus, .ui-menu .ui-menu-item a.ui-state-active {
-	font-weight: bold;
-	margin: 0px;
+color:white;
 }
 .ui-menu .ui-state-disabled {
 	font-weight: normal;
@@ -151,8 +150,9 @@
 .ui-widget-content {
 	border-top: 0;
 	border-right: 1px solid #ccc;
-	background: #EFF0F0;  /** ici **/
+	background: #F5F5F5;  /** ici **/
 	color: #222222;
+	  overflow: hidden;
 }
 
 
@@ -160,10 +160,10 @@
 	color: #222222;
 }
 .ui-widget-header {
-	margin-left: 10px;
+	margin-left: 0px;
 	color: #222222;
 	font-weight: bold;
-	height: 0px;
+
 }
 .ui-widget-header a {
 	color: #222222;
@@ -173,7 +173,6 @@
  ----------------------------------*/
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-	
 	background: #e6e6e6;
 	font-weight: normal;
 	color: red;
@@ -183,11 +182,6 @@
 	text-decoration: none;
 }
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
-	border-top: 1px solid #E7E7E7;
-	border-left: 1px solid #E7E7E7;
-	border-bottom: 1px solid #E7E7E7;
-	border-right: 1px solid #ccc;
-	background: #e1ecf0;
 	font-weight: normal;
 	color: #212121;
 }
@@ -196,6 +190,7 @@
 .ui-state-hover a, .ui-state-hover a:hover, .ui-state-hover a:link, .ui-state-hover a:visited{
 	color: #212121;
 	text-decoration: none;
+	font-weight: bold;
 }
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
 	border: 1px solid #aaaaaa;
