@@ -13,7 +13,8 @@
 		<table class="table table-striped table-condensed">
 			<caption>
 				<h2>
-					Listes des disques en attente de <?php echo $username.(defined('NBU') && NBU != 0) ? "<span class=\"badge badge-important\">".NBU."</span>" : ""; ?>
+					Listes des disques en attente de <?php echo $username; ?>
+					<?php echo (defined('NBU') && NBU != 0) ? "<span class=\"badge badge-important\">".NBU."</span>" : ""; ?>
 				</h2>
 			</caption>
 			<tr>
