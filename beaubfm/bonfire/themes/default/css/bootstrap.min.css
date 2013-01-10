@@ -3945,7 +3945,13 @@ h1, h2, h3, h4, h5, h6 {
 	height: 500px;
 	background: url("../images/fond/10.jpg") no-repeat center ;
 	margin:auto;
-	background-size: cover;
+	
+    -webkit-box-shadow: 0 0 65px #fff inset, 0 0 20px #fff inset;  
+    -moz-box-shadow:    0 0 65px #fff inset, 0 0 20px #fff inset;  
+      -moz-box-shadow: 0 0 65px #fff inset, 0 0 20px #fff inset, 0 0 5px #fff;  
+    -webkit-box-shadow: 0 0 65px #fff inset, 0 0 20px #fff inset, 0 0 5px #fff;  
+    box-shadow: 0 0 65px #fff inset, 0 0 20px #fff inset, 0 0 5px #fff;  
+ 
 }
 .indexRecherche{
 	padding-top: 250px;
@@ -3962,11 +3968,10 @@ h1.home {
 
 .resuRecherche{
 	width: 90%;
-	height: 50px;
+	height: 90px;
 	background: url("../images/fond/10.jpg") no-repeat center ;
 	margin-bottom:10px;
-	padding: 20px;
-	background-size: cover;
+	padding-top: 50px;
 	border-radius:10px;
 	-moz-border-radius:10px;
 }
