@@ -56,7 +56,6 @@ class Disque extends Authenticated_Controller {
 		$this -> infodisque -> id = $this->current_user->id;
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
-		//$this->output->enable_profiler(TRUE);
 
 		// Chargement des colones supplémentaire
 		$this -> colonnes = $this -> parametreManager -> select('colonnes');

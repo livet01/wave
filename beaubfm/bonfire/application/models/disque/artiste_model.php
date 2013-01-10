@@ -25,14 +25,27 @@ class Artiste_model extends CI_Model {
 	}
 	
 	function insert($nom,$radio,$cat) {
+		
+		//$query = $this->db->query("INSERT INTO $this->table (per_nom, cat_id, rad_id) VALUES ('$nom', 3, 1);");
 		$resultat = $this->db->set('per_nom', $nom)
-						->set('cat_id', $cat)
-						->set('rad_id', $radio)
-						->insert("personne");
-		if(!$resultat) {
-			throw new Exception("La personne n'a pas été ajouté", 1);
+							->set('cat_id', 3)
+							->set('rad_id', 1)
+							->insert("personne");
+						
+		if($resultat)
+			return $this->db->insert_id();
+		else
+			return false;
+		/*if ($this->db->trans_status() === FALSE)
+		{
+		    $this->db->trans_rollback();
+			return -1;
 		}
-		return $this->db->insert_id();
+		else
+		{
+		    $this->db->trans_commit();
+			return 
+		}*/
 	}
 	
 	function delete ($artiste){

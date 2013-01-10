@@ -15,14 +15,28 @@ class Personne_model extends CI_Model {
 	}
 	public function ajouterPersonne($id,$data,$cat)
 	{
-		
-		//$last_id = $this->db->get($this->table);
-		//var_dump(1000+$last_id+1);
-		return $this->db
-						->set('per_nom', $data)
-						->set('cat_id', 3)
-						->set('rad_id', 1)
-						->insert($this->table);
+		echo "coucou";
+		exit(0);
+		$this->db->trans_begin();
+		/*$this->db->set('per_nom', $data)
+				->set('cat_id', 3)
+				->set('rad_id', 1)
+				->insert($this->table);*/
+		//$this->db->query("INSERT IGNORE INTO $this->table (per_nom, cat_id, rad_id) VALUES ('$data', 3, 1);");
+		$data = array('per_id' => NULL, 'per_nom' => $data, 'cat_id' => 3, 'rad_id' => 1);
+		$insert_query = $this->db->insert_string($this->table, $data);
+		$insert_query = str_replace('INSERT INTO','INSERT IGNORE INTO',$insert_query);
+		$this->db->query($insert_query);
+		if ($this->db->trans_status() === FALSE)
+		{
+		    $this->db->trans_rollback();
+			return -1;
+		}
+		else
+		{
+		    $this->db->trans_commit();
+			return TRUE;
+		}
 	}
 	
 	public function readPersonne($select = '', $where = "")

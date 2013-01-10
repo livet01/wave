@@ -248,7 +248,7 @@ class ImporterFiche extends Authenticated_Controller{
 		$msgNonOk = null;
 		if ($nbErreur !== null) {
 			foreach ($nbErreur as $nb) {
-				$msgNonOk = $msgNonOK . "<b>Problème de lecture</b> de la ligne <b>$nb</b>. Cette ligne a été ignorée.<br/>";
+				$msgNonOk = $msgNonOk . "<b>Problème de lecture</b> de la ligne <b>$nb</b>. Cette ligne a été ignorée.<br/>";
 			}
 		}
 
@@ -265,7 +265,8 @@ class ImporterFiche extends Authenticated_Controller{
 		//on vérifie si les champs obligatoires sont renseignés
 		if (is_null($disque['Artiste']) || is_null($disque['Titre']) || is_null($disque['Diffuseur']) || is_null($disque['Emplacement'])
 			|| $disque['Artiste']=="" || $disque['Titre']=="" || $disque['Diffuseur']=="" || $disque['Emplacement']==""
-			|| str_replace(array("/", "!", "?", '"'), "", $disque['Artiste']) == "" || str_replace(array("/", "!", "?", '"'), "", $disque['Diffuseur']) == "") {
+			|| str_replace(array("/", "!", "?", '"', " "), "", $disque['Artiste']) == "" || str_replace(array("/", "!", "?", '"' ," "), "", $disque['Diffuseur']) == ""
+			|| str_replace(array("/", "!", "?", '"' ," "), "", $disque['Titre']) == ""){
 			$valide = FALSE;
 		}
 			
@@ -404,11 +405,11 @@ class ImporterFiche extends Authenticated_Controller{
 
 			//Artiste
 			$art_id = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $this->current_user->rad_id, $cat_id);
-
+			if($art_id == -1)
+				$valide = FALSE;
+			
 			if (!$disqueControlleur -> existeTitreArtiste($disque['Titre'], $art_id)) {
-				$this -> db -> trans_begin();
 				try {
-
 					//Diffuseur
 					if ($cat_id === 5) {
 						$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Artiste'], $this->current_user->rad_id, $mail, $cat_id);
@@ -422,9 +423,7 @@ class ImporterFiche extends Authenticated_Controller{
 					} catch (Exception $e) {
 						$ecoute_id = $this->current_user->id;
 					}
-					$this -> db -> trans_commit();
 				} catch(Exception $e) {
-					$this -> db -> trans_rollback();
 					$valide = FALSE;
 				}
 			} else {
@@ -433,14 +432,14 @@ class ImporterFiche extends Authenticated_Controller{
 			}
 
 			if ($valide === TRUE && $doublon === FALSE) {
-				$disqueControlleur -> set_dis_libelle($titre);
-				$disqueControlleur -> set_dis_format(addslashes($format));
-				$disqueControlleur -> set_mem_id(addslashes($ecoute_id));
-				$disqueControlleur -> set_art_id(addslashes($art_id));
-				$disqueControlleur -> set_dif_id(addslashes($dif_id));
+				$disqueControlleur -> set_dis_libelle((string)$titre);
+				$disqueControlleur -> set_dis_format((string)$format);
+				$disqueControlleur -> set_mem_id($ecoute_id);
+				$disqueControlleur -> set_art_id($art_id);
+				$disqueControlleur -> set_dif_id($dif_id);
 				$disqueControlleur -> set_dis_envoi_ok(TRUE);
-				$disqueControlleur -> set_emp_id(addslashes($emp_id));
-				$disqueControlleur -> set_emb_id(addslashes($emb_id));
+				$disqueControlleur -> set_emp_id($emp_id);
+				$disqueControlleur -> set_emb_id($emb_id);
 				$disqueControlleur -> set_sty_id($style_id);
 				
 				try {

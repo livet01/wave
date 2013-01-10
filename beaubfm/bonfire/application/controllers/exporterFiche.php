@@ -159,6 +159,7 @@ class ExporterFiche extends Base_Controller {
 
 	public function csv()
 	{
+		$this->output->enable_profiler(FALSE);
 		$this->auth->restrict('Wave.Exporter.Disque');
 		date_default_timezone_set("Europe/Paris");
 		

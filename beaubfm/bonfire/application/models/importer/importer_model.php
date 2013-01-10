@@ -9,19 +9,31 @@ class Importer_model extends CI_Model {
 	
 	public function ajoutDisqueImport($libelle,$format,$ecoute,$dateAjout,$artiste,$diffuseur,$email,$emplacement,$perId,$style,$emBev)
 	{
-		return $this->db->set('imp_libelle', $libelle)
-						->set('imp_format', $format)
-						->set('imp_ecoute', $ecoute)
-						->set('imp_date_ajout', $dateAjout)
-						->set('imp_artiste', $artiste)
-						->set('imp_diffuseur', $diffuseur)
-						->set('imp_email_diffuseur', $email)
-						->set('imp_emplacement', $emplacement)
-						->set('per_id_import', $perId)	
-						->set('imp_date_import', 'NOW()',false)
-						->set('imp_style', $style)
-						->set('imp_em_bev',$emBev)
-						->insert($this->table);
+		//$this->db->trans_start();
+		return $this->db->set('imp_libelle', (string)$libelle)
+				->set('imp_format', $format)
+				->set('imp_ecoute', $ecoute)
+				->set('imp_date_ajout', $dateAjout)
+				->set('imp_artiste', $artiste)
+				->set('imp_diffuseur', $diffuseur)
+				->set('imp_email_diffuseur', $email)
+				->set('imp_emplacement', $emplacement)
+				->set('per_id_import', $perId)	
+				->set('imp_date_import', 'NOW()',false)
+				->set('imp_style', $style)
+				->set('imp_em_bev',$emBev)
+				->insert($this->table);
+				
+		/*if ($this->db->trans_status() === FALSE)
+		{
+		    $this->db->trans_rollback();
+			return -1;
+		}
+		else
+		{
+		    $this->db->trans_commit();
+			return TRUE;
+		}*/
 	}
 	
 	public function existImport($libelle,$artiste,$diffuseur) {
