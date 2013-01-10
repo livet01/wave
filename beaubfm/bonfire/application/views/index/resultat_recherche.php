@@ -83,10 +83,10 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 </table>
 <?php if(count($resultat)>15){ ?>
 
-
+<center>
 <div class="holder">
 </div>
-
+</center>
 <?php }
 	}
 ?>

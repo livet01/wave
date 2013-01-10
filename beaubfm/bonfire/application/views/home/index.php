@@ -1,6 +1,6 @@
 <header id="overview" class="jumbotron subhead">
 	
-	<div id="overview" class="container">
+
 		<center>
 	<form class="form-search" action="<?php echo site_url('index/recherche'); ?>" method="post" name="form_recherche" id="recherche_form">
 		<div class="input-append">
@@ -15,9 +15,7 @@
 		</div>
 	</form>
 </center>
-	</div>
+
 </header>
-<div class="hero-unit">
-     
-</div>
+
 
