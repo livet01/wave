@@ -8,7 +8,7 @@
  ?>"  placeholder="Recherchez un titre, un album, un artiste...">
 			<input type="hidden" name="recherche_id" id="recherche_id" value="">
 			<button type="submit" class="btn">
-				Search
+				Rechercher
 			</button>
 		</div>
 	</form>
