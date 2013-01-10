@@ -265,7 +265,9 @@ class ImporterFiche extends Authenticated_Controller{
 		$style_id = null;
 		
 		//on vérifie si les champs obligatoires sont renseignés
-		if (is_null($disque['Artiste']) || is_null($disque['Titre']) || is_null($disque['Diffuseur']) || is_null($disque['Emplacement']) || str_replace(array("/", "!", "?", '"'), "", $disque['Artiste']) == "" || str_replace(array("/", "!", "?", '"'), "", $disque['Diffuseur']) == "") {
+		if (is_null($disque['Artiste']) || is_null($disque['Titre']) || is_null($disque['Diffuseur']) || is_null($disque['Emplacement'])
+			|| $disque['Artiste']=="" || $disque['Titre']=="" || $disque['Diffuseur']=="" || $disque['Emplacement']==""
+			|| str_replace(array("/", "!", "?", '"'), "", $disque['Artiste']) == "" || str_replace(array("/", "!", "?", '"'), "", $disque['Diffuseur']) == "") {
 			$valide = FALSE;
 		}
 			
@@ -293,6 +295,7 @@ class ImporterFiche extends Authenticated_Controller{
 			//Cas d'un fichier exporté depuis gcstar
 			if (!isset($disque['EmissionBenevole'])) {
 				$style = null;
+				$style_id=null;
 
 				//Catégorie
 				$cat_id = 3;
@@ -325,8 +328,6 @@ class ImporterFiche extends Authenticated_Controller{
 									$style = "vert";
 								} else if (strstr($valEmp, "bleu")) {
 									$style = "bleu";
-								} else {
-									$valide = FALSE;
 								}
 							}
 						} else {
