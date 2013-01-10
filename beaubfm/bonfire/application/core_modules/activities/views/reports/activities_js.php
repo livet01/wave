@@ -3,10 +3,10 @@ function confirm_delete(event) {
 
 	var which = $('#'+action+'_select option:selected').text();
 
-	var date_for = 'for';
-	if (action.indexOf('date') != -1) date_for = 'before';
+	var date_for = 'pour';
+	if (action.indexOf('date') != -1) date_for = 'avant';
 
-	return confirm('Are you sure you wish to delete the activity logs '+date_for+' "'+which+'"?')
+	return confirm('Etes-vous sur de vouloir supprimer les journaux d\'activités '+date_for+' "'+which+'"?')
 }
 $('.btn').filter('[id^="delete-"][type="submit"]').click(confirm_delete);
 

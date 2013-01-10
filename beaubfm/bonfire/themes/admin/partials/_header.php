@@ -44,7 +44,7 @@
 					<h1><?php echo anchor( '/', $this->settings_lib->item('site.title'), 'class="brand"' ); ?></h1>
 
 
-					<?php if(isset($shortcut_data) && is_array($shortcut_data['shortcuts']) && is_array($shortcut_data['shortcut_keys']) && count($shortcut_data['shortcut_keys'])):?>
+					<?php /* if(isset($shortcut_data) && is_array($shortcut_data['shortcuts']) && is_array($shortcut_data['shortcut_keys']) && count($shortcut_data['shortcut_keys'])):?>
 					<!-- Shortcut Menu -->
 					<div class="nav pull-right" id="shortcuts">
 					<div class="btn-group">
@@ -68,7 +68,7 @@
 						</ul>
 					</div>
 					</div>
-					<?php endif;?>
+					<?php endif; */?>
 
 					<div class="nav-collapse in collapse">
 						<!-- User Menu -->
