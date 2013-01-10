@@ -1,6 +1,5 @@
 <!-- <script src="<?php echo js_url('resultatRech'); ?>"></script> -->
 <center>	
-		<div id="box"></div>
 		<?php
 		if (isset($msg))
 			echo $msg;
@@ -12,10 +11,12 @@
 		?>	
 		<table class="table table-striped table-condensed">
 			<caption>
+				<div class="page-header">
 				<h2>
 					Listes des disques en attente de <?php echo $username; ?>
 					<?php echo (defined('NBU') && NBU != 0) ? "<span class=\"badge badge-important\">".NBU."</span>" : ""; ?>
 				</h2>
+				</div>
 			</caption>
 			<tr>
 				<th><input type="checkbox" onclick="CocheTout(this,'choix[]');" value="1" ></th>
@@ -35,7 +36,7 @@
 				else
 					echo '<tr>';
 
-				echo '<td class="checkbox"><input id="chx' . $j . '" class="chx" type="checkbox" name="choix[]" value="' . $ligne['dis_id'] . '"></td>';
+				echo '<td><input id="chx' . $j . '" class="chx" type="checkbox" name="choix[]" value="' . $ligne['dis_id'] . '"></td>';
 				echo '<td class="left" onclick="; }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['dis_libelle'] . '</td>';
 				echo '<td>' . $ligne['art_nom'] . '</td>';
 				echo '<td>' . $ligne['per_nom'] . '</td>';
@@ -116,5 +117,5 @@
 	}
 	?>
 	<div class="form-actions">
-		<a id="supprimerI" class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i>Supprimer les fiches</a>
+		<span id="supprimerI"><a class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i>Supprimer les fiches</a></span>
 	</div>
