@@ -35,7 +35,7 @@ $lang['bf_top_number'] = 'Eléments <em>par</em> page:';
 $lang['bf_top_number_help'] = 'Lors de l\'affichage des rapports, combien d\'éléments doivent être affichés à la fois ?';
 $lang['bf_home'] = 'Accueil';
 $lang['bf_site_information'] = 'Information du site';
-$lang['bf_timezone'] = 'Zone horraire';
+$lang['bf_timezone'] = 'Zone horaire';
 $lang['bf_language'] = 'Langue';
 $lang['bf_language_help'] = 'Choisissez les langues disponibles pour les inscrits';
 
@@ -59,7 +59,7 @@ $lang['bf_days'] = 'Jours';
 $lang['bf_username'] = 'Nom d\'utilisateur';
 $lang['bf_password'] = 'Mot de passe';
 $lang['bf_password_confirm'] = 'Mot de passe (encore)';
-$lang['bf_display_name'] = 'Afficher le nom';
+$lang['bf_display_name'] = 'Nom d\'affichage';
 
 //--------------------------------------------------------------------
 // ! CRUD SETTINGS
