@@ -207,7 +207,7 @@
 				$("#supprimerdisque").submit();
 				});
 				
-				$("div.holder").jPages({
+				$(".holder").jPages({
 				containerID : "disque",
 				previous : "←",
 				next : "→",
@@ -215,7 +215,7 @@
 				delay : 10
 				});
 				
-				$("div.holder1").jPages({
+				$(".holder1").jPages({
 				containerID : "disque1",
 				previous : "←",
 				next : "→",
@@ -223,7 +223,7 @@
 				delay : 10
 				});
 				
-				$("div.holder2").jPages({
+				$(".holder2").jPages({
 				containerID : "disque2",
 				previous : "←",
 				next : "→",

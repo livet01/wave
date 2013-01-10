@@ -85,13 +85,13 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 </table>
 <?php if(count($resultat)>15){ ?>
 	<center>
-<div class="pager">
+
 <div class="pagination">
-	<nav class="navig_result">
-		<div class="holder"></div>
-	</nav>
+
+		<ul class="holder"></ul>
+
 </div>
-</div>
+
 </center>
 <?php }
 	}
@@ -106,6 +106,7 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 	<?php if (has_permission('Wave.Supprimer.Disque')) { ?>
 	<a id="supprimer" class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a><?php } ?>
 	<?php if (has_permission('Wave.Exporter.Disque')) {?>
+	<a class="btn " href="<?php echo site_url('index'); ?>"><i class="icon-repeat"></i> Annuler </a>
 	<a id="exporter" class="btn btn-large btn-block disabled" href="#"><i class="icon-share-alt"></i> Exporter des fiches</a><?php } ?>
 </div>
 <?php } ?>
