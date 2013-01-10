@@ -51,14 +51,22 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 			$j = 0;
 			foreach ($resultat as $ligne) {
 				if ($i % 2 == 0)
-					echo '<tr class="bis">';
+					$bis = 'class="bis"';
 				else
-					echo '<tr>';
-
+					$bis = '';
+						
+				echo '<tr '.$bis.' style="cursor:pointer;" onclick="
+				$(\'.colall\').hide(); $(\'.icon-chevron-down\').attr(\'class\',\'icon-chevron-right\');
+				$(\'#col'.$ligne['dis_id'].'\').show(); 
+				$.get(\'' . site_url("index/affichage_disque/" . $ligne['dis_id']) . '\', 
+				function(data) {
+					 $(\'#col'.$ligne['dis_id'].'\').html(\'\').html(data); }).complete(
+					 function(){ $(\'#img'.$ligne['dis_id'].'\').attr(\'class\',\'icon-chevron-down\') });">';
+				
 				echo '<td><input id="chx' . $j . '" class="check" type="checkbox" name="choix[]" value="' . $ligne['dis_id'] . '"></td>';
-				echo '<td class="left" onclick="ajaxBox_loader(true); $(\'.colall\').hide(); $(\'#col'.$ligne['dis_id'].'\').show(); $.get(\'' . site_url("index/affichage_disque/" . $ligne['dis_id']) . '\', function(data) { $(\'#col'.$ligne['dis_id'].'\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['dis_libelle'] . '</td>';
-				echo '<td onclick="ajaxBox_loader(true);$.get(\'' . site_url("index/affichage_disque/" . $ligne['dis_id']) . '\', function(data) { $(\'#col'.$ligne['dis_id'].'\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['art_nom'] . '</td>';
-				echo '<td onclick="ajaxBox_loader(true);$.get(\'' . site_url("index/affichage_disque/" . $ligne['dis_id']) . '\', function(data) { $(\'#col'.$ligne['dis_id'].'\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['per_nom'] . '</td>';
+				echo '<td class="left"><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></a> ' . $ligne['dis_libelle'] . '</td>';
+				echo '<td>' . $ligne['art_nom'] . '</td>';
+				echo '<td>' . $ligne['per_nom'] . '</td>';
 				echo '<td>';
 				if (has_permission('Wave.Modifier.Disque'))
 					echo '<a class="action-tab" href="' . site_url("disque/modifier/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a>';
@@ -69,8 +77,8 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 				echo '</td>';
 				echo '</tr>';
 				?>
-				<tr >
-				<td colspan="6" id="<?php echo "col".$ligne['dis_id']; ?>" class="colall"></td>
+				<tr id="<?php echo "col".$ligne['dis_id']; ?>"  class="colall">
+				
 				</tr>
 				<?php
 				$i++;

@@ -268,6 +268,11 @@ class Index extends Authenticated_Controller {
 
 			// Tableau contenant les données à envoyé
 			$json_array = array();
+			
+				
+			$this -> load -> model('parametre_model', 'parametreManager');
+			$colonnes = $this -> parametreManager -> select('colonnes');
+			$colonnes = explode(";", $colonnes['param_valeur']);
 
 			// Parcours du résultat du model et ajout au json_array
 			foreach ($tabs as $tab) {
@@ -276,10 +281,10 @@ class Index extends Authenticated_Controller {
 				else {
 					$emb_id = $tab -> emb_libelle;
 				}
-				$json_array[] = array("dis_id" => $tab -> dis_id, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
-			}
+				$json_array[] = array("dis_id" => $tab -> dis_id, "dis_envoi_ok" => $tab -> dis_envoi_ok, "sty_libelle" => $tab -> sty_libelle, "mail" => $tab -> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
+		}
 			// Passage a la vue manquante
-			$this -> load -> view('index/affichage_disque', array('data' => $json_array[0]));
+			$this -> load -> view('index/affichage_disque', array('data' => $json_array[0], 'colonne' => $colonnes));
 
 		}
 	}
