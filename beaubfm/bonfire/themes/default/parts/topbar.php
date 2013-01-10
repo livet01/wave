@@ -8,7 +8,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-			<a href="<?php echo site_url('index'); ?>" class="brand">
+			<a href="<?php echo site_url('home'); ?>" class="brand">
 				<?php e($this->settings_lib->item('site.title')); ?>
 			</a>
 			
