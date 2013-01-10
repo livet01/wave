@@ -73,8 +73,7 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 				if (has_permission('Wave.Supprimer.Disque'))	
 					echo '<a class="action-tab" onclick="CocheTout(this,\'choix[]\');CocheTout(this,\'choix[]\');$(\'#chx' . $j . '\').attr(\'checked\',\'checked\');$(\'#tdisque\').attr(\'action\',\'' . site_url("disque/supprimer") . '\').submit();" href="#"><i class="icon-trash"></a>';
 				echo '</td>';
-				echo '
-			</tr>';
+				echo '</tr>';
 				$i++;
 				$j++;
 			}
