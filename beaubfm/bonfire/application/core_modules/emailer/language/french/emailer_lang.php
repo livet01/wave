@@ -47,8 +47,8 @@ $lang['em_test_button']			= 'Envoyez un message de test';
 $lang['em_test_result_header']	= 'Résultats des tests';
 $lang['em_test_no_results']		= 'Soit le test ne s\'exécute pas, ou ne retourne aucun résultat.';
 $lang['em_test_debug_header']	= 'Information de débogage';
-$lang['em_test_success']		= 'L\'email semble être réglé correctement. Si vous ne voyez pas le message dans votre boîte de réception, essayez de regarder dans votre boîte de spam ou de courrier indésirable.';
-$lang['em_test_error']			= 'L\'email semble ne pas être réglé correctement.';
+$lang['em_test_success']		= 'L\'email semble être correctement envoyé. Si vous ne voyez pas le message dans votre boîte de réception, essayez de regarder dans votre boîte de spam ou de courrier indésirable.';
+$lang['em_test_error']			= 'L\'email semble ne pas s\'être correctement envoyé.';
 
 $lang['em_test_mail_subject']	= 'Félicitations! Votre Emailer Bonfire fonctionne!';
 $lang['em_test_mail_body']		= 'Si vous voyez ce message, il semble que votre Emailer Bonfire fonctionne!';

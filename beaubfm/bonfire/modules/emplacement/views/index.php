@@ -10,10 +10,10 @@
 		<thead>
 		
 			
-		<th>libelle emplacement</th>
-		<th>identifiant radio</th>
-		<th>emp_plus egal a 1 si emission benevole sinon 0</th>
-		<th>mail emplacement</th>
+		<th>Libelle de l'Emplacement</th>
+		<th>Identifiant Radio : 1</th>
+		<th>Emission Spéciale : 1 Sinon : 0</th>/th>
+		<th>Email de l'Emplacement</th>
 		
 		</thead>
 		<tbody>

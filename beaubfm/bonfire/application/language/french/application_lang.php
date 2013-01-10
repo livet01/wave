@@ -113,7 +113,7 @@ $lang['bf_size'] = 'Poids';
 $lang['bf_files'] = 'Fichiers';
 $lang['bf_file'] = 'Fichier';
 
-$lang['bf_with_selected'] = 'avec les sélectionnés';
+$lang['bf_with_selected'] = 'Avec la sélection...';
 
 $lang['bf_env_dev'] = 'Developement';
 $lang['bf_env_test'] = 'Test';

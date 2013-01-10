@@ -55,7 +55,7 @@ class content extends Admin_Controller {
 		$records = $this->style_model->find_all();
 
 		Template::set('records', $records);
-		Template::set('toolbar_title', 'Manage Style');
+		Template::set('toolbar_title', 'Gérer les Styles');
 		Template::render();
 	}
 
@@ -179,8 +179,8 @@ class content extends Admin_Controller {
 		}
 
 		
-		$this->form_validation->set_rules('style_sty_couleur','couleur du style de musique','required|unique[style.sty_couleur,style.sty_id]|trim|xss_clean|alpha|max_length[15]');
-		$this->form_validation->set_rules('style_sty_libelle','libelle du style de musique','required|trim|xss_clean|max_length[45]');
+		$this->form_validation->set_rules('style_sty_couleur','Couleur du Style','required|unique[style.sty_couleur,style.sty_id]|trim|xss_clean|alpha|max_length[15]');
+		$this->form_validation->set_rules('style_sty_libelle','Libelle du Style','required|trim|xss_clean|max_length[45]');
 
 		if ($this->form_validation->run() === FALSE)
 		{

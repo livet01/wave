@@ -3,7 +3,7 @@
 		<?php
 			echo form_open(SITE_AREA . '/reports/activities/' . $vars['which'], 'class="form-horizontal constrained ajax-form"');
 
-			$form_help = '<span class="help-inline">' . sprintf(lang('activity_filter_note'),($vars['view_which'] == ucwords(lang('activity_date')) ? 'from before':'only for'),strtolower($vars['view_which'])) . '</span>';
+			$form_help = '<span class="help-inline">' . sprintf(lang('activity_filter_note'),($vars['view_which'] == ucwords(lang('activity_date')) ? ' d\'avant ':' seulement pour : '),strtolower($vars['view_which'])) . '</span>';
 			$form_data = array('name' => $vars['which'].'_select', 'id' => $vars['which'].'_select', 'class' => 'span3' );
 			echo form_dropdown($form_data, $select_options, $filter, lang('activity_filter_head') , '' , $form_help);
 			//echo form_dropdown("activity_select", $select_options, $filter,array('id' => 'activity_select', 'class' => 'span4' ) );

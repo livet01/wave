@@ -55,7 +55,7 @@ class content extends Admin_Controller {
 		$records = $this->parametre_model->find_all();
 
 		Template::set('records', $records);
-		Template::set('toolbar_title', 'Manage Parametre');
+		Template::set('toolbar_title', 'Gérer les Paramètres');
 		Template::render();
 	}
 
@@ -179,8 +179,8 @@ class content extends Admin_Controller {
 		}
 
 		
-		$this->form_validation->set_rules('parametre_param_libelle','libelle du parametre','trim|xss_clean|max_length[100]');
-		$this->form_validation->set_rules('parametre_param_valeur','valeur du parametre','trim|xss_clean|max_length[100]');
+		$this->form_validation->set_rules('parametre_param_libelle','Libelle du Parametre','trim|xss_clean|max_length[100]');
+		$this->form_validation->set_rules('parametre_param_valeur','Valeur du Parametre','trim|xss_clean|max_length[100]');
 
 		if ($this->form_validation->run() === FALSE)
 		{

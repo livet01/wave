@@ -8,10 +8,10 @@
 					<th class="column-check"><input class="check-all" type="checkbox" /></th>
 					<?php endif;?>
 					
-					<th>libelle emplacement</th>
-					<th>identifiant radio</th>
-					<th>emp_plus egal a 1 si emission benevole sinon 0</th>
-					<th>mail emplacement</th>
+					<th>Libelle de l'Emplacement</th>
+					<th>Identifiant Radio : 1</th>
+					<th>Emission Spéciale : 1 Sinon : 0</th>
+					<th>Email de l'Emplacement</th>
 				</tr>
 			</thead>
 			<?php if (isset($records) && is_array($records) && count($records)) : ?>
@@ -47,7 +47,7 @@
 			<?php endforeach; ?>
 			<?php else: ?>
 				<tr>
-					<td colspan="5">No records found that match your selection.</td>
+					<td colspan="5">Aucun enregistrement trouvé correspondant à votre sélection.</td>
 				</tr>
 			<?php endif; ?>
 			</tbody>

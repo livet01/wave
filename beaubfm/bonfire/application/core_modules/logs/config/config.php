@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 $config['module_config'] = array(
-	'description'	=> 'Allows viewing of log files and adjusting log level.',
-	'author'		=> 'Bonfire Team',
-	'name'			=> 'Logs'
+	'description'	=> 'Permet de visualiser les fichiers journaux et d\'ajuster le niveau de journalisation.',
+	'author'		=> 'Wave Team',
+	'name'			=> 'Journaux'
 );	

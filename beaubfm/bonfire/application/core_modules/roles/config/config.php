@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 $config['module_config'] = array(
-	'description'	=> 'Provides Role-Based Access Control for users.',
-	'author'		=> 'Bonfire Team'
+	'description'	=> 'Fournit le contrôle d\'accès basé sur les rôles pour les utilisateurs.',
+	'author'		=> 'Wave Team'
 );

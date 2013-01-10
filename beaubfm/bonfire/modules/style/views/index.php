@@ -10,8 +10,8 @@
 		<thead>
 		
 			
-		<th>couleur du style de musique</th>
-		<th>libelle du style de musique</th>
+		<th>Couleur du Style</th>
+		<th>Libelle du Style</th>
 		
 		</thead>
 		<tbody>

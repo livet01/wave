@@ -8,8 +8,8 @@
 					<th class="column-check"><input class="check-all" type="checkbox" /></th>
 					<?php endif;?>
 					
-					<th>couleur du style de musique</th>
-					<th>libelle du style de musique</th>
+					<th>Couleur du Style</th>
+					<th>Libelle du Style</th>
 				</tr>
 			</thead>
 			<?php if (isset($records) && is_array($records) && count($records)) : ?>
@@ -43,7 +43,7 @@
 			<?php endforeach; ?>
 			<?php else: ?>
 				<tr>
-					<td colspan="3">No records found that match your selection.</td>
+					<td colspan="3">Aucun enregistrement trouvé correspondant à votre sélection.</td>
 				</tr>
 			<?php endif; ?>
 			</tbody>

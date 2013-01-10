@@ -55,7 +55,7 @@ class content extends Admin_Controller {
 		$records = $this->emplacement_model->find_all();
 
 		Template::set('records', $records);
-		Template::set('toolbar_title', 'Manage Emplacement');
+		Template::set('toolbar_title', 'Gérer les Emplacements');
 		Template::render();
 	}
 
@@ -179,10 +179,10 @@ class content extends Admin_Controller {
 		}
 
 		
-		$this->form_validation->set_rules('emplacement_emp_libelle','libelle emplacement','required|trim|xss_clean|max_length[45]');
-		$this->form_validation->set_rules('emplacement_rad_id','identifiant radio','required|trim|xss_clean|is_natural_no_zero|max_length[6]');
-		$this->form_validation->set_rules('emplacement_emp_plus','emp_plus egal a 1 si emission benevole sinon 0','required|trim|xss_clean|is_natural|max_length[1]');
-		$this->form_validation->set_rules('emplacement_emp_mail','mail emplacement','trim|xss_clean|valid_email');
+		$this->form_validation->set_rules('emplacement_emp_libelle','Libelle de l\'Emplacement','required|trim|xss_clean|max_length[45]');
+		$this->form_validation->set_rules('emplacement_rad_id','Identifiant Radio','required|trim|xss_clean|is_natural_no_zero|max_length[6]');
+		$this->form_validation->set_rules('emplacement_emp_plus','Emission Spéciale : 1 Sinon : 0','required|trim|xss_clean|is_natural|max_length[1]');
+		$this->form_validation->set_rules('emplacement_emp_mail','Email de l\'Emplacement','trim|xss_clean|valid_email');
 
 		if ($this->form_validation->run() === FALSE)
 		{

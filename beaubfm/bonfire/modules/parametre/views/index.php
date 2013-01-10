@@ -10,8 +10,8 @@
 		<thead>
 		
 			
-		<th>libelle du parametre</th>
-		<th>valeur du parametre</th>
+		<th>Libelle du Parametre</th>
+		<th>Valeur du Parametre</th>
 		
 		</thead>
 		<tbody>

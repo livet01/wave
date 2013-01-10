@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 $config['module_config'] = array(
-	'description'	=> 'Allows other modules to store user activity information.',
-	'author'		=> 'Bonfire Team',
-	'name'			=> 'Activities'
+	'description'	=> 'Permet aux autres modules de stocker des informations sur l\'activité de l\'utilisateur.',
+	'author'		=> 'Wave team',
+	'name'			=> 'Activités'
 );
