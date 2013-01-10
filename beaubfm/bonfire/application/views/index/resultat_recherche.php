@@ -64,7 +64,7 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 					 function(){ $(\'#img'.$ligne['dis_id'].'\').attr(\'class\',\'icon-chevron-down\') });">';
 				
 				echo '<td><input id="chx' . $j . '" class="check" type="checkbox" name="choix[]" value="' . $ligne['dis_id'] . '"></td>';
-				echo '<td class="left"><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></a> ' . $ligne['dis_libelle'] . '</td>';
+				echo '<td class="left"><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i></a> ' . $ligne['dis_libelle'] . '</td>';
 				echo '<td>' . $ligne['art_nom'] . '</td>';
 				echo '<td>' . $ligne['per_nom'] . '</td>';
 				echo '<td>';
