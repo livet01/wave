@@ -3,10 +3,10 @@ class Info_Disque_Model extends CI_Model
 {
     function GetArtiste($numArtiste)
     {
-		return $this->db->select('Disque.dis_id')
-						->from('Disque')
-						->join('Artiste', 'Disque.per_id_artiste=Artiste.art_id', 'LEFT')
-						->where('Disque.per_id_artiste', $numArtiste)
+		return $this->db->select('disque.dis_id')
+						->from('disque')
+						->join('Artiste', 'disque.per_id_artiste=Artiste.art_id', 'LEFT')
+						->where('disque.per_id_artiste', $numArtiste)
 						->get()
 						->result_array();
     }
@@ -14,10 +14,10 @@ class Info_Disque_Model extends CI_Model
 
     function GetLabel($numLabel)
     {
-		return $this->db->select('Disque.dis_id')
-						->from('Disque')
-						->join('Users', 'Disque.dif_id=Users.id', 'LEFT')
-						->where('Disque.dif_id', $numLabel)
+		return $this->db->select('disque.dis_id')
+						->from('disque')
+						->join('Users', 'disque.dif_id=Users.id', 'LEFT')
+						->where('disque.dif_id', $numLabel)
 						->get()
 						->result_array();	
     }
@@ -58,18 +58,18 @@ class Info_Disque_Model extends CI_Model
 	function GetOneDisque($numDisque)
     {
 		$this->db->select('*')
-						->where('Disque.dis_id', $numDisque);
-		$query = $this->db->get('Disque');
+						->where('disque.dis_id', $numDisque);
+		$query = $this->db->get('disque');
 		return $query->result_array();
     }
 	
 	function GetAll($nb=0,$debut=0)
     {
-			$this->db->select(array('disque.dis_id','dis_libelle','dis_format','u2.username as mem_nom','Artiste.art_nom','u1.username as per_nom','Emplacement.emp_libelle'))
-						->join('Artiste', 'disque.per_id_artiste=Artiste.art_id', 'LEFT')
-						->join('Emplacement', 'disque.emp_id=Emplacement.emp_id', 'LEFT')
-						->join('Users AS u1', 'disque.dif_id=u1.id', 'LEFT')
-						->join('Users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
+			$this->db->select(array('disque.dis_id','dis_libelle','dis_format','u2.username as mem_nom','Artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
+						->join('artiste', 'disque.per_id_artiste=artiste.art_id', 'LEFT')
+						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
+						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
+						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
 						->order_by('dis_libelle', 'asc'); //-> limit($nb, $debut);
 		$query = $this->db->get('disque');
 		return $query->result();
@@ -82,11 +82,11 @@ class Info_Disque_Model extends CI_Model
 			return $this->GetAll();
 		}
 		else {
-			$this->db->select(array('disque.dis_id','dis_libelle','dis_format','u2.username as mem_nom','Artiste.art_nom','u1.username as per_nom','Emplacement.emp_libelle'))
-						->join('Artiste', 'disque.per_id_artiste=Artiste.art_id', 'LEFT')
-						->join('Emplacement', 'disque.emp_id=Emplacement.emp_id', 'LEFT')
-						->join('Users AS u1', 'disque.dif_id=u1.id', 'LEFT')
-						->join('Users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
+			$this->db->select(array('disque.dis_id','dis_libelle','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
+						->join('artiste', 'disque.per_id_artiste=Artiste.art_id', 'LEFT')
+						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
+						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
+						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
 							->where_in('dis_id', $iddisque)
 							->order_by('dis_libelle', 'asc'); //-> limit($nb, $debut);
 			$query = $this->db->get('disque');
