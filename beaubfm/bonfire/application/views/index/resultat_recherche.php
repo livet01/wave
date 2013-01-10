@@ -1,5 +1,6 @@
 <!-- <script src="<?php echo js_url('resultatRech'); ?>"></script> -->
 <center>
+	<div class="resuRecherche">
 	<form class="form-search" action="<?php echo site_url('index/recherche'); ?>" method="post" name="form_recherche" id="recherche_form">
 		<div class="input-append">
 			<input type="text" class="span6 search-query" data-provide="typeahead" name="recherche" id="recherche" value="<?php
@@ -12,6 +13,7 @@
 			</button>
 		</div>
 	</form>
+</div>
 </center>
 
 <?php
