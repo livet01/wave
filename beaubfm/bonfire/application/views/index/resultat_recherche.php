@@ -35,13 +35,12 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 <?php }
 	if(($affichage==0 || $affichage==1) && !empty($resultat)){
  ?>
-<div id="box"></div>
 
 <table class="table table-striped table-condensed">
 	<caption>
 		<div class="page-header">
 		<?php if($affichage==0) { ?> <h2>Listes des disques</h2> <?php } ?>
-		<?php if($affichage==1) { echo count($resultat); ?> résultat(s) trouvé(s).<?php } ?>
+		<?php if($affichage==1) { ?> <h2> <?php echo count($resultat); ?> résultat(s) trouvé(s).</h2><?php } ?>
 		</div>
 	</caption>
 	<tr>
@@ -62,7 +61,7 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 				else
 					echo '<tr>';
 
-				echo '<td><input id="chx' . $j . '" class="checkbox" type="checkbox" name="choix[]" value="' . $ligne['dis_id'] . '"></td>';
+				echo '<td><input id="chx' . $j . '" class="check" type="checkbox" name="choix[]" value="' . $ligne['dis_id'] . '"></td>';
 				echo '<td class="left" onclick="; }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['dis_libelle'] . '</td>';
 				echo '<td onclick="ajaxBox_loader(true);$.get(\'' . site_url("index/affichage_disque/" . $ligne['dis_id']) . '\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['art_nom'] . '</td>';
 				echo '<td onclick="ajaxBox_loader(true);$.get(\'' . site_url("index/affichage_disque/" . $ligne['dis_id']) . '\', function(data) { $(\'#aff-disque\').html(\'\').html(data); }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['per_nom'] . '</td>';
@@ -84,14 +83,11 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 	</tbody>
 </table>
 <?php if(count($resultat)>15){ ?>
-	<center>
 
-<div class="pagination">
-
+<center>
+	<div class="pagination">
 		<ul class="holder"></ul>
-
-</div>
-
+	</div>
 </center>
 <?php }
 	}
@@ -104,10 +100,10 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 <?php if (has_permission('Wave.Supprimer.Disque') || has_permission('Wave.Exporter.Disque')) { ?>
 <div class="form-actions">
 	<?php if (has_permission('Wave.Supprimer.Disque')) { ?>
-	<span id="supprimer"><a class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a></span><?php } ?>
+	<span id="supprimer"><a class="btn btn-large btn-block" href="#"><i class="icon-trash"></i> Supprimer les fiches</a></span><?php } ?>
 	<?php if (has_permission('Wave.Exporter.Disque')) {?>
 	
-	<span id="exporter"><a  class="btn btn-large disabled" href="#"><i class="icon-share-alt"></i> Exporter des fiches</a></span><?php } ?>
+	<span id="exporter"><a  class="btn btn-large" href="#"><i class="icon-share-alt"></i> Exporter des fiches</a></span><?php } ?>
 </div>
 <?php } ?>
 

@@ -1,27 +1,12 @@
-<div id="cadre2">
-	<div id="selection">
-		
-		<div id="cadre_action">
-		<?php
-			foreach ($liens as $lien) {
-			?>
-				<a <?php echo (!empty($lien['id'])) ?  'id="'.$lien['id'].'"' : ''; ?> class="btn-large-action" href="<?php echo $lien['href']; ?>">
-					<i class="<?php echo $lien['icon']; ?>"></i><?php echo $lien['text']; ?>
-				</a>
-			<?php
-			}
-		?>
-		</div>
-	</div>
-	<div id="resultat_recherche">
-		
-		<table>
+<table class="table table-striped table-condensed">
 			<caption>
-				<?php echo count($resultat); ?> disque(s) sélectionné(s).
+				<div class="page-header">
+				<h2><?php echo count($resultat); ?> disque(s) sélectionné(s).</h2>
+				</div>
 			</caption>
 			<tr>
 				<th><i class="icon-music"></i>Titre</th>
-				<th><i class="icon-group"></i>Artiste</th>
+				<th><i class="icon-user"></i>Artiste</th>
 				<th><i class="icon-home"></i>Label</th>
 			</tr>
 			<tbody id="disque">
@@ -45,11 +30,24 @@
 			?>
 			</form>
 			</tbody>
-		</table>
+</table>
 		<?php if(count($resultat)>15){ ?>
-			<nav class="navig_result">
-			<div class="holder"></div>
-			</nav>
+			<center>
+				<div class="pagination">
+					<ul class="holder"></ul>
+				</div>
+			</center>
 		<?php } ?>
-	</div>
+<div class="form-actions">
+		<?php
+			foreach ($liens as $lien) {
+			?>
+				<a class="btn" href="<?php echo $lien['href']; ?>">
+					<span <?php echo (!empty($lien['id'])) ?  'id="'.$lien['id'].'"' : ''; ?>>
+						<i class="<?php echo $lien['icon']; ?>"></i><?php echo $lien['text']; ?>
+					</span>
+				</a>
+			<?php
+			}
+		?>
 </div>
