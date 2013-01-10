@@ -3943,9 +3943,18 @@ h1, h2, h3, h4, h5, h6 {
 #overview{
 	width: 1170px;
 	height: 500px;
-	background-image: url("../images/fond/01.jpg");
+	background-image: url("../images/fond/09.jpg");
 	
 }
 .indexRecherche{
 	padding-top: 250px;
+}
+
+h1.home {
+	text-align:center;
+	padding-top: 200px;
+	margin-bottom: -200px;
+	font-size: 6em;
+	color: #fff;
+	text-shadow: 2px 0px 2px #ddccb5;
 }

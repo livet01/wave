@@ -1,8 +1,9 @@
 
 	
 	<div id="overview" >
-		<center>
-	<h1>Wave</h1>
+		
+	<center>
+		<h1 class="home">Wave</h1>
 	<div class="indexRecherche">
 	<form class="form-search" action="<?php echo site_url('index/recherche'); ?>" method="post" name="form_recherche" id="recherche_form">
 		<div class="input-append">

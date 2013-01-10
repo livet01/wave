@@ -120,7 +120,7 @@
 }
 .ui-menu .ui-menu-item a.ui-state-focus, .ui-menu .ui-menu-item a.ui-state-active {
 	font-weight: bold;
-	margin: -1px;
+	margin: 0px;
 }
 .ui-menu .ui-state-disabled {
 	font-weight: normal;
