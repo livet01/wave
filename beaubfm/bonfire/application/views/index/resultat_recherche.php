@@ -104,10 +104,10 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 <?php if (has_permission('Wave.Supprimer.Disque') || has_permission('Wave.Exporter.Disque')) { ?>
 <div class="form-actions">
 	<?php if (has_permission('Wave.Supprimer.Disque')) { ?>
-	<a id="supprimer" class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a><?php } ?>
+	<span id="supprimer"><a class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i> Supprimer les fiches</a></span><?php } ?>
 	<?php if (has_permission('Wave.Exporter.Disque')) {?>
-	<a class="btn " href="<?php echo site_url('index'); ?>"><i class="icon-repeat"></i> Annuler </a>
-	<a id="exporter" class="btn btn-large btn-block disabled" href="#"><i class="icon-share-alt"></i> Exporter des fiches</a><?php } ?>
+	
+	<span id="exporter"><a  class="btn btn-large disabled" href="#"><i class="icon-share-alt"></i> Exporter des fiches</a></span><?php } ?>
 </div>
 <?php } ?>
 

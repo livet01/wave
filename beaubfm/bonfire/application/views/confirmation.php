@@ -1,14 +1,6 @@
 <div id="cadre2">
 	<div id="selection">
-		<div class="infos-disque">
-			<ul class="icons" id="aff-disque">
-				<li>&nbsp;</li>
-				<li>&nbsp;</li>
-				<li id="chargement" class="chargement"><img src="<?php echo img_url('search.png'); ?>"> </li>
-				<li>&nbsp;</li>
-				<li>&nbsp;</li>
-			</ul>
-		</div>
+		
 		<div id="cadre_action">
 		<?php
 			foreach ($liens as $lien) {
@@ -28,9 +20,9 @@
 				<?php echo count($resultat); ?> disque(s) sélectionné(s).
 			</caption>
 			<tr>
-				<th><i class="icon-music"></i> Titre</th>
-				<th><i class="icon-group"></i> Artiste</th>
-				<th><i class="icon-home"></i> Label</th>
+				<th><i class="icon-music"></i>Titre</th>
+				<th><i class="icon-group"></i>Artiste</th>
+				<th><i class="icon-home"></i>Label</th>
 			</tr>
 			<tbody id="disque">
 			<form  method="post" id="<?php echo $form_id; ?>" action="#">
