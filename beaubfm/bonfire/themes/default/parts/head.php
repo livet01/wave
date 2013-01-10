@@ -41,6 +41,7 @@
 
 			//Recherche (autocompl�tion)
 			jQuery(document).ready(function($) {
+				$('.colall').hide();
 			$("#recherche" ).catcomplete({
 			source: function(request, response) {
 			$.ajax({ url: "<?php echo site_url('index/suggestions'); ?>
@@ -211,7 +212,7 @@
 				containerID : "disque",
 				previous : "←",
 				next : "→",
-				perPage : 15,
+				perPage : 16,
 				delay : 10
 				});
 				
@@ -219,7 +220,7 @@
 				containerID : "disque1",
 				previous : "←",
 				next : "→",
-				perPage : 15,
+				perPage : 16,
 				delay : 10
 				});
 				
@@ -227,7 +228,7 @@
 				containerID : "disque2",
 				previous : "←",
 				next : "→",
-				perPage : 15,
+				perPage : 16,
 				delay : 10
 				});
 				});
@@ -252,7 +253,7 @@
 				{
 				// Ajout d'un élement <img> d'id #ajaxBox_loader
 				if (pState === true)
-				$('#aff-disque').html('').html('<li>&nbsp;</li><li>&nbsp;</li><li><img id="ajaxBox_loader" src="<?php echo img_url('ajax-loader.gif'); ?>" align="center" /></li><li>&nbsp;</li><li>&nbsp;</li>');
+				$('.aff-disque').html('').html('<li>&nbsp;</li><li>&nbsp;</li><li><img id="ajaxBox_loader" src="<?php echo img_url('ajax-loader.gif'); ?>" align="center" /></li><li>&nbsp;</li><li>&nbsp;</li>');
 				// Suppression de l'élement d'id #ajaxBox_loader
 				else
 				$('#ajaxBox_loader').remove();

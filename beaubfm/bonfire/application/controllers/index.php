@@ -249,6 +249,8 @@ class Index extends Authenticated_Controller {
 	// Méthode d'affichage des renseingements d'un disque : ajax.
 	//
 	public function affichage_disque($id_disque) {
+		
+		$this->output->enable_profiler(FALSE);
 		$this->auth->restrict('Wave.Recherche.Disque');
 		if (!empty($id_disque))// Si le id_disque n'est pas nul
 		{
@@ -277,6 +279,8 @@ class Index extends Authenticated_Controller {
 				$json_array[] = array("dis_id" => $tab -> dis_id, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
 			}
 			// Passage a la vue manquante
+			$this -> load -> view('index/affichage_disque', array('data' => $json_array[0]));
+
 		}
 	}
 
