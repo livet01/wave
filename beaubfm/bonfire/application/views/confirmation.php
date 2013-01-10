@@ -33,7 +33,7 @@
 				<th><i class="icon-home"></i> Label</th>
 			</tr>
 			<tbody id="disque">
-			<form  method="post" id="supprimerdisque" action="#">
+			<form  method="post" id="<?php echo $form_id; ?>" action="#">
 			<?php
 				$i=0;
 				$j=0;

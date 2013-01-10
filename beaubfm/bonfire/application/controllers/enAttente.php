@@ -139,6 +139,7 @@ class EnAttente extends Authenticated_Controller {
 		}
 		$data['liens'][0] = array("id" => "supprAllI", "icon" => "icon-trash", "text" => " Tout supprimer", "href" => "#");
 		$data['liens'][1] = array("id" => "", "icon" => "icon-undo", "text" => " Annuler", "href" => site_url("enAttente/"));
+		$data['form_id'] = "supprimerdisque";
 		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
 		$data['affichage'] = $affichage;
 

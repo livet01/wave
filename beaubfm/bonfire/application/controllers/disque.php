@@ -859,7 +859,7 @@ class Disque extends Authenticated_Controller {
 		$data['affichage'] = $affichage;
 		$data['liens'][0] = array("id" => "supprAll", "icon" => "icon-trash", "text" => " Tout supprimer", "href" => "#");
 		$data['liens'][1] = array("id" => "", "icon" => "icon-undo", "text" => " Annuler", "href" => site_url("enAttente/"));
-
+		$data['form_id'] = "supprimerdisque";
 		// Chargement de la vue
 		$this -> layout -> views('menu_principal')->view('confirmation', $data);
 		

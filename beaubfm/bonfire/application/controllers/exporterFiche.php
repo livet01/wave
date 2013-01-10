@@ -81,6 +81,7 @@ class ExporterFiche extends Base_Controller {
 		$data['liens'][0] = array("id" => "linkCSV", "icon" => "icon-download-alt", "text" => " Exporter en CSV", "href" => "#");
 		$data['liens'][1] = array("id" => "linkXLS", "icon" => "icon-download-alt", "text" => " Exporter en XLS", "href" => "#");
 		$data['liens'][2] = array("id" => "", "icon" => "icon-undo", "text" => " Annuler", "href" => site_url("index/"));
+		$data['form_id'] = "exportdisque";
 		// Chargement de la vue
 		Template::set('data',$data);
 		Template::set_view('confirmation');
