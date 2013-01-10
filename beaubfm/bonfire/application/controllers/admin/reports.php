@@ -39,7 +39,7 @@ class Reports extends Admin_Controller
 	{
 		parent::__construct();
 
-		Template::set('toolbar_title', 'Reports');
+		Template::set('toolbar_title', 'Rapports');
 
 		$this->auth->restrict('Site.Reports.View');
 	}//end __construct()
@@ -53,7 +53,7 @@ class Reports extends Admin_Controller
 	 */
 	public function index()
 	{
-		Template::set_view('admin/reports/index');
+		Template::set_view('admin/content/index');
 		Template::render();
 	}//end index()
 
