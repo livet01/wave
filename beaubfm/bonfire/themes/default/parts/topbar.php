@@ -23,14 +23,7 @@
 						<b class="caret"></b></a>
 
 						<ul class="dropdown-menu">
-							<li>
-								<a href="<?php echo site_url(); ?>">
-									<?php echo lang('bf_home') ?>
-								</a>
-							</li>
-
 							<?php if (has_permission('Site.Content.View')) : ?>
-							<li class="divider"></li>
 							<li>
 								<?php echo anchor(SITE_AREA, 'Panel d\'administration'); ?>
 							</li>

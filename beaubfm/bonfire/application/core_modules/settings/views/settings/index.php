@@ -13,15 +13,15 @@
 	<div class="tabbable">
 		<ul class="nav nav-tabs">
 			<li class="active">
-				<a href="#main-settings" data-toggle="tab">Main Settings</a>
+				<a href="#main-settings" data-toggle="tab">Paramètres Principaux</a>
 			</li>
 			<li>
-				<a href="#security" data-toggle="tab">Security Settings</a>
+				<a href="#security" data-toggle="tab">Paramètres de Sécurité</a>
 			</li>
 
 			<?php if (has_permission('Site.Developer.View')) : ?>
 			<li>
-				<a href="#developer" data-toggle="tab">Developer Settings</a>
+				<a href="#developer" data-toggle="tab">Paramètres Développeur</a>
 			</li>
 			<?php endif; ?>
 		</ul>

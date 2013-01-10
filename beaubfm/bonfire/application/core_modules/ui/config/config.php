@@ -1,8 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 $config['module_config'] = array(
-	'description'	=> 'Provides helpers for consistent admin UI features.',
-	'author'		=> 'Bonfire Team',
+	'description'	=> 'Fournit des raccourcis pour l\'interface administrateur.',
+	'author'		=> 'Wave Team',
 	'version'		=> '0.1.0',
-        'name'          => 'Keyboard Shortcuts',
+        'name'          => 'Raccourcis Clavier',
 );
