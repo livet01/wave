@@ -75,7 +75,7 @@ class Developer extends Admin_Controller
 	 *
 	 * @return void
 	 */
-	public function index($trans_lang='english')
+	public function index($trans_lang='french')
 	{
 		Assets::add_module_js('translate', 'translate.js');
 
@@ -140,7 +140,7 @@ class Developer extends Admin_Controller
 		// Get the lang file
 		if ($lang_file)
 		{
-			$orig	= load_lang_file($lang_file, 'english');
+			$orig	= load_lang_file($lang_file, 'french');
 			$new	= load_lang_file($lang_file, $trans_lang);
 
 			if (!$new)
