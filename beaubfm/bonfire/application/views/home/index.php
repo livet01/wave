@@ -1,7 +1,8 @@
-<header id="overview" class="jumbotron subhead">
-	
 
+	
+	<div id="overview" >
 		<center>
+	<div class="indexRecherche">
 	<form class="form-search" action="<?php echo site_url('index/recherche'); ?>" method="post" name="form_recherche" id="recherche_form">
 		<div class="input-append">
 			<input type="text" class="span6 search-query" data-provide="typeahead" name="recherche" id="recherche" value="<?php
@@ -14,8 +15,9 @@
 			</button>
 		</div>
 	</form>
+	</div>
 </center>
+	</div>
 
-</header>
 
 

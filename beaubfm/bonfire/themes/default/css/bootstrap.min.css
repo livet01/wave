@@ -3941,6 +3941,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #overview{
-	margin-top: 200px;
-	margin-bottom: 200px;
+	width: 1170px;
+	height: 500px;
+	background-image: url("http://hdwpapers.com/walls/guitar_fender_wallpaper-normal.jpg");
+	background-repeat: no-repeat;
+}
+.indexRecherche{
+	padding-top: 250px;
 }
