@@ -1,10 +1,7 @@
 <div class="cadre_selection">
 	<?php
-	if(!empty($msg)){
-		foreach ($msg as $mesg) {
-			echo $mesg;
-		}	
-	}
+	if(isset($msg))
+		echo $msg;
 	?>
 	<!-- Sélection de fichiers -->
 	<h1>Importation</h1>

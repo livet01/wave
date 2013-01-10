@@ -156,9 +156,8 @@ class EnAttente extends Authenticated_Controller {
 			
 		$this->auth->restrict('Wave.Importer.Disque');
 		$choix = $this->input->post('choix');
-		$ttx = count($choix)+1;
+		$ttx = count($choix);
 		$suc = $ech = 0;
-		$ech = 1;
 		if(!empty($choix)) {
 			foreach($choix as $id) {
 				$r = $this->importerManager->deleteImport($id);
@@ -169,13 +168,13 @@ class EnAttente extends Authenticated_Controller {
 			}
 		}
 		if($suc == $ttx)
-			Template::set_message('Le(s) disque(s) ont été correctement supprimé', 'success');
+			echo ($ttx > 1) ? Template::set_message('Tous les disques ont été correctement supprimé', 'success') : Template::set_message('Le disque a été correctement supprimé', 'success');
 		else {
 			if($ech == $ttx)
-				Template::set_message('Le(s) disque(s) n\'ont pas été correctement supprimé', 'error');
+				echo ($ttx > 1) ? Template::set_message('Tous les disques n\'ont pas été correctement supprimé', 'error') : Template::set_message('Le disque n\'a pas été correctement supprimé', 'error');
 			else{
-				$s = Template::message($suc.' disque(s) ont été cont été correctement supprimé', 'success').Template::message($ech.' disque(s) n\'ont pas été cont été correctement supprimé', 'error');
-				Template::set_message($s, 'warning');
+				Template::set_message($suc.' disque(s) ont été cont été correctement supprimé', 'success');
+				//Template::set_message($s, 'warning');
 			}
 		}
 		Template::redirect('enAttente/');

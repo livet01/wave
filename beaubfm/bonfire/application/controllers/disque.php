@@ -868,18 +868,34 @@ class Disque extends Authenticated_Controller {
 	public function supprimerAll($choix = null) {
 		$this->auth->restrict('Wave.Supprimer.Disque');
 		$choix = $this->input->post('choix');
+		$ttx = count($choix);
+		$suc = $ech = 0;
 		if(!empty($choix)) {
 			foreach($choix as $id) {
-				$this->supprimerOneDisque($id);
+				$r = $this->supprimerOneDisque($id);
+				if($r)
+					$suc++;
+				else
+					$ech++;
 			}
 		}
-		redirect(site_url('index'));
+		if($suc == $ttx)
+			echo ($ttx > 1) ? Template::set_message('Tous les disques ont été correctement supprimé', 'success') : Template::set_message('Le disque a été correctement supprimé', 'success');
+		else {
+			if($ech == $ttx)
+				echo ($ttx > 1) ? Template::set_message('Tous les disques n\'ont pas été correctement supprimé', 'error') : Template::set_message('Le disque n\'a pas été correctement supprimé', 'error');
+			else{
+				Template::set_message($suc.' disque(s) ont été cont été correctement supprimé', 'success');
+				//Template::set_message($s, 'warning');
+			}
+		}
+		Template::redirect('index');
 	}
 	
 	private function supprimerOneDisque($id) {
 		// Transtipage en integer
 		$id_disque = intval($id);
-
+		$r1 = $r2 = true;
 		// On récupère les infos du disque
 		$tabs = $this -> infodisque -> GetOneDisque($id_disque);
 			
@@ -889,13 +905,15 @@ class Disque extends Authenticated_Controller {
 			$tabs = $tabs[0];
 			
 			if($this->artisteManager->compte(array('per_id_artiste'=>$tabs['per_id_artiste'])) == 0) {
-				$this->artisteManager->delete($tabs['per_id_artiste']);
+				$r1 = $this->artisteManager->delete($tabs['per_id_artiste']);
 			}
 			
 			if($this->diffuseurManager->compte(array('dif_id'=>$tabs['dif_id'])) == 0) {
-				$this->diffuseurManager->delete($tabs['dif_id']);
+				$r2 = $this->diffuseurManager->delete($tabs['dif_id']);
 			}
 		}
+		
+		return ($sup && $r1 && $r2);
 	}
 }
 ?>
