@@ -32,7 +32,7 @@
 							<?php if (has_permission('Site.Content.View')) : ?>
 							<li class="divider"></li>
 							<li>
-								<?php echo anchor(SITE_AREA, 'Control Panel'); ?>
+								<?php echo anchor(SITE_AREA, 'Panel d\'administration'); ?>
 							</li>
 
 							<?php endif; ?>
