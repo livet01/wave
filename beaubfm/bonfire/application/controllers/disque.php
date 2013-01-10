@@ -52,6 +52,7 @@ class Disque extends Authenticated_Controller {
 		$this -> load -> model('disque/style_model', 'styleManager');
 		$this -> load -> model('disque/ecoute_model', 'ecouteManager');
 		$this -> load -> model('index/Info_Disque_Model', 'infodisque');
+		$this -> infodisque -> id = $this->current_user->id;
 		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
 		//$this->output->enable_profiler(TRUE);
@@ -752,6 +753,7 @@ class Disque extends Authenticated_Controller {
 	// Méthode de suggestion : ajax et auto-completion.
 	//
 	public function suggestions_artiste() {
+		$this->output->enable_profiler(FALSE);
 		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
@@ -773,6 +775,7 @@ class Disque extends Authenticated_Controller {
 	// Méthode de suggestion : ajax et auto-completion.
 	//
 	public function suggestions_diffuseur() {
+		$this->output->enable_profiler(FALSE);
 		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
@@ -794,6 +797,7 @@ class Disque extends Authenticated_Controller {
 	// Méthode de suggestion : ajax et auto-completion.
 	//
 	public function suggestions_ecoute() {
+		$this->output->enable_profiler(FALSE);
 		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
@@ -815,6 +819,7 @@ class Disque extends Authenticated_Controller {
 	// Méthode de suggestion : ajax et auto-completion.
 	//
 	public function suggestions_email() {
+		$this->output->enable_profiler(FALSE);
 		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);

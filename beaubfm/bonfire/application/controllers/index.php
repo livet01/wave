@@ -16,7 +16,8 @@ class Index extends Authenticated_Controller {
 		// Chargement des ressources pour tout le contrôleur
 		$this -> load -> database();
 		$this -> load -> library('form_validation');
-		
+		$this -> load -> model('index/Info_Disque_Model');
+		$this -> Info_Disque_Model -> id = $this->current_user->id;
 	}
 
 	//
@@ -24,7 +25,7 @@ class Index extends Authenticated_Controller {
 	//
 	public function index($g_nb_disques = 1, $affichage = 0) {
 		$this->auth->restrict('Wave.Recherche.Disque');
-		// Chargement des ressources		$this -> load -> model('index/Info_Disque_Model');
+		// Chargement des ressources
 		$this -> load -> library('pagination');
 		
 		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
@@ -149,7 +150,7 @@ class Index extends Authenticated_Controller {
 								$tabs = $this -> Info_Disque_Model -> GetArtiste($row -> art_id);
 							}
 							if ($i == 2) {
-								$tabs = $this -> Info_Disque_Model -> GetLabel($row -> lab_id);
+								$tabs = $this -> Info_Disque_Model -> GetLabel($row -> id);
 							}
 
 							foreach ($tabs as $tab) {
@@ -205,6 +206,8 @@ class Index extends Authenticated_Controller {
 	// Méthode de suggestion : ajax et auto-completion.
 	//
 	public function suggestions() {
+		
+		$this->output->enable_profiler(FALSE);
 		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);

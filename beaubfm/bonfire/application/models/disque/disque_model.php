@@ -4,7 +4,7 @@
  * 
  */
 class Disque_model extends CI_Model {
-	private $table = "Disque";
+	private $table = "disque";
 		
 	function __construct() {
 		parent::__construct();
