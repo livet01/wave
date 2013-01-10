@@ -88,7 +88,7 @@ $lang['bf_actions'] = 'Actions';
 $lang['bf_clear'] = 'Effacer';
 $lang['bf_action_list'] = 'List';
 $lang['bf_action_create'] = 'Créer';
-$lang['bf_action_ban'] = 'Ban';
+$lang['bf_action_ban'] = 'Bannir';
 
 //--------------------------------------------------------------------
 // ! SETTINGS LIB

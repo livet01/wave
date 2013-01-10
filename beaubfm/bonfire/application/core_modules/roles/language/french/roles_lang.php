@@ -53,7 +53,7 @@ $lang['role_destination_note']		= 'L\'URL de redirection du site lors de la réu
 $lang['role_default_context']		= 'Contexte de l\'Admin par défaut';
 $lang['role_default_context_note']	= 'Le contexte admin à charger lorsque aucun contexte n\'est spécifié (I.E. http://votresite.com/admin/)';
 
-$lang['matrix_header']				= 'Matrice de la Permission';
+$lang['matrix_header']				= 'Matrice des Permissions';
 $lang['matrix_permission']			= 'Permission';
 $lang['matrix_role']				= 'Rôle';
 $lang['matrix_note']				= 'Édition des permissions instantanée. Basculer une case à cocher pour ajouter ou retirer cette permission pour ce rôle.';

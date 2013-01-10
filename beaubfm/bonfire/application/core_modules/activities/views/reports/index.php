@@ -118,7 +118,7 @@
 
 
 <div class="admin-box">
-	<h3>Activity Cleanup</h3>
+	<h3>Nettoyage de Journaux</h3>
 
 	<?php $empty_table = true; ?>
 

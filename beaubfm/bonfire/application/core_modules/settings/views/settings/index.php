@@ -185,7 +185,7 @@
 			</div>
 
 			<div class="control-group">
-				<label class="control-label">Password Options</label>
+				<label class="control-label">Options des mots de passe</label>
 				<div class="controls">
 					<label class="checkbox" for="password_force_numbers">
 						<input type="checkbox" name="password_force_numbers" id="password_force_numbers" value="1" <?php echo set_checkbox('password_force_numbers', 1, isset($settings['auth.password_force_numbers']) && $settings['auth.password_force_numbers'] == 1 ? TRUE : FALSE); ?> />
@@ -215,7 +215,7 @@
 	<div class="tab-pane" id="developer">
 		<!-- Developer Settings -->
 		<fieldset>
-			<legend>Developer</legend>
+			<legend>Développeur</legend>
 
 			<div class="control-group">
 				<div class="controls">

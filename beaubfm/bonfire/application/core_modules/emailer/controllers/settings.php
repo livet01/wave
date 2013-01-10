@@ -101,17 +101,17 @@ class Settings extends Admin_Controller
 				if ($updated)
 				{
 					// Success, so reload the page, so they can see their settings
-					Template::set_message('Email settings successfully saved.', 'success');
+					Template::set_message('Paramètres de messagerie enregistrés avec succès.', 'success');
 					redirect(SITE_AREA .'/settings/emailer');
 				}
 				else
 				{
-					Template::set_message('There was an error saving your settings.', 'error');
+					Template::set_message('Il y a une erreur lors de l\'enregistrement de vos paramètres.', 'error');
 				}
 			}
 			else
 			{
-				Template::set_message('There was an error saving your settings.', 'error');
+				Template::set_message('Il y a une erreur lors de l\'enregistrement de vos paramètres.', 'error');
 			}
 		}//end if
 
@@ -121,7 +121,7 @@ class Settings extends Admin_Controller
 
 		Assets::add_module_js('emailer', 'js/settings');
 
-		Template::set('toolbar_title', 'Email Settings');
+		Template::set('toolbar_title', 'Paramètres d\'Email');
 
 		Template::render();
 

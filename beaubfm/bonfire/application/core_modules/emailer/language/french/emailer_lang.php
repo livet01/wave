@@ -23,7 +23,7 @@
 
 $lang['em_template']			= 'Modèle';
 $lang['em_email_template']		= 'Modèle d\'Email';
-$lang['em_emailer_queue']		= 'Queue d\'Email';
+$lang['em_emailer_queue']		= 'File d\'attente d\'Email';
 
 $lang['em_system_email']		= 'Email du système';
 $lang['em_system_email_note']	= 'L\'email où tous les courriels générés par le système sont envoyés à partir.';
@@ -54,7 +54,7 @@ $lang['em_test_mail_subject']	= 'Félicitations! Votre Emailer Bonfire fonctionn
 $lang['em_test_mail_body']		= 'Si vous voyez ce message, il semble que votre Emailer Bonfire fonctionne!';
 
 $lang['em_stat_no_queue']		= 'Vous ne possédez aucun emails dans la file d\'attente.';
-$lang['em_total_in_queue']		= 'Total des Emails dans la queue:';
+$lang['em_total_in_queue']		= 'Total des Emails dans la file d\'attente:';
 $lang['em_total_sent']			= 'Total des Emails expédiés:';
 
 $lang['em_sent']				= 'Expédié';

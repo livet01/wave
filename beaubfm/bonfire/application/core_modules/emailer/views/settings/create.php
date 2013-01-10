@@ -14,11 +14,11 @@
 	<table class="table table-stripped">
 		<tbody>
 			<tr>
-				<td>Subject:</td>
+				<td>Sujet:</td>
 				<td><input type="text" size="50" name="email_subject" id="email_subject" value="<?php if (isset($email_subject)){e($email_subject);} ?>"></td>
 			</tr>
 			<tr>
-				<td>Content:</td>
+				<td>Contenu:</td>
 				<td><textarea name="email_content" id="email_content" rows="15" style="width:90%;"><?php 
 					if(isset($email_content)){e($email_content);}
 				?></textarea>
@@ -115,7 +115,7 @@
 			<?php endforeach; ?>
 		<?php else: ?>
 			<tr>
-				<td colspan="6">No users found that match your selection.</td>
+				<td colspan="6">Aucun utilisateurs trouvés qui correpondent à votre sélection.</td>
 			</tr>
 		<?php endif; ?>
 		</tbody>

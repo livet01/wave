@@ -107,7 +107,7 @@ $lang['us_unauthorized']			= 'Non autorisé. Désolé vous n\'avez pas la permis
 $lang['us_empty_id']				= 'Aucun id utilisateur fourni. Vous devez fournir un nom d\'utilisateur pour effectuer cette action.';
 $lang['us_self_delete']				= 'Non autorisé. Désolé, vous ne pouvez pas vous supprimer.';
 
-$lang['us_filter_first_letter']		= 'Nom d\'utilisateur commence par: ';
+$lang['us_filter_first_letter']		= 'Nom d\'utilisateur commençant par: ';
 $lang['us_account_details']			= 'Détails du compte';
 $lang['us_last_login']				= 'Dernière connexion';
 

@@ -9,8 +9,8 @@
 	</div>
 	<div class="column size1of3 last-column text-right">
 		<?php echo form_open($this->uri->uri_string(), array('class' => 'form-inline')); ?>
-		<input type="submit" name="action_force_process" class="btn btn-primary" value="Process Now">
-		<input type="submit" name="action_insert_test" class="btn btn-warning" value="Insert Test Email">
+		<input type="submit" name="action_force_process" class="btn btn-primary" value="Envoyer Maintenant">
+		<input type="submit" name="action_insert_test" class="btn btn-warning" value="Insérer un Email de Test">
 		<?php echo form_close(); ?>
 	</div>
 </div>
@@ -84,10 +84,10 @@
 
 <?php if (isset($email_debug)) :?>
 
-<h3>Email Debugger</h3>
+<h3>Débuggeur d'Email</h3>
 
 <div class="notification attention">
-	<p>There was an error sending emails from the queue. The results appear below.</p>
+	<p>Il y a une erreur pendant l'envoi des emails à partir de la file d'attente. Les résultats apparaissent ci-dessous.</p>
 </div>
 
 <div class="box">

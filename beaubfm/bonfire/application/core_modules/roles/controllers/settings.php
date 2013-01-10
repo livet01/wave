@@ -104,13 +104,13 @@ class Settings extends Admin_Controller
 			}
 			else
 			{
-				Template::set_message('There was a problem creating the role: '. $this->role_model->error, 'error');
+				Template::set_message('Il y a eu un problème lors de la création du rôle:'. $this->role_model->error, 'error');
 			}
 		}
 
         Template::set('contexts', list_contexts(true));
 
-        Template::set('toolbar_title', 'Create New Role');
+        Template::set('toolbar_title', 'Créer un nouveau Rôle');
 		Template::set_view('settings/role_form');
 		Template::render();
 
@@ -133,7 +133,7 @@ class Settings extends Admin_Controller
 
 		if (empty($id))
 		{
-			Template::set_message('Invalid Role ID.', 'error');
+			Template::set_message('ID du rôle invalide.', 'error');
 			redirect(SITE_AREA .'/settings/roles');
 		}
 
@@ -141,7 +141,7 @@ class Settings extends Admin_Controller
 		{
 			if ($this->save_role('update', $id))
 			{
-				Template::set_message('Role successfully saved.', 'success');
+				Template::set_message('Le Rôle a bien été sauvegardé.', 'success');
 				// redirect to update the sidebar which will show old name otherwise.
 				Template::redirect(SITE_AREA .'/settings/roles');
 			}
@@ -154,19 +154,19 @@ class Settings extends Admin_Controller
 		{
 			if ($this->role_model->delete($id))
 			{
-				Template::set_message('The Role was successfully deleted.', 'success');
+				Template::set_message('Le Rôle a été supprimé avec succès.', 'success');
 				redirect(SITE_AREA .'/settings/roles');
 			}
 			else
 			{
-				Template::set_message('We could not delete the role: '. $this->role_model->error, 'error');
+				Template::set_message('Impossible de supprimer le rôle: '. $this->role_model->error, 'error');
 			}
 		}
 
 		Template::set('role', $this->role_model->find($id));
         Template::set('contexts', list_contexts(true));
 
-        Template::set('toolbar_title', 'Edit Role');
+        Template::set('toolbar_title', 'Editer un Rôle');
 		Template::set_view('settings/role_form');
 		Template::render();
 

@@ -4,7 +4,7 @@
 	<?php echo form_open(SITE_AREA .'/settings/emailer', 'class="form-horizontal"'); ?>
 
 	<fieldset>
-		<legend>General Settings</legend>
+		<legend>Paramètres Généraux</legend>
 
 		<div class="control-group <?php echo form_error('sender_email') ? 'error' : '' ?>">
 			<label class="control-label" for="sender_email"><?php echo lang('em_system_email'); ?></label>
@@ -96,7 +96,7 @@
 	</fieldset>
 
 	<div class="form-actions">
-		<input type="submit" name="submit" class="btn btn-primary" value="Save Settings" />
+		<input type="submit" name="submit" class="btn btn-primary" value="Sauvegarder les paramètres" />
 	</div>
 
 	<?php echo form_close(); ?>

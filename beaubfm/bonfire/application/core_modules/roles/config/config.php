@@ -2,5 +2,6 @@
 
 $config['module_config'] = array(
 	'description'	=> 'Fournit le contrôle d\'accès basé sur les rôles pour les utilisateurs.',
-	'author'		=> 'Wave Team'
+	'author'		=> 'Wave Team',
+	'name'			=>'Rôles'
 );
