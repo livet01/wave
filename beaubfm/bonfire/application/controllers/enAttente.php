@@ -46,66 +46,71 @@ class EnAttente extends Authenticated_Controller {
 			// On récupère le nombre de disque présent dans la base
 			$tabs = $this -> importerManager -> selectImport();
 			$nb_disques_total = count($tabs);
-
-			// On vérifie la cohérence de la variable $_GET
-			if ($g_nb_disques > 1) {
-				// La variable $_GET semblent être correcte. On doit maintenant
-				// vérifier s'il y a bien assez de disquess dans la base dedonnées.
-				if ($g_nb_disques <= $nb_disques_total) {
-					// Il y a assez de disques dans la base de données.
-					// La variable $_GET est donc cohérente.
-					$nb_disques = intval($g_nb_disques);
+			//var_dump("dksn,vnkdlf", $nb_disques_total);
+			if($nb_disques_total > 0)
+			{
+				// On vérifie la cohérence de la variable $_GET
+				if ($g_nb_disques > 1) {
+					// La variable $_GET semblent être correcte. On doit maintenant
+					// vérifier s'il y a bien assez de disquess dans la base dedonnées.
+					if ($g_nb_disques <= $nb_disques_total) {
+						// Il y a assez de disques dans la base de données.
+						// La variable $_GET est donc cohérente.
+						$nb_disques = intval($g_nb_disques);
+					} else {
+						// Il n'y pas assez de messages dans la base de données.
+						$nb_disques = 1;
+					}
 				} else {
-					// Il n'y pas assez de messages dans la base de données.
+					// La variable $_GET "nb_disques" est erronée. On lui donne une valeur par défaut
 					$nb_disques = 1;
 				}
-			} else {
-				// La variable $_GET "nb_disques" est erronée. On lui donne une valeur par défaut
-				$nb_disques = 1;
-			}
-
-			// Récupération de tout les disques de importdisque pour la page
-
-			$this -> importerManager -> selectImport();
-
-			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
-			foreach ($tabs as $tab) {
-				if (empty($tab -> emb_id))
-					$emb_id = null;
-				else {
-					$emb_id = $tab -> emb_id;
-				}
-				//var_dump($this->current_user->id, $tab->per_id_import);
+	
+				// Récupération de tout les disques de importdisque pour la page
+	
+				//$tabs = $this -> importerManager -> selectImport();
+			
 				
-				if((int)$tab->per_id_import == $this->current_user->id){
-					$tab_result1[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab->imp_diffuseur);
-					//var_dump("==");
+				// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
+				foreach ($tabs as $tab) {
+					if (empty($tab -> emb_id))
+						$emb_id = null;
+					else {
+						$emb_id = $tab -> emb_id;
+					}
+					//var_dump($this->current_user->id, $tab->per_id_import);
+					
+					if((int)$tab->per_id_import == $this->current_user->id){
+						$tab_result1[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab->imp_diffuseur);
+						//var_dump("==");
+					}
+					else{
+						$tab_result2[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab->imp_diffuseur);
+						//var_dump("!=");
+					}
 				}
-				else{
-					$tab_result2[] = array("dis_id" => $tab -> imp_id, "dis_libelle" => $tab -> imp_libelle, "mem_nom" => $tab -> imp_ecoute, "art_nom" => $tab -> imp_artiste, "per_nom" => $tab->imp_diffuseur);
-					//var_dump("!=");
+				if (!empty($tab_result1)) {
+					// On passe le tableau de disque
+					$data['resultat1'] = $tab_result1;
 				}
+				if (!empty($tab_result2)) {
+					// On passe le tableau de disque
+					$data['resultat2'] = $tab_result2;
+				}
+	
+			// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
+			$data['affichage'] = $affichage;
+			$data['username'] = $this->current_user->username;
+			// Chargement de la vue
+			Template::set_view('enAttente/resultat');
+			Template::set('data', $data);
+			Template::render();
 			}
-			if (!empty($tab_result1)) {
-				// On passe le tableau de disque
-				$data['resultat1'] = $tab_result1;
-			}
-			if (!empty($tab_result2)) {
-				// On passe le tableau de disque
-				$data['resultat2'] = $tab_result2;
-			}
-		}
-
-		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
-		$data['affichage'] = $affichage;
-		$data['username'] = $this->current_user->username;
-		// Chargement de la vue
-		Template::set_view('enAttente/resultat');
-		//Template::set_view('index/resultat_recherche');
-		Template::set('data', $data);
-		Template::render();
-		//$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', $data);
-
+	else
+	{
+		Template::redirect('index');
+	}
+	}
 	}
 
 	public function supprimmerDisquesEnAttente($idsupp = 0, $g_nb_disques = 1, $affichage = 0) {
@@ -178,7 +183,10 @@ class EnAttente extends Authenticated_Controller {
 				//Template::set_message($s, 'warning');
 			}
 		}
-		Template::redirect('enAttente/');
+		if($this->importerManager->compte() > 0)
+			Template::redirect('enAttente');
+		else
+			Template::redirect('index');
 	}
 
 	

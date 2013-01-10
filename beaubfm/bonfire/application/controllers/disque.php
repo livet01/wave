@@ -907,7 +907,7 @@ class Disque extends Authenticated_Controller {
 			}
 		}
 		
-		return ($sup && $r1 && $r2);
+		return ($r1 && $r2);
 	}
 
 }

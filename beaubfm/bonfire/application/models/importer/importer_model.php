@@ -83,4 +83,11 @@ class Importer_model extends CI_Model {
 						->from($this->table)
 	                    ->count_all_results();
 	}
+	
+	public function compte()
+	{
+		return $this->db
+						->from($this->table)
+	                    ->count_all_results();
+	}
 }
