@@ -4,7 +4,7 @@
  * 
  */
 class Artiste_model extends CI_Model {
-	private $table = "Artiste";
+	private $table = "artiste";
 		
 	function __construct() {
 		parent::__construct();
@@ -19,7 +19,7 @@ class Artiste_model extends CI_Model {
 	}
 	
 	function compte($where) {
-		return $this->db	->from("Disque")
+		return $this->db	->from("disque")
 							->where($where)
 							->count_all_results();
 	}
@@ -28,7 +28,7 @@ class Artiste_model extends CI_Model {
 		$resultat = $this->db->set('per_nom', $nom)
 						->set('cat_id', $cat)
 						->set('rad_id', $radio)
-						->insert("Personne");
+						->insert("personne");
 		if(!$resultat) {
 			throw new Exception("La personne n'a pas été ajouté", 1);
 		}
@@ -37,6 +37,6 @@ class Artiste_model extends CI_Model {
 	
 	function delete ($artiste){
 		
-		return $this -> db ->delete("Personne", array('per_id' => $artiste));
+		return $this -> db ->delete("personne", array('per_id' => $artiste));
 	}
 }

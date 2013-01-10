@@ -5,7 +5,7 @@
  */
 class Parametre_model extends CI_Model {
 	
-	protected $table = 'Parametre';
+	protected $table = 'parametre';
 	
 	function __construct() {
 		parent::__construct();

@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Disque_model extends CI_Model {
 	
-	protected $table = 'Disque';
+	protected $table = 'disque';
 	
 	function __construct() {
 		parent::__construct();

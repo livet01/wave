@@ -4,7 +4,7 @@
  * 
  */
 class Utilisateur_model extends CI_Model {
-	private $table1 = "Users";
+	private $table1 = "users";
 		
 	function __construct() {
 		parent::__construct();

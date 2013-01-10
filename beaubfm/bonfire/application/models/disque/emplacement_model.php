@@ -5,7 +5,7 @@
  */
 class Emplacement_model extends CI_Model {
 	
-	protected $table = 'Emplacement';
+	protected $table = 'emplacement';
 	
 	function __construct() {
 		parent::__construct();

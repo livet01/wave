@@ -5,8 +5,8 @@
  */
 class Diffuseur_model extends CI_Model {
 	
-	protected $table = 'Diffuseur';
-	protected $vue = 'Label';
+	protected $table = 'diffuseur';
+	protected $vue = 'label';
 	
 	function __construct() {
 		parent::__construct();

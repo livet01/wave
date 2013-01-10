@@ -5,10 +5,10 @@
  */
 class Personne_model extends CI_Model {
 	
-	protected $table = 'Personne';
-	protected $tableUti='Utilisateur';
-	protected $vueArt = 'Artiste';
-	protected $vueAutoProd = 'AutoProduction';
+	protected $table = 'personne';
+	protected $tableUti='utilisateur';
+	protected $vueArt = 'artiste';
+	protected $vueAutoProd = 'autoproduction';
 	
 	function __construct() {
 		parent::__construct();

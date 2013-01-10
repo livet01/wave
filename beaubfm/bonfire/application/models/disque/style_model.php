@@ -5,7 +5,7 @@
  */
 class Style_model extends CI_Model {
 	
-	protected $table = 'Style';
+	protected $table = 'style';
 	
 	function __construct() {
 		parent::__construct();
