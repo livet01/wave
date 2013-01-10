@@ -84,8 +84,6 @@ class ImporterFiche extends Authenticated_Controller{
 			}
 		}
 		
-		//On recharge la vue et on affiche les éventuels messages d'erreurs
-		parent::__construct();
 		if(!empty($msg))
 			$data['msg'] = $msg;
 		
