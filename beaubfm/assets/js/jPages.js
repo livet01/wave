@@ -140,9 +140,9 @@
       for (; i <= this._numPages; i++) {
         if (i === 1 && this.options.startRange === 0) navhtml += "";
         if (i > this.options.startRange && i <= this._numPages - this.options.endRange)
-          navhtml += "<li><a href='#' class='jp-hidden'>";
+          navhtml += "<li onclick=\"$('.colall').hide(); $('.icon-chevron-down').attr('class','icon-chevron-right');\"><a href='#' class='jp-hidden'>";
         else
-          navhtml += "<li><a>";
+          navhtml += "<li onclick=\"$('.colall').hide(); $('.icon-chevron-down').attr('class','icon-chevron-right');\"><a href=\"#\">";
 
         switch (this.options.links) {
           case "numeric":

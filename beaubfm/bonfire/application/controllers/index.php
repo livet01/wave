@@ -64,18 +64,47 @@ class Index extends Authenticated_Controller {
 			$linkpag = "<a href=\"#\" id=\"begin\">&lt;&lt;</a><a href=\"#\" id=\"pred\">&lt;</a>".$pag."<a href=\"#\" id=\"suiv\">&gt;</a><a href=\"#\" id=\"fin\">&gt;&gt;</a>";
 			$data['pagination'] = $linkpag;
 			//$data['pagination'] = $this -> pagination -> create_links();*/
-
-			// Récupération de tout les disques pour la page
-			$tabs = $this -> Info_Disque_Model -> GetAll();
-
-			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
-			foreach ($tabs as $tab) {
-				if (empty($tab -> emb_id))
-					$emb_id = null;
-				else {
-					$emb_id = $tab -> emb_id;
+			
+			if (has_permission('Wave.Modifier.Disque'))
+			{
+				// Récupération de tout les disques pour la page
+				$tabs = $this -> Info_Disque_Model -> GetAllAttente();
+	
+				// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
+				foreach ($tabs as $tab) {
+					if (empty($tab -> emb_id))
+						$emb_id = null;
+					else {
+						$emb_id = $tab -> emb_id;
+					}
+					$tab_result[] = array("dis_id" => $tab -> dis_id,"sty_couleur" => $tab -> sty_couleur, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
 				}
-				$tab_result[] = array("dis_id" => $tab -> dis_id, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+				// Récupération de tout les disques pour la page
+				$tabs = $this -> Info_Disque_Model -> GetAllNoAttente();
+	
+				// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
+				foreach ($tabs as $tab) {
+					if (empty($tab -> emb_id))
+						$emb_id = null;
+					else {
+						$emb_id = $tab -> emb_id;
+					}
+					$tab_result[] = array("dis_id" => $tab -> dis_id,"sty_couleur" => $tab -> sty_couleur, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+				}
+			}
+			else{
+				// Récupération de tout les disques pour la page
+				$tabs = $this -> Info_Disque_Model -> GetAll();
+	
+				// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
+				foreach ($tabs as $tab) {
+					if (empty($tab -> emb_id))
+						$emb_id = null;
+					else {
+						$emb_id = $tab -> emb_id;
+					}
+					$tab_result[] = array("dis_id" => $tab -> dis_id,"sty_couleur" => $tab -> sty_couleur, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+				}
 			}
 			if(!empty($tab_result)){
 				// On passe le tableau de disque
@@ -106,7 +135,8 @@ class Index extends Authenticated_Controller {
 
 		if ($this -> form_validation -> run() == FALSE)// Des erreurs on été détecté !
 		{
-			$this -> index(1, -1);
+			Template::set_message("Que voulez vous recherchez ? Réessayez en indiquant votre recherche dans le barre de recherche.","error");
+			Template::redirect('index');
 			// On revoie sur la méthode index avec un affichage de -1.
 		} else// Aucune erreur
 		{
@@ -124,8 +154,8 @@ class Index extends Authenticated_Controller {
 			$rowsDisque = $this -> autocomplete_model -> GetAutocompleteArrayDisque(array('keyword' => $this -> input -> post('recherche')));
 
 			if (empty($rows) and empty($rowsLabel) and empty($rowsDisque)){// Aucun disque, artiste, label a été trouvé
-				Template::set_message("La recherche n'a renvoyé aucun résultat","error");
-				$this -> index(1, 2);
+				Template::set_message("La recherche n'a renvoyé aucun résultat","info");
+				Template::redirect('index');
 			// On revoi sur l'index avec un affichage de 2
 			} else {
 				// On stoque dans la variable term le mot clé
@@ -181,8 +211,8 @@ class Index extends Authenticated_Controller {
 
 				// Si il n'y a pas de disque dans tab_resultDisque
 				if (count($tab_resultDisque) == 0 || !isset($tab_resultDisque)){
-					Template::set_message("La recherche n'a renvoyé aucun résultat","error");
-					$this -> index(1, 2);
+					Template::set_message("La recherche n'a renvoyé aucun résultat","info");
+					Template::redirect('index');
 				}
 					
 				// On renvoi sur l'index avec un affichage de 2
@@ -254,8 +284,6 @@ class Index extends Authenticated_Controller {
 		$this->auth->restrict('Wave.Recherche.Disque');
 		if (!empty($id_disque))// Si le id_disque n'est pas nul
 		{
-			// On charge le model
-			$this -> load -> model('index/Info_Disque_Model', 'infodisque');
 
 			// id_dis doit être >= à 0
 			assert($id_disque >= 0);
@@ -264,12 +292,11 @@ class Index extends Authenticated_Controller {
 			$id_disque = intval($id_disque);
 
 			// On récupère les infos du disque
-			$tabs = $this -> infodisque -> GetDisque($id_disque);
+			$tabs = $this -> Info_Disque_Model -> GetDisque($id_disque);
 
 			// Tableau contenant les données à envoyé
 			$json_array = array();
-			
-				
+							
 			$this -> load -> model('parametre_model', 'parametreManager');
 			$colonnes = $this -> parametreManager -> select('colonnes');
 			$colonnes = explode(";", $colonnes['param_valeur']);
@@ -281,7 +308,7 @@ class Index extends Authenticated_Controller {
 				else {
 					$emb_id = $tab -> emb_libelle;
 				}
-				$json_array[] = array("dis_id" => $tab -> dis_id, "dis_envoi_ok" => $tab -> dis_envoi_ok, "sty_libelle" => $tab -> sty_libelle, "mail" => $tab -> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
+				$json_array[] = array("dis_id" => $tab -> dis_id, "dis_envoi_ok" => $tab -> dis_envoi_ok, "sty_couleur" => $tab -> sty_couleur, "sty_libelle" => $tab -> sty_libelle, "mail" => $tab -> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
 		}
 			// Passage a la vue manquante
 			$this -> load -> view('index/affichage_disque', array('data' => $json_array[0], 'colonne' => $colonnes));

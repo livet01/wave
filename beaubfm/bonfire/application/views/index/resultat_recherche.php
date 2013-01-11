@@ -37,7 +37,7 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 <?php }
 	if(($affichage==0 || $affichage==1) && !empty($resultat)){
  ?>
-<table class="table table-striped table-condensed">
+<table class="table">
 	<caption>
 		<div class="page-header">
 		<?php if($affichage==0) { ?> <h2>Listes des disques</h2> <?php } ?>
@@ -53,18 +53,31 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 				if ($i % 2 == 0)
 					$bis = 'class="bis"';
 				else
-					$bis = '';
+					$bis = '';	
 						
 				echo '<tr '.$bis.' style="cursor:pointer;" onclick="
+				if($(\'#img'.$ligne['dis_id'].'\').attr(\'class\') == \'icon-chevron-down\') {
+				$(\'.colall\').hide(); $(\'.icon-chevron-down\').attr(\'class\',\'icon-chevron-right\'); }
+				else {
 				$(\'.colall\').hide(); $(\'.icon-chevron-down\').attr(\'class\',\'icon-chevron-right\');
 				$(\'#col'.$ligne['dis_id'].'\').show(); 
 				$.get(\'' . site_url("index/affichage_disque/" . $ligne['dis_id']) . '\', 
 				function(data) {
 					 $(\'#col'.$ligne['dis_id'].'\').html(\'\').html(data); }).complete(
-					 function(){ $(\'#img'.$ligne['dis_id'].'\').attr(\'class\',\'icon-chevron-down\') });">';
+					 function(){ $(\'#img'.$ligne['dis_id'].'\').attr(\'class\',\'icon-chevron-down\') });
+					 }">';
 				
 				echo '<td><input id="chx' . $j . '" class="check" type="checkbox" name="choix[]" value="' . $ligne['dis_id'] . '"></td>';
-				echo '<td class="left"><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i></a> ' . $ligne['dis_libelle'] . '</td>';
+				
+				if (has_permission('Wave.Modifier.Disque'))
+					echo '<td><i class="circle-'.$ligne['sty_couleur'].'"></i></td>';
+				
+				if($ligne['emp_libelle'] == "En attente" && has_permission('Wave.Modifier.Disque')) {
+				echo '<td class="left"><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i> <span style="color:red;"><i class="icon-warning-sign"></i> ' . $ligne['dis_libelle'] . '</span></td>';
+				}
+				else
+					echo '<td class="left"><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i> ' . $ligne['dis_libelle'] . '</td>';
+				
 				echo '<td>' . $ligne['art_nom'] . '</td>';
 				echo '<td>' . $ligne['per_nom'] . '</td>';
 				echo '<td>';
@@ -90,6 +103,9 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 		<thead>
 	<tr>
 		<th><input type="checkbox" onclick="CocheTout(this,'choix[]');" value="1" ></th>
+		<?php if (has_permission('Wave.Modifier.Disque'))
+			{ ?>
+		<th><i class="icon-certificate"></i></th><?php } ?>
 		<th><i class="icon-music"></i> Titre</th>
 		<th><i class="icon-user"></i> Artiste</th>
 		<th><i class="icon-home"></i> Label</th>

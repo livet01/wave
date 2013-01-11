@@ -152,13 +152,13 @@
 				// Pour les disques normales et correctes
 				var n = $("input:checked").length;
 				if(n >= 1) {
-			  	$("#supprimer").removeClass().addClass("btn-large-action");
-			  	$("#supprimer").click(function(){
+			  	$("#supprimer>a").removeClass().addClass("btn");
+			  	$("#supprimer>a").click(function(){
 			  		$("#tdisque").attr("action","<?php echo site_url("disque/supprimer"); ?>").submit();
 			  	});
 			  	
-			  	$("#exporter").removeClass().addClass("btn-large-action");
-			  	$("#exporter").click(function(){
+			  	$("#exporter>a").removeClass().addClass("btn");
+			  	$("#exporter>a").click(function(){
 			  		$("#tdisque").attr("action","<?php echo site_url("exporterFiche"); ?>").submit();
 			  	});
 			  	
@@ -173,12 +173,12 @@
 				});
 				}
 				else {
-			  	$("#supprimer").removeClass().addClass("btn-large-action-nonActif");
-			  	$("#supprimer").attr("href", "#");
+			  	$("#supprimer>a").removeClass().addClass("btn disabled");
+			  	$("#supprimer>a").attr("href", "#");
 			  	$("#supprimerI").removeClass().addClass("btn-large-action-nonActif");
 			  	$("#supprimerI").attr("href", "#");
-			  	$("#exporter").removeClass().addClass("btn-large-action-nonActif");
-			  	$("#exporter").attr("href", "#");
+			  	$("#exporter>a").removeClass().addClass("btn disabled");
+			  	$("#exporter>a").attr("href", "#");
 			  	$("#modifier").removeClass().addClass("btn-large-action-nonActif");
 			  	$("#modifier").attr("href", "#");
 			  	$("#tdisque").attr("action","#");

@@ -94,11 +94,17 @@ class Base_Controller extends MX_Controller
 			}
 
 			$this->load->model('importer/importer_model', 'importerManager');
+			$this->load->model('index/info_disque_model', 'infoDisque');
 			// Load our current logged in user so we can access it anywhere.
 			if(!defined('NBU'))
 				define('NBU', $this->importerManager->compteU($this->current_user->id));
 			if(!defined('NBNU'))
 				define('NBNU', $this->importerManager->compteNU($this->current_user->id));
+			if (has_permission('Wave.Modifier.Disque'))
+			{
+				if(!defined('ATTENTE'))
+					define('ATTENTE', $this->infoDisque->count_enAttente());
+			}
 			
 		}
 

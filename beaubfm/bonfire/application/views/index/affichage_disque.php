@@ -2,7 +2,8 @@
 if(!empty($data)) { 
 	
 ?>
-<td></td>
+<td></td><?php if(defined('ATTENTE')) { ?>
+<td></td><?php } ?>
 <td colspan="5">
 <?php if(!empty($data['dis_format'])) { ?><span class="label label-info" style="margin: 0 5px; "><i class="icon-file icon-white"></i> <?php echo $data['dis_format'];  ?></span><?php } ?>
 <?php if(!empty($data['emp_libelle'])) { ?><span class="label label-important"style="margin: 0 5px;"><i class="icon-hdd icon-white"></i> <?php echo $data['emp_libelle'];  ?></span><?php } ?>

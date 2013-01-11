@@ -3972,3 +3972,64 @@ h1.home {
 	border-radius:10px;
 	-moz-border-radius:10px;
 }
+
+.circle-rouge {
+	display: inline-block;
+  	border: solid 1px rgb(200,200,200);
+    width: 10px;
+    height: 10px;
+    background: red;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.circle-vert {
+	display: inline-block;
+  	border: solid 1px rgb(200,200,200);
+    width: 10px;
+    height: 10px;
+    background: green;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.circle-bleu {
+	display: inline-block;
+  	border: solid 1px rgb(200,200,200);
+    width: 10px;
+    height: 10px;
+    background: blue;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.circle-jaune {
+	display: inline-block;
+  	border: solid 1px rgb(200,200,200);
+    width: 10px;
+    height: 10px;
+    background: yellow;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.circle-orange {
+	display: inline-block;
+  	border: solid 1px rgb(200,200,200);
+    width: 10px;
+    height: 10px;
+    background: orange;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.circle-blanc {
+	display: inline-block;
+  	border: solid 1px rgb(200,200,200);
+    width: 10px;
+    height: 10px;
+    background: white;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}

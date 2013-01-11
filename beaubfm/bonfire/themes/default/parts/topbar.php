@@ -56,16 +56,23 @@
 					<?php endif; ?>
 				</ul>
 				<ul class="nav">
-				<?php  if (has_permission('Wave.Recherche.Disque')) {?>
-				  <li>
-				    <a href="<?php echo site_url("index"); ?>">Recherche</a>
-				  </li><?php }
-				 $valeur = unserialize($_COOKIE['bf_session']);  
+				<?php  if (has_permission('Wave.Recherche.Disque')) {
+					?><li><a href="<?php echo site_url("index"); ?>">Recherche<?php
+					if (has_permission('Wave.Modifier.Disque'))
+					{
+					 if(defined('ATTENTE') && (ATTENTE)!=0) { ?>
+					 <span class="badge badge-important"><?php echo ATTENTE; ?></span>
+					<?php } } ?></a></li><?php  }
+				if(isset($_COOKIE['bf_session']))
+					 $valeur = unserialize($_COOKIE['bf_session']); 
+				else {
+					$valeur= array();
+				} 
 				 if (has_permission('Wave.Ajouter.Disque')) { ?>
 				  <li><a href="<?php echo site_url("disque/ajouter"); ?>">Ajouter un disque <?php if(isset($valeur['user_id']) && isset($valeur['auth_custom'])) { if(file_exists('./assets/upload/'.$valeur['user_id'].'-'.$valeur['auth_custom'])) { ?><span class="badge badge-important">1</span><?php }} ?></a></li>
 				  <?php } if (has_permission('Wave.Importer.Disque')) {  ?><li><a href="<?php echo site_url("importerFiche"); ?>">Importer</a></li>
 					<?php if(defined('NBU') && defined('NBNU') && (NBU+NBNU)!=0) { ?>
-					<li><a href="<?php echo site_url("enAttente"); ?>">En attente  <?php if(NBU != 0) { ?><span class="badge badge-important"><?php echo NBU; ?></span> <?php } if(NBNU != 0) { ?><span class="badge badge-info"><?php echo NBNU; ?></span><?php } ?></a></li>
+					<li><a href="<?php echo site_url("enAttente"); ?>">Disques incorrectes  <?php if(NBU != 0) { ?><span class="badge badge-important"><?php echo NBU; ?></span> <?php } if(NBNU != 0) { ?><span class="badge badge-info"><?php echo NBNU; ?></span><?php } ?></a></li>
 					<?php } }  ?>
 				</ul>
 			</div><!--/.nav-collapse -->

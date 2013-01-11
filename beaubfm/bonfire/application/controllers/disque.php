@@ -849,7 +849,7 @@ class Disque extends Authenticated_Controller {
 		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
 		$data['affichage'] = $affichage;
 		$data['liens'][0] = array("id" => "supprAll", "icon" => "icon-trash", "text" => " Tout supprimer", "href" => "#");
-		$data['liens'][1] = array("id" => "", "icon" => "icon-undo", "text" => " Annuler", "href" => site_url("enAttente/"));
+		$data['liens'][1] = array("id" => "", "icon" => "icon-repeat", "text" => " Annuler", "href" => site_url("enAttente/"));
 		$data['form_id'] = "supprimerdisque";
 		
 		Template::set('data',$data);

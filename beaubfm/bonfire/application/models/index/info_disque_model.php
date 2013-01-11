@@ -37,7 +37,7 @@ class Info_Disque_Model extends CI_Model
 		{
 			$this->db->where('disque.dif_id',$this->id);
 		}
-			$this->db->select(array('col1','col2','col3','col4','col5','col6','disque.dis_id','dis_envoi_ok','sty_libelle','dis_libelle','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom', 'u1.email as mail','emplacement.emp_libelle','embenevole.emb_libelle'))
+			$this->db->select(array('col1','col2','col3','col4','col5','col6','disque.dis_id','dis_envoi_ok','sty_libelle','sty_couleur','dis_libelle','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom', 'u1.email as mail','emplacement.emp_libelle','embenevole.emb_libelle'))
 						->join('artiste', 'disque.per_id_artiste=Artiste.art_id', 'LEFT')
 						->join('emplacement', 'disque.emp_id=Emplacement.emp_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
@@ -66,11 +66,12 @@ class Info_Disque_Model extends CI_Model
 		{
 			$this->db->where('disque.dif_id',$this->id);
 		}
-			$this->db->select(array('disque.dis_id','dis_libelle','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
+			$this->db->select(array('disque.dis_id','dis_libelle','sty_couleur','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
 						->join('artiste', 'disque.per_id_artiste=Artiste.art_id', 'LEFT')
 						->join('emplacement', 'disque.emp_id=Emplacement.emp_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
+						->join('style','disque.sty_id=style.sty_id', 'LEFT')
 						->where('disque.dis_id', $numDisque);
 		$query = $this->db->get('disque');
 		return $query->result_array();
@@ -88,18 +89,55 @@ class Info_Disque_Model extends CI_Model
 		return $query->result_array();
     }
 	
-	function GetAll($nb=0,$debut=0)
+	function GetAll()
     {
     	if (has_permission('Wave.Restriction.Disque'))
 		{
 			$this->db->where('disque.dif_id',$this->id);
 		}
-			$this->db->select(array('disque.dis_id','dis_libelle','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
+			$this->db->select(array('disque.dis_id','dis_libelle','sty_couleur','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
 						->join('artiste', 'disque.per_id_artiste=artiste.art_id', 'LEFT')
 						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
+						->join('style','disque.sty_id=style.sty_id', 'LEFT')
 						->order_by('dis_libelle', 'asc'); //-> limit($nb, $debut);
+		$query = $this->db->get('disque');
+		return $query->result();
+    }
+	
+	function GetAllNoAttente()
+    {
+    	if (has_permission('Wave.Restriction.Disque'))
+		{
+			$this->db->where('disque.dif_id',$this->id);
+		}
+			$this->db->select(array('disque.dis_id','dis_libelle','sty_couleur','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
+						->join('artiste', 'disque.per_id_artiste=artiste.art_id', 'LEFT')
+						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
+						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
+						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
+						->join('style','disque.sty_id=style.sty_id', 'LEFT')
+						->where('emp_libelle !=',"En attente")
+						->order_by('dis_libelle', 'asc'); //-> limit($nb, $debut);
+		$query = $this->db->get('disque');
+		return $query->result();
+    }
+	
+	function GetAllAttente()
+    {
+    	if (has_permission('Wave.Restriction.Disque'))
+		{
+			$this->db->where('disque.dif_id',$this->id);
+		}
+			$this->db->select(array('disque.dis_id','dis_libelle','sty_couleur','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
+						->join('artiste', 'disque.per_id_artiste=artiste.art_id', 'LEFT')
+						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
+						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
+						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
+						->join('style','disque.sty_id=style.sty_id', 'LEFT')
+						->where('emp_libelle','En attente')
+						->order_by('dis_date_ajout', 'asc'); //-> limit($nb, $debut);
 		$query = $this->db->get('disque');
 		return $query->result();
     }
@@ -133,5 +171,18 @@ class Info_Disque_Model extends CI_Model
 			$this->db->where('disque.dif_id',$this->id);
 		}
 		return $this -> db -> count_all('disque');
+	}
+	
+	public function count_enAttente() {
+		if (has_permission('Wave.Modifier.Disque'))
+		{
+		$this->db	->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
+					->where('emp_libelle','En attente')
+					->from('disque');
+		return $this -> db -> count_all_results();
+		
+		}
+		else
+			return null;
 	}
 }
