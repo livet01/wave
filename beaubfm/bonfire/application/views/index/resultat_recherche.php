@@ -97,6 +97,7 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 				$i++;
 				$j++;
 			}
+			
 			?>
 		</form>
 	</tbody>

@@ -13,12 +13,13 @@ class ImporterFiche extends Authenticated_Controller{
 
 	public function index() {
 		$this->auth->restrict('Wave.Importer.Disque');
-		Template::set_view('importer.php');
+		Template::set_view('importer');
 		Template::render();
 	}
 
 	public function envoi() {
 		$this->auth->restrict('Wave.Importer.Disque');
+		
 		//On déclare ici le nombre de fichier possible à uploader depuis la vue
 		$nombreFichier = array('1', '2', '3', '4', '5', '6', '7');
 		$msg = '';
@@ -93,8 +94,7 @@ class ImporterFiche extends Authenticated_Controller{
 		else
 			Template::set_message("Veuillez choisir un fichier.", "warning");
 
-		Template::set_view('importer.php');
-		Template::render();
+		Template::redirect('importerFiche');
 	}
 
 	public function excelFile($data) {
