@@ -1,11 +1,22 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Importer_model extends CI_Model {
+		
+	public $table="importdisque";
 	
 	public function __construct() {
 		parent::__construct();
 	}
 	
-	public $table="importdisque";
+	
+	public function selectImport()
+	{
+		return $this->db->select('*')
+						->from($this->table)
+						->order_by('imp_libelle', 'asc')
+						->get()
+						->result();
+	}
+	
 	
 	public function ajoutDisqueImport($libelle,$format,$ecoute,$dateAjout,$artiste,$diffuseur,$email,$emplacement,$perId,$style,$emBev)
 	{

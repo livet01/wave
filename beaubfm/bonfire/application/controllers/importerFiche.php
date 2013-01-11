@@ -313,18 +313,17 @@ class ImporterFiche extends Authenticated_Controller{
 					} catch (Exception $e) {
 						if (strlen($valEmp) > 0) {
 							if ((substr_compare($valEmp, "arch", 0, 4)) == 0) {
-								$emp_id = 2;
-	
+								$emp_id = 2;	
 								if (strstr($valEmp, "rouge")) {
-									$style = "rouge";
+									$style = "red";
 								} else if (strstr($valEmp, "jaune")) {
-									$style = "jaune";
+									$style = "yellow";
 								} else if (strstr($valEmp, "blanc")) {
-									$style = "blanc";
+									$style = "white";
 								} else if (strstr($valEmp, "vert")) {
-									$style = "vert";
+									$style = "green";
 								} else if (strstr($valEmp, "bleu")) {
-									$style = "bleu";
+									$style = "blue";
 								}
 							}
 						} else {
@@ -402,9 +401,11 @@ class ImporterFiche extends Authenticated_Controller{
 			$titre = $disque['Titre'];
 
 			//Artiste
-			$art_id = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $this->current_user->rad_id, $cat_id);
-			if($art_id == -1)
-				$valide = FALSE;
+			if($valide!==FALSE){
+				$art_id = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $this->current_user->rad_id, $cat_id);
+				if($art_id == -1){
+					$valide = FALSE;
+				}
 			
 			if (!$disqueControlleur -> existeTitreArtiste($disque['Titre'], $art_id)) {
 				try {
@@ -427,6 +428,7 @@ class ImporterFiche extends Authenticated_Controller{
 			} else {
 				$valide = FALSE;
 				$doublon = TRUE;
+			}
 			}
 
 			if ($valide === TRUE && $doublon === FALSE) {
