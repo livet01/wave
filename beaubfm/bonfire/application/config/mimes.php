@@ -8,7 +8,7 @@
 |
 */
 
-$mimes = array(	'xls'	=>	array('application/excel', 'application/vnd.ms-excel', 'application/msexcel','application/ms-excel','text/html'),
+$mimes = array(	'xls'	=>	array('application/excel', 'application/vnd.ms-excel', 'application/msexcel','application/ms-excel','text/html','application/msword'),
 				'xlsx'	=>	array('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel', 'application/zip','application/octet-stream', '\"application/octet-stream\"'),
 				'csv'	=>	array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv','text/plain','text/html', 'application/excel', 'application/vnd.msexcel'),
 				'hqx'	=>	'application/mac-binhex40',
