@@ -180,6 +180,11 @@ class Template
 	 * @var object
 	 */
 	private static $ci;
+	
+	/**
+	 * 
+	 */
+	 private static $flashmsg = array();
 
 	//--------------------------------------------------------------------
 
@@ -720,13 +725,19 @@ class Template
 	 *
 	 * @return void
 	 */
-	public static function set_message($message='', $type='info')
+	public static function set_message($message='', $type='info',$i=0)
 	{
 		if (!empty($message))
 		{
 			if (isset(self::$ci->session))
 			{
-				self::$ci->session->set_flashdata('message', $type.'::'.$message);
+				if(isset(self::$flashmsg[$i])) {
+					Template::set_message($message,$type,$i+1);
+				}
+				else {
+					self::$ci->session->set_flashdata('message'.$i, $type.'::'.$message); 
+					self::$flashmsg[$i] = true;
+				}
 			}
 
 			self::$message = array('type'=>$type, 'message'=>$message);
@@ -734,6 +745,7 @@ class Template
 
 	}//end set_message()
 
+	
 	//---------------------------------------------------------------
 
 	/**
@@ -750,13 +762,13 @@ class Template
 	 *
 	 * @return string A string with the results of inserting the message into the message template.
 	 */
-	public static function message($message='', $type='information')
+	public static function message($message='', $type='information' ,$i = 0)
 	{
 		// Does session data exist?
-		if (empty($message) && class_exists('CI_Session'))
+		if (empty($message) && class_exists('CI_Session') && isset($i))
 		{
-			$message = self::$ci->session->flashdata('message');
-
+			$message = self::$ci->session->flashdata('message'.$i);
+			
 			if (!empty($message))
 			{
 				// Split out our message parts
@@ -788,15 +800,16 @@ class Template
 		// (This was a very rare occurence, but clearing should resolve the problem.
 		if (class_exists('CI_Session'))
 		{
-			self::$ci->session->set_flashdata('message', '');
+			self::$ci->session->set_flashdata('message'.$i, '');
 		}
-
-		return $template;
+		$rt = self::$ci->session->flashdata('message'.$i);
+		if(!empty($rt))
+			return $template.Template::message('','',$i+1);
+		else
+			return $template;
 
 	}//end message()
-
-	//---------------------------------------------------------------
-
+	
 	/**
 	 * Returns a javascript solution for page redirection. This is especially
 	 * handy when you want to redirect out of an ajax request to a standard

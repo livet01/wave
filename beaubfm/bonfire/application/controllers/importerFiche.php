@@ -47,8 +47,8 @@ class ImporterFiche extends Authenticated_Controller{
 					//var_dump($dataTest['file_type']);
 					
 					//On récupère l'erreur					
-					$msg .= Template::message(str_replace(array('<p>', '</p>'), "", "Fichier " . $i . " : " . $this -> upload -> display_errors() . "<br/>Fichier autorisé : XLS, XLSX, CSV d'une taille maximum de 2048 KO.
-																<br/>Si vous avez bien importé un fichier d'un de ces types, cela peut venir de la configuration de votre machine, essayez sur une autre machine."), "error");
+					Template::set_message(str_replace(array('<p>', '</p>'), "", "Fichier " . $i . " : " . $this -> upload -> display_errors() . "<br/>Fichier autorisé : XLS, XLSX, CSV d'une taille maximum de 2048 KO."), "error");
+					$data = "";
 				} else {
 					//Sinon on récupère les informations de l'upload
 					$data[$i] = array('upload_data' => $this -> upload -> data());
@@ -76,25 +76,22 @@ class ImporterFiche extends Authenticated_Controller{
 				$msgValide = $this -> ctrlTableauFinal($arrayDisqueEpure);
 				if ($msgValide === TRUE) {
 					$msgRetour = $this -> ctrlAjoutFiche($arrayDisqueEpure);
-					$msg .= Template::message("Fichier " . $i . " : " . $msgRetour['reussi'], "success");
+					Template::set_message("Fichier " . $i . " : " . $msgRetour['reussi'], "success");
 					if ($msgRetour['erreur'] !== null) {
-						$msg .= Template::message("Fichier" . $i . " : " . $msgRetour['erreur'], "error");
+						Template::set_message("Fichier " . $i . " : " . $msgRetour['erreur'], "error");
 					}
 				} else {
-					$msg .= Template::message("Fichier " . $i . " : Le fichier est illisible, il lui manque une colonne ou il n'est pas compatible.", "error");
+					Template::set_message("Fichier " . $i . " : Le fichier est illisible, il lui manque une colonne ou il n'est pas compatible.", "error");
 				}
 			}
 		}
-		
-		if(!empty($msg))
-			$data['msg'] = $msg;
 		
 		if(isset($data)){
 			Template::set('data',$data);
 		}
 		else
 			Template::set_message("Veuillez choisir un fichier.", "warning");
-
+		
 		Template::redirect('importerFiche');
 	}
 
