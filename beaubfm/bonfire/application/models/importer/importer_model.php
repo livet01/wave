@@ -1,22 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Importer_model extends CI_Model {
-		
-	public $table="importdisque";
 	
 	public function __construct() {
 		parent::__construct();
 	}
 	
-	
-	public function selectImport()
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->order_by('imp_libelle', 'asc')
-						->get()
-						->result();
-	}
-	
+	public $table="importdisque";
 	
 	public function ajoutDisqueImport($libelle,$format,$ecoute,$dateAjout,$artiste,$diffuseur,$email,$emplacement,$perId,$style,$emBev)
 	{
@@ -43,6 +32,39 @@ class Importer_model extends CI_Model {
 							->get()
 							->row_array();
 	}
+	
+	public function selectImport()
+	{
+		return $this->db->select('*')
+						->from($this->table)
+						->order_by('imp_libelle', 'asc')
+						->get()
+						->result();
+	}
+	
+	function GetAll_in($iddisque = array())
+    {
+		if(empty($iddisque))
+		{
+			return $this->selectImport();
+		}
+		else {
+			return $this->db->select('*')
+							->from($this->table)
+							->where_in('imp_id', $iddisque)
+							->get()
+							->result();
+		}
+    }
+	
+	function GetDisqueImport($id)
+    {
+			return $this->db->select('*')
+							->from($this->table)
+							->where_in('imp_id', $id)
+							->get()
+							->result();
+    }
 	
 	public function deleteImport($id)
 	{

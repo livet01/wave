@@ -657,7 +657,7 @@ class Disque extends Authenticated_Controller {
 
 	public function rechercheDiffuseurByNom($nom, $radio, $email, $categorie) {
 		$this->auth->restrict('Wave.Ajouter.Disque');
-		$difId = $this -> diffuseurManager -> select('Users.id', array('Users.username' => $nom, ));
+		$difId = $this -> diffuseurManager -> select('users.id', array('users.username' => $nom, ));
 		if (empty($difId)) {
 			$this -> db -> trans_begin();
 			try {

@@ -168,7 +168,7 @@
 				  	
 			  	$("#supprimerI").removeClass().addClass("btn-large-action");
 			  	$("#supprimerI").click(function(){
-			  		$("#tdisqueI").attr("action","<?php echo site_url("enAttente/supprimmerDisquesEnAttente"); ?>").submit();
+			  		$("#tdisqueI").attr("action","<?php echo site_url("enAttente/supprimerDisquesEnAttente"); ?>").submit();
 				});
 				}
 				else {

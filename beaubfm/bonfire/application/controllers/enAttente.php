@@ -113,7 +113,7 @@ class EnAttente extends Authenticated_Controller {
 	}
 	}
 
-	public function supprimmerDisquesEnAttente($idsupp = 0, $g_nb_disques = 1, $affichage = 0) {
+	public function supprimerDisquesEnAttente($idsupp = 0, $g_nb_disques = 1, $affichage = 0) {
 		
 		$this->auth->restrict('Wave.Importer.Disque');
 		// Chargement des ressources
