@@ -69,8 +69,13 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 				
 				echo '<td><input id="chx' . $j . '" class="check" type="checkbox" name="choix[]" value="' . $ligne['dis_id'] . '"></td>';
 				
-				if (has_permission('Wave.Modifier.Disque'))
-					echo '<td><i class="circle-'.$ligne['sty_couleur'].'"></i></td>';
+				if (has_permission('Wave.Modifier.Disque')){
+					if($ligne['sty_couleur']!=null){
+						echo '<td><i style="background:'.$ligne['sty_couleur'].'" class="circle"></i></td>';
+					} else {
+						echo '<td></td>';
+					}
+				}
 				
 				if($ligne['emp_libelle'] == "En attente" && has_permission('Wave.Modifier.Disque')) {
 				echo '<td class="left"><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i> <span style="color:red;"><i class="icon-warning-sign"></i> ' . $ligne['dis_libelle'] . '</span></td>';
