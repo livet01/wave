@@ -35,7 +35,7 @@ $id = isset($emplacement['emp_id']) ? $emplacement['emp_id'] : '';
 
         </div>
         <div class="control-group <?php echo form_error('emplacement_emp_plus') ? 'error' : ''; ?>">
-            <?php echo form_label('Emission Spéciale : 1<br/>Sinon : 0'. lang('bf_form_label_required'), 'emplacement_emp_plus', array('class' => "control-label") ); ?>
+            <?php echo form_label('Emission Spéciale : 1,<br/>En Attente : 2,<br/>Sinon : 0'. lang('bf_form_label_required'), 'emplacement_emp_plus', array('class' => "control-label") ); ?>
             <div class='controls'>
         <input id="emplacement_emp_plus" type="text" name="emplacement_emp_plus" maxlength="1" value="<?php echo set_value('emplacement_emp_plus', isset($emplacement['emp_plus']) ? $emplacement['emp_plus'] : ''); ?>"  />
         <span class="help-inline"><?php echo form_error('emplacement_emp_plus'); ?></span>

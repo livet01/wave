@@ -10,7 +10,7 @@
 					
 					<th>Libelle de l'Emplacement</th>
 					<th>Identifiant Radio : 1</th>
-					<th>Emission Spéciale : 1 Sinon : 0</th>
+					<th>Emission Spéciale : 1, En Attente : 2, Sinon : 0</th>
 					<th>Email de l'Emplacement</th>
 				</tr>
 			</thead>
