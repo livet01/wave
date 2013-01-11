@@ -40,7 +40,7 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 <table class="table">
 	<caption>
 		<div class="page-header">
-		<?php if($affichage==0) { ?> <h2>Listes des disques</h2> <?php } ?>
+		<?php if($affichage==0) { ?> <h2>Liste des disques</h2> <?php } ?>
 		<?php if($affichage==1) { ?> <h2> <?php echo count($resultat); ?> résultat(s) trouvé(s).</h2><?php } ?>
 		</div>
 	</caption>

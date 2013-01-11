@@ -172,7 +172,7 @@ class ImporterFiche extends Authenticated_Controller{
 			$j = 0;
 			foreach ($listeKeys as $libelleKeys) {
 				if ($keys[$libelleKeys] !== false) {
-					$arrayEpure[$i][$listeKeysFinal[$j]] = ucwords(utf8_decode($arrayFichier[$i][$keys[$libelleKeys]]));
+					$arrayEpure[$i][$listeKeysFinal[$j]] = ucwords(strtolower(utf8_decode($arrayFichier[$i][$keys[$libelleKeys]])));
 				}
 				$j++;
 			}
@@ -268,7 +268,7 @@ class ImporterFiche extends Authenticated_Controller{
 			$valide = FALSE;
 		}
 			
-			$search = array('@[éèêëÊË]@i', '@[àâäÂÄ]@i', '@[îïÎÏ]@i', '@[ûùüÛÜ]@i', '@[ôöÔÖ]@i', '@[ç]@i','@[_]@i', "@[^a-zA-Z0-9 -']@");
+			$search = array('@[éèêëÊË]@i', '@[àâäÂÄ]@i', '@[îïÎÏ]@i', '@[ûùüÛÜ]@i', '@[ôöÔÖ]@i', '@[ç]@i','@[_]@i', "@[^a-zA-Z0-9 -'()]@");
 			$replace = array('e', 'a', 'i', 'u', 'o', 'c',' ', '');
 			$disque['Artiste'] = preg_replace($search, $replace, $disque['Artiste']);
 			$disque['Diffuseur'] = preg_replace($search, $replace, $disque['Diffuseur']);
@@ -388,8 +388,8 @@ class ImporterFiche extends Authenticated_Controller{
 				if (empty($disque['Style'])) {
 					$style_id = null;
 				} else {
-					try {
-						$style_id = $disqueControlleur -> rechercherStyleByNom($disque['Style']);
+					try {						
+						$style_id = $disqueControlleur -> rechercherStyleByLibelle($disque['Style']);
 					} catch (Exception $e) {
 						$style_id = null;
 					}

@@ -13,7 +13,7 @@
 			<caption>
 				<div class="page-header">
 				<h2>
-					Listes des disques en attente de <?php echo $username; ?>
+					Liste des disques en attente de <?php echo $username; ?>
 					<?php echo (defined('NBU') && NBU != 0) ? "<span class=\"badge badge-important\">".NBU."</span>" : ""; ?>
 				</h2>
 				</div>
@@ -65,7 +65,7 @@
 		?>
 		<table class="table table-striped table-condensed">
 			<caption>
-					<h2>Listes des disques en attente 
+					<h2>Liste des disques en attente 
 					<?php if(defined('NBU') && NBNU != 0) { ?><span class="badge badge-info"><?php echo NBNU; }?></span>
 					</h2> 
 			</caption>

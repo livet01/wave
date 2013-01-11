@@ -716,7 +716,17 @@ class Disque extends Authenticated_Controller {
 			$styleId = $styleId["sty_id"];
 		}
 		return $styleId;
-
+	}
+	
+	public function rechercherStyleByLibelle($nom) {
+		$this->auth->restrict('Wave.Ajouter.Disque');
+		$styleId = $this -> styleManager -> select('sty_id', array('sty_libelle' => $nom));
+		if (empty($styleId)) {
+			throw new Exception("Le style n'existe pas.");
+		} else {
+			$styleId = $styleId["sty_id"];
+		}
+		return $styleId;
 	}
 	
 	public function getStyleByCouleur($nom) {
