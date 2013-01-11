@@ -162,25 +162,25 @@
 			  		$("#tdisque").attr("action","<?php echo site_url("exporterFiche"); ?>").submit();
 			  	});
 			  	
-			  	$("#modifier").removeClass().addClass("btn-large-action");
-			  	$("#modifier").click(function(){
+			  	$("#modifier>a").removeClass().addClass("btn");
+			  	$("#modifier>a").click(function(){
 			  		$("#tdisqueI").attr("action","<?php echo site_url("enAttente/modifDisquesEnAttente"); ?>").submit();
 			  	});
 				  	
-			  	$("#supprimerI").removeClass().addClass("btn-large-action");
-			  	$("#supprimerI").click(function(){
+			  	$("#supprimerI>a").removeClass().addClass("btn");
+			  	$("#supprimerI>a").click(function(){
 			  		$("#tdisqueI").attr("action","<?php echo site_url("enAttente/supprimmerDisquesEnAttente"); ?>").submit();
 				});
 				}
 				else {
 			  	$("#supprimer>a").removeClass().addClass("btn disabled");
 			  	$("#supprimer>a").attr("href", "#");
-			  	$("#supprimerI").removeClass().addClass("btn-large-action-nonActif");
-			  	$("#supprimerI").attr("href", "#");
+			  	$("#supprimerI>a").removeClass().addClass("btn disabled");
+			  	$("#supprimerI>a").attr("href", "#");
 			  	$("#exporter>a").removeClass().addClass("btn disabled");
 			  	$("#exporter>a").attr("href", "#");
-			  	$("#modifier").removeClass().addClass("btn-large-action-nonActif");
-			  	$("#modifier").attr("href", "#");
+			  	$("#modifier>a").removeClass().addClass("btn disabled");
+			  	$("#modifier>a").attr("href", "#");
 			  	$("#tdisque").attr("action","#");
 				}
 				}

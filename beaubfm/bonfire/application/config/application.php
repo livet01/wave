@@ -174,7 +174,7 @@ $config['template.parse_views']		= FALSE;
 $config['template.message_template'] =<<<EOD
  <div class="alert alert-block alert-{type} fade in notification">
 		<a data-dismiss="alert" class="close" href="#">&times;</a>
-		<div>{message}</div>
+		{message}
 	</div>
 EOD;
 

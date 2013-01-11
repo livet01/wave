@@ -213,6 +213,10 @@ class Disque extends Authenticated_Controller {
 		redirect(site_url("disque/ajouter"));
 	}
 
+	public function envoiMailEmplacement($id) {
+		
+	}
+
 	//
 	// Modifier un disque
 	//
@@ -262,17 +266,21 @@ class Disque extends Authenticated_Controller {
 			else {
 				$emb_id = $tab -> emb_libelle;
 			}
-			$json_array[] = array("dis_id" => $tab -> dis_id, "dis_envoi_ok" => $tab -> dis_envoi_ok, "sty_libelle" => $tab -> sty_libelle, "mail" => $tab -> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
+			$json_array[] = array("dis_id" => $tab -> dis_id, "emp_id" => $tab -> emp_id, "dis_envoi_ok" => $tab -> dis_envoi_ok, "sty_libelle" => $tab -> sty_libelle, "mail" => $tab -> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
 		}
 		if (!empty($json_array[0])) {
 			$disque = $json_array[0];
 			$data['infoDisque'] = $disque;
+			$data['modifier'] = true;
 			$this -> old_disque = $disque;
 			if (!$this -> formulaire_null()) {
 				// Formulaire envoyé
 				$this -> set_dis_id($id);
 				$is_erreur = $this -> modifier_disque();
 				if (empty($is_erreur)) {
+					if($this->old_disque['emp_id']!=$this->get_emp_id()){
+						Template::set_message('<strong>Emplacement modifié</strong><br>Voulez vous lui renvoyer un email : <a href="#" class="btn btn-mini btn-primary">Oui</a> <a href="#" data-dismiss="alert" class="btn btn-mini">Non</a>', 'info');
+					}
 					Template::set_message('Le disque a bien été modifié', 'success');
 					Template::redirect('index');
 				} else {
@@ -352,7 +360,15 @@ class Disque extends Authenticated_Controller {
 		$this -> form_validation -> set_rules('email', '"Email"', 'trim|min_length[5]|max_length[50]|valid_email|xss_clean');
 		// Vérification du champs écouté par
 		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|min_length[5]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-
+		// Vérification du champs écouté par
+		$this -> form_validation -> set_rules('emplacement', '"Emplacement"', 'trim|required|encode_php_tags|xss_clean');
+		// Vérification du champs écouté par
+		$this -> form_validation -> set_rules('style', '"Style"', 'trim|encode_php_tags|xss_clean');
+		// Vérification du champs écouté par
+		$this -> form_validation -> set_rules('format', '"Format"', 'trim|encode_php_tags|xss_clean');
+		// Vérification du champs écouté par
+		$this -> form_validation -> set_rules('envoiMail', '"Envoyer Mail"', 'trim|encode_php_tags|xss_clean');
+		
 		$emplacement = $this -> rechercheEmplacementByNom($this -> input -> post('emplacement'));
 		$plus = $this -> parametreManager -> select('emb');
 		$i = 1;
@@ -364,11 +380,7 @@ class Disque extends Authenticated_Controller {
 		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
 		if ($emplacement == $plus['param_valeur']) {
 			$this -> form_validation -> set_rules('emb', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[?!&#%a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-			$this -> form_validation -> set_rules('autoprod', 'Autoproduction', 'trim|required|min_length[5]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-			$this -> form_validation -> set_rules('label', 'Label', 'trim|required|min_length[5]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-			$this -> formulaire($data);
-
-		}
+			}
 		// Vérifiaction du diffuseur si il y n'est pas auto producteur
 		if ($this -> input -> post('autoprod') != "a")
 			$this -> form_validation -> set_rules('diffuseur', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');

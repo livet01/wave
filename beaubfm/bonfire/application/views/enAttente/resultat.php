@@ -117,5 +117,5 @@
 	}
 	?>
 	<div class="form-actions">
-		<span id="supprimerI"><a class="btn btn-large btn-block disabled" href="#"><i class="icon-trash"></i>Supprimer les fiches</a></span>
+		<span id="supprimerI"><a class="btn disabled" href="#"><i class="icon-trash"></i>Supprimer les fiches</a></span>
 	</div>

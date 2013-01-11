@@ -55,7 +55,8 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 				else
 					$bis = '';	
 						
-				echo '<tr '.$bis.' style="cursor:pointer;" onclick="
+				echo '<tr '.$bis.' >';
+				$script = 'style="cursor:pointer;" onclick="
 				if($(\'#img'.$ligne['dis_id'].'\').attr(\'class\') == \'icon-chevron-down\') {
 				$(\'.colall\').hide(); $(\'.icon-chevron-down\').attr(\'class\',\'icon-chevron-right\'); }
 				else {
@@ -65,26 +66,25 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 				function(data) {
 					 $(\'#col'.$ligne['dis_id'].'\').html(\'\').html(data); }).complete(
 					 function(){ $(\'#img'.$ligne['dis_id'].'\').attr(\'class\',\'icon-chevron-down\') });
-					 }">';
-				
+					 }"';
 				echo '<td><input id="chx' . $j . '" class="check" type="checkbox" name="choix[]" value="' . $ligne['dis_id'] . '"></td>';
 				
 				if (has_permission('Wave.Modifier.Disque')){
 					if($ligne['sty_couleur']!=null){
-						echo '<td><i style="background:'.$ligne['sty_couleur'].'" class="circle"></i></td>';
+						echo '<td '.$script.'><i style="background:'.$ligne['sty_couleur'].'" class="circle"></i></td>';
 					} else {
-						echo '<td></td>';
+						echo '<td '.$script.'></td>';
 					}
 				}
 				
 				if($ligne['emp_libelle'] == "En attente" && has_permission('Wave.Modifier.Disque')) {
-				echo '<td class="left"><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i> <span style="color:red;"><i class="icon-warning-sign"></i> ' . $ligne['dis_libelle'] . '</span></td>';
+				echo '<td class="left" '.$script.'><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i> <span style="color:red;"><i class="icon-warning-sign"></i> ' . $ligne['dis_libelle'] . '</span></td>';
 				}
 				else
-					echo '<td class="left"><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i> ' . $ligne['dis_libelle'] . '</td>';
+					echo '<td class="left" '.$script.'><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i> ' . $ligne['dis_libelle'] . '</td>';
 				
-				echo '<td>' . $ligne['art_nom'] . '</td>';
-				echo '<td>' . $ligne['per_nom'] . '</td>';
+				echo '<td '.$script.'>' . $ligne['art_nom'] . '</td>';
+				echo '<td '.$script.'>' . $ligne['per_nom'] . '</td>';
 				echo '<td>';
 				if (has_permission('Wave.Modifier.Disque'))
 					echo '<a class="action-tab" href="' . site_url("disque/modifier/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a>';
