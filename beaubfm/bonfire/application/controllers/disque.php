@@ -213,8 +213,43 @@ class Disque extends Authenticated_Controller {
 		redirect(site_url("disque/ajouter"));
 	}
 
-	public function envoiMailEmplacement($id) {
-		
+	public function envoiMailEmplacement($id_disque) {
+
+		$this->auth->restrict('Wave.Ajouter.Disque');
+		if (!empty($id_disque))// Si le id_disque n'est pas nul
+		{
+
+			// id_dis doit être >= à 0
+			assert($id_disque >= 0);
+
+			// Transtipage en integer
+			$id_disque = intval($id_disque);
+
+			// On récupère les infos du disque
+			$tabs = $this -> Info_Disque_Model -> GetDisque($id_disque);
+
+			// Tableau contenant les données à envoyé
+			$json_array = array();
+							
+			$this -> load -> model('parametre_model', 'parametreManager');
+			$colonnes = $this -> parametreManager -> select('colonnes');
+			$colonnes = explode(";", $colonnes['param_valeur']);
+
+			// Parcours du résultat du model et ajout au json_array
+			foreach ($tabs as $tab) {
+				if (empty($tab -> emb_libelle))
+					$emb_id = null;
+				else {
+					$emb_id = $tab -> emb_libelle;
+				}
+				$json_array[] = array("dis_id" => $tab -> dis_id, "dis_envoi_ok" => $tab -> dis_envoi_ok, "sty_couleur" => $tab -> sty_couleur, "sty_libelle" => $tab -> sty_libelle, "mail" => $tab -> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
+			}
+			
+			// Envoi mail ici
+			Template::set_message('Le mail a bien été envoyé.', 'success');
+			Template::redirect('index');
+		}
+
 	}
 
 	//
@@ -279,7 +314,7 @@ class Disque extends Authenticated_Controller {
 				$is_erreur = $this -> modifier_disque();
 				if (empty($is_erreur)) {
 					if($this->old_disque['emp_id']!=$this->get_emp_id()){
-						Template::set_message('<strong>Emplacement modifié</strong><br>Voulez vous lui renvoyer un email : <a href="#" class="btn btn-mini btn-primary">Oui</a> <a href="#" data-dismiss="alert" class="btn btn-mini">Non</a>', 'info');
+						Template::set_message('<strong>Emplacement modifié</strong><br>Voulez vous lui renvoyer un email : <a href="'.site_url('disque/envoiMailEmplacement/'.$id).'" class="btn btn-mini btn-primary">Oui</a> <a href="#" data-dismiss="alert" class="btn btn-mini">Non</a>', 'info');
 					}
 					Template::set_message('Le disque a bien été modifié', 'success');
 					Template::redirect('index');
@@ -426,16 +461,17 @@ class Disque extends Authenticated_Controller {
 				$email = $this -> input -> post('email');
 				$artiste = $this -> input -> post('artiste');
 				$dif = $this -> input -> post('diffuseur');
-				if (($this->input->post('style'))) 
-					$style = $this->getStyleByCouleur($this->input->post('style'));
-				else 
-					$style = '';
+				
+
+				if ($this->input->post('style')!= '') {
+					$style = $this->getStyleByCouleur($this->input->post('style')); }
+				else {
+					$style = ''; }
 				$date_dis_ajout = date("d/m/Y");
 				$ecoutePar = $this -> input -> post('listenBy');
 								
 				//On récupère l'emplacement sélectionné dans le formulaire pour personnaliser le corps du mail
 				$empChoisi = $this -> input -> post('emplacement');
-				var_dump('trou', $this->get_emb_id());
 				if ($empChoisi == 'Emission spéciale')
 					$emb_bev_lib = $this -> embManager -> select('emb_libelle', array('emb_id' => $this->get_emb_id())); 
 					//var_dump('trout', $emb_bev_lib);
@@ -476,9 +512,9 @@ class Disque extends Authenticated_Controller {
 				}
 
 				$this -> set_mem_id($this -> rechercherEcouteParByNom($this -> input -> post('listenBy')));
-
+				if ($this->input->post('style')!= '') {
 				$this -> set_sty_id($this -> rechercherStyleByNom($this -> input -> post('style')));
-
+				}
 				$i = 1;
 				foreach ($this->colonnes as $colonne) {
 					switch ($i) {
