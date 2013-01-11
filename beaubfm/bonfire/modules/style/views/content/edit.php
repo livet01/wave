@@ -33,7 +33,7 @@ $id = isset($style['sty_id']) ? $style['sty_id'] : '';
         <div class="control-group <?php echo form_error('style_sty_couleur') ? 'error' : ''; ?>">
             <?php echo form_label('Couleur du Style'. lang('bf_form_label_required'), 'style_sty_couleur', array('class' => "control-label") ); ?>
             <div class='controls'>
-        <input id="style_sty_couleur" type="text" name="style_sty_couleur" maxlength="16" value="<?php echo set_value('style_sty_couleur', isset($style['style_sty_couleur']) ? $style['style_sty_couleur'] : ''); ?>"  />
+        <input id="style_sty_couleur" type="text" name="style_sty_couleur" maxlength="16" value="<?php echo set_value('sty_couleur', isset($style['sty_couleur']) ? $style['sty_couleur'] : ''); ?>"  />
         <span class="help-inline"><?php echo form_error('style_sty_couleur'); ?></span>
         </div>
 
@@ -42,7 +42,7 @@ $id = isset($style['sty_id']) ? $style['sty_id'] : '';
         <div class="control-group <?php echo form_error('style_sty_libelle') ? 'error' : ''; ?>">
             <?php echo form_label('Libelle du Style'. lang('bf_form_label_required'), 'style_sty_libelle', array('class' => "control-label") ); ?>
             <div class='controls'>
-        <input id="style_sty_libelle" type="text" name="style_sty_libelle" maxlength="45" value="<?php echo set_value('style_sty_libelle', isset($style['style_sty_libelle']) ? $style['style_sty_libelle'] : ''); ?>"  />
+        <input id="style_sty_libelle" type="text" name="style_sty_libelle" maxlength="45" value="<?php echo set_value('sty_libelle', isset($style['sty_libelle']) ? $style['sty_libelle'] : ''); ?>"  />
         <span class="help-inline"><?php echo form_error('style_sty_libelle'); ?></span>
         </div>
 
