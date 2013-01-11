@@ -414,20 +414,23 @@ class Disque extends Authenticated_Controller {
 				$email = $this -> input -> post('email');
 				$artiste = $this -> input -> post('artiste');
 				$dif = $this -> input -> post('diffuseur');
-				$style = $this->getStyleByCouleur($this->input->post('style'));
+				if (($this->input->post('style'))) 
+					$style = $this->getStyleByCouleur($this->input->post('style'));
+				else 
+					$style = '';
 				$date_dis_ajout = date("d/m/Y");
-				
-				//
-				//$ecoutePar = $this->input->post('listenBy');
-				//var_dump('trou', $listenBy);
-				//
+				$ecoutePar = $this -> input -> post('listenBy');
 								
 				//On récupère l'emplacement sélectionné dans le formulaire pour personnaliser le corps du mail
 				$empChoisi = $this -> input -> post('emplacement');
-				$messLib = $this -> emplacementManager -> select('emp_mail', array('emp_libelle' => $empChoisi));
+				var_dump('trou', $this->get_emb_id());
+				if ($empChoisi == 'Emission spéciale')
+					$emb_bev_lib = $this -> embManager -> select('emb_libelle', array('emb_id' => $this->get_emb_id())); 
+					//var_dump('trout', $emb_bev_lib);
 				
+				$messLib = $this -> emplacementManager -> select('emp_mail', array('emp_libelle' => $empChoisi));
 				//RETOUR FONCTION CUSTOMIZE EMAIL
-				$messModifie = $this->customizeEmail($messLib['emp_mail'], $this->get_dis_libelle(), $artiste, $dif, $style, $empChoisi, $date_dis_ajout, $est_auto_production);
+				$messModifie = $this->customizeEmail($messLib['emp_mail'], $this->get_dis_libelle(), $artiste, $dif, $style, $empChoisi, $date_dis_ajout, $ecoutePar, $est_auto_production);
 				
 				//On vérifie si la case 'Envoyer Mail' a été cochée pour procéder à l'envoi
 				if ($this -> input -> post('envoiMail') == "0" && !empty($email)) {
@@ -944,11 +947,14 @@ class Disque extends Authenticated_Controller {
 	}
 	
 	//On cherche dans cette fonction les mots clés relatifs aux informations d'un album pour les remplacer par les informations de l'album entré en base
-	public function customizeEmail($messLib, $titre, $artiste, $diffuseur, $style, $emplacement, $dis_date_ajout, /*$ecoutePar,*/ $estAutoProd) {
+	public function customizeEmail($messLib, $titre, $artiste, $diffuseur, $style, $emplacement, $dis_date_ajout, $ecoutePar, $estAutoProd) {
 		$messModifie = str_replace('%titre%', $titre, $messLib);
 		$messModifie = str_replace('%artiste%', $artiste, $messModifie);
 		if (!empty($style)) 
 			$messModifie = str_replace('%style%', $style, $messModifie);
+		else {
+			$messModifie = str_replace('%style%', ' ', $messModifie);
+		}
 		$messModifie = str_replace('%emplacement%', $emplacement, $messModifie);
 		$messModifie = str_replace('%d_ajout%', $dis_date_ajout, $messModifie);
 		if (!$estAutoProd) {
@@ -957,8 +963,11 @@ class Disque extends Authenticated_Controller {
 		else {
 			$messModifie = str_replace('%diffuseur%', '(AutoProduction)', $messModifie);
 		}
-		/*if (!empty($ecoutePar))
-			$messModifie = str_replace('%ecoute_par%', $titre, $messLib);*/
+		if (!empty($ecoutePar))
+			$messModifie = str_replace('%e_par%', $ecoutePar, $messModifie);
+		else {
+			$messModifie = str_replace('%e_par%', ' ', $messModifie);
+		}
 		
 		return $messModifie;
 	}

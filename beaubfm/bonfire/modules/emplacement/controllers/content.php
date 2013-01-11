@@ -182,7 +182,7 @@ class content extends Admin_Controller {
 		$this->form_validation->set_rules('emplacement_emp_libelle','Libelle de l\'Emplacement','required|trim|xss_clean|max_length[45]');
 		$this->form_validation->set_rules('emplacement_rad_id','Identifiant Radio','required|trim|xss_clean|is_natural_no_zero|max_length[6]');
 		$this->form_validation->set_rules('emplacement_emp_plus','Emission Spéciale : 1, En Attente : 2, Sinon : 0','required|trim|xss_clean|is_natural|max_length[1]');
-		$this->form_validation->set_rules('emplacement_emp_mail','Email de l\'Emplacement','trim|xss_clean|valid_email');
+		$this->form_validation->set_rules('emplacement_emp_mail','Email de l\'Emplacement','trim|xss_clean');
 
 		if ($this->form_validation->run() === FALSE)
 		{
