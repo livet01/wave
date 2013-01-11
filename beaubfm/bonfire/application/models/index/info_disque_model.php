@@ -154,7 +154,7 @@ class Info_Disque_Model extends CI_Model
 		}
 		else {
 			$this->db->select(array('disque.dis_id','dis_libelle','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
-						->join('artiste', 'disque.art_id=Artiste.art_id', 'LEFT')
+						->join('artiste', 'disque.art_id=artiste.art_id', 'LEFT')
 						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
