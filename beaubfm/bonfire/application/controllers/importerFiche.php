@@ -175,7 +175,7 @@ class ImporterFiche extends Authenticated_Controller{
 			$j = 0;
 			foreach ($listeKeys as $libelleKeys) {
 				if ($keys[$libelleKeys] !== false) {
-					$arrayEpure[$i][$listeKeysFinal[$j]] = utf8_decode($arrayFichier[$i][$keys[$libelleKeys]]);
+					$arrayEpure[$i][$listeKeysFinal[$j]] = ucwords(utf8_decode($arrayFichier[$i][$keys[$libelleKeys]]));
 				}
 				$j++;
 			}
