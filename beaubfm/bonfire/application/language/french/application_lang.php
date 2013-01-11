@@ -203,7 +203,7 @@ $lang['log_intro'] = 'Ce sont les messages du journal.';
 // Login
 //--------------------------------------------------------------------
 $lang['bf_action_register'] = 'S\'inscrire';
-$lang['bf_forgot_password'] = 'Vous avez perdu votre mot de passe ?';
+$lang['bf_forgot_password'] = 'Mot de passe oublié ?';
 $lang['bf_remember_me'] = 'Se souvenir de moi';
 
 //--------------------------------------------------------------------

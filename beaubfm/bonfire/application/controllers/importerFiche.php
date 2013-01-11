@@ -47,7 +47,8 @@ class ImporterFiche extends Authenticated_Controller{
 					//var_dump($dataTest['file_type']);
 					
 					//On récupère l'erreur					
-					$msg .= Template::message(str_replace(array('<p>', '</p>'), "", "Fichier " . $i . " : " . $this -> upload -> display_errors() . "<br/>Fichier autorisé : XLS, XLSX, CSV d'une taille maximum de 2048 KO."), "error");
+					$msg .= Template::message(str_replace(array('<p>', '</p>'), "", "Fichier " . $i . " : " . $this -> upload -> display_errors() . "<br/>Fichier autorisé : XLS, XLSX, CSV d'une taille maximum de 2048 KO.
+																<br/>Si vous avez bien importé un fichier d'un de ces types, cela peut venir de la configuration de votre machine, essayez sur une autre machine."), "error");
 				} else {
 					//Sinon on récupère les informations de l'upload
 					$data[$i] = array('upload_data' => $this -> upload -> data());
@@ -80,7 +81,7 @@ class ImporterFiche extends Authenticated_Controller{
 						$msg .= Template::message("Fichier" . $i . " : " . $msgRetour['erreur'], "error");
 					}
 				} else {
-					$msg .= Template::message("Fichier" . $i . " : Le fichier est illisible, il lui manque une colonne ou il n'est pas compatible.", "error");
+					$msg .= Template::message("Fichier " . $i . " : Le fichier est illisible, il lui manque une colonne ou il n'est pas compatible.", "error");
 				}
 			}
 		}
