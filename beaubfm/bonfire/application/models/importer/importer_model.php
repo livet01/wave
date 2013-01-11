@@ -23,17 +23,6 @@ class Importer_model extends CI_Model {
 				->set('imp_style', $style)
 				->set('imp_em_bev',$emBev)
 				->insert($this->table);
-				
-		/*if ($this->db->trans_status() === FALSE)
-		{
-		    $this->db->trans_rollback();
-			return -1;
-		}
-		else
-		{
-		    $this->db->trans_commit();
-			return TRUE;
-		}*/
 	}
 	
 	public function existImport($libelle,$artiste,$diffuseur) {
@@ -43,39 +32,6 @@ class Importer_model extends CI_Model {
 							->get()
 							->row_array();
 	}
-	
-	public function selectImport()
-	{
-		return $this->db->select('*')
-						->from($this->table)
-						->order_by('imp_libelle', 'asc')
-						->get()
-						->result();
-	}
-	
-	function GetAll_in($iddisque = array())
-    {
-		if(empty($iddisque))
-		{
-			return $this->selectImport();
-		}
-		else {
-			return $this->db->select('*')
-							->from($this->table)
-							->where_in('imp_id', $iddisque)
-							->get()
-							->result();
-		}
-    }
-	
-	function GetDisqueImport($id)
-    {
-			return $this->db->select('*')
-							->from($this->table)
-							->where_in('imp_id', $id)
-							->get()
-							->result();
-    }
 	
 	public function deleteImport($id)
 	{

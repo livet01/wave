@@ -36,13 +36,11 @@ class Disque extends Authenticated_Controller {
 		parent::__construct();
 		//Chargement Librairie
 		$this -> load -> library('form_validation');
-		$this -> load -> library('securite');
 		$this -> load -> library('layout');
 		$this -> load -> library('layout');
 		$this -> load -> library('emailer/emailer');
 
 		//Chargement models
-		$this -> load -> model('personne_model', 'persManager');
 		$this -> load -> model('parametre_model', 'parametreManager');
 		$this -> load -> model('disque/disque_model', 'disqueManager');
 		$this -> load -> model('disque/artiste_model', 'artisteManager');
@@ -54,7 +52,6 @@ class Disque extends Authenticated_Controller {
 		$this -> load -> model('disque/ecoute_model', 'ecouteManager');
 		$this -> load -> model('index/Info_Disque_Model', 'infodisque');
 		$this -> infodisque -> id = $this->current_user->id;
-		$this -> load -> model('disque_model', 'disqueManager');
 		$this -> load -> helper(array('form', 'url'));
 
 		// Chargement des colones supplémentaire
@@ -584,7 +581,7 @@ class Disque extends Authenticated_Controller {
 		$data['dis_libelle'] = $this -> get_dis_libelle();
 		$data['dis_format'] = $this -> get_dis_format();
 		$data['uti_id_ecoute'] = $this -> get_mem_id();
-		$data['per_id_artiste'] = $this -> get_art_id();
+		$data['art_id'] = $this -> get_art_id();
 		$data['dif_id'] = $this -> get_dif_id();
 		$data['dis_envoi_ok'] = $this -> get_dis_envoi_ok();
 		$data['emp_id'] = $this -> get_emp_id();
@@ -723,7 +720,7 @@ class Disque extends Authenticated_Controller {
 
 	public function existeTitreArtiste($titre, $id_artiste) {
 		$this->auth->restrict('Wave.Ajouter.Disque');
-		$return = $this -> disqueManager -> select('dis_id', array('per_id_artiste' => $id_artiste, 'dis_libelle' => $titre));
+		$return = $this -> disqueManager -> select('dis_id', array('art_id' => $id_artiste, 'dis_libelle' => $titre));
 		return !empty($return);
 	}
 
@@ -934,8 +931,8 @@ class Disque extends Authenticated_Controller {
 
 			$tabs = $tabs[0];
 
-			if($this->artisteManager->compte(array('per_id_artiste'=>$tabs['per_id_artiste'])) == 0) {
-				$r1 = $this->artisteManager->delete($tabs['per_id_artiste']);
+			if($this->artisteManager->compte(array('art_id'=>$tabs['art_id'])) == 0) {
+				$r1 = $this->artisteManager->delete($tabs['art_id']);
 			}
 
 			if($this->diffuseurManager->compte(array('dif_id'=>$tabs['dif_id'])) == 0) {

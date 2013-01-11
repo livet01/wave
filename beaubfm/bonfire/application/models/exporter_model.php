@@ -9,27 +9,27 @@ class Exporter_model extends CI_Model {
 	{
 			
 		if(empty($where)){
-			return $this->db->select(array('disque.dis_libelle','Artiste.art_nom','u1.username as per_nom','disque.dis_format','Emplacement.emp_libelle','disque.dis_date_ajout','u2.username as uti_login','u1.email as dif_mail','EmissionBenevole.emb_libelle','Style.sty_libelle'))
+			return $this->db->select(array('disque.dis_libelle','artiste.art_nom','u1.username as per_nom','disque.dis_format','emplacement.emp_libelle','disque.dis_date_ajout','u2.username as uti_login','u1.email as dif_mail','embenevole.emb_libelle','style.sty_libelle'))
 						->from('disque')
-						->join('Artiste','disque.per_id_artiste = Artiste.art_id')
-						->join('Users as u1', 'disque.dif_id = u1.id')
-						->join('Users as u2', 'disque.uti_id_ecoute = u2.id')
-						->join('Emplacement', 'disque.emp_id = Emplacement.emp_id')
-						->join('EmBenevole', 'disque.emb_id = EmBenevole.emb_id','left')
-						->join('Style','disque.sty_id = Style.sty_id', 'left')
+						->join('artiste','disque.art_id = artiste.art_id')
+						->join('users as u1', 'disque.dif_id = u1.id')
+						->join('users as u2', 'disque.uti_id_ecoute = u2.id')
+						->join('emplacement', 'disque.emp_id = emplacement.emp_id')
+						->join('embenevole', 'disque.emb_id = embenevole.emb_id','left')
+						->join('style','disque.sty_id = style.sty_id', 'left')
 						->get();
 		}
 		elseif(!empty($where))
 		{
 				
-			return $this->db->select(array('disque.dis_libelle','Artiste.art_nom','u1.username as per_nom','disque.dis_format','Emplacement.emp_libelle','disque.dis_date_ajout','u2.username as uti_login','u1.email as dif_mail','EmBenevole.emb_libelle','Style.sty_libelle'))
+			return $this->db->select(array('disque.dis_libelle','artiste.art_nom','u1.username as per_nom','disque.dis_format','emplacement.emp_libelle','disque.dis_date_ajout','u2.username as uti_login','u1.email as dif_mail','embenevole.emb_libelle','style.sty_libelle'))
 							->from('disque')
-							->join('Artiste','disque.per_id_artiste = Artiste.art_id')
-							->join('Users as u1', 'disque.dif_id = u1.id')
-							->join('Users as u2', 'disque.uti_id_ecoute = u2.id')
-							->join('Emplacement', 'disque.emp_id = Emplacement.emp_id')
-							->join('EmBenevole', 'disque.emb_id = EmBenevole.emb_id','left')
-							->join('Style','disque.sty_id = Style.sty_id', 'left')
+							->join('artiste','disque.art_id = artiste.art_id')
+							->join('users as u1', 'disque.dif_id = u1.id')
+							->join('users as u2', 'disque.uti_id_ecoute = u2.id')
+							->join('emplacement', 'disque.emp_id = emplacement.emp_id')
+							->join('embenevole', 'disque.emb_id = embenevole.emb_id','left')
+							->join('style','disque.sty_id = style.sty_id', 'left')
 							->where_in('dis_id', $where)
 							->order_by('dis_libelle', 'asc')
 							->get();

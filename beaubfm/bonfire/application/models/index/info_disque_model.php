@@ -10,8 +10,8 @@ class Info_Disque_Model extends CI_Model
 		}
 		return $this->db->select('disque.dis_id')
 						->from('disque')
-						->join('artiste', 'disque.per_id_artiste=artiste.art_id', 'LEFT')
-						->where('disque.per_id_artiste', $numArtiste)
+						->join('artiste', 'disque.art_id=artiste.art_id', 'LEFT')
+						->where('disque.art_id', $numArtiste)
 						->get()
 						->result_array();
     }
@@ -25,7 +25,7 @@ class Info_Disque_Model extends CI_Model
 		}
 		return $this->db->select('disque.dis_id')
 						->from('disque')
-						->join('users', 'disque.dif_id=Users.id', 'LEFT')
+						->join('users', 'disque.dif_id=users.id', 'LEFT')
 						->where('disque.dif_id', $numLabel)
 						->get()
 						->result_array();	
@@ -38,12 +38,12 @@ class Info_Disque_Model extends CI_Model
 			$this->db->where('disque.dif_id',$this->id);
 		}
 			$this->db->select(array('col1','col2','col3','col4','col5','col6','disque.dis_id','dis_envoi_ok','sty_libelle','sty_couleur','dis_libelle','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom', 'u1.email as mail','emplacement.emp_libelle','embenevole.emb_libelle'))
-						->join('artiste', 'disque.per_id_artiste=Artiste.art_id', 'LEFT')
-						->join('emplacement', 'disque.emp_id=Emplacement.emp_id', 'LEFT')
+						->join('artiste', 'disque.art_id=artiste.art_id', 'LEFT')
+						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
-						->join('embenevole','disque.emb_id=EmBenevole.emb_id', 'LEFT')
-						->join('style','disque.sty_id=Style.sty_id', 'LEFT')
+						->join('embenevole','disque.emb_id=embenevole.emb_id', 'LEFT')
+						->join('style','disque.sty_id=style.sty_id', 'LEFT')
 						->where('disque.dis_id', $numDisque);
 		$query = $this->db->get('disque');
 		return $query->result();
@@ -67,8 +67,8 @@ class Info_Disque_Model extends CI_Model
 			$this->db->where('disque.dif_id',$this->id);
 		}
 			$this->db->select(array('disque.dis_id','dis_libelle','sty_couleur','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
-						->join('artiste', 'disque.per_id_artiste=Artiste.art_id', 'LEFT')
-						->join('emplacement', 'disque.emp_id=Emplacement.emp_id', 'LEFT')
+						->join('artiste', 'disque.art_id=artiste.art_id', 'LEFT')
+						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
 						->join('style','disque.sty_id=style.sty_id', 'LEFT')
@@ -96,7 +96,7 @@ class Info_Disque_Model extends CI_Model
 			$this->db->where('disque.dif_id',$this->id);
 		}
 			$this->db->select(array('disque.dis_id','dis_libelle','sty_couleur','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
-						->join('artiste', 'disque.per_id_artiste=artiste.art_id', 'LEFT')
+						->join('artiste', 'disque.art_id=artiste.art_id', 'LEFT')
 						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
@@ -113,12 +113,12 @@ class Info_Disque_Model extends CI_Model
 			$this->db->where('disque.dif_id',$this->id);
 		}
 			$this->db->select(array('disque.dis_id','dis_libelle','sty_couleur','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
-						->join('artiste', 'disque.per_id_artiste=artiste.art_id', 'LEFT')
+						->join('artiste', 'disque.art_id=artiste.art_id', 'LEFT')
 						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
 						->join('style','disque.sty_id=style.sty_id', 'LEFT')
-						->where('emp_libelle !=',"En attente")
+						->where('emplacement.emp_id !=',0)
 						->order_by('dis_libelle', 'asc'); //-> limit($nb, $debut);
 		$query = $this->db->get('disque');
 		return $query->result();
@@ -131,12 +131,12 @@ class Info_Disque_Model extends CI_Model
 			$this->db->where('disque.dif_id',$this->id);
 		}
 			$this->db->select(array('disque.dis_id','dis_libelle','sty_couleur','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
-						->join('artiste', 'disque.per_id_artiste=artiste.art_id', 'LEFT')
+						->join('artiste', 'disque.art_id=artiste.art_id', 'LEFT')
 						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
 						->join('style','disque.sty_id=style.sty_id', 'LEFT')
-						->where('emp_libelle','En attente')
+						->where('emplacement.emp_id',0)
 						->order_by('dis_date_ajout', 'asc'); //-> limit($nb, $debut);
 		$query = $this->db->get('disque');
 		return $query->result();
@@ -154,7 +154,7 @@ class Info_Disque_Model extends CI_Model
 		}
 		else {
 			$this->db->select(array('disque.dis_id','dis_libelle','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
-						->join('artiste', 'disque.per_id_artiste=Artiste.art_id', 'LEFT')
+						->join('artiste', 'disque.art_id=Artiste.art_id', 'LEFT')
 						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')

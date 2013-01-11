@@ -4,7 +4,7 @@
  * 
  */
 class Diffuseur_model extends CI_Model {
-	private $table = "Users";
+	private $table = "users";
 		
 	function __construct() {
 		parent::__construct();
@@ -19,14 +19,14 @@ class Diffuseur_model extends CI_Model {
 	}
 	
 	function compte($where) {
-		return $this->db	->from("Disque")
+		return $this->db	->from("disque")
 							->where($where)
 							->count_all_results();
 	}
 	
 		
 	function delete ($artiste){		
-		return $this -> db ->delete("Users", array('id' => $artiste));
+		return $this -> db ->delete($this->table, array('id' => $artiste));
 	}
 	
 }
