@@ -19,7 +19,7 @@ $id = isset($emplacement['emp_id']) ? $emplacement['emp_id'] : '';
         <div class="control-group <?php echo form_error('emplacement_emp_libelle') ? 'error' : ''; ?>">
             <?php echo form_label('Libelle de l\'Emplacement'. lang('bf_form_label_required'), 'emplacement_emp_libelle', array('class' => "control-label") ); ?>
             <div class='controls'>
-        <input id="emplacement_emp_libelle" type="text" name="emplacement_emp_libelle" maxlength="45" value="<?php echo set_value('emp_libelle', isset($emplacement['emp_libelle']) ? $emplacement['emp_libelle'] : ''); ?>"  />
+        <input id="emplacement_emp_libelle" type="text" name="emplacement_emp_libelle" maxlength="45" value="<?php echo set_value('emplacement_emp_libelle', isset($emplacement['emp_libelle']) ? $emplacement['emp_libelle'] : ''); ?>"  />
         <span class="help-inline"><?php echo form_error('emplacement_emp_libelle'); ?></span>
         </div>
 
@@ -28,7 +28,7 @@ $id = isset($emplacement['emp_id']) ? $emplacement['emp_id'] : '';
         <div class="control-group <?php echo form_error('emplacement_rad_id') ? 'error' : ''; ?>">
             <?php echo form_label('Identifiant Radio'. lang('bf_form_label_required'), 'emplacement_rad_id', array('class' => "control-label") ); ?>
             <div class='controls'>
-        <input id="emplacement_rad_id" type="text" name="emplacement_rad_id" maxlength="6" value="<?php echo set_value('rad_id', isset($emplacement['rad_id']) ? $emplacement['rad_id'] : ''); ?>"  />
+        <input id="emplacement_rad_id" type="text" name="emplacement_rad_id" maxlength="6" value="<?php echo set_value('emplacement_rad_id', isset($emplacement['rad_id']) ? $emplacement['rad_id'] : ''); ?>"  />
         <span class="help-inline"><?php echo form_error('emplacement_rad_id'); ?></span>
         </div>
 
@@ -37,7 +37,7 @@ $id = isset($emplacement['emp_id']) ? $emplacement['emp_id'] : '';
         <div class="control-group <?php echo form_error('emplacement_emp_plus') ? 'error' : ''; ?>">
             <?php echo form_label('Emission Spéciale : 1<br/>Sinon : 0'. lang('bf_form_label_required'), 'emplacement_emp_plus', array('class' => "control-label") ); ?>
             <div class='controls'>
-        <input id="emplacement_emp_plus" type="text" name="emplacement_emp_plus" maxlength="1" value="<?php echo set_value('emp_plus', isset($emplacement['emp_plus']) ? $emplacement['emp_plus'] : ''); ?>"  />
+        <input id="emplacement_emp_plus" type="text" name="emplacement_emp_plus" maxlength="1" value="<?php echo set_value('emplacement_emp_plus', isset($emplacement['emp_plus']) ? $emplacement['emp_plus'] : ''); ?>"  />
         <span class="help-inline"><?php echo form_error('emplacement_emp_plus'); ?></span>
         </div>
 
@@ -46,7 +46,7 @@ $id = isset($emplacement['emp_id']) ? $emplacement['emp_id'] : '';
         <div class="control-group <?php echo form_error('emplacement_emp_mail') ? 'error' : ''; ?>">
             <?php echo form_label('Email de l\'Emplacement', 'emplacement_emp_mail', array('class' => "control-label") ); ?>
             <div class='controls'>
-        <input id="emplacement_emp_mail" type="text" name="emplacement_emp_mail"  value="<?php echo set_value('emp_mail', isset($emplacement['emp_mail']) ? $emplacement['emp_mail'] : ''); ?>"  />
+        <input id="emplacement_emp_mail" type="text" name="emplacement_emp_mail"  value="<?php echo set_value('emplacement_emp_mail', isset($emplacement['emp_mail']) ? $emplacement['emp_mail'] : ''); ?>"  />
         <span class="help-inline"><?php echo form_error('emplacement_emp_mail'); ?></span>
         </div>
 

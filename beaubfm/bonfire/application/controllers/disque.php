@@ -314,7 +314,7 @@ class Disque extends Authenticated_Controller {
 		foreach ($emp_libelles as $emp_libelle) {
 			array_push($data['emplacements'], array("emp_libelle" => $emp_libelle -> emp_libelle, "emp_plus" => $emp_libelle -> emp_plus));
 		}
-
+	
 		// Colonne sup
 		$data['colonnes'] = $this -> colonnes;
 
@@ -409,17 +409,40 @@ class Disque extends Authenticated_Controller {
 					$this -> set_emb_id($this -> rechercheEmbByNom($this -> input -> post('emb'), $this -> current_user -> rad_id));
 				}
 				
+				//
 				//Envoi de Mail Automatique
+				//
+				
+				//On récupère les informations nécessaires à envoyer dans le mail
 				$email = $this -> input -> post('email');
 				$artiste = $this -> input -> post('artiste');
 				$dif = $this -> input -> post('diffuseur');
+				$style = $this->getStyleByCouleur($this->input->post('style'));
+				$date_dis_ajout = date("d/m/Y");
+				
+				//
+				//$ecoutePar = $this->input->post('listenBy');
+				//var_dump('trou', $listenBy);
+				//
+								
+				//On récupère l'emplacement sélectionné dans le formulaire pour personnaliser le corps du mail
+				$empChoisi = $this -> input -> post('emplacement');
+				$messLib = $this -> emplacementManager -> select('emp_mail', array('emp_libelle' => $empChoisi));
+				
+				//RETOUR FONCTION CUSTOMIZE EMAIL
+				$messModifie = $this->customizeEmail($messLib['emp_mail'], $this->get_dis_libelle(), $artiste, $dif, $style, $empChoisi, $date_dis_ajout, $est_auto_production);
+				
+				//On vérifie si la case 'Envoyer Mail' a été cochée pour procéder à l'envoi
 				if ($this -> input -> post('envoiMail') == "0" && !empty($email)) {
-					//$this -> emailer -> enable_debug(true);
 
-					$message = '<h3 class="h3">Votre album a été ajouté à la bibliothèque de BeaubFM</h3>
+					if (!empty($messModifie)) {
+						$message = $messModifie;
+					} else {
+						$message = '<h3 class="h3">Votre album a été ajouté à la bibliothèque de BeaubFM</h3>
 								</br><p style="text-decoration:underline">Informations concernant l\'album :</p> 
 								<p>Titre : '.$this->get_dis_libelle().' 
 								</br>Artiste : '.$artiste.(($est_auto_production) ? '<p> (Autoproduction)</p>': '<p>Label : '.$dif.'</p>');
+					}
 
 					$data = array(
 						'to' => $email, 
@@ -683,6 +706,20 @@ class Disque extends Authenticated_Controller {
 		return $styleId;
 
 	}
+	
+	public function getStyleByCouleur($nom) {
+		$this->auth->restrict('Wave.Ajouter.Disque');
+		$styleLib = $this -> styleManager -> select('sty_libelle', array('sty_couleur' => $nom));
+		if (empty($styleLib)) {
+
+			throw new Exception("Le style n'existe pas.");
+		} else {
+
+			$styleLib = $styleLib["sty_libelle"];
+		}
+		return $styleLib;
+		
+	}
 
 	public function existeTitreArtiste($titre, $id_artiste) {
 		$this->auth->restrict('Wave.Ajouter.Disque');
@@ -907,6 +944,26 @@ class Disque extends Authenticated_Controller {
 		}
 		
 		return ($r1 && $r2);
+	}
+	
+	//On cherche dans cette fonction les mots clés relatifs aux informations d'un album pour les remplacer par les informations de l'album entré en base
+	public function customizeEmail($messLib, $titre, $artiste, $diffuseur, $style, $emplacement, $dis_date_ajout, /*$ecoutePar,*/ $estAutoProd) {
+		$messModifie = str_replace('%titre%', $titre, $messLib);
+		$messModifie = str_replace('%artiste%', $artiste, $messModifie);
+		if (!empty($style)) 
+			$messModifie = str_replace('%style%', $style, $messModifie);
+		$messModifie = str_replace('%emplacement%', $emplacement, $messModifie);
+		$messModifie = str_replace('%d_ajout%', $dis_date_ajout, $messModifie);
+		if (!$estAutoProd) {
+			$messModifie = str_replace('%diffuseur%', $diffuseur, $messModifie);
+		}
+		else {
+			$messModifie = str_replace('%diffuseur%', '(AutoProduction)', $messModifie);
+		}
+		/*if (!empty($ecoutePar))
+			$messModifie = str_replace('%ecoute_par%', $titre, $messLib);*/
+		
+		return $messModifie;
 	}
 
 }
