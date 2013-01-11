@@ -19,7 +19,7 @@ $id = isset($emplacement['emp_id']) ? $emplacement['emp_id'] : '';
         <div class="control-group <?php echo form_error('emplacement_emp_libelle') ? 'error' : ''; ?>">
             <?php echo form_label('Libelle de l\'Emplacement'. lang('bf_form_label_required'), 'emplacement_emp_libelle', array('class' => "control-label") ); ?>
             <div class='controls'>
-        <input id="emplacement_emp_libelle" readonly="readonly" type="text" name="emplacement_emp_libelle" maxlength="45" value="<?php echo set_value('emp_libelle', isset($emplacement['emp_libelle']) ? $emplacement['emp_libelle'] : ''); ?>"  />
+        <input id="emplacement_emp_libelle" type="text" name="emplacement_emp_libelle" maxlength="45" value="<?php echo set_value('emp_libelle', isset($emplacement['emp_libelle']) ? $emplacement['emp_libelle'] : ''); ?>"  />
         <span class="help-inline"><?php echo form_error('emplacement_emp_libelle'); ?></span>
         </div>
 

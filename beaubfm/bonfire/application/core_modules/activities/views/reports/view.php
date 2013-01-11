@@ -26,7 +26,7 @@
 
 	<br/>
 
-	<h2><?php echo sprintf(lang('activity_view'),'avant la '.($vars['view_which'] == ucwords(lang('activity_date')) ? $vars['view_which'] : $vars['view_which']),$vars['name']); ?></h2>
+	<h2><?php echo sprintf(lang('activity_view'),'avant '.($vars['view_which'] == ucwords(lang('activity_date')) ? $vars['view_which'] : $vars['view_which']),$vars['name']); ?></h2>
 
 	<?php if (!isset($activity_content) || empty($activity_content)) : ?>
 	<div class="alert alert-error fade in">
