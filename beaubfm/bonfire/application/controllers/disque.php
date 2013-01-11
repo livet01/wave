@@ -348,13 +348,13 @@ class Disque extends Authenticated_Controller {
 
 	private function verification() {
 		// Vérification du titre
-		$this -> form_validation -> set_rules('titre', '"Titre"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		$this -> form_validation -> set_rules('titre', '"Titre"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[?!&#%a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 		// Vérification de l'artiste
-		$this -> form_validation -> set_rules('artiste', '"Artiste"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		$this -> form_validation -> set_rules('artiste', '"Artiste"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[?!&#%a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 		// Vérification de l'email
 		$this -> form_validation -> set_rules('email', '"Email"', 'trim|min_length[5]|max_length[50]|valid_email|xss_clean');
 		// Vérification du champs écouté par
-		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|min_length[5]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 
 		$emplacement = $this -> rechercheEmplacementByNom($this -> input -> post('emplacement'));
 		$plus = $this -> parametreManager -> select('emb');
@@ -366,15 +366,15 @@ class Disque extends Authenticated_Controller {
 
 		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
 		if ($emplacement == $plus['param_valeur']) {
-			$this -> form_validation -> set_rules('emb', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-			$this -> form_validation -> set_rules('autoprod', 'Autoproduction', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-			$this -> form_validation -> set_rules('label', 'Label', 'trim|required|min_length[5]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+			$this -> form_validation -> set_rules('emb', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[?!&#%a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+			$this -> form_validation -> set_rules('autoprod', 'Autoproduction', 'trim|required|min_length[5]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+			$this -> form_validation -> set_rules('label', 'Label', 'trim|required|min_length[5]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 			$this -> formulaire($data);
 
 		}
 		// Vérifiaction du diffuseur si il y n'est pas auto producteur
 		if ($this -> input -> post('autoprod') != "a")
-			$this -> form_validation -> set_rules('diffuseur', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+			$this -> form_validation -> set_rules('diffuseur', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 
 		// On renvoi le résultats des vérifications
 		return $this -> form_validation -> run();
