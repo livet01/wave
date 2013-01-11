@@ -1,4 +1,18 @@
-
+<div class="row-fluid">
+	<div class="span8 offset2">
+		<div class="alert alert-info fade in">
+		  <a data-dismiss="alert" class="close">&times;</a>
+			<h4 class="alert-heading">La couleur du style peut s'écrire de trois façons :</h4>
+			<ul>
+				<li>En anglais directement.</li>
+				<li>En rgb (par exemple pour du noir écrire : rgb(0,0,0))</li>
+				<li>En hexadecimal (par exemple pour du blanc écrire : #FFFFFF)</li>
+			</ul>
+			<h4>Une bonne écriture permettra l'affichage de la couleur dans tout le site.</h4>
+			<?php if (isset($password_hints) ) echo $password_hints; ?>
+		</div>
+	</div>
+</div>
 <?php if (validation_errors()) : ?>
 <div class="alert alert-block alert-error fade in ">
   <a class="close" data-dismiss="alert">&times;</a>
@@ -19,7 +33,7 @@ $id = isset($style['sty_id']) ? $style['sty_id'] : '';
         <div class="control-group <?php echo form_error('style_sty_couleur') ? 'error' : ''; ?>">
             <?php echo form_label('Couleur du Style'. lang('bf_form_label_required'), 'style_sty_couleur', array('class' => "control-label") ); ?>
             <div class='controls'>
-        <input id="style_sty_couleur" type="text" name="style_sty_couleur" maxlength="15" value="<?php echo set_value('style_sty_couleur', isset($style['style_sty_couleur']) ? $style['style_sty_couleur'] : ''); ?>"  />
+        <input id="style_sty_couleur" type="text" name="style_sty_couleur" maxlength="16" value="<?php echo set_value('style_sty_couleur', isset($style['style_sty_couleur']) ? $style['style_sty_couleur'] : ''); ?>"  />
         <span class="help-inline"><?php echo form_error('style_sty_couleur'); ?></span>
         </div>
 

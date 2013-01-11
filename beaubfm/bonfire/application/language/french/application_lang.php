@@ -157,7 +157,7 @@ $lang['bf_user_settings'] = 'Mon profil';
 $lang['bf_both'] = 'tous les deux';
 $lang['bf_go_back'] = 'Revenir en arrière';
 $lang['bf_new'] = 'Nouveau';
-$lang['bf_required_note'] = 'Les champs obligatoire sont en <b>gras</b>.';
+$lang['bf_required_note'] = 'Les champs obligatoires sont en <b>gras</b>.';
 $lang['bf_form_label_required'] = '<span class="required">*</span>';
 
 //--------------------------------------------------------------------

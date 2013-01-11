@@ -1,5 +1,5 @@
 <div>
-	<h1 class="page-header">Parametre</h1>
+	<h1 class="page-header">Paramètre</h1>
 </div>
 
 <br />
@@ -10,8 +10,8 @@
 		<thead>
 		
 			
-		<th>Libelle du Parametre</th>
-		<th>Valeur du Parametre</th>
+		<th>Libelle du Paramètre</th>
+		<th>Valeur du Paramètre</th>
 		
 		</thead>
 		<tbody>

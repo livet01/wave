@@ -27,31 +27,6 @@ class content extends Admin_Controller {
 	*/
 	public function index()
 	{
-
-		// Deleting anything?
-		if (isset($_POST['delete']))
-		{
-			$checked = $this->input->post('checked');
-
-			if (is_array($checked) && count($checked))
-			{
-				$result = FALSE;
-				foreach ($checked as $pid)
-				{
-					$result = $this->parametre_model->delete($pid);
-				}
-
-				if ($result)
-				{
-					Template::set_message(count($checked) .' '. lang('parametre_delete_success'), 'success');
-				}
-				else
-				{
-					Template::set_message(lang('parametre_delete_failure') . $this->parametre_model->error, 'error');
-				}
-			}
-		}
-
 		$records = $this->parametre_model->find_all();
 
 		Template::set('records', $records);
@@ -60,41 +35,6 @@ class content extends Admin_Controller {
 	}
 
 	//--------------------------------------------------------------------
-
-
-
-	/*
-		Method: create()
-
-		Creates a Parametre object.
-	*/
-	public function create()
-	{
-		$this->auth->restrict('Parametre.Content.Create');
-
-		if ($this->input->post('save'))
-		{
-			if ($insert_id = $this->save_parametre())
-			{
-				// Log the activity
-				$this->activity_model->log_activity($this->current_user->id, lang('parametre_act_create_record').': ' . $insert_id . ' : ' . $this->input->ip_address(), 'parametre');
-
-				Template::set_message(lang('parametre_create_success'), 'success');
-				Template::redirect(SITE_AREA .'/content/parametre');
-			}
-			else
-			{
-				Template::set_message(lang('parametre_create_failure') . $this->parametre_model->error, 'error');
-			}
-		}
-		Assets::add_module_js('parametre', 'parametre.js');
-
-		Template::set('toolbar_title', lang('parametre_create') . ' Parametre');
-		Template::render();
-	}
-
-	//--------------------------------------------------------------------
-
 
 
 	/*
@@ -128,27 +68,10 @@ class content extends Admin_Controller {
 				Template::set_message(lang('parametre_edit_failure') . $this->parametre_model->error, 'error');
 			}
 		}
-		else if (isset($_POST['delete']))
-		{
-			$this->auth->restrict('Parametre.Content.Delete');
-
-			if ($this->parametre_model->delete($id))
-			{
-				// Log the activity
-				$this->activity_model->log_activity($this->current_user->id, lang('parametre_act_delete_record').': ' . $id . ' : ' . $this->input->ip_address(), 'parametre');
-
-				Template::set_message(lang('parametre_delete_success'), 'success');
-
-				redirect(SITE_AREA .'/content/parametre');
-			} else
-			{
-				Template::set_message(lang('parametre_delete_failure') . $this->parametre_model->error, 'error');
-			}
-		}
 		Template::set('parametre', $this->parametre_model->find($id));
 		Assets::add_module_js('parametre', 'parametre.js');
 
-		Template::set('toolbar_title', lang('parametre_edit') . ' Parametre');
+		Template::set('toolbar_title', lang('parametre_edit') . ' Paramètre');
 		Template::render();
 	}
 
@@ -193,19 +116,7 @@ class content extends Admin_Controller {
 		$data['param_libelle']        = $this->input->post('parametre_param_libelle');
 		$data['param_valeur']        = $this->input->post('parametre_param_valeur');
 
-		if ($type == 'insert')
-		{
-			$id = $this->parametre_model->insert($data);
-
-			if (is_numeric($id))
-			{
-				$return = $id;
-			} else
-			{
-				$return = FALSE;
-			}
-		}
-		else if ($type == 'update')
+		if ($type == 'update')
 		{
 			$return = $this->parametre_model->update($id, $data);
 		}
