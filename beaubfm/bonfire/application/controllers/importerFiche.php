@@ -43,9 +43,9 @@ class ImporterFiche extends Authenticated_Controller{
 				//Si l'upload ne fonctionne pas
 				if (!$this -> upload -> do_upload($form_name)) {
 					//Pour tester le type du fichier
-					$dataTest=$this->upload->data();
-					var_dump('ali',$dataTest['file_type']);
-					exit();
+					//$dataTest=$this->upload->data();
+					//var_dump('ali',$dataTest['file_type']);
+					//exit();
 					
 					//On récupère l'erreur					
 					Template::set_message(str_replace(array('<p>', '</p>'), "", "Fichier " . $i . " : " . $this -> upload -> display_errors() . "<br/>Fichier autorisé : XLS, XLSX, CSV d'une taille maximum de 2048 KO."), "error");
