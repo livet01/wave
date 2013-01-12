@@ -57,7 +57,7 @@
 				</ul>
 				<ul class="nav">
 				<?php  if (has_permission('Wave.Recherche.Disque')) {
-					?><li><a href="<?php echo site_url("index"); ?>">Recherche<?php
+					?><li><a href="<?php echo site_url("index"); ?>">Rechercher<?php
 					if (has_permission('Wave.Modifier.Disque'))
 					{
 					 if(defined('ATTENTE') && (ATTENTE)!=0) { ?>
