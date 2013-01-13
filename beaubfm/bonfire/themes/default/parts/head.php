@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+	
 	<script src="<?php echo Template::theme_url('js/modernizr-2.5.3.js') ?>"></script>
 	<?php echo Assets::css(); ?>
 
@@ -207,7 +208,7 @@
 				$("#supprimerdisque").attr("action","<?php echo site_url("enAttente/supprimerAll"); ?>");
 				$("#supprimerdisque").submit();
 				});
-				
+
 				$(".holder").jPages({
 				containerID : "disque",
 				previous : "←",

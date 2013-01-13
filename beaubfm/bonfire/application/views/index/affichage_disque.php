@@ -1,10 +1,13 @@
 <?php 
 if(!empty($data)) { 
-	
+	if(has_permission("Wave.Modifier.Disque") || has_permission("Wave.Supprimer.Disque")) {
 ?>
-<td></td><?php if(defined('ATTENTE')) { ?>
-<td></td><?php } ?>
-<td colspan="5">
+<td></td><?php } if (has_permission('Wave.Modifier.Disque'))
+			{ ?>
+<td></td><?php } 
+$nb_restant = 3 + ((has_permission('Wave.Modifier.Disque')) ? 1 : 0) + ((has_permission('Wave.Supprimer.Disque')) ? 1 : 0);
+?>
+<td colspan="<?php echo $nb_restant; ?>">
 <?php if(!empty($data['dis_format'])) { ?><span class="label label-info" style="margin: 0 5px; "><i class="icon-file icon-white"></i> <?php echo $data['dis_format'];  ?></span><?php } ?>
 <?php if(!empty($data['emp_libelle'])) { ?><span class="label label-important"style="margin: 0 5px;"><i class="icon-hdd icon-white"></i> <?php echo $data['emp_libelle'];  ?></span><?php } ?>
 <?php if(!empty($data['mem_nom'])) { ?><span class="label label-success" style="margin: 0 5px;"><i class="icon-headphones icon-white"></i> <?php echo $data['mem_nom'];?></span><?php } ?>

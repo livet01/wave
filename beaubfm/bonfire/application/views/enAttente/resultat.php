@@ -14,7 +14,7 @@
 				<div class="page-header">
 				<h2>
 					Liste des disques en attente de <?php echo $username; ?>
-					<?php echo (defined('NBU') && NBU != 0) ? "<span class=\"badge badge-important\">".NBU."</span>" : ""; ?>
+					<?php echo (defined('NBU') && NBU != 0) ? "<span class=\"badge badge-warning\">".NBU."</span>" : ""; ?>
 				</h2>
 				</div>
 			</caption>
@@ -40,7 +40,7 @@
 				echo '<td class="left" onclick="; }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['dis_libelle'] . '</td>';
 				echo '<td>' . $ligne['art_nom'] . '</td>';
 				echo '<td>' . $ligne['per_nom'] . '</td>';
-				echo '<td><a class="btn btn-info btn-mini ajaxify" href="' . site_url("enAttente/modifDisquesEnAttente/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a> 
+				echo '<td><a class="btn btn-info btn-mini " style="margin-right:10px;" href="' . site_url("enAttente/modifDisquesEnAttente/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a> 
 						<a class="btn btn-danger btn-mini" href="' . site_url("enAttente/supprimerDisquesEnAttente/" . $ligne['dis_id']) . '"><i class="icon-trash"></a></td>';
 				echo '</tr>';
 				$i++;
@@ -92,7 +92,7 @@
 				echo '<td class="left" onclick="; }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['dis_libelle'] . '</td>';
 				echo '<td>' . $ligne['art_nom'] . '</td>';
 				echo '<td>' . $ligne['per_nom'] . '</td>';
-				echo '<td><a class="btn btn-info btn-mini" href="' . site_url("enAttente/modifDisquesEnAttente/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a> 
+				echo '<td><a class="btn btn-info btn-mini" style="margin-right:10px;" href="' . site_url("enAttente/modifDisquesEnAttente/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a> 
 						<a class="btn btn-danger btn-mini" href="' . site_url("enAttente/supprimerDisquesEnAttente/" . $ligne['dis_id']) . '"><i class="icon-trash"></a></td>';
 				echo '</tr>';
 				$i++;

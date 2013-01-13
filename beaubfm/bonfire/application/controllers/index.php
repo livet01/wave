@@ -2,7 +2,7 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-class Index extends Authenticated_Controller {
+class Index extends Base_Controller {
 	//
 	// Constante d'affichage : réglage du nombre de disque par parge à afficher dans le tableau
 	//
@@ -17,14 +17,15 @@ class Index extends Authenticated_Controller {
 		$this -> load -> database();
 		$this -> load -> library('form_validation');
 		$this -> load -> model('index/Info_Disque_Model');
-		$this -> Info_Disque_Model -> id = $this->current_user->id;
+		if($this->auth->is_logged_in())
+			$this -> Info_Disque_Model -> id = $this->current_user->id;
 	}
 
 	//
 	// Méthode index : affichage de l'ensemble des disques
 	//
 	public function index($g_nb_disques = 1, $affichage = 0) {
-		$this->auth->restrict('Wave.Recherche.Disque');
+		
 		// Chargement des ressources
 		$this -> load -> library('pagination');
 		
@@ -129,7 +130,7 @@ class Index extends Authenticated_Controller {
 	// Méthode recherche : affichage des résultats de la recherche
 	//
 	public function recherche($g_nb_disques = 1) {
-		$this->auth->restrict('Wave.Recherche.Disque');
+		
 		// On vérifie si la variable post contient des erreurs
 		$this -> form_validation -> set_rules('recherche', 'recherche', 'trim|required|xss_clean');
 
@@ -238,7 +239,6 @@ class Index extends Authenticated_Controller {
 	public function suggestions() {
 		
 		$this->output->enable_profiler(FALSE);
-		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
 
@@ -314,6 +314,11 @@ class Index extends Authenticated_Controller {
 			$this -> load -> view('index/affichage_disque', array('data' => $json_array[0], 'colonne' => $colonnes));
 
 		}
+	}
+
+	public function spip() {
+		$this->output->enable_profiler(FALSE);
+		$this -> load -> view('index/spip');
 	}
 
 }

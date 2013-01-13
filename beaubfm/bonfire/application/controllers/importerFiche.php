@@ -17,83 +17,99 @@ class ImporterFiche extends Authenticated_Controller{
 		Template::render();
 	}
 
+	private function name_file($extension,$i = 1) {
+		if(file_exists('./assets/upload/'.$this->current_user->username . '_fichier_'.$i.$extension))
+			return $this->name_file($extension,$i+1);
+		else
+			return $this->current_user->username . '_fichier_'.$i;
+	}
 	public function envoi() {
 		$this->auth->restrict('Wave.Importer.Disque');
-		
-		//On déclare ici le nombre de fichier possible à uploader depuis la vue
-		$nombreFichier = array('1', '2', '3', '4', '5', '6', '7');
-		$msg = '';
-		//Pour chaque fichier qu'on peut uploader on test si il existe et s'il possède la bonne extension
-		foreach ($nombreFichier as $i) {
+		$this->output->enable_profiler(FALSE);
+		//Si le fichier existe on initialise la config
+		if (!empty($_FILES['file']['name'])) {
+			$extension = strrchr($_FILES['file']['name'],'.');
+			//Le nom sera du type "login_fichier_NUMFICHIER"
+			$config['file_name'] = $this->name_file($extension);
+			$config['upload_path'] = './assets/upload/';
 
-			//Si le fichier existe on initialise la config
-			if (!empty($_FILES['fichier_' . $i]['name'])) {
-
-				//Le nom sera du type "login_fichier_NUMFICHIER"
-				$config['file_name'] = $this->current_user->username . '_fichier_' . $i;
-				$config['upload_path'] = './assets/upload';
-
-				//Les extensions acceptées sont les suivantes
-				$config['allowed_types'] = 'csv|xls|xlsx';
-				$config['max_size'] = '2048';
-				$config['overwrite'] = TRUE;
-				$this -> upload -> initialize($config);
-				$form_name = 'fichier_' . $i;
-
-				//Si l'upload ne fonctionne pas
-				if (!$this -> upload -> do_upload($form_name)) {
-					//Pour tester le type du fichier
-					//$dataTest=$this->upload->data();
-					//var_dump('ali',$dataTest['file_type']);
-					//exit();
-					
-					//On récupère l'erreur					
-					Template::set_message(str_replace(array('<p>', '</p>'), "", "Fichier " . $i . " : " . $this -> upload -> display_errors() . "<br/>Fichier autorisé : XLS, XLSX, CSV d'une taille maximum de 2048 KO."), "error");
-					$data = "";
-				} else {
-					//Sinon on récupère les informations de l'upload
-					$data[$i] = array('upload_data' => $this -> upload -> data());
-					
-					//Pour tester le type du fichier
-					//var_dump($data[$i]['upload_data']['file_type']);
+			//Les extensions acceptées sont les suivantes
+			$config['allowed_types'] = 'csv|xls|xlsx';
+			$config['max_size'] = '2048';
+			$config['overwrite'] = TRUE;
+			$this -> upload -> initialize($config);
+			
+				
+			//Si l'upload ne fonctionne pas
+			if (!$this -> upload -> do_upload("file")) {
+				//Pour tester le type du fichier
+				//$dataTest=$this->upload->data();
+				//var_dump('ali',$dataTest['file_type']);
+				//exit();
+				//On récupère l'erreur		
+				$json = array("error"=> true, "message"=>'Fichier ' . $_FILES['file']['name'] . ' : ' . $this -> upload -> display_errors('',''));
+							
+				
+			} else {
+				
+				if ($extension == '.csv') {
+					$arrayFichier = $this -> csvFile($config['upload_path'].$config['file_name'].$extension);
 				}
+				else if ($extension == '.xls' || $extension == '.xlsx') {
+					$arrayFichier = $this -> excelFile($config['upload_path'].$config['file_name'].$extension);
+				}
+				else {
+					$arrayFichier = array();
+				}
+				//Sinon on récupère les informations de l'upload
+				$json = array("error"=> false,"name"=>$config['file_name'].$extension,"nombre"=>count($arrayFichier)-1);
+				
+				//Pour tester le type du fichier
+				//var_dump($data[$i]['upload_data']['file_type']);
 			}
-		}
-
-		//Pour chaque fichier téléchargé on récupère le type du fichier pour charger la bonne librairie
-		foreach ($nombreFichier as $i) {
-			if (isset($data[$i])) {
-				if ($data[$i]['upload_data']['file_ext'] == '.csv') {
-					$arrayFichier = $this -> csvFile($data[$i]);
-				}
-				if ($data[$i]['upload_data']['file_ext'] == '.xls' || $data[$i]['upload_data']['file_ext'] == '.xlsx') {
-					$arrayFichier = $this -> excelFile($data[$i]);
-				}
-				if ($data[$i]['upload_data']['file_ext'] == '.xml') {
-					$arrayFichier = $this -> xmlFile($data[$i]);
-				}
-				unlink($data[$i]['upload_data']['full_path']);
-				$arrayDisqueEpure = $this -> getTabFinal($arrayFichier);
-				$msgValide = $this -> ctrlTableauFinal($arrayDisqueEpure);
-				if ($msgValide === TRUE) {
-					$msgRetour = $this -> ctrlAjoutFiche($arrayDisqueEpure);
-					Template::set_message("Fichier " . $i . " : " . $msgRetour['reussi'], "success");
-					if ($msgRetour['erreur'] !== null) {
-						Template::set_message("Fichier " . $i . " : " . $msgRetour['erreur'], "error");
-					}
-				} else {
-					Template::set_message("Fichier " . $i . " : Le fichier est illisible, il lui manque une colonne ou il n'est pas compatible.", "error");
-				}
-			}
-		}
-		
-		if(isset($data)){
-			Template::set('data',$data);
+		 	die(json_encode($json));
 		}
 		else
-			Template::set_message("Veuillez choisir un fichier.", "warning");
+			redirect('importerFiche');
+	}
+
+	public function traitement($nameFile) {
+		if(empty($nameFile)) {
+			redirect('importerFiche');
+			exit();
+		}
 		
-		Template::redirect('importerFiche');
+		$extension = strrchr($nameFile,'.');
+		$chemin = './assets/upload/'.$nameFile;
+		//Pour chaque fichier téléchargé on récupère le type du fichier pour charger la bonne librairie
+
+		if (isset($extension)) {
+			if ($extension == '.csv') {
+				$arrayFichier = $this -> csvFile($chemin);
+			}
+			if ($extension == '.xls' || $extension == '.xlsx') {
+				$arrayFichier = $this -> excelFile($chemin);
+			}
+			
+			unlink($chemin);
+			
+			$arrayDisqueEpure = $this -> getTabFinal($arrayFichier);
+			$msgValide = $this -> ctrlTableauFinal($arrayDisqueEpure);
+			if ($msgValide === TRUE) {
+				$msgRetour = $this -> ctrlAjoutFiche($arrayDisqueEpure);
+				if ($msgRetour['erreur'] !== null) {
+					die(json_encode(array("error"=>true,"message"=>$msgRetour['erreur'])));
+				}
+				else
+					die(json_encode(array("error"=>false,"message"=>$msgRetour['reussi'])));
+					
+			} else {
+				die(json_encode(array("error"=>true,"message"=>"Le fichier est illisible, il lui manque une colonne ou il n'est pas compatible.")));
+			}
+		}
+		
+		
+		
 	}
 
 	public function excelFile($data) {
@@ -102,13 +118,10 @@ class ImporterFiche extends Authenticated_Controller{
 		$objPHPExcel = new PHPExcel();
 
 		//On charge le fichier excel correspondant à l'appel de la fonction
-		$objPHPExcel = PHPExcel_IOFactory::load($data['upload_data']['full_path']);
+		$objPHPExcel = PHPExcel_IOFactory::load($data);
 
 		//On le change en tableau et on le renvoie
 		return $objPHPExcel -> getSheet() -> toArray();
-	}
-
-	public function xmlFile($data) {
 	}
 
 	public function csvFile($data) {
@@ -116,7 +129,7 @@ class ImporterFiche extends Authenticated_Controller{
 		$objReader = PHPExcel_IOFactory::createReader('CSV') -> setDelimiter(';') -> setLineEnding("\r\n") -> setSheetIndex(0);
 
 		//On charge le fichier CSV correspondant à l'appel de la fonction
-		$objPHPExcel = $objReader -> load($data['upload_data']['full_path']);
+		$objPHPExcel = $objReader -> load($data);
 
 		//On le change en tableau et on le renvoie
 		return $objPHPExcel -> getSheet() -> toArray();

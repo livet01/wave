@@ -15,7 +15,6 @@
 	</form>
 </div>
 </center>
-
 <?php
 if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 <div class="alert alert-error">
@@ -27,17 +26,18 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 	if(!isset($resultat) && $affichage==0){
  ?>
 <div class="alert alert-info">
+	<h3>Bienvenue,</h3>
 	<p>
-		Bienvenue, il n'y a aucun disque dans la base de données.
+		Il n'y a aucun disque dans la base de données.
 	</p>
 	<p>
-		Veuillez ajouter un titre pour commencer.
+		Pour commencer, essayez <a href="<?php echo site_url("disque") ?>">d'ajouter</a> ou <a href="<?php echo site_url("importerFiche") ?>">d'importer des disques</a> !
 	</p>
 </div>
 <?php }
 	if(($affichage==0 || $affichage==1) && !empty($resultat)){
  ?>
-<table class="table">
+<table class="table table-hover" id="table-disque">
 	<caption>
 		<div class="page-header">
 		<?php if($affichage==0) { ?> <h2>Liste des disques</h2> <?php } ?>
@@ -51,23 +51,34 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 			$j = 0;
 			foreach ($resultat as $ligne) {
 				if ($i % 2 == 0)
-					$bis = 'class="bis"';
+					$bis = 'bis';
 				else
 					$bis = '';	
-						
-				echo '<tr '.$bis.' >';
-				$script = 'style="cursor:pointer;" onclick="
-				if($(\'#img'.$ligne['dis_id'].'\').attr(\'class\') == \'icon-chevron-down\') {
-				$(\'.colall\').hide(); $(\'.icon-chevron-down\').attr(\'class\',\'icon-chevron-right\'); }
+					
+				if($ligne['emp_libelle'] == "En attente" && has_permission('Wave.Modifier.Disque')) {	
+					echo '<tr class="error '.$bis.'" >'; }
 				else {
-				$(\'.colall\').hide(); $(\'.icon-chevron-down\').attr(\'class\',\'icon-chevron-right\');
-				$(\'#col'.$ligne['dis_id'].'\').show(); 
-				$.get(\'' . site_url("index/affichage_disque/" . $ligne['dis_id']) . '\', 
-				function(data) {
-					 $(\'#col'.$ligne['dis_id'].'\').html(\'\').html(data); }).complete(
-					 function(){ $(\'#img'.$ligne['dis_id'].'\').attr(\'class\',\'icon-chevron-down\') });
-					 }"';
-				echo '<td><input id="chx' . $j . '" class="check" type="checkbox" name="choix[]" value="' . $ligne['dis_id'] . '"></td>';
+					echo '<tr class="'.$bis.'" >';
+				}
+		    	if(has_permission('Wave.Recherche.Disque'))
+				{
+					$script = 'style="cursor:pointer;" onclick="
+					if($(\'#img'.$ligne['dis_id'].'\').attr(\'class\') == \'icon-chevron-down\') {
+					$(\'.colall\').hide(); $(\'.icon-chevron-down\').attr(\'class\',\'icon-chevron-right\'); }
+					else {
+					$(\'.colall\').hide(); $(\'.icon-chevron-down\').attr(\'class\',\'icon-chevron-right\');
+					$(\'#col'.$ligne['dis_id'].'\').show(); 
+					$.get(\'' . site_url("index/affichage_disque/" . $ligne['dis_id']) . '\', 
+					function(data) {
+						 $(\'#col'.$ligne['dis_id'].'\').html(\'\').html(data); }).complete(
+						 function(){ $(\'#img'.$ligne['dis_id'].'\').attr(\'class\',\'icon-chevron-down\') });
+						 }"';
+				}
+				else {
+					$script = '';
+				}
+				if(has_permission('Wave.Modifier.Disque') || has_permission('Wave.Supprimer.Disque'))
+					echo '<td><input id="chx' . $j . '" class="check" type="checkbox" name="choix[]" value="' . $ligne['dis_id'] . '"></td>';
 				
 				if (has_permission('Wave.Modifier.Disque')){
 					if($ligne['sty_couleur']!=null){
@@ -76,23 +87,24 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 						echo '<td '.$script.'></td>';
 					}
 				}
-				
+				if(has_permission('Wave.Recherche.Disque'))
+					$chevron = '<i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i>';
+				else {
+					$chevron ='';
+				}
 				if($ligne['emp_libelle'] == "En attente" && has_permission('Wave.Modifier.Disque')) {
-				echo '<td class="left" '.$script.'><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i> <span style="color:red;"><i class="icon-warning-sign"></i> ' . $ligne['dis_libelle'] . '</span></td>';
+				echo '<td class="left" '.$script.'> '.$chevron.' <i class="icon-warning-sign"></i> ' . $ligne['dis_libelle'] . '</td>';
 				}
 				else
-					echo '<td class="left" '.$script.'><i id="img'.$ligne['dis_id'].'" href="#" class="icon-chevron-right"></i> ' . $ligne['dis_libelle'] . '</td>';
+					echo '<td class="left" '.$script.'>'.$chevron.' ' . $ligne['dis_libelle'] . '</td>';
 				
 				echo '<td '.$script.'>' . $ligne['art_nom'] . '</td>';
 				echo '<td '.$script.'>' . $ligne['per_nom'] . '</td>';
-				echo '<td>';
 				if (has_permission('Wave.Modifier.Disque'))
-					echo '<a class="action-tab" href="' . site_url("disque/modifier/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a>';
-				echo '</td>';
-				echo '<td>';
+					echo '<td><a class="action-tab" href="' . site_url("disque/modifier/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a></td>';
+		
 				if (has_permission('Wave.Supprimer.Disque'))	
-					echo '<a class="action-tab" onclick="CocheTout(this,\'choix[]\');CocheTout(this,\'choix[]\');$(\'#chx' . $j . '\').attr(\'checked\',\'checked\');$(\'#tdisque\').attr(\'action\',\'' . site_url("disque/supprimer") . '\').submit();" href="#"><i class="icon-trash"></a>';
-				echo '</td>';
+					echo '<td><a class="action-tab" onclick="CocheTout(this,\'choix[]\');CocheTout(this,\'choix[]\');$(\'#chx' . $j . '\').attr(\'checked\',\'checked\');$(\'#tdisque\').attr(\'action\',\'' . site_url("disque/supprimer") . '\').submit();" href="#"><i class="icon-trash"></a></td>';
 				echo '</tr>';
 				?>
 				<tr id="<?php echo "col".$ligne['dis_id']; ?>"  class="colall">
@@ -107,16 +119,21 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 		</form>
 	</tbody>
 		<thead>
-	<tr>
+	<tr><?php if(has_permission('Wave.Modifier.Disque') || has_permission('Wave.Supprimer.Disque')) { ?>
 		<th><input type="checkbox" onclick="CocheTout(this,'choix[]');" value="1" ></th>
-		<?php if (has_permission('Wave.Modifier.Disque'))
+		<?php } if (has_permission('Wave.Modifier.Disque'))
 			{ ?>
 		<th><i class="icon-certificate"></i></th><?php } ?>
 		<th><i class="icon-music"></i> Titre</th>
 		<th><i class="icon-user"></i> Artiste</th>
 		<th><i class="icon-home"></i> Label</th>
+		<?php if(has_permission('Wave.Modifier.Disque'))
+				{ ?>
 		<th><i class="icon-pencil"></i></th>
+		<?php } if(has_permission('Wave.Supprimer.Disque'))
+				{ ?>
 		<th><i class="icon-trash"></i></th>
+		<?php } ?>
 	</tr>
 	</thead>
 </table>
