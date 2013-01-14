@@ -6,19 +6,7 @@
 		<h1><?php echo lang('us_login'); ?></h1>
 	</div>
 
-
-
-<?php if ( !$site_open ) : ?>
-<div class="row-fluid">
-	<div class="span12">
-		<div class="alert alert-danger fade in span6" >
-		  <a data-dismiss="alert" class="close">&times;</a>
-			<h4 class="alert-heading">Désolé, ce site n'est accessible qu'aux utilisateurs invités.</h4>
-		</div>
-	</div>
-</div>
 <?php
-	endif;
 	if (auth_errors() || validation_errors()) :
 ?>
 <div class="row-fluid">
@@ -63,7 +51,7 @@
 
 	<div class="control-group">
 		<div class="controls">
-			<input class="btn btn-primary" type="submit" name="submit" id="submit" value="Let Me In" tabindex="5" />
+			<input class="btn btn-primary" type="submit" name="submit" id="submit" value="Se connecter" tabindex="5" />
 		</div>
 	</div>
 <?php echo form_close(); ?>
