@@ -119,7 +119,7 @@ $lang['bf_env_dev'] = 'Developement';
 $lang['bf_env_test'] = 'Test';
 $lang['bf_env_prod'] = 'Production';
 
-$lang['bf_show_profiler'] = 'Voir le profil de l\Administrateur?';
+$lang['bf_show_profiler'] = 'Voir le profil de l\'Administrateur?';
 $lang['bf_show_front_profiler'] = 'Voir les profil sur le FrontEnd?';
 
 $lang['bf_cache_not_writable'] = 'Le répertoire de cache est protégé en écriture';

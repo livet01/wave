@@ -19,6 +19,7 @@
 					<?php if (isset($current_user->email)) : ?>
 					<li class="dropdown" >
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<?php echo $current_user->username; ?>
 						<i class="icon-user icon-white"></i>
 						<b class="caret"></b></a>
 

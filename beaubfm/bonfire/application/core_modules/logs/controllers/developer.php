@@ -94,10 +94,10 @@ class Developer extends Admin_Controller
 				@copy(APPPATH.'/index.html',$this->config->item('log_path').'/index.html');
 
 				// Log the activity
-				$activity_text = "all log files";
+				$activity_text = "tous les fichiers journaux";
 				$this->activity_model->log_activity($this->current_user->id, ucfirst($activity_text) . ' deleted from: ' . $this->input->ip_address(), 'logs');
 
-				Template::set_message("Successfully deleted " . $activity_text, 'success');
+				Template::set_message("Suppression réussie de " . $activity_text, 'success');
 			}
 		}
 
