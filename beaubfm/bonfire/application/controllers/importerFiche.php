@@ -253,8 +253,8 @@ class ImporterFiche extends Authenticated_Controller{
 		$msgOk = "Sur <b>$nb</b> album(s) <b>testé(s)</b> :<br/>
 				<b>$valide valide(s)</b>, ajouté(s) en base.<br/>
 				<b>$invalide invalide(s)</b> dont :<br/>
-				<b>$doublon doublon(s)</b> déjà rentré(s) en base<br/>
-				<b>$enAttente</b> mis <b>en attente</b><br/>
+				<b>$doublon doublon(s)</b> déjà rentré(s) en base.<br/>
+				<b>$enAttente</b> mis <b>en attente</b>.<br/>
 				<b>$dejaEnAttente déjà</b> mis <b>en attente</b>.";
 
 		$msgNonOk = null;
