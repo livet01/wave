@@ -264,9 +264,13 @@ class Disque extends Authenticated_Controller {
 		$formats = $this -> parametreManager -> select('format');
 		$formats = explode(";", $formats['param_valeur']);
 		$data['formats'] = $formats;
-
-		// Colones sup
-		$data['colonnes'] = $this -> colonnes;
+	
+		// Colonne sup
+		$colonnes=$this -> parametreManager->select('colonnes');
+		if($colonnes['param_valeur']!=''){
+			$colonnes=explode(";", $colonnes['param_valeur']);		
+			$data['colonnes'] = $colonnes;
+		}
 
 		// Chargement des emplacements
 		$emp_libelles = $this -> emplacementManager -> select_all(array('emp_libelle', 'emp_plus'));
@@ -356,7 +360,11 @@ class Disque extends Authenticated_Controller {
 		}
 	
 		// Colonne sup
-		$data['colonnes'] = $this -> colonnes;
+		$colonnes=$this -> parametreManager->select('colonnes');
+		if($colonnes['param_valeur']!=''){
+			$colonnes=explode(";", $colonnes['param_valeur']);		
+			$data['colonnes'] = $colonnes;
+		}
 
 		// Chargement des styles
 		$styles = $this -> styleManager -> select_all(array('sty_couleur', 'sty_libelle'));

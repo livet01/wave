@@ -212,6 +212,13 @@ class EnAttente extends Authenticated_Controller {
 			array_push($data['styles'], array("couleur" => $style -> sty_couleur, "libelle" => $style -> sty_libelle));
 		}
 		
+		// Colonne sup
+		$colonnes=$this -> parametreManager->select('colonnes');
+		if($colonnes['param_valeur']!=''){
+			$colonnes=explode(";", $colonnes['param_valeur']);		
+			$data['colonnes'] = $colonnes;
+		}
+		
 		//Cr�ation d'un objet Disque
 		$disqueModif = new Disque();
 		
