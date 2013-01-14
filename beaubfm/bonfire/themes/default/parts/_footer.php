@@ -19,6 +19,7 @@
   <script type="text/javascript" src="<?php echo js_url("plupload/plupload"); ?>"></script>
   <script type="text/javascript" src="<?php echo js_url("plupload/plupload.flash"); ?>"></script>
   <script type="text/javascript" src="<?php echo js_url("plupload/plupload.html5"); ?>"></script>
+  <script type="text/javascript" src="<?php echo js_url("plupload/i18n/fr"); ?>"></script>
   <script type="text/javascript" >
   	var uploader = new plupload.Uploader({
 		runtimes: 'html5,flash',
