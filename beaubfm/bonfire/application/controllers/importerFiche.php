@@ -322,42 +322,46 @@ class ImporterFiche extends Authenticated_Controller{
 					$valEmp = strtolower($disque['Emplacement']);
 					$emb_id = null;
 					$emp_id = null;
-					try {
-						$emp_id = $disqueControlleur -> rechercheEmplacementByNom($valEmp);
-					} catch (Exception $e) {
-						if (strlen($valEmp) > 0) {
-							if ((substr_compare($valEmp, "arch", 0, 4)) == 0) {
-								$emp_id = 2;	
-								if (strstr($valEmp, "rouge")) {
-									$style = "red";
-								} else if (strstr($valEmp, "jaune")) {
-									$style = "yellow";
-								} else if (strstr($valEmp, "blanc")) {
-									$style = "white";
-								} else if (strstr($valEmp, "vert")) {
-									$style = "green";
-								} else if (strstr($valEmp, "bleu")) {
-									$style = "blue";
+					if($valEmp==='a.d' || $valEmp==='a.d.' || $valEmp==='ad'){
+						$emp_id=$disqueControlleur->rechercheEmplacementByNom('Refusé');
+					} else {
+						try {
+							$emp_id = $disqueControlleur -> rechercheEmplacementByNom($valEmp);
+						} catch (Exception $e) {
+							if (strlen($valEmp) > 0) {
+								if ((substr_compare($valEmp, "arch", 0, 4)) == 0) {
+									$emp_id = 2;	
+									if (strstr($valEmp, "rouge")) {
+										$style = "red";
+									} else if (strstr($valEmp, "jaune")) {
+										$style = "yellow";
+									} else if (strstr($valEmp, "blanc")) {
+										$style = "white";
+									} else if (strstr($valEmp, "vert")) {
+										$style = "green";
+									} else if (strstr($valEmp, "bleu")) {
+										$style = "blue";
+									}
+								}
+							} else {
+								$disque['Emplacement'] = NULL;
+								$emp_id = 4;
+								try {
+									$emb_id = $disqueControlleur -> rechercheEmBevByNom($valEmp);
+								} catch (Exception $e) {
+									$valide = FALSE;
 								}
 							}
-						} else {
-							$disque['Emplacement'] = NULL;
-							$emp_id = 4;
-							try {
-								$emb_id = $disqueControlleur -> rechercheEmBevByNom($valEmp);
-							} catch (Exception $e) {
-								$valide = FALSE;
-							}
-						}
-						
-						
-						//Style
-						if (!empty($style)) {
-							try {
-								$style_id = $disqueControlleur -> rechercherStyleByNom($style);
-							} catch (Exception $e) {
-								$valide = FALSE;
-								$style_id = NULL;
+							
+							
+							//Style
+							if (!empty($style)) {
+								try {
+									$style_id = $disqueControlleur -> rechercherStyleByNom($style);
+								} catch (Exception $e) {
+									$valide = FALSE;
+									$style_id = NULL;
+								}
 							}
 						}
 					}
