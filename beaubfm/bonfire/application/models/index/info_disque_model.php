@@ -204,7 +204,7 @@ class Info_Disque_Model extends CI_Model
 						->join('artiste', 'disque.art_id=artiste.art_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->order_by('dis_date_ajout', 'asc')
-						->limit('50'); //-> limit($nb, $debut);
+						->limit('0','50'); //-> limit($nb, $debut);
 		$query = $this->db->get('disque');
 		return $query->result();
     }
