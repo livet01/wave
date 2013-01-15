@@ -26,7 +26,7 @@
 		container: 'plupload',
 		browse_button: 'browse',
 		drop_element:"droparea",
-		url:'<?php echo site_url("importer/envoi"); ?>',
+		url:'<?php echo site_url("importerFiche/envoi"); ?>',
 		flash_swf_url: '<?php echo base_url()."assets/js/plupload/plupload.flash.swf"; ?>',
 		multipart : true,
 		urlstream_upload: true,
@@ -73,7 +73,7 @@
 			
 			decompte(file,0,data.nombre);
 			$.ajax({
-				url : "<?php echo base_url().index_page().'/importer/traitement/'; ?>"+data.name,
+				url : "<?php echo base_url().index_page().'/importerFiche/traitement/'; ?>"+data.name,
 				success: function(rep,textStatus,jqXHR) {
 					dataRetour = jQuery.parseJSON(rep);
 					if(dataRetour.error)

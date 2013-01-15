@@ -118,14 +118,36 @@ class Index extends Base_Controller {
 
 		// Chargement de la vue
 		Template::set_view('index/resultat_recherche');
-		//Template::set_view('index/resultat_recherche');
 		Template::set('value',$this -> input -> post('recherche'));
 		Template::set('data',$data);
 		Template::render();
-		//$this -> layout -> views('menu_principal') -> views('index/barre_recherche', array('value' => $this -> input -> post('recherche'))) -> view('index/resultat_recherche', $data);
 		
 	}
+	public function rss() {
+		
+        $this->load->helper('xml');
+		// Récupération de tout les disques pour la page
+		$tabs = $this -> Info_Disque_Model -> GetAll();
 
+		// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
+		foreach ($tabs as $tab) {
+			if (empty($tab -> emb_id))
+				$emb_id = null;
+			else {
+				$emb_id = $tab -> emb_id;
+			}
+			$tab_result[] = array("dis_id" => $tab -> dis_id,"sty_couleur" => $tab -> sty_couleur, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+		}
+		if(!empty($tab_result)){
+			// On passe le tableau de disque
+			$data['resultat'] = $tab_result;		
+		}
+		else
+			$data['resultat'] = array();
+		   
+        //header("Content-Type: application/rss+xml");
+        $this->load->view('index/rss', $data);
+	}
 	//
 	// Méthode recherche : affichage des résultats de la recherche
 	//
