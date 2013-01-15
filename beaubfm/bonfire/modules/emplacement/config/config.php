@@ -2,5 +2,5 @@
 	'description'	=> 'Ce module permet l\'ajout d\'un emplacement dans la base de données à travers la manipulation de la table emplacement',
 	'name'		=> 'Emplacement',
 	'version'		=> '0.0.1',
-	'author'		=> 'Admin'
+	'author'		=> 'Wave Team'
 );

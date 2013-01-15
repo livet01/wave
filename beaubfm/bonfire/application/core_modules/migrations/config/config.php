@@ -2,7 +2,7 @@
 
 $config['module_config'] = array(
 	'description'	=> 'Helps maintain database versioning.',
-	'author'		=> 'Bonfire Team',
+	'author'		=> 'Wave Team',
 	'menu_topic'	=> array(
 		'developer'		=> 'Database Tools'
 	)
