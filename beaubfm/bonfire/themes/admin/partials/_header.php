@@ -19,7 +19,7 @@
 
 	<meta name="robots" content="noindex" />
 	
-    <link rel="shortcut icon" href="<?php echo base_url(); ?>favicon2.ico">
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>favicon.ico">
 	<?php echo Assets::css(null, true); ?>
 
 	<script src="<?php echo Template::theme_url('js/modernizr-2.5.3.js'); ?>"></script>

@@ -24,7 +24,7 @@
 	    }
     	</style>
 
-    	<link rel="shortcut icon" href="<?php echo base_url(); ?>favicon2.ico">
+    	<link rel="shortcut icon" href="<?php echo base_url(); ?>favicon.ico">
 
 		<script src="<?php echo js_url('less'); ?>" type="application/javascript"></script>
 		<script type="text/javascript">
