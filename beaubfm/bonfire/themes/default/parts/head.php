@@ -209,13 +209,6 @@
 				$("#supprimerdisque").submit();
 				});
 
-				$(".holder").jPages({
-				containerID : "disque",
-				previous : "←",
-				next : "→",
-				perPage : 16,
-				delay : 10
-				});
 				
 				$(".holder1").jPages({
 				containerID : "disque1",

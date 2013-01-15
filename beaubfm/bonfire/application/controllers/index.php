@@ -25,102 +25,77 @@ class Index extends Base_Controller {
 	// Méthode index : affichage de l'ensemble des disques
 	//
 	public function index($g_nb_disques = 1, $affichage = 0) {
-		
-		// Chargement des ressources
-		$this -> load -> library('pagination');
-		
-		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
-		{
-			// Tableau récoltant des données à envoyer à la vue
-			$data = array();
-
-			// On récupère le nombre de disque présent dans la base
-			$nb_disques_total = $this -> Info_Disque_Model -> count();
-			
-			// On vérifie la cohérence de la variable $_GET
-			if ($g_nb_disques > 1) {
-				// La variable $_GET semblent être correcte. On doit maintenant
-				// vérifier s'il y a bien assez de disquess dans la base dedonnées.
-				if ($g_nb_disques <= $nb_disques_total) {
-					// Il y a assez de disques dans la base de données.
-					// La variable $_GET est donc cohérente.
-					$nb_disques = intval($g_nb_disques);
-				} else {
-					// Il n'y pas assez de messages dans la base de données.
-					$nb_disques = 1;
-				}
-			} else {
-				// La variable $_GET "nb_disques" est erronée. On lui donne une valeur par défaut
-				$nb_disques = 1;
-			}
-
-			// Mise en place de la pagination
-			//$this -> pagination -> initialize(array('base_url' => base_url() . 'index.php/index/index/', 'total_rows' => $nb_disques_total, 'per_page' => self::NB_DISQUE_PAR_PAGE));
-			/*$pag = "";
-			for($i = 1 ; $i <= ($nb_disques_total/self::NB_DISQUE_PAR_PAGE)+1 ; $i++)
-			{
-				$pag = $pag."&nbsp;<a href=\"#\" id=\"p".$i."\">".$i."</a>&nbsp;";
-			}
-			
-			$linkpag = "<a href=\"#\" id=\"begin\">&lt;&lt;</a><a href=\"#\" id=\"pred\">&lt;</a>".$pag."<a href=\"#\" id=\"suiv\">&gt;</a><a href=\"#\" id=\"fin\">&gt;&gt;</a>";
-			$data['pagination'] = $linkpag;
-			//$data['pagination'] = $this -> pagination -> create_links();*/
-			
-			if (has_permission('Wave.Modifier.Disque'))
-			{
-				// Récupération de tout les disques pour la page
-				$tabs = $this -> Info_Disque_Model -> GetAllAttente();
-	
-				// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
-				foreach ($tabs as $tab) {
-					if (empty($tab -> emb_id))
-						$emb_id = null;
-					else {
-						$emb_id = $tab -> emb_id;
-					}
-					$tab_result[] = array("dis_id" => $tab -> dis_id,"sty_couleur" => $tab -> sty_couleur, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
-				}
-				// Récupération de tout les disques pour la page
-				$tabs = $this -> Info_Disque_Model -> GetAllNoAttente();
-	
-				// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
-				foreach ($tabs as $tab) {
-					if (empty($tab -> emb_id))
-						$emb_id = null;
-					else {
-						$emb_id = $tab -> emb_id;
-					}
-					$tab_result[] = array("dis_id" => $tab -> dis_id,"sty_couleur" => $tab -> sty_couleur, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
-				}
-			}
-			else{
-				// Récupération de tout les disques pour la page
-				$tabs = $this -> Info_Disque_Model -> GetAll();
-	
-				// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
-				foreach ($tabs as $tab) {
-					if (empty($tab -> emb_id))
-						$emb_id = null;
-					else {
-						$emb_id = $tab -> emb_id;
-					}
-					$tab_result[] = array("dis_id" => $tab -> dis_id,"sty_couleur" => $tab -> sty_couleur, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
-				}
-			}
-			if(!empty($tab_result)){
-				// On passe le tableau de disque
-				$data['resultat'] = $tab_result;		
-			}
-		}
 
 		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
 		$data['affichage'] = $affichage;
-
+	
+		// On récupère le nombre de disque présent dans la base
+		$data['compte'] = $this -> Info_Disque_Model -> count();
+		
 		// Chargement de la vue
-		Template::set_view('index/resultat_recherche');
+		Template::set_view('index/index');
 		Template::set('value',$this -> input -> post('recherche'));
 		Template::set('data',$data);
 		Template::render();
+		
+	}
+
+	public function index_ajax() {
+		
+		$this->output->enable_profiler(FALSE);
+		
+		// Tableau récoltant des données à envoyer à la vue
+		$data = array();
+	
+		if (has_permission('Wave.Modifier.Disque'))
+		{
+			// Récupération de tout les disques pour la page
+			$tabs = $this -> Info_Disque_Model -> GetAllAttente();
+
+			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
+			foreach ($tabs as $tab) {
+				if (empty($tab -> emb_id))
+					$emb_id = null;
+				else {
+					$emb_id = $tab -> emb_id;
+				}
+				$tab_result[] = array("dis_id" => $tab -> dis_id,"sty_couleur" => $tab -> sty_couleur, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+			}
+			// Récupération de tout les disques pour la page
+			$tabs = $this -> Info_Disque_Model -> GetAllNoAttente();
+
+			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
+			foreach ($tabs as $tab) {
+				if (empty($tab -> emb_id))
+					$emb_id = null;
+				else {
+					$emb_id = $tab -> emb_id;
+				}
+				$tab_result[] = array("dis_id" => $tab -> dis_id,"sty_couleur" => $tab -> sty_couleur, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+			}
+		}
+		else{
+			// Récupération de tout les disques pour la page
+			$tabs = $this -> Info_Disque_Model -> GetAll();
+
+			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
+			foreach ($tabs as $tab) {
+				if (empty($tab -> emb_id))
+					$emb_id = null;
+				else {
+					$emb_id = $tab -> emb_id;
+				}
+				$tab_result[] = array("dis_id" => $tab -> dis_id,"sty_couleur" => $tab -> sty_couleur, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+			}
+		}
+		if(!empty($tab_result)){
+			// On passe le tableau de disque
+			$data['resultat'] = $tab_result;		
+		}
+		else
+			$data['resultat'] = array();
+		
+		$this->load->view('index/tableau',$data);
 		
 	}
 	public function rss() {
@@ -146,7 +121,7 @@ class Index extends Base_Controller {
 		else
 			$data['resultat'] = array();
 
-//        header("Content-Type: application/rss+xml");
+        header("Content-Type: application/rss+xml");
         $this->load->view('index/rss', $data);
 	}
 	//

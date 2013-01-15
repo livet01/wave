@@ -151,13 +151,11 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 	<ul class="icons" <?php if(($affichage==1 && isset($resultat)) || $affichage==0) { ?> id="aff-disque" <?php } ?>></ul>
 </div>
 
-<?php if (has_permission('Wave.Supprimer.Disque') || has_permission('Wave.Exporter.Disque')) { ?>
 <div class="form-actions">
 	<?php if (has_permission('Wave.Supprimer.Disque')) { ?>
 	<span id="supprimer"><a class="btn btn-block" href="#"><i class="icon-trash"></i> Supprimer les fiches</a></span><?php } ?>
 	<?php if (has_permission('Wave.Exporter.Disque')) {?>
 	
 	<span id="exporter"><a  class="btn" href="#"><i class="icon-share-alt"></i> Exporter des fiches</a></span><?php } ?>
+	<?php if($affichage==0) { ?><a class="btn"href="<?php echo site_url('index/rss'); ?>"><img src="<?php echo img_url('feed-icon.png'); ?>"> RSS</a><?php } ?>
 </div>
-<?php } ?>
-
