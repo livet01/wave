@@ -111,6 +111,10 @@ class CI_Exceptions {
 		{
 			log_message('error', '404 Page Not Found --> '.$page);
 		}
+		if(!class_exists('Template'))
+		{
+			require APPPATH.'libraries/template.php';
+		}
 		
 		Template::redirect('index/erreur/404');
 		//echo $this->show_error($heading, $message, 'error_404', 404);
