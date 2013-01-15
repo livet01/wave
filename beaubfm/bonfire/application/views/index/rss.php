@@ -19,8 +19,8 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
     <dc:rights>Copyright <?php echo gmdate("Y", time()); ?></dc:rights>
 
     <?php if(isset($resultat)) {
-    	 for($i=0;$i<50;$i++): 
-    		$ligne = $resultat[$i]; ?>
+    	 foreach($resultat as $ligne): ?>
+    
         <item>
 
           <title><?php echo xml_convert($ligne['dis_libelle']); ?></title>
@@ -29,7 +29,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
         </item>
 
         
-    <?php endfor; } ?>
+    <?php endforeach; } ?>
     
     </channel></rss> 
 
