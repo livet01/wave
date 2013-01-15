@@ -20,7 +20,7 @@
 	<script type="text/javascript" src="<?php echo js_url('jPages'); ?>"></script>
 
 	<script ype="text/javascript" src="<?php echo js_url('jquery.avgrund'); ?>"></script>
-    <link rel="shortcut icon" href="<?php echo base_url(); ?>favicon.ico">
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>favicon2.ico">
     <link rel="apple-touch-icon" href="<?php echo base_url(); ?>assets/images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="<?php echo base_url(); ?>assets/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="<?php echo base_url(); ?>assets/images/apple-touch-icon-114x114.png">
