@@ -29,10 +29,10 @@ if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 	<h3>Bienvenue,</h3>
 	<p>
 		Il n'y a aucun disque dans la base de données.
-	</p>
+	</p><?php if(has_permission('Wave.Ajouter.Disque') || has_permission('Wave.Importer.Disque')) {?>
 	<p>
-		Pour commencer, essayez <a href="<?php echo site_url("disque") ?>">d'ajouter</a> ou <a href="<?php echo site_url("importerFiche") ?>">d'importer des disques</a> !
-	</p>
+		Pour commencer, essayez <?php if(has_permission('Wave.Ajouter.Disque')){ ?><a href="<?php echo site_url("disque") ?>">d'ajouter</a> <?php if(has_permission('Wave.Importer.Disque')){ echo 'ou '; } } if(has_permission('Wave.Importer.Disque')){ echo'<a href="'.site_url("importerFiche"); ?>">d'importer des disques</a><?php } ?> !
+	</p><?php } ?>
 </div>
 <?php }
 	if(($affichage==0 || $affichage==1) && !empty($resultat)){

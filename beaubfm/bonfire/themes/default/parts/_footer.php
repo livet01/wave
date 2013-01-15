@@ -15,7 +15,7 @@
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="<?php echo js_path(); ?>jquery-1.7.2.min.js"><\/script>')</script>
-  <?php if(class_exists('Importer')) { ?>
+  <?php if(class_exists('ImporterFiche')) { ?>
   <script type="text/javascript" src="<?php echo js_url("plupload/plupload"); ?>"></script>
   <script type="text/javascript" src="<?php echo js_url("plupload/plupload.flash"); ?>"></script>
   <script type="text/javascript" src="<?php echo js_url("plupload/plupload.html5"); ?>"></script>
