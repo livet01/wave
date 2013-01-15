@@ -101,7 +101,7 @@ class Users extends Front_Controller
 						}
 						else
 						{
-							Template::redirect('/');
+							Template::redirect('home');
 						}
 					}
 				}//end if
@@ -114,7 +114,7 @@ class Users extends Front_Controller
 		else
 		{
 
-			Template::redirect('/');
+			Template::redirect('home');
 		}//end if
 
 	}//end login()
@@ -136,7 +136,7 @@ class Users extends Front_Controller
 
 		$this->auth->logout();
 
-		redirect('/');
+		redirect('home');
 
 	}//end  logout()
 
@@ -213,7 +213,7 @@ class Users extends Front_Controller
 		else
 		{
 
-			Template::redirect('/');
+			Template::redirect('home');
 		}//end if
 
 	}//end forgot_password()
@@ -392,7 +392,7 @@ class Users extends Front_Controller
 		else
 		{
 
-			Template::redirect('/');
+			Template::redirect('home');
 		}//end if
 
 	}//end reset_password()

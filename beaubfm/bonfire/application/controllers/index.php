@@ -20,7 +20,7 @@ class Index extends Base_Controller {
 		if($this->auth->is_logged_in())
 			$this -> Info_Disque_Model -> id = $this->current_user->id;
 	}
-
+	
 	//
 	// Méthode index : affichage de l'ensemble des disques
 	//
@@ -319,6 +319,15 @@ class Index extends Base_Controller {
 	public function spip() {
 		$this->output->enable_profiler(FALSE);
 		$this -> load -> view('index/spip');
+	}
+	
+	public function erreur($num) {
+		switch($num) {
+			case 404 :
+				Template::set_view('erreurs/erreur404');
+				break;
+		}
+		Template::render();
 	}
 
 }

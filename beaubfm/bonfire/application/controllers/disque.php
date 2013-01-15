@@ -225,6 +225,8 @@ class Disque extends Authenticated_Controller {
 			// Transtipage en integer
 			$id_disque = intval($id_disque);
 
+
+			$this -> load -> model('index/Info_Disque_Model');
 			// On récupère les infos du disque
 			$tabs = $this -> Info_Disque_Model -> GetDisque($id_disque);
 

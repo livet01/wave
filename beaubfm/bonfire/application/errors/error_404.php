@@ -1,34 +1,26 @@
-<html>
-<head>
-<title>404 Page Not Found</title>
-<style type="text/css">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>404 not foud</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-body {
-background-color:	#fff;
-margin:				40px;
-font-family:		Lucida Grande, Verdana, Sans-serif;
-font-size:			12px;
-color:				#000;
-}
 
-#content  {
-border:				#999 1px solid;
-background-color:	#fff;
-padding:			20px 20px 12px 20px;
-}
-
-h1 {
-font-weight:		normal;
-font-size:			14px;
-color:				#990000;
-margin:				0 0 4px 0;
-}
-</style>
-</head>
+    <!-- iPhone and Mobile favicon's and touch icons -->
+	<link href="<?php echo css_url('jquery-ui'); ?>" rel="stylesheet" type="text/css"/>
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>favicon.ico">
+    <link rel="apple-touch-icon" href="<?php echo base_url(); ?>assets/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="<?php echo base_url(); ?>assets/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="<?php echo base_url(); ?>assets/images/apple-touch-icon-114x114.png">
+	
+  </head>
 <body>
-	<div id="content">
-		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
-	</div>
+<!--[if lt IE 7]>
+		<p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or
+		<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p>
+<![endif]-->
+<p>404 not found</p>
 </body>
 </html>
