@@ -383,7 +383,7 @@ class ImporterFiche extends Authenticated_Controller{
 				//Emplacement				
 				$disque['Emplacement']=preg_replace($search, $replace, $disque['Emplacement']);
 				
-				if($disque['Emplacement']==='Refus' || $disque['Emplacement']==='Refusé'){
+				if($disque['Emplacement']==='Refus' || $disque['Emplacement']==='Refuse'){
 					$disque['Emplacement']='Refusé';
 				}
 								
