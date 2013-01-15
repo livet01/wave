@@ -380,7 +380,13 @@ class ImporterFiche extends Authenticated_Controller{
 					$cat_id = 3;
 				}
 
-				//Emplacement
+				//Emplacement				
+				$disque['Emplacement']=preg_replace($search, $replace, $disque['Emplacement']);
+				
+				if($disque['Emplacement']==='Refus' || $disque['Emplacement']==='Refusé'){
+					$disque['Emplacement']='Refusé';
+				}
+								
 				try {
 					$emp_id = $disqueControlleur -> rechercheEmplacementByNom($disque['Emplacement']);
 				} catch (Exception $e) {
