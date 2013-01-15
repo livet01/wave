@@ -145,7 +145,7 @@ class Index extends Base_Controller {
 		}
 		else
 			$data['resultat'] = array();
-		   
+
         header("Content-Type: application/rss+xml");
         $this->load->view('index/rss', $data);
 	}

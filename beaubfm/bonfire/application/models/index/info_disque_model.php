@@ -191,11 +191,6 @@ class Info_Disque_Model extends CI_Model
 	
 	function GetAllRss()
     {
-    	if (has_permission('Wave.Restriction.Disque'))
-		{
-			$this->db->where('disque.dif_id',$this->id);
-		}
-
 		if(!has_permission('Wave.Recherche.Disque'))
 		{
 			$this->db	->where_in('emp_plus',array(1,3));
@@ -205,7 +200,7 @@ class Info_Disque_Model extends CI_Model
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
 						->order_by('dis_date_ajout', 'asc')
-						->limit('0','50'); //-> limit($nb, $debut);
+						->limit('20'); //-> limit($nb, $debut);
 		$query = $this->db->get('disque');
 		return $query->result();
     }
