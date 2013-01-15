@@ -124,6 +124,7 @@ class Index extends Base_Controller {
 		
 	}
 	public function rss() {
+		$this->output->enable_profiler(FALSE);
 		
         $this->load->helper('xml');
 		// Récupération de tout les disques pour la page
@@ -145,7 +146,7 @@ class Index extends Base_Controller {
 		else
 			$data['resultat'] = array();
 		   
-        //header("Content-Type: application/rss+xml");
+        header("Content-Type: application/rss+xml");
         $this->load->view('index/rss', $data);
 	}
 	//
