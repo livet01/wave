@@ -128,7 +128,7 @@ class Index extends Base_Controller {
 		
         $this->load->helper('xml');
 		// Récupération de tout les disques pour la page
-		$tabs = $this -> Info_Disque_Model -> GetAll();
+		$tabs = $this -> Info_Disque_Model -> GetAllRss();
 
 		// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.
 		foreach ($tabs as $tab) {
@@ -137,7 +137,7 @@ class Index extends Base_Controller {
 			else {
 				$emb_id = $tab -> emb_id;
 			}
-			$tab_result[] = array("dis_id" => $tab -> dis_id,"sty_couleur" => $tab -> sty_couleur, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id);
+			$tab_result[] = array( "dis_libelle" => $tab -> dis_libelle, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom);
 		}
 		if(!empty($tab_result)){
 			// On passe le tableau de disque

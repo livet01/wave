@@ -189,6 +189,26 @@ class Info_Disque_Model extends CI_Model
 		return $query->result();
     }
 	
+	function GetAllRss()
+    {
+    	if (has_permission('Wave.Restriction.Disque'))
+		{
+			$this->db->where('disque.dif_id',$this->id);
+		}
+
+		if(!has_permission('Wave.Recherche.Disque'))
+		{
+			$this->db	->where_in('emp_plus',array(1,3));
+		}
+			$this->db->select(array('dis_libelle','artiste.art_nom','u1.username as per_nom',))
+						->join('artiste', 'disque.art_id=artiste.art_id', 'LEFT')
+						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
+						->order_by('dis_date_ajout', 'asc')
+						->limit('50'); //-> limit($nb, $debut);
+		$query = $this->db->get('disque');
+		return $query->result();
+    }
+	
 	function GetAll_in($iddisque = array())
     {
     	if (has_permission('Wave.Restriction.Disque'))

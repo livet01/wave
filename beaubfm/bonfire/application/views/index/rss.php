@@ -19,7 +19,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
     <dc:rights>Copyright <?php echo gmdate("Y", time()); ?></dc:rights>
 
     <?php if(isset($resultat)) {
-    	 foreach($resultat as $ligne): ?>
+    	 foreach($resultat as $ligne) { ?>
     
         <item>
 
@@ -29,7 +29,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
         </item>
 
         
-    <?php endforeach; } ?>
+    <?php } } ?>
     
     </channel></rss> 
 
