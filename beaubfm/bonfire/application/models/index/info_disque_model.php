@@ -203,6 +203,7 @@ class Info_Disque_Model extends CI_Model
 			$this->db->select(array('dis_libelle','artiste.art_nom','u1.username as per_nom',))
 						->join('artiste', 'disque.art_id=artiste.art_id', 'LEFT')
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
+						->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
 						->order_by('dis_date_ajout', 'asc')
 						->limit('0','50'); //-> limit($nb, $debut);
 		$query = $this->db->get('disque');
