@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>BeaubFM</title>
+		<title>Wave - BeaubFM</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this -> config -> item('charset'); ?>" />
 		<!--	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />	-->		
 		<noscript>Votre navigateur ne supporte pas le Javascript !</noscript> 
