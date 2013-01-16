@@ -213,9 +213,9 @@ class Disque extends Authenticated_Controller {
 		redirect(site_url("disque/ajouter"));
 	}
 
-	public function envoiMailEmplacement($id_disque) {
+	public function envoiMailEmplacement() {
 
-		$this->auth->restrict('Wave.Ajouter.Disque');
+		/*$this->auth->restrict('Wave.Ajouter.Disque');
 		if (!empty($id_disque))// Si le id_disque n'est pas nul
 		{
 
@@ -245,14 +245,14 @@ class Disque extends Authenticated_Controller {
 					$emb_id = $tab -> emb_libelle;
 				}
 				$json_array[] = array("dis_id" => $tab -> dis_id, "dis_envoi_ok" => $tab -> dis_envoi_ok, "sty_couleur" => $tab -> sty_couleur, "sty_libelle" => $tab -> sty_libelle, "mail" => $tab -> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
-			}
+			}*/
 			
 			// Envoi mail ici
+			$this->envoiMail();
 			Template::set_message('Le mail a bien été envoyé.', 'success');
 			Template::redirect('index');
 		}
 
-	}
 
 	//
 	// Modifier un disque
@@ -320,7 +320,7 @@ class Disque extends Authenticated_Controller {
 				$is_erreur = $this -> modifier_disque();
 				if (empty($is_erreur)) {
 					if($this->old_disque['emp_id']!=$this->get_emp_id()){
-						Template::set_message('<strong>Emplacement modifié</strong><br>Voulez vous lui renvoyer un email : <a href="'.site_url('disque/envoiMailEmplacement/'.$id).'" class="btn btn-mini btn-primary">Oui</a> <a href="#" data-dismiss="alert" class="btn btn-mini">Non</a>', 'info');
+						Template::set_message('<strong>Emplacement modifié</strong><br>Voulez vous lui renvoyer un email : <a href="'.site_url('disque/envoiMailEmplacement').'" class="btn btn-mini btn-primary">Oui</a> <a href="#" data-dismiss="alert" class="btn btn-mini">Non</a>', 'info');
 					}
 					Template::set_message('Le disque a bien été modifié', 'success');
 					Template::redirect('index');
@@ -467,77 +467,11 @@ class Disque extends Authenticated_Controller {
 				//
 				//Envoi de Mail Automatique
 				//
-				
-				//On récupère les informations nécessaires à envoyer dans le mail
-				$email = $this -> input -> post('email');
-				$artiste = $this -> input -> post('artiste');
-				$dif = $this -> input -> post('diffuseur');
-				
-
-				if ($this->input->post('style')!= '') {
-					$style = $this->getStyleByCouleur($this->input->post('style')); }
-				else {
-					$style = ''; }
-				$date_dis_ajout = date("d/m/Y");
-				$ecoutePar = $this -> input -> post('listenBy');
-								
-				//On récupère l'emplacement sélectionné dans le formulaire pour personnaliser le corps du mail
-				$empChoisi = $this -> input -> post('emplacement');
-				$emb_bev_lib = '';
-				if ($empChoisi == 'Emission spéciale')
-					$emb_bev_lib = $this -> input -> post('emb'); 
-				$messLib = $this -> emplacementManager -> select('emp_mail', array('emp_libelle' => $empChoisi));
-				//RETOUR FONCTION CUSTOMIZE EMAIL
-				$messModifie = $this->customizeEmail($messLib['emp_mail'], $this->get_dis_libelle(), $artiste, $dif, $style, $empChoisi, $date_dis_ajout, $ecoutePar, $est_auto_production, $emb_bev_lib);
-				
-				//On vérifie si la case 'Envoyer Mail' a été cochée pour procéder à l'envoi
-				if ($this -> input -> post('envoiMail') == "0" && !empty($email)) {
-
-					if (!empty($messModifie)) {
-						$message = '<p>'.$messModifie.'</p>';
-					} else {
-						$message = '<h3>Problème d\'affichage du contenu de l\'email...</h3>';
-					}
-					
-					//Personnalisation de l'objet de l'email
-					switch ($empChoisi) {
-						case 'En attente':
-							$objet = 'Accusé de réception du C.D. '.$this->get_dis_libelle().' de '.$artiste;
-							break;
-						
-						case 'Airplay':
-							$objet = 'Intégration du C.D. '.$this->get_dis_libelle().' dans la programmation générale';
-							break;
-							
-						case 'Archivage':
-							$objet = 'Archivage du C.D. '.$this->get_dis_libelle().' de '.$artiste;
-							break;
-						
-						case 'Refusé':
-							$objet = 'Non intégration du C.D. '.$this->get_dis_libelle().' dans la programmation générale';
-							break;	
-						
-						case 'Emission spéciale':
-							$objet = 'Transfert du C.D. '.$this->get_dis_libelle().' auprès d\'une émission spéciale';
-							break;
-							
-						default:
-							$objet = 'Traitement du C.D. '.$this->get_dis_libelle().' de '.$artiste.'dans la programmation générale';
-							break;
-					}
-
-					$data = array(
-						'to' => $email, 
-						'subject' => $objet,
-						'message' => $message);
-
-					$this -> emailer -> send($data);
-					$this -> set_dis_envoi_ok(1);
-
-				} else {
-					$this -> set_dis_envoi_ok(0);
+				if ($this -> input -> post('envoiMail') != FALSE) {
+					$this->envoiMail();
+					Template::set_message('Le mail a bien été envoyé.', 'success');
 				}
-
+				
 				// Vérification du format selectionné
 				if ($this -> verificationFormat($this -> input -> post('format'))) {
 					$this -> set_dis_format($this -> input -> post('format'));
@@ -1040,6 +974,79 @@ class Disque extends Authenticated_Controller {
 		return ($sup && $r1 && $r2);
 	}
 	
+	//Envoi d'un mail automatique
+	public function envoiMail() {
+				//On récupère les informations nécessaires à envoyer dans le mail
+				$email = $this -> input -> post('email');
+				$artiste = $this -> input -> post('artiste');
+				$dif = $this -> input -> post('diffuseur');
+				$est_auto_production = $this -> input -> post('autoprod') == "a";
+				
+
+				if ($this->input->post('style')!= '') {
+					$style = $this->getStyleByCouleur($this->input->post('style')); }
+				else {
+					$style = ''; }
+				$date_dis_ajout = date("d/m/Y");
+				$ecoutePar = $this -> input -> post('listenBy');
+								
+				//On récupère l'emplacement sélectionné dans le formulaire pour personnaliser le corps du mail
+				$empChoisi = $this -> input -> post('emplacement');
+				$emb_bev_lib = '';
+				if ($empChoisi == 'Emission spéciale')
+					$emb_bev_lib = $this -> input -> post('emb'); 
+				$messLib = $this -> emplacementManager -> select('emp_mail', array('emp_libelle' => $empChoisi));
+				//RETOUR FONCTION CUSTOMIZE EMAIL
+				$messModifie = $this->customizeEmail($messLib['emp_mail'], $this->get_dis_libelle(), $artiste, $dif, $style, $empChoisi, $date_dis_ajout, $ecoutePar, $est_auto_production, $emb_bev_lib);
+				
+				//On vérifie si la case 'Envoyer Mail' a été cochée pour procéder à l'envoi
+				if ($this -> input -> post('envoiMail') == "0" && !empty($email)) {
+
+					if (!empty($messModifie)) {
+						$message = '<p>'.$messModifie.'</p>';
+					} else {
+						$message = '<p>Problème d\'affichage du contenu de l\'email...</p>';
+					}
+					//Personnalisation de l'objet de l'email
+					switch ($empChoisi) {
+						case 'En attente':
+							$objet = 'Accusé de réception du C.D. '.$this->get_dis_libelle().' de '.$artiste;
+							break;
+						
+						case 'Airplay':
+							$objet = 'Intégration du C.D. '.$this->get_dis_libelle().' dans la programmation générale';
+							break;
+							
+						case 'Archivage':
+							$objet = 'Archivage du C.D. '.$this->get_dis_libelle().' de '.$artiste;
+							break;
+						
+						case 'Refusé':
+							$objet = 'Non intégration du C.D. '.$this->get_dis_libelle().' dans la programmation générale';
+							break;	
+						
+						case 'Emission spéciale':
+							$objet = 'Transfert du C.D. '.$this->get_dis_libelle().' auprès d\'une émission spéciale';
+							break;
+							
+						default:
+							$objet = 'Traitement du C.D. '.$this->get_dis_libelle().' de '.$artiste.'dans la programmation générale';
+							break;
+					}
+
+					$data = array(
+						'to' => $email, 
+						'subject' => $objet,
+						'message' => $message);
+
+					$this -> emailer -> send($data);
+					$this -> set_dis_envoi_ok(1);
+
+				} else {
+					$this -> set_dis_envoi_ok(0);
+				}
+	}
+	
 	//On cherche dans cette fonction les mots clés relatifs aux informations d'un album pour les remplacer par les informations de l'album entré en base
 	public function customizeEmail($messLib, $titre, $artiste, $diffuseur, $style, $emplacement, $dis_date_ajout, $ecoutePar, $estAutoProd, $emb_bev_lib) {
 		$messModifie = str_replace('%titre%', $titre, $messLib);
@@ -1055,7 +1062,7 @@ class Disque extends Authenticated_Controller {
 			$messModifie = str_replace('%diffuseur%', $diffuseur, $messModifie);
 		}
 		else {
-			$messModifie = str_replace('%diffuseur%', '(AutoProduction)', $messModifie);
+			$messModifie = str_replace('%diffuseur%', ' '.$artiste.' (AutoProduction)', $messModifie);
 		}
 		if (!empty($ecoutePar))
 			$messModifie = str_replace('%e_par%', $ecoutePar, $messModifie);

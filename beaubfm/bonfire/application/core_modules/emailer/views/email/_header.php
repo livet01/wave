@@ -3,7 +3,7 @@
 
 
 <STYLE>
- .headerTop { background-color:#FFCC66; border-top:0px solid #000000; border-bottom:1px solid #FFFFFF; text-align:center; }
+ .headerTop { background-color:#333333; border-top:0px solid #000000; border-bottom:1px solid #FFFFFF; text-align:center; }
  .adminText { font-size:10px; color:#996600; line-height:200%; font-family:verdana; text-decoration:none; }
  .headerBar { background-color:#FFFFFF; border-top:0px solid #333333; border-bottom:10px solid #FFFFFF; }
  .title { font-size:20px; font-weight:bold; color:#CC6600; font-family:arial; line-height:110%; }
@@ -36,4 +36,9 @@
 
 <table width="550" cellpadding="20" cellspacing="0" bgcolor="#FFFFFF">
 <tr>
+<td class="headerTop ">
+    							<div>
+        							<img src="../../assets/images/LOGO_BEAUBFM_150.jpg"/>
+    							</div>
+</td>
 <td bgcolor="#FFFFFF" valign="top" style="font-size:12px;color:#000000;line-height:150%;font-family:trebuchet ms;">
