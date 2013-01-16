@@ -105,7 +105,7 @@ class Developer extends Admin_Controller
 
 		if (!Template::get('toolbar_title'))
 		{
-			Template::set('toolbar_title', 'Database Maintenance');
+			Template::set('toolbar_title', 'Maintenance de base de données');
 		}
 
 		Template::render();
@@ -186,7 +186,7 @@ class Developer extends Admin_Controller
 		$this->load->helper('file');
 		Template::set('backups', get_dir_file_info($this->backup_folder));
 
-		Template::set('toolbar_title', 'Database Backups');
+		Template::set('toolbar_title', 'Sauvegardes de base de données');
 		Template::render();
 	}//end backups()
 
@@ -210,7 +210,7 @@ class Developer extends Admin_Controller
 			Template::set('tables', $tables);
 			Template::set('file', ENVIRONMENT .'_backup_' . date('Y-m-j_His'));
 
-			Template::set('toolbar_title', 'Create New Backup');
+			Template::set('toolbar_title', 'Créer une nouvelle Sauvegarde');
 			return TRUE;
 		}
 		else if (isset($_POST['submit']))

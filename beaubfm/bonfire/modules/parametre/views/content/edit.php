@@ -2,7 +2,8 @@
 	<div class="span8 offset2">
 		<div class="alert alert-info fade in">
 		  <a data-dismiss="alert" class="close">&times;</a>
-			<h4 class="alert-heading">Pour rajouter une option, ajouter un point-virgule et écrire l'option sans ajouter d'espaces.</h4>
+			<h4 class="alert-heading">Les paramètres doivent être écrits en étant séparés par un point-virgule.</h4>
+			<h4 class="alert-heading">Il ne faut pas mettre de point-virgule en début ni en fin.</h4>
 			<?php if (isset($password_hints) ) echo $password_hints; ?>
 		</div>
 	</div>
