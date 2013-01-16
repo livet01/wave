@@ -1,5 +1,5 @@
 <?php 
-	if(!empty($resultat)){
+	if(isset($resultat)){
 		if(count($resultat)==0){
  ?>
 <div class="alert alert-info">
