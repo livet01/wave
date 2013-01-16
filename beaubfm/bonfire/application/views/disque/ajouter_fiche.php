@@ -78,7 +78,7 @@
 					$i=0;
 					?>
 					<?php foreach($emplacements as $emplacement) { $i++; if($emplacement['emp_plus']==1) { $name_emp = $emplacement['emp_libelle']; } ?>
-						<label class="radio" for="<?php echo 'emp'.$i ?>"  <?php echo ($emplacement['emp_plus']==0 || $emplacement['emp_plus']==2) ? 'onclick="$(\'#emb2\').hide()"' : 'onclick="$(\'#emb2\').show()"'; ?>>
+						<label class="radio" for="<?php echo 'emp'.$i ?>"  <?php echo ($emplacement['emp_plus']==0 || $emplacement['emp_plus']>=2) ? 'onclick="$(\'#emb2\').hide()"' : 'onclick="$(\'#emb2\').show()"'; ?>>
 						<input type="radio" name="emplacement" id="<?php echo 'emp'.$i ?>" value="<?php echo $emplacement['emp_libelle'] ?>" <?php echo ((set_value('emplacement') == $emplacement['emp_libelle']) || (!empty($infoDisque['emp_libelle']) && $infoDisque['emp_libelle'] == $emplacement['emp_libelle']) || (!empty($sauv['emplacement']) && $sauv['emplacement'] == $emplacement['emp_libelle']) )? 'checked="checked"' : ''; ?> <?php echo ($emplacement['emp_plus']==0 || $emplacement['emp_plus']==2) ? 'onclick="$(\'#emb2\').hide()"' : 'onclick="$(\'#emb2\').show()"'; ?> >
 						<?php echo $emplacement['emp_libelle'] ?>
 					</label>
