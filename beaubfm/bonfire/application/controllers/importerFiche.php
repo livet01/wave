@@ -291,7 +291,11 @@ class ImporterFiche extends Authenticated_Controller{
 			if (is_null($disque['Format']) || !$disqueControlleur -> verificationFormat($disque['Format'])) {
 				$format = "CD";
 			} else {
-				$format = $disque['Format'];
+				if($disque['Format']==="Cd"){
+					$format="CD";
+				} else {
+					$format = $disque['Format'];
+				}
 			}
 
 			//Mail
