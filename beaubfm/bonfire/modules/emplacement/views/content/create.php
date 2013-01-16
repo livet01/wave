@@ -45,9 +45,8 @@ $id = isset($emplacement['emp_id']) ? $emplacement['emp_id'] : '';
         </div>
         <div class="control-group <?php echo form_error('emplacement_emp_mail') ? 'error' : ''; ?>">
             <?php echo form_label('Email de l\'Emplacement', 'emplacement_emp_mail', array('class' => "control-label") ); ?>
-            <div class='controls'>
-        <input id="emplacement_emp_mail" type="text" name="emplacement_emp_mail"  value="<?php echo set_value('emplacement_emp_mail', isset($emplacement['emplacement_emp_mail']) ? $emplacement['emplacement_emp_mail'] : ''); ?>"  />
-        <span class="help-inline"><?php echo form_error('emplacement_emp_mail'); ?></span>
+            <div class='controls'>        
+            <textarea rows="10" cols="30" id="emplacement_emp_mail" name="emplacement_emp_mail"><?php echo set_value('emplacement_emp_mail', isset($emplacement['emp_mail']) ? $emplacement['emp_mail'] : ''); ?></textarea><span class="help-inline"><?php echo form_error('emplacement_emp_mail'); ?></span>
         </div>
 
 

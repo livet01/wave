@@ -365,7 +365,7 @@ class Developer extends Admin_Controller
 		}//end if
 
 		Template::set_view('developer/restore');
-		Template::set('toolbar_title', 'Database Restore');
+		Template::set('toolbar_title', 'Restauration de la base de données');
 		Template::render();
 
 	}//end restore()
