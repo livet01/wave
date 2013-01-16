@@ -71,7 +71,8 @@ class Base_Controller extends MX_Controller
 		Events::trigger('before_controller', get_class($this));
 		
 		parent::__construct();
-       
+		Assets::add_js(js_url("autocompletion"));
+		
 		// Load Activity Model Since it's used everywhere.
 		$this->load->model('activities/Activity_model', 'activity_model');
 

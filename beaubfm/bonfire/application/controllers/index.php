@@ -34,6 +34,8 @@ class Index extends Base_Controller {
 		
 		// Chargement de la vue
 		Template::set_view('index/index');
+		Assets::add_js(js_url("pagination"));
+		Assets::add_js(js_url("cocheTout"));
 		Template::set('value',$this -> input -> post('recherche'));
 		Template::set('data',$data);
 		Template::render();
@@ -98,6 +100,7 @@ class Index extends Base_Controller {
 		$this->load->view('index/tableau',$data);
 		
 	}
+
 	public function rss() {
 		$this->output->enable_profiler(FALSE);
 		
@@ -120,6 +123,7 @@ class Index extends Base_Controller {
 		}
 		else
 			$data['resultat'] = array();
+
 
         header("Content-Type: application/rss+xml");
         $this->load->view('index/rss', $data);
@@ -218,6 +222,8 @@ class Index extends Base_Controller {
 				else {
 					// On charge la vue avec un affichage de 1
 					Template::set_view('index/resultat_recherche');
+					Assets::add_js(js_url("pagination"));
+					Assets::add_js(js_url("cocheTout"));
 					//Template::set_view('index/resultat_recherche');
 					Template::set('value',$this -> input -> post('recherche'));
 					Template::set('resultat',$tab_resultDisque);

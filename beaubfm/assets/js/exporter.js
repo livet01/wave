@@ -1,0 +1,10 @@
+jQuery(function($){
+	$("#linkXLS").click(function(){
+		$("#exportdisque").attr("action",CI.site_url+"/exporterFiche/xls");
+		$("#exportdisque").submit();
+	});
+	$("#linkCSV").click(function(){
+		$("#exportdisque").attr("action",CI.site_url+"/exporterFiche/csv");
+		$("#exportdisque").submit();
+	});
+});

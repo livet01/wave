@@ -19,12 +19,13 @@ class Artiste_model extends CI_Model {
 	}
 	
 	function compte($where) {
-		return $this->db	->from("disque")
-							->where($where)
-							->count_all_results();
+		return $this->db->from("disque")
+						->where($where)
+						->count_all_results();
 	}
 	
-	function insert($nom,$radio,$cat) {
+	function insert($nom,$radio,$cat) 
+	{
 		$resultat = $this->db->set('art_nom', $nom)
 							->set('rad_id', 1)
 							->insert($this->table);
@@ -35,7 +36,8 @@ class Artiste_model extends CI_Model {
 			return false;
 	}
 	
-	function delete ($artiste){		
+	function delete ($artiste)
+	{		
 		return $this -> db ->delete($this->table, array('art_id' => $artiste));
 	}
 }

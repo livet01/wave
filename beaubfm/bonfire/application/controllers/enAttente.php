@@ -103,6 +103,8 @@ class EnAttente extends Authenticated_Controller {
 			$data['username'] = $this->current_user->username;
 			// Chargement de la vue
 			Template::set_view('enAttente/resultat');
+			Assets::add_js(js_url("pagination"));
+			Assets::add_js(js_url("cocheTout"));
 			Template::set('data', $data);
 			Template::render();
 			}
@@ -151,6 +153,8 @@ class EnAttente extends Authenticated_Controller {
 		// Chargement de la vue
 		//$this -> layout -> views('menu_principal')->view('disque/supprimer', $data);
 		// Chargement de la vue
+		Assets::add_js(js_url("supprImpDisque"));
+		Assets::add_js(js_url("pagination"));
 		Template::set_view('confirmation');
 		//Template::set_view('index/resultat_recherche');
 		Template::set('data', $data);

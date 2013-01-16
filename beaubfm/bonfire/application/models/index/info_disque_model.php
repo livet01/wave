@@ -115,11 +115,13 @@ class Info_Disque_Model extends CI_Model
 			$this->db	->join('emplacement', 'disque.emp_id=emplacement.emp_id', 'LEFT')
 						->where_in('emp_plus',array(1,3));
 		}
-		$this->db->select('*')
-						->where('disque.dis_id', $numDisque);
-		$query = $this->db->get('disque');
-		return $query->result_array();
-    }
+		
+		return $this->db->select('*')
+						->from("disque")
+						->where('disque.dis_id', $numDisque)
+						->get()
+						->result_array();
+	}
 	
 	function GetAll()
     {
@@ -211,7 +213,6 @@ class Info_Disque_Model extends CI_Model
 		{
 			$this->db->where('disque.dif_id',$this->id);
 		}
-
 		if(empty($iddisque))
 		{
 			return $this->GetAll();

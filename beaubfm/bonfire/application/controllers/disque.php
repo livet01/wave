@@ -392,6 +392,7 @@ class Disque extends Authenticated_Controller {
 		}
 
 		Template::set('data', $data);
+		Assets::add_js(js_url("ajoutfiche"));
 		Template::set_view('disque/ajouter_fiche');
 		Template::render();
 	}
@@ -973,13 +974,14 @@ class Disque extends Authenticated_Controller {
 			// On passe le tableau de disque
 			$data['resultat'] = $tab_result;
 		}
-
+		
 		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
 		$data['affichage'] = $affichage;
 		$data['liens'][0] = array("id" => "supprAll", "icon" => "icon-trash", "text" => " Tout supprimer", "href" => "#");
 		$data['liens'][1] = array("id" => "", "icon" => "icon-repeat", "text" => " Annuler", "href" => site_url("enAttente/"));
 		$data['form_id'] = "supprimerdisque";
-		
+		Assets::add_js(js_url("supprDisque"));
+		Assets::add_js(js_url("pagination"));
 		Template::set('data',$data);
 		Template::set_view('confirmation');
 		Template::render();
@@ -1007,7 +1009,6 @@ class Disque extends Authenticated_Controller {
 				echo ($ttx > 1) ? Template::set_message('Tous les disques n\'ont pas été correctement supprimé', 'error') : Template::set_message('Le disque n\'a pas été correctement supprimé', 'error');
 			else{
 				Template::set_message($suc.' disque(s) ont été cont été correctement supprimé', 'success');
-				//Template::set_message($s, 'warning');
 			}
 		}
 		Template::redirect('index');
@@ -1016,25 +1017,27 @@ class Disque extends Authenticated_Controller {
 	private function supprimerOneDisque($id) {
 		// Transtipage en integer
 		$id_disque = intval($id);
-		$r1 = $r2 = true;
+		$r1 = $r2 = $sup = true;
 		// On récupère les infos du disque
-		$tabs = $this -> infodisque -> GetOneDisque($id_disque);
-
+		$tabs = $this->infodisque->GetOneDisque($id_disque);
+		
 		if (!empty($tabs)) {
-			$sup = $this -> disqueManager -> delete($id_disque);
-
+			$sup = $this->disqueManager->delete($id_disque);
+			
 			$tabs = $tabs[0];
-
-			if($this->artisteManager->compte(array('art_id'=>$tabs['art_id'])) == 0) {
-				$r1 = $this->artisteManager->delete($tabs['art_id']);
+			
+			if($this->artisteManager->compte(array('art_id'=>$tabs['art_id'])) === 0) 
+			{
+				$r1 = $this->artisteManager->delete(intval($tabs['art_id']));
 			}
 
-			if($this->diffuseurManager->compte(array('dif_id'=>$tabs['dif_id'])) == 0) {
-				$r2 = $this->diffuseurManager->delete($tabs['dif_id']);
+			if($this->diffuseurManager->compte(array('dif_id'=>$tabs['dif_id'])) === 0) 
+			{
+				$r2 = $this->diffuseurManager->delete(intval($tabs['dif_id']));
+
 			}
 		}
-		
-		return ($r1 && $r2);
+		return ($sup && $r1 && $r2);
 	}
 	
 	//On cherche dans cette fonction les mots clés relatifs aux informations d'un album pour les remplacer par les informations de l'album entré en base

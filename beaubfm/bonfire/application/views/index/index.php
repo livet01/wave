@@ -19,6 +19,7 @@
 if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
 <div class="alert alert-error">
 	<p>
+		<?php echo img_url(); ?>
 		Veuillez saisir au moins une lettre pour faire une recherche.
 	</p>
 </div>

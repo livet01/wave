@@ -83,6 +83,8 @@ class ExporterFiche extends Base_Controller {
 		$data['liens'][2] = array("id" => "", "icon" => "icon-repeat", "text" => " Annuler", "href" => site_url("index/"));
 		$data['form_id'] = "exportdisque";
 		// Chargement de la vue
+		Assets::add_js(js_url("exporter"));
+		Assets::add_js(js_url("pagination"));
 		Template::set('data',$data);
 		Template::set_view('confirmation');
 		Template::render();
