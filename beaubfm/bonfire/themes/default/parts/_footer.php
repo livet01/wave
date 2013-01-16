@@ -64,32 +64,39 @@
 	});
 	
 	uploader.bind('FileUploaded',function(up,file,response){
-		data = jQuery.parseJSON(response.response);
-		if(data.error) {
-			$('#'+file.id).addClass('alert').html('').html(data.message);
-		}
-		else {
-			$('#'+file.id).addClass('alert').addClass('alert-info').html('').html('<img class="chargement" src="<?php echo img_url("ajax-loader.gif"); ?>">Traitement en cours ... <span class="nb-disque"><strong class="act-nb-dis">0</strong>/'+data.nombre+' disques analysés.');
-			
-			decompte(file,0,data.nombre);
-			$.ajax({
-				url : "<?php echo base_url().index_page().'/importerFiche/traitement/'; ?>"+data.name,
-				success: function(rep,textStatus,jqXHR) {
-					dataRetour = jQuery.parseJSON(rep);
-					if(dataRetour.error)
-						$('#'+file.id).removeClass('alert-info').removeClass('file').addClass('alert-error').html('').html('<a class="close" data-dismiss="alert" href="#">&times;</a>'+dataRetour.message);
-					else 
-						$('#'+file.id).removeClass('alert-info').removeClass('file').addClass('alert-success').html('').html('<a class="close" data-dismiss="alert" href="#">&times;</a>'+dataRetour.message);
-					
-				}
-				});
-		}
-		
+		try{
+			data = jQuery.parseJSON(response.response);
+			if(data.error) {
+				$('#'+file.id).addClass('alert').html('').html('<a class="close" data-dismiss="alert" href="#">&times;</a>'+data.message);
+			}
+			else {
+				$('#'+file.id).addClass('alert').addClass('alert-info').html('').html('<img class="chargement" src="<?php echo img_url("ajax-loader.gif"); ?>">Traitement en cours ... <span class="nb-disque"><strong class="act-nb-dis">0</strong>/'+data.nombre+' disques analysés.');
+
+				decompte(file,0,data.nombre);
+				
+				$.ajax({
+					url : "<?php echo base_url().index_page().'/importerFiche/traitement/'; ?>"+data.name,
+					success: function(rep,textStatus,jqXHR) {
+						try{
+							var dataRetour = jQuery.parseJSON(rep);
+							if(dataRetour.error)
+								$('#'+file.id).removeClass('alert-info').removeClass('file').addClass('alert-error').html('').html('<a class="close" data-dismiss="alert" href="#">&times;</a>'+dataRetour.message);
+							else 
+								$('#'+file.id).removeClass('alert-info').removeClass('file').addClass('alert-success').html('').html('<a class="close" data-dismiss="alert" href="#">&times;</a>'+dataRetour.message);
+						} catch(err) {
+							$('#'+file.id).removeClass('alert-info').removeClass('file').addClass('alert-error').html('').html('<a class="close" data-dismiss="alert" href="#">&times;</a>Une erreur s\'emble s\'être produite pendant le traitement. Veuillez contacter l\'administrateur.');
+						}	
+					}
+					});
+			}
+		} catch(err) {
+			$('#'+file.id).addClass('alert').removeClass('alert-info').removeClass('file').addClass('alert-error').html('').html('<a class="close" data-dismiss="alert" href="#">&times;</a>Une erreur s\'emble s\'être produite pendant le téléchargement. Veuillez contacter l\'administrateur.');
+		}	
 	});
 	function decompte(file,pos,nb) {
 		$('#'+file.id).find('.act-nb-dis').html('').html(pos);
 		if(pos<nb){
-			setTimeout(function(){decompte(file,pos+1,nb);},2);
+			setTimeout(function(){decompte(file,pos+1,nb);},3);
 		}
 	}
 	

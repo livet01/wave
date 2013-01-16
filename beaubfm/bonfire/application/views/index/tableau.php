@@ -1,5 +1,19 @@
 <?php 
 	if(!empty($resultat)){
+		if(count($resultat)==0){
+ ?>
+<div class="alert alert-info">
+	<h3>Bienvenue,</h3>
+	<p>
+		Il n'y a aucun disque dans la base de données.
+	</p><?php if(has_permission('Wave.Ajouter.Disque') || has_permission('Wave.Importer.Disque')) {?>
+	<p>
+		Pour commencer, essayez <?php if(has_permission('Wave.Ajouter.Disque')){ ?><a href="<?php echo site_url("disque") ?>">d'ajouter</a> <?php if(has_permission('Wave.Importer.Disque')){ echo 'ou '; } } if(has_permission('Wave.Importer.Disque')){ echo'<a href="'.site_url("importerFiche"); ?>">d'importer des disques</a><?php } ?> !
+	</p><?php } ?>
+</div>
+<?php } 
+		else {
+
  ?>
 <table class="table table-hover" id="table-disque">
 	<caption>
@@ -106,18 +120,21 @@
 <div class="holder">
 </div>
 </center>
+
+<script type="text/javascript" src="<?php echo js_url('jPages'); ?>"></script>
+<script type="text/javascript">
+	
+			$(".holder").jPages({
+			containerID : "disque",
+			previous : "←",
+			next : "→",
+			perPage : 32,
+			delay : 10
+			});
+</script>
 <?php }
+			
+	}
+		
 	}
 ?>
-
-	<script type="text/javascript" src="<?php echo js_url('jPages'); ?>"></script>
-	<script type="text/javascript">
-		
-				$(".holder").jPages({
-				containerID : "disque",
-				previous : "←",
-				next : "→",
-				perPage : 32,
-				delay : 10
-				});
-	</script>

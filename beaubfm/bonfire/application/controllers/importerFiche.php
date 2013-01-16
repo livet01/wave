@@ -74,11 +74,12 @@ class ImporterFiche extends Authenticated_Controller{
 	}
 
 	public function traitement($nameFile) {
+		
 		if(empty($nameFile)) {
 			redirect('importerFiche');
 			exit();
 		}
-		
+
 		$extension = strrchr($nameFile,'.');
 		$chemin = './assets/upload/'.$nameFile;
 		//Pour chaque fichier téléchargé on récupère le type du fichier pour charger la bonne librairie
@@ -107,9 +108,7 @@ class ImporterFiche extends Authenticated_Controller{
 				die(json_encode(array("error"=>true,"message"=>"Le fichier est illisible, il lui manque une colonne ou il n'est pas compatible.")));
 			}
 		}
-		
-		
-		
+
 	}
 
 	public function excelFile($data) {
@@ -147,6 +146,7 @@ class ImporterFiche extends Authenticated_Controller{
 	 */
 	public function getTabFinal($arrayFichier) {
 		$this->auth->restrict('Wave.Importer.Disque');
+		
 		//liste de clés utilisées pour le tableau de retour
 		$listeKeysFinal = array("Titre", "Artiste", "Diffuseur", "Format", "Emplacement", "DateAjout", "EcoutePar", "Mail", "EmissionBenevole", "Style");
 
@@ -178,9 +178,7 @@ class ImporterFiche extends Authenticated_Controller{
 		foreach ($listeKeys as $libelleKeys) {
 			$keys[$libelleKeys] = array_search($libelleKeys, $arrayFichier[0]);
 		}
-		
 		$arrayEpure=null;
-
 		$longueurArray = count($arrayFichier) - 1;
 		for ($i = 1; $i <= $longueurArray; $i++) {
 			$j = 0;

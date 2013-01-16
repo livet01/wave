@@ -1,12 +1,10 @@
-<!-- <script src="<?php echo js_url('resultatRech'); ?>"></script> -->
 <center>
 	<div class="resuRecherche">
 	<form class="form-search" action="<?php echo site_url('index/recherche'); ?>" method="post" name="form_recherche" id="recherche_form">
 		<div class="input-append">
 			<input type="text" class="span6 search-query" data-provide="typeahead" name="recherche" id="recherche" value="<?php
 			if (!empty($value)) { echo $value;
-			}
- ?>"  placeholder="Recherchez un titre, un album, un artiste...">
+			} ?>"  placeholder="Recherchez un titre, un album, un artiste...">
 			<input type="hidden" name="recherche_id" id="recherche_id" value="">
 			<button type="submit" class="btn">
 				Rechercher
@@ -15,27 +13,6 @@
 	</form>
 </div>
 </center>
-<?php
-if($affichage!=0 && ($affichage!=1 || !isset($resultat)) && $affichage!=2){ ?>
-<div class="alert alert-error">
-	<p>
-		<?php echo img_url(); ?>
-		Veuillez saisir au moins une lettre pour faire une recherche.
-	</p>
-</div>
-<?php }
-	if(!(isset($compte) && $compte>0) && $affichage==0){
- ?>
-<div class="alert alert-info">
-	<h3>Bienvenue,</h3>
-	<p>
-		Il n'y a aucun disque dans la base de données.
-	</p><?php if(has_permission('Wave.Ajouter.Disque') || has_permission('Wave.Importer.Disque')) {?>
-	<p>
-		Pour commencer, essayez <?php if(has_permission('Wave.Ajouter.Disque')){ ?><a href="<?php echo site_url("disque") ?>">d'ajouter</a> <?php if(has_permission('Wave.Importer.Disque')){ echo 'ou '; } } if(has_permission('Wave.Importer.Disque')){ echo'<a href="'.site_url("importerFiche"); ?>">d'importer des disques</a><?php } ?> !
-	</p><?php } ?>
-</div>
-<?php } ?>
 
 <div id="tableau-index">
 	<center class="container">

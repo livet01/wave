@@ -824,10 +824,10 @@ class Template
 	 */
 	public static function redirect($url=NULL)
 	{
-		if(function_exists('site_url'))
-			$url = strpos($url, 'http') === FALSE ? site_url($url) : $url;
-		else
-			$url = strpos($url, 'http') === FALSE ? $url : $url;
+			
+		
+		$url = strpos($url, 'http') === FALSE && function_exists('site_url') ? site_url($url) : $url;
+		
 		echo "<script>window.location='{$url}'</script>";
 		exit();
 

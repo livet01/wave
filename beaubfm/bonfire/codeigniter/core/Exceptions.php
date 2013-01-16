@@ -115,7 +115,7 @@ class CI_Exceptions {
 		{
 			require APPPATH.'libraries/template.php';
 		}
-		
+
 		Template::redirect('index/erreur/404');
 		//echo $this->show_error($heading, $message, 'error_404', 404);
 		exit;

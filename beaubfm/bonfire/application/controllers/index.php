@@ -24,20 +24,12 @@ class Index extends Base_Controller {
 	//
 	// Méthode index : affichage de l'ensemble des disques
 	//
-	public function index($g_nb_disques = 1, $affichage = 0) {
+	public function index() {
 
-		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
-		$data['affichage'] = $affichage;
-	
-		// On récupère le nombre de disque présent dans la base
-		$data['compte'] = $this -> Info_Disque_Model -> count();
-		
 		// Chargement de la vue
 		Template::set_view('index/index');
-		Assets::add_js(js_url("pagination"));
-		Assets::add_js(js_url("cocheTout"));
+		Assets::add_js("cocheTout");
 		Template::set('value',$this -> input -> post('recherche'));
-		Template::set('data',$data);
 		Template::render();
 		
 	}
@@ -131,7 +123,7 @@ class Index extends Base_Controller {
 	//
 	// Méthode recherche : affichage des résultats de la recherche
 	//
-	public function recherche($g_nb_disques = 1) {
+	public function recherche() {
 		
 		// On vérifie si la variable post contient des erreurs
 		$this -> form_validation -> set_rules('recherche', 'recherche', 'trim|required|xss_clean');

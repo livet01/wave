@@ -26,7 +26,7 @@ class Disque_model extends CI_Model {
 			else {
 				$id = $this->db->insert_id();
 			}
-			return $this->db->set('dis_id', $id)
+			$this->db->set('dis_id', $id)
 					->set('dis_libelle', $data['dis_libelle'])
 					->set('dis_format', $data['dis_format'])
 					->set('uti_id_ecoute', $data['uti_id_ecoute'])
@@ -44,6 +44,7 @@ class Disque_model extends CI_Model {
 					->set('col5', (empty($data['col5']) ? NULL : $data['col5']))
 					->set('col6', (empty($data['col6']) ? NULL : $data['col6']))
 					->insert($this->table);
+			return $id;
 		}
 		else {
 			return FALSE;
