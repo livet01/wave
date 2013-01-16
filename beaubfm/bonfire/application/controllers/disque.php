@@ -692,7 +692,7 @@ class Disque extends Authenticated_Controller {
 			$i++;
 		}
 		$id = $this -> disqueManager -> insert($data);
-		if (!$id) {
+		if ($id === FALSE) {
 			throw new Exception("Erreur dans l'ajout");
 		}
 		else
