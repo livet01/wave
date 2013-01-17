@@ -53,7 +53,7 @@
 						<label class="control-label" for="style"><i class="icon-certificate"></i> Style</label>
 						<div class="controls">
 							<?php foreach($styles as $style) { $i++; ?>
-								<label class="radio <?php echo $style['couleur'] ?>" for="<?php echo $style['couleur'] ?>"><?php echo $style['libelle'] ?>
+								<label class="radio <?php echo $style['couleur'] ?>" for="<?php echo $style['couleur'] ?>"><?php echo $style['libelle'] ?> <i style="background:<?php echo $style['couleur'] ?>" class="circle"></i> 
 									<input type="radio" name="style" id="<?php echo $style['couleur'] ?>" value="<?php echo $style['couleur'] ?>" <?php echo ((set_value('style') == $style['couleur']) || (!empty($infoDisque['sty_libelle']) && $infoDisque['sty_libelle'] == $style['libelle']) || (!empty($sauv['style']) && $sauv['style'] == $style['couleur']) )? 'checked="checked"' : ''; ?> >
 								</label>
 					<?php } while($i<4) {
