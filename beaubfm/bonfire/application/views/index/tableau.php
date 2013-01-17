@@ -122,6 +122,7 @@
 </center>
 
 <script type="text/javascript" src="<?php echo js_url('jPages'); ?>"></script>
+<script type="text/javascript" src="<?php echo js_url('cocheTout'); ?>"></script>
 <script type="text/javascript">
 	
 			$(".holder").jPages({
@@ -133,7 +134,17 @@
 			});
 </script>
 <?php }
-			
+	?>
+
+<div class="form-actions">
+	<?php if (has_permission('Wave.Supprimer.Disque')) { ?>
+	<span id="supprimer"><a class="btn btn-block" href="#"><i class="icon-trash"></i> Supprimer les fiches</a></span><?php } ?>
+	<?php if (has_permission('Wave.Exporter.Disque')) {?>
+	
+	<span id="exporter"><a  class="btn" href="#"><i class="icon-share-alt"></i> Exporter des fiches</a></span><?php } ?>
+	<a class="btn"href="<?php echo site_url('index/rss'); ?>"><img src="<?php echo img_url('feed-icon.png'); ?>"> RSS</a>
+</div>
+	<?php		
 	}
 		
 	}
