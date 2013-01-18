@@ -307,9 +307,8 @@ class ImporterFiche extends Authenticated_Controller{
 
 			//Cas d'un fichier exporté depuis gcstar
 			if (!isset($disque['EmissionBenevole'])) {
-				$style = null;
-				$style_id=null;
-
+				$style=null;
+				
 				//Catégorie
 				$cat_id = 3;
 				if (strstr(strtolower($disque['Diffuseur']), "auto")) {
@@ -354,24 +353,21 @@ class ImporterFiche extends Authenticated_Controller{
 									$valide = FALSE;
 								}
 							}
-							
-							
-							//Style
-							if (!empty($style)) {
-								try {
-									$style_id = $disqueControlleur -> rechercherStyleByNom($style);
-								} catch (Exception $e) {
-									$valide = FALSE;
-									$style_id = NULL;
-								}
-							}
 						}
 					}
 					if ($emp_id == null) {
 						$valide = FALSE;
 					}
 				}
-
+				//Style
+				if (!empty($style)) {
+					try {
+						$style_id = $disqueControlleur -> rechercherStyleByNom($style);
+					} catch (Exception $e) {
+						$valide = FALSE;
+						$style_id = NULL;
+					}
+				}
 			} else {
 				//Dans le cas ou le fichier vient de notre base
 
@@ -420,7 +416,6 @@ class ImporterFiche extends Authenticated_Controller{
 						$style_id = null;
 					}
 				}
-
 			}
 
 			//Titre
@@ -431,30 +426,29 @@ class ImporterFiche extends Authenticated_Controller{
 				$art_id = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $this->current_user->rad_id, $cat_id);
 				if($art_id == -1){
 					$valide = FALSE;
-				}
-			
-			if (!$disqueControlleur -> existeTitreArtiste($disque['Titre'], $art_id)) {
-				try {
-					//Diffuseur
-					if ($cat_id === 5) {
-						$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Artiste'], $this->current_user->rad_id, $mail, $cat_id);
-					} else {
-						$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Diffuseur'], $this->current_user->rad_id, $mail, 4);
-					}
-
-					//EcoutePar
+				}			
+				if (!$disqueControlleur -> existeTitreArtiste($disque['Titre'], $art_id)) {
 					try {
-						$ecoute_id = $disqueControlleur -> rechercherEcouteParByNom($disque['EcoutePar']);
-					} catch (Exception $e) {
-						$ecoute_id = $this->current_user->id;
+						//Diffuseur
+						if ($cat_id === 5) {
+							$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Artiste'], $this->current_user->rad_id, $mail, $cat_id);
+						} else {
+							$dif_id = $disqueControlleur -> rechercheDiffuseurByNom($disque['Diffuseur'], $this->current_user->rad_id, $mail, 4);
+						}
+	
+						//EcoutePar
+						try {
+							$ecoute_id = $disqueControlleur -> rechercherEcouteParByNom($disque['EcoutePar']);
+						} catch (Exception $e) {
+							$ecoute_id = $this->current_user->id;
+						}
+					} catch(Exception $e) {
+						$valide = FALSE;
 					}
-				} catch(Exception $e) {
+				} else {
 					$valide = FALSE;
+					$doublon = TRUE;
 				}
-			} else {
-				$valide = FALSE;
-				$doublon = TRUE;
-			}
 			}
 
 			if ($valide === TRUE && $doublon === FALSE) {
@@ -473,34 +467,28 @@ class ImporterFiche extends Authenticated_Controller{
 				} catch (Exception $e) {
 					$e -> getMessage();
 				}
-
 			}
-
-		//A enlever quand Valentin mettra les styles dans l'export//
-		$disque['Style'] = null;
-
-		$dejaEnAttente = FALSE;
-		$enAttente = FALSE;
-
-		$testDoublonImport = $this -> importerManager -> existImport($disque['Titre'], $disque['Artiste'], $disque['Diffuseur']);
-
-		if ($valide === FALSE && $doublon === FALSE && empty($testDoublonImport)) {
-			//Cas d'un fichier exporté depuis gcstar
-			if (!isset($disque['EmissionBenevole'])) {
-				$enAttente = TRUE;
-				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], NULL, $this->current_user->id, $style, NULL);
+			
+			$dejaEnAttente = FALSE;
+			$enAttente = FALSE;
+	
+			$testDoublonImport = $this -> importerManager -> existImport($disque['Titre'], $disque['Artiste'], $disque['Diffuseur']);
+	
+			if ($valide === FALSE && $doublon === FALSE && empty($testDoublonImport)) {
+				//Cas d'un fichier exporté depuis gcstar
+				if (!isset($disque['EmissionBenevole'])) {
+					$enAttente = TRUE;
+					$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], NULL, $this->current_user->id, $disque['Style'], NULL);
+				} else {
+					$enAttente = TRUE;
+					$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], NULL, $this->current_user->id, $disque['Style'], $disque['EmissionBenevole']);
+				}
 			} else {
-				$enAttente = TRUE;
-				$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], NULL, $this->current_user->id, $style, $disque['EmissionBenevole']);
+				if ($doublon === FALSE && $valide === FALSE) {
+					$dejaEnAttente = TRUE;
+				}
 			}
-		} else {
-			if ($doublon === FALSE && $valide === FALSE) {
-				$dejaEnAttente = TRUE;
-			}
+			return array('valide' => $valide, 'doublon' => $doublon, 'enAttente' => $enAttente, 'dejaEnAttente' => $dejaEnAttente);
 		}
-		
-		
-		return array('valide' => $valide, 'doublon' => $doublon, 'enAttente' => $enAttente, 'dejaEnAttente' => $dejaEnAttente);
 	}
-}
 ?>
