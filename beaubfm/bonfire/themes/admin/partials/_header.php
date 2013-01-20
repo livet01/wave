@@ -85,7 +85,7 @@
 									<li>
 										<div class="inner">
 											<div class="toolbar-profile-img">
-												<?php echo gravatar_link($current_user->email, 96, null, $current_user->display_name) ?>
+												<img src="<?php echo img_url("user.png"); ?>" width="96" height="96" alt="Logo Utilisateur" title="<?php echo (isset($current_user->display_name) && !empty($current_user->display_name)) ? $current_user->display_name : ($this->settings_lib->item('auth.use_usernames') ? $current_user->username : $current_user->email); ?>">
 											</div>
 
 											<div class="toolbar-profile-info">

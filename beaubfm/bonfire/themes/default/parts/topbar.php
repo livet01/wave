@@ -19,7 +19,7 @@
 					<?php if (isset($current_user->email)) : ?>
 					<li class="dropdown" >
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<?php echo $current_user->username; ?>
+							<?php echo (isset($current_user->display_name) && !empty($current_user->display_name)) ? $current_user->display_name : ($this->settings_lib->item('auth.use_usernames') ? $current_user->username : $current_user->email); ?>
 						<i class="icon-user icon-white"></i>
 						<b class="caret"></b></a>
 
