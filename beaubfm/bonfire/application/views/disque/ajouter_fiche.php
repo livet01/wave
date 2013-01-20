@@ -57,7 +57,7 @@
 								name="autoprod" 
 								value="a" 
 								<?php echo ((set_value('autoprod') ==='a') || (!empty($infoDisque) && $infoDisque['art_nom'] == $infoDisque['per_nom'])||(!empty($sauv['artiste']) && !empty($sauv['diffuseur']) && $sauv['artiste'] == $sauv['diffuseur'])) ? "checked=\"checked\"" : ""; ?> 
-								onclick="$('#block-label').hide();EmailCheck();LabelChange();" > Auto-Production
+								onclick="$('#block-label').hide();LabelChange();" > Auto-Production
 					</label>
 					<label class="btn btn-info <?php echo ((set_value('autoprod') ==='b') || (!empty($infoDisque) && $infoDisque['art_nom'] != $infoDisque['per_nom'])||(!empty($sauv['artiste']) && !empty($sauv['diffuseur']) && $sauv['artiste'] != $sauv['diffuseur'])) ? "active" : ""; ?>" for="diff">
 							<input  style="display:none;" class="check" type="radio" id="diff" name="autoprod" value="b" <?php echo ((isset($_POST['autoprod']) && $_POST['autoprod'] ==='') || (!empty($infoDisque) && $infoDisque['art_nom'] == $infoDisque['per_nom'])||(!empty($sauv['artiste']) && !empty($sauv['diffuseur']) && $sauv['artiste'] == $sauv['diffuseur'])) ? "checked=\"checked\"" : ""; ?> 
