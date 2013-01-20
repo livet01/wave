@@ -26,10 +26,10 @@ function ArtisteChange() {
 						$('#art-help').removeAttr('class','label label-info').attr('class','label label-success').html('').html('Artiste trouvé');
 					}
 					else {
-						$('#art-help').removeAttr('class','label label-success').attr('class','label label-info').html('').html('Nouvelle artiste');
+						$('#art-help').removeAttr('class','label label-success').attr('class','label label-info').html('').html('Nouvel artiste');
 					}
 				} catch(err){
-					$('#art-help').removeAttr('class','label label-success').attr('class','label label-info').html('').html('Nouvelle artiste');
+					$('#art-help').removeAttr('class','label label-success').attr('class','label label-info').html('').html('Nouvel artiste');
 				}
 			}
 		});
@@ -70,7 +70,7 @@ function LabelChange() {
 					}
 					else {
 						if($('input[name=autoprod]:checked').val() == 'a') {
-							$('#art-help2').removeAttr('class','label label-info').attr('class','label label-info').html('').html('Nouveau auto-producteur');
+							$('#art-help2').removeAttr('class','label label-info').attr('class','label label-info').html('').html('Nouvel auto-producteur');
 						}
 						else {
 							$('#lab-help').removeAttr('class','label label-info').attr('class','label label-info').html('').html('Nouveau label');
@@ -79,7 +79,7 @@ function LabelChange() {
 					}
 				} catch(err){
 					if($('input[name=autoprod]:checked').val() == 'a') {
-						$('#art-help2').removeAttr('class','label label-info').attr('class','label label-info').html('').html('Nouveau auto-producteur');
+						$('#art-help2').removeAttr('class','label label-info').attr('class','label label-info').html('').html('Nouvel auto-producteur');
 					}
 					else {
 						$('#lab-help').removeAttr('class','label label-info').attr('class','label label-info').html('').html('Nouveau label');
@@ -100,7 +100,7 @@ function ArtisteDisqueVerif() {
 				try{
 					var data = jQuery.parseJSON(rep)
 					if(data.couple && data.artiste == $("#artiste").val() && data.disque == $("#titre").val()){
-						$('#dis-help').removeAttr('class','label label-important').attr('class','label label-important').html('').html('Doublons détecté');
+						$('#dis-help').removeAttr('class','label label-important').attr('class','label label-important').html('').html('Doublon détecté');
 					}
 					else {
 						$('#dis-help').removeAttr('class','label label-important').html('');
