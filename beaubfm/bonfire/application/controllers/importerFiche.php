@@ -478,7 +478,7 @@ class ImporterFiche extends Authenticated_Controller{
 				//Cas d'un fichier exporté depuis gcstar
 				if (!isset($disque['EmissionBenevole'])) {
 					$enAttente = TRUE;
-					$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], NULL, $this->current_user->id, $disque['Style'], NULL);
+					$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], NULL, $this->current_user->id, $style, NULL);
 				} else {
 					$enAttente = TRUE;
 					$this -> importerManager -> ajoutDisqueImport($disque['Titre'], $disque['Format'], $disque['EcoutePar'], $disque['DateAjout'], $disque['Artiste'], $disque['Diffuseur'], $disque['Mail'], NULL, $this->current_user->id, $disque['Style'], $disque['EmissionBenevole']);
