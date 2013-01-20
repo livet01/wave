@@ -37,6 +37,13 @@ class Autocomplete_Model extends CI_Model
    		$query = $this->db->get('users');
 		return $query->result();
     }
+    function GetAutocompleteEmb($options = array())
+    {
+	    $this->db->select(array('emb_id','emb_libelle'));
+	    $this->db->like('emb_libelle', $options['keyword'], 'both');
+   		$query = $this->db->get('embenevole');
+		return $query->result();
+    }
     function GetAutocompleteDisque($options = array())
     {
     	if(!has_permission('Wave.Recherche.Disque'))

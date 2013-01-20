@@ -88,7 +88,6 @@ jQuery(document).ready(function($) {
 	}
 	}
 	});
-	$("#email")
 	//Recherche Label (autocompl�tion)
 	$("#diffuseur").autocomplete({
 	source : function(request, response) {
@@ -110,22 +109,30 @@ jQuery(document).ready(function($) {
 	if (ui.item) {
 	$('#diffuseur').val(ui.item.value);
 	}
-	}}).blur(function(){
-	$("#email").val("");
+	}});
+	
+	//Recherche Label (autocompl�tion)
+	$("#emb").autocomplete({
+	source : function(request, response) {
 	$.ajax({
-	url : CI.site_url+'/disque/suggestions_email',
+	url : CI.site_url+'/disque/suggestions_emb',
 	data : {
-	term : $("#diffuseur").val()
+	term : $("#emb").val()
 	},
 	dataType : "json",
 	type : "POST",
 	success : function(data) {
-	$("#email").val(data);
+	response(data);
 	}
-	
 	});
-		
-	});
+	},
+	minLength : 1,
+	delay : 0,
+	select : function(event, ui) {
+	if (ui.item) {
+	$('#emb').val(ui.item.value);
+	}
+	}});
 	});
 	// Fonction d'ajout ou de suppression du "loader"
 	function ajaxBox_loader(pState)

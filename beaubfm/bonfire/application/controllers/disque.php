@@ -409,6 +409,9 @@ class Disque extends Authenticated_Controller {
 		$this -> form_validation -> set_rules('format', '"Format"', 'trim|encode_php_tags|xss_clean');
 		// Vérification du champs écouté par
 		$this -> form_validation -> set_rules('envoiMail', '"Envoyer Mail"', 'trim|encode_php_tags|xss_clean');
+		// Vérification du champs écouté par
+		$this -> form_validation -> set_rules('autoprod', '"Diffuseur"', 'trim|required|encode_php_tags|xss_clean');
+		
 		
 		$emplacement = $this -> rechercheEmplacementByNom($this -> input -> post('emplacement'));
 		$plus = $this -> parametreManager -> select('emb');
@@ -423,8 +426,8 @@ class Disque extends Authenticated_Controller {
 			$this -> form_validation -> set_rules('emb', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[?!&#%a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 			}
 		// Vérifiaction du diffuseur si il y n'est pas auto producteur
-		if ($this -> input -> post('autoprod') != "a")
-			$this -> form_validation -> set_rules('diffuseur', '"Diffuseur"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		if ($this -> input -> post('autoprod') === "b")
+			$this -> form_validation -> set_rules('diffuseur', '"Label"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 
 		// On renvoi le résultats des vérifications
 		return $this -> form_validation -> run();
@@ -861,8 +864,52 @@ class Disque extends Authenticated_Controller {
 		}
 	}
 
+	//
+	// Méthode de suggestion : ajax et auto-completion.
+	//
+	public function verif_artiste() {
+		$this->output->enable_profiler(FALSE);
+		$this->auth->restrict('Wave.Recherche.Disque');
+		$this -> load -> model('index/autocomplete_model');
+		$term = $this -> input -> post('term', TRUE);
 
+		$json_array = array();
+		$rows = $this -> autocomplete_model -> GetAutocompleteArtiste(array('keyword' => $term));
+
+		echo json_encode(array("nom" => $rows[0] -> art_nom));
+	}
 	
+		//
+	// Méthode de suggestion : ajax et auto-completion.
+	//
+	public function verif_ecoute() {
+		$this->output->enable_profiler(FALSE);
+		$this->auth->restrict('Wave.Recherche.Disque');
+		$this -> load -> model('index/autocomplete_model');
+		$term = $this -> input -> post('term', TRUE);
+
+		$json_array = array();
+		$rows = $this -> autocomplete_model -> GetAutocompleteMembre(array('keyword' => $term));
+
+		echo json_encode(array("nom" => $rows[0] -> username));
+	}
+	
+	//
+	// Méthode de suggestion : ajax et auto-completion.
+	//
+	public function verif_artiste_disque() {
+		$this->output->enable_profiler(FALSE);
+		$this->auth->restrict('Wave.Recherche.Disque');
+		$this -> load -> model('index/autocomplete_model');
+		$artiste = $this -> input -> post('artiste', TRUE);
+		$disque = $this -> input -> post('disque', TRUE);
+		$rows = $this -> autocomplete_model -> GetAutocompleteArtiste(array('keyword' => $artiste));
+		if(isset($rows[0]))
+			$art_id = $rows[0]->art_nom;
+		else
+			$art_id = '';
+		echo json_encode(array("couple" => $this -> existeTitreArtiste($disque, $rows[0] -> art_id),"artiste"=> $art_id,"disque"=>$disque));
+	}
 	//
 	// Méthode de suggestion : ajax et auto-completion.
 	//
@@ -907,6 +954,20 @@ class Disque extends Authenticated_Controller {
 		echo json_encode($json_array);
 	}
 
+	
+	//
+	// Méthode de suggestion : ajax et auto-completion.
+	//
+	public function verif_diffuseur() {
+		$this->output->enable_profiler(FALSE);
+		$this->auth->restrict('Wave.Recherche.Disque');
+		$this -> load -> model('index/autocomplete_model');
+		$term = $this -> input -> post('term', TRUE);
+
+		$rows = $this -> autocomplete_model -> GetAutocompleteLabel(array('keyword' => $term));
+
+		echo json_encode(array("nom" => $rows[0] -> username, "email" => $rows[0] -> email));
+	}
 	//
 	// Méthode de suggestion : ajax et auto-completion.
 	//
@@ -928,7 +989,40 @@ class Disque extends Authenticated_Controller {
 
 		echo json_encode($json_array);
 	}
+		//
+	// Méthode de suggestion : ajax et auto-completion.
+	//
+	public function suggestions_emb() {
+		$this->output->enable_profiler(FALSE);
+		$this->auth->restrict('Wave.Recherche.Disque');
+		$this -> load -> model('index/autocomplete_model');
+		$term = $this -> input -> post('term', TRUE);
 
+		$json_array = array();
+		$rows = $this -> autocomplete_model -> GetAutocompleteEmb(array('keyword' => $term));
+		$i = 0;
+		foreach ($rows as $row) {
+			if ($i < 6) {
+				array_push($json_array, array("label" => $row -> emb_libelle));
+			}
+			$i++;
+		}
+
+		echo json_encode($json_array);
+	}
+		//
+	// Méthode de suggestion : ajax et auto-completion.
+	//
+	public function verif_emb() {
+		$this->output->enable_profiler(FALSE);
+		$this->auth->restrict('Wave.Recherche.Disque');
+		$this -> load -> model('index/autocomplete_model');
+		$term = $this -> input -> post('term', TRUE);
+
+		$rows = $this -> autocomplete_model -> GetAutocompleteEmb(array('keyword' => $term));
+
+		echo json_encode(array("nom" => $rows[0] -> emb_libelle));
+	}
 	//
 	// Méthode de suggestion : ajax et auto-completion.
 	//
@@ -941,9 +1035,8 @@ class Disque extends Authenticated_Controller {
 		$json_array = array();
 		$rows = $this -> autocomplete_model -> GetAutocompleteLabel(array('keyword' => $term));
 		if (!empty($rows))
-			echo json_encode($rows[0] -> email);
+			echo json_encode(array("nom" => $rows[0] -> art_nom, "email" => $rows[0] -> email));
 	}
-
 	function supprimer($g_nb_disques = 1, $affichage = 0) {
 		$this->auth->restrict('Wave.Supprimer.Disque');
 
@@ -1006,7 +1099,7 @@ class Disque extends Authenticated_Controller {
 			if($ech == $ttx)
 				echo ($ttx > 1) ? Template::set_message('Tous les disques n\'ont pas été correctement supprimé', 'error') : Template::set_message('Le disque n\'a pas été correctement supprimé', 'error');
 			else{
-				Template::set_message($suc.' disque(s) ont été cont été correctement supprimé', 'success');
+				Template::set_message($suc.' disque(s) ont été correctement supprimé', 'success');
 			}
 		}
 		Template::redirect('index');

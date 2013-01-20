@@ -17,9 +17,7 @@
  ?>
 <table class="table table-hover" id="table-disque">
 	<caption>
-		<div class="page-header">
 		<h2 style="padding-top: 20px">Liste des disques</h2>
-		</div>
 	</caption>
 
 	<tbody id="disque">
