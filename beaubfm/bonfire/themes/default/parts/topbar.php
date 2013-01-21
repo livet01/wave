@@ -28,6 +28,9 @@
 							<li>
 								<?php echo anchor(SITE_AREA, 'Panel d\'administration'); ?>
 							</li>
+							<li>
+								<?php echo anchor('plan', 'Plan du site'); ?>
+							</li>
 
 							<li class="divider"></li>
 							<?php endif; ?>

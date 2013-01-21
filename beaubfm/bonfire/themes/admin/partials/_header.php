@@ -93,6 +93,7 @@
 													<?php e($current_user->email) ?>
 													<br/>
 												</p>
+												<a href="<?php echo site_url('plan') ?>">Plan du site</a>
 												<a href="<?php echo site_url(SITE_AREA .'/settings/users/edit') ?>"><?php echo lang('bf_user_settings')?></a>
 												<a href="<?php echo site_url('logout'); ?>"><?php echo lang('bf_action_logout')?></a>
 											</div>
