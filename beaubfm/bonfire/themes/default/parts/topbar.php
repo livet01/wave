@@ -28,12 +28,11 @@
 							<li>
 								<?php echo anchor(SITE_AREA, 'Panel d\'administration'); ?>
 							</li>
+							<?php endif; ?>
 							<li>
 								<?php echo anchor('plan', 'Plan du site'); ?>
 							</li>
-
 							<li class="divider"></li>
-							<?php endif; ?>
 							<li>
 								<a href="<?php echo site_url('users/profile');?>">
 									<?php echo lang('bf_user_settings') ?>
