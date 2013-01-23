@@ -18,18 +18,6 @@ class Embenevole_model extends CI_Model {
 							->get()
 							->row_array();
 	}
-	
-	function insert($nom,$radio) {
-		$last_id = $this->db->count_all_results($this->table) + 1;
-		
-		$resultat = $this->db->set('emb_id', $last_id)
-						->set('emb_libelle', $nom)
-						->set('rad_id', $radio)
-						->insert($this->table);
-		if(!$resultat) {
-			throw new Exception("L'emission bénévole n'a pas été ajouté", 1);
-		}
-		return $last_id;
-	}
+
 }
 

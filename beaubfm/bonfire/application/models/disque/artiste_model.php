@@ -23,18 +23,7 @@ class Artiste_model extends CI_Model {
 						->where($where)
 						->count_all_results();
 	}
-	
-	function insert($nom,$radio,$cat) 
-	{
-		$resultat = $this->db->set('art_nom', $nom)
-							->set('rad_id', 1)
-							->insert($this->table);
-						
-		if($resultat)
-			return $this->db->insert_id();
-		else
-			return false;
-	}
+
 	
 	function delete ($artiste)
 	{		

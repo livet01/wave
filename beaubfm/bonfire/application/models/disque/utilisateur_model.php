@@ -18,22 +18,7 @@ class Utilisateur_model extends CI_Model {
 							->row_array();
 	}
 	
-	function insert($id,$login,$mdp,$role_id,$email='') {
-		$pass=$this->hash_password($mdp);
-		
-		
-		$resultat = $this->db->set('username', $login)
-						->set('password_hash', $pass[0])
-						->set('email',$email)
-						->set('rad_id',1)
-						->set('role_id',$role_id)
-						->set('salt',$pass[1])
-						->insert($this->table1);
-		if(!$resultat) {
-			throw new Exception("L'utilisateur n'a pas été ajouté", 1);
-		}
-		return $this->db->insert_id();
-	}
+
 	
 	//--------------------------------------------------------------------
 

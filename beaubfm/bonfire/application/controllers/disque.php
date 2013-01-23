@@ -28,7 +28,7 @@ class Disque extends Authenticated_Controller {
 	private $col5;
 	private $col6;
 	private $colonnes;
-
+	private $bdd = array();
 	//
 	// Constructeur
 	//
@@ -302,7 +302,7 @@ class Disque extends Authenticated_Controller {
 			else {
 				$emb_id = $tab -> emb_libelle;
 			}
-			$json_array[] = array("dis_id" => $tab -> dis_id, "emp_id" => $tab -> emp_id, "dis_envoi_ok" => $tab -> dis_envoi_ok, "sty_libelle" => $tab -> sty_libelle, "mail" => $tab -> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
+			$json_array[] = array("dis_id" => $tab -> dis_id, "emp_id" => $tab -> emp_id, "dis_envoi_ok" => $tab -> dis_envoi_ok, "sty_couleur" => $tab -> sty_couleur, "mail" => $tab -> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
 		}
 		if (!empty($json_array[0])) {
 			$disque = $json_array[0];
@@ -341,8 +341,23 @@ class Disque extends Authenticated_Controller {
 	//
 	public function ajouter() {
 		$this->auth->restrict('Wave.Ajouter.Disque');
-		// Initialisation des données a envoyer en bd
-		$data = array('erreur' => "", 'reussi' => "");
+
+		if (!$this -> formulaire_null()) {
+			// Formulaire envoyé
+			$is_erreur = $this -> ajouter_disque();
+			if (empty($is_erreur)) {
+				Template::set_message('Le disque a bien été ajouté', 'success');
+				if (file_exists('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username))
+					delete_files('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username);
+				Template::redirect('disque');
+			} else {
+				Template::set_message($is_erreur, 'error');
+			}
+		} else if (file_exists('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username)) {
+			$this -> load -> helper('file');
+			$sauv = read_file('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username);
+			$data['sauv'] = unserialize($sauv);
+		}
 
 		// Chargement des formats
 		$formats = $this -> parametreManager -> select('format');
@@ -369,23 +384,7 @@ class Disque extends Authenticated_Controller {
 		foreach ($styles as $style) {
 			array_push($data['styles'], array("couleur" => $style -> sty_couleur, "libelle" => $style -> sty_libelle));
 		}
-
-		if (!$this -> formulaire_null()) {
-			// Formulaire envoyé
-			$is_erreur = $this -> ajouter_disque();
-			if (empty($is_erreur)) {
-				Template::set_message('Le disque a bien été ajouté', 'success');
-				if (file_exists('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username))
-					delete_files('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username);
-			} else {
-				Template::set_message($is_erreur, 'error');
-			}
-		} else if (file_exists('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username)) {
-			$this -> load -> helper('file');
-			$sauv = read_file('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username);
-			$data['sauv'] = unserialize($sauv);
-		}
-
+	
 		Template::set('data', $data);
 		Assets::add_js(js_url("ajoutfiche"));
 		Template::set_view('disque/ajouter_fiche');
@@ -394,22 +393,22 @@ class Disque extends Authenticated_Controller {
 
 	private function verification() {
 		// Vérification du titre
-		$this -> form_validation -> set_rules('titre', '"Titre"', 'trim|required|min_length[1]|max_length[150]|regex_match["^[?!&#%a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		$this -> form_validation -> set_rules('titre', '"Titre"', 'trim|required|min_length[1]|max_length[150]|regex_match["^[?!&#%a-z\(\)A-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 		// Vérification de l'artiste
-		$this -> form_validation -> set_rules('artiste', '"Artiste"', 'trim|required|min_length[1]|max_length[150]|regex_match["^[?!&#%a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		$this -> form_validation -> set_rules('artiste', '"Artiste"', 'trim|required|min_length[1]|max_length[150]|regex_match["^[?!&\(\)#%a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 		// Vérification de l'email
 		$this -> form_validation -> set_rules('email', '"Email"', 'trim|min_length[5]|max_length[50]|valid_email|xss_clean');
 		// Vérification du champs écouté par
-		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|min_length[5]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
-		// Vérification du champs écouté par
+		$this -> form_validation -> set_rules('listenBy', '"Ecouté par"', 'trim|min_length[1]|max_length[52]|regex_match["^[?!&%#a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+		// Vérification du champs emplacement
 		$this -> form_validation -> set_rules('emplacement', '"Emplacement"', 'trim|required|encode_php_tags|xss_clean');
-		// Vérification du champs écouté par
+		// Vérification du champs style
 		$this -> form_validation -> set_rules('style', '"Style"', 'trim|encode_php_tags|xss_clean');
-		// Vérification du champs écouté par
+		// Vérification du champs format
 		$this -> form_validation -> set_rules('format', '"Format"', 'trim|encode_php_tags|xss_clean');
-		// Vérification du champs écouté par
+		// Vérification du champs envoyer mail
 		$this -> form_validation -> set_rules('envoiMail', '"Envoyer Mail"', 'trim|encode_php_tags|xss_clean');
-		// Vérification du champs écouté par
+		// Vérification du champs autoprod
 		$this -> form_validation -> set_rules('autoprod', '"Diffuseur"', 'trim|required|encode_php_tags|xss_clean');
 		
 		
@@ -423,7 +422,7 @@ class Disque extends Authenticated_Controller {
 
 		// Vérifiaction de l'existance de l'emission Bénévole si Emission Bénévole est sélectionné
 		if ($emplacement == $plus['param_valeur']) {
-			$this -> form_validation -> set_rules('emb', '"Emission"', 'trim|required|min_length[5]|max_length[52]|regex_match["^[?!&#%a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
+			$this -> form_validation -> set_rules('emb', '"Emission"', 'trim|required|min_length[1]|max_length[52]|regex_match["^[?!&#%a-zA-Z0-9\\s-_\']*$"]|encode_php_tags|xss_clean');
 			}
 		// Vérifiaction du diffuseur si il y n'est pas auto producteur
 		if ($this -> input -> post('autoprod') === "b")
@@ -435,10 +434,9 @@ class Disque extends Authenticated_Controller {
 	}
 
 	private function attribution($unique = TRUE) {
-		$this -> db -> trans_begin();
-
-		$est_auto_production = $this -> input -> post('autoprod') == "a";
+		$est_auto_production = $this -> input -> post('autoprod') === "a";
 		try {
+				
 			$art_id = $this -> rechercheArtisteByNom($this -> input -> post('artiste'), $this -> current_user -> rad_id, ($est_auto_production) ? 5 : 3);
 
 			// Si le titre et l'artiste ne sont pas présent en base de données.
@@ -478,52 +476,24 @@ class Disque extends Authenticated_Controller {
 					$style = ''; }
 				$date_dis_ajout = date("d/m/Y");
 				$ecoutePar = $this -> input -> post('listenBy');
-								
+				
 				//On récupère l'emplacement sélectionné dans le formulaire pour personnaliser le corps du mail
 				$empChoisi = $this -> input -> post('emplacement');
 				$emb_bev_lib = '';
-				if ($empChoisi == 'Emission spéciale')
+				if ($this -> get_emp_id() == $plus['param_valeur'])
 					$emb_bev_lib = $this -> input -> post('emb'); 
 				$messLib = $this -> emplacementManager -> select('emp_mail', array('emp_libelle' => $empChoisi));
 				//RETOUR FONCTION CUSTOMIZE EMAIL
 				$messModifie = $this->customizeEmail($messLib['emp_mail'], $this->get_dis_libelle(), $artiste, $dif, $style, $empChoisi, $date_dis_ajout, $ecoutePar, $est_auto_production, $emb_bev_lib);
 				
 				//On vérifie si la case 'Envoyer Mail' a été cochée pour procéder à l'envoi
-				if ($this -> input -> post('envoiMail') == "0" && !empty($email)) {
+				if ($this -> input -> post('envoiMail') == "1" && !empty($email)) {
 
 					if (!empty($messModifie)) {
 						$message = '<p>'.$messModifie.'</p>';
-					} else {
-						$message = '<h3>Problème d\'affichage du contenu de l\'email...</h3>';
-					}
 					
-					//Personnalisation de l'objet de l'email
-					switch ($empChoisi) {
-						case 'En attente':
-							$objet = 'Accusé de réception du C.D. '.$this->get_dis_libelle().' de '.$artiste;
-							break;
-						
-						case 'Airplay':
-							$objet = 'Intégration du C.D. '.$this->get_dis_libelle().' dans la programmation générale';
-							break;
+					$objet = '[Beaub\'FM] Traitement du disque : '.$this->get_dis_libelle();
 							
-						case 'Archivage':
-							$objet = 'Archivage du C.D. '.$this->get_dis_libelle().' de '.$artiste;
-							break;
-						
-						case 'Refusé':
-							$objet = 'Non intégration du C.D. '.$this->get_dis_libelle().' dans la programmation générale';
-							break;	
-						
-						case 'Emission spéciale':
-							$objet = 'Transfert du C.D. '.$this->get_dis_libelle().' auprès d\'une émission spéciale';
-							break;
-							
-						default:
-							$objet = 'Traitement du C.D. '.$this->get_dis_libelle().' de '.$artiste.'dans la programmation générale';
-							break;
-					}
-
 					$data = array(
 						'to' => $email, 
 						'subject' => $objet,
@@ -531,6 +501,7 @@ class Disque extends Authenticated_Controller {
 
 					$this -> emailer -> send($data);
 					$this -> set_dis_envoi_ok(1);
+					}
 
 				} else {
 					$this -> set_dis_envoi_ok(0);
@@ -542,8 +513,9 @@ class Disque extends Authenticated_Controller {
 				} else {
 					throw new Exception("Le format n'est pas valide");
 				}
-
+				if ($this->input->post('listenBy')!= '') {
 				$this -> set_mem_id($this -> rechercherEcouteParByNom($this -> input -> post('listenBy')));
+				}
 				if ($this->input->post('style')!= '') {
 				$this -> set_sty_id($this -> rechercherStyleByNom($this -> input -> post('style')));
 				}
@@ -570,36 +542,96 @@ class Disque extends Authenticated_Controller {
 							break;
 					}
 					$i++;
+					
+					// Chargement du corps mail
+					$corps_mail = $this -> parametreManager -> select('mail-inscription');
+					$corps_mail = $corps_mail['param_valeur'];
+					
+					if(empty($corps_mail))
+						throw new Exception("Erreur chargement corps mail inscription");
+						
+					// Si l'utilisateur n'existe pas
+					if($this->get_dif_id() === -1){
+						if($est_auto_production)
+							$login = $this->input->post('artiste');
+						else
+							$login = $this->input->post('diffuseur');
+						$objet = '[Beaub\'FM] Inscription ';	
+						$message = '<p>'.$corps_mail.'</p>
+						<p>Nom d\'utilisateur : '.$login.'<br>
+						Mot de passe : '.$this->generatePassword(6).'</p>
+						<p>Ceci est un email automatique, merci de ne pas y répondre.</p>
+						';	
+						$data = array(
+							'to' => $email, 
+							'subject' => $objet,
+							'message' => $message);
+	
+						$this -> emailer -> send($data);
+					}
 				}
 
 			} else {// Le titre, artiste est déja en base de données
 				throw new Exception("Le disque $this->dis_libelle est déjà présent dans la base de donnée.");
 			}
-			$this -> db -> trans_commit();
 		} catch(Exception $e) {
-			$this -> db -> trans_rollback();
 			throw new Exception($e -> getMessage());
 		}
 
 	}
-
+	
+	private function generatePassword($length=8, $possible='$=@#23456789bcdfghjkmnpqrstvwxyz')
+	{
+	    $password = '';
+	
+	    $possible_length = strlen($possible) - 1;
+	
+	    #
+	    # add random characters to $password for $length
+	    #
+	
+	    while ($length--)
+	    {
+	        #
+	        # pick a random character from the possible ones
+	        #
+	
+	        $except = substr($password, -$possible_length / 2);
+	
+	        for ($n = 0 ; $n < 5 ; $n++)
+	        {
+	            $char = $possible{mt_rand(0, $possible_length)};
+	
+	            #
+	            # we don't want this character if it's already in the password
+	            # unless it's far enough (half of our possible length).
+	            # note: we have 4 tries to find a suitable one.
+	            #
+	
+	            if (strpos($except, $char) === false)
+	            {
+	                break;
+	            }
+	        }
+	
+	        $password .= $char;
+	    }
+	
+	    return $password;
+	}
 	public function ajouter_disque() {
 		
 		$this->auth->restrict('Wave.Ajouter.Disque');
 		$erreur = "";
-		if (!$this -> formulaire_null()) {
-			if ($this -> verification()) {
-				try {
-					$this -> attribution();
-					$this -> addBDD();
-				} catch (Exception $e) {
-					$erreur = $e -> getMessage();
-				}
-			} else {
-				$erreur = validation_errors('&nbsp;', '&nbsp;');
+		if ($this -> verification()) {
+			try {
+				$this -> attribution();
+				$this -> addBDD();
+			} catch (Exception $e) {
+				$erreur = $e -> getMessage();
 			}
 		} else {
-			$erreur = "Le formulaire envoyé est nul.";
+			$erreur = validation_errors('&nbsp;', '&nbsp;');
 		}
 		return $erreur;
 	}
@@ -665,10 +697,22 @@ class Disque extends Authenticated_Controller {
 		$data['dis_format'] = $this -> get_dis_format();
 		$data['uti_id_ecoute'] = $this -> get_mem_id();
 		$data['art_id'] = $this -> get_art_id();
+		if($data['art_id']==-1) {
+			if(isset($this->bdd['artiste']))
+				$data['art_id'] = array('insert'=>true,'data'=>$this->bdd['artiste']);
+		}
 		$data['dif_id'] = $this -> get_dif_id();
+		if($data['dif_id']==-1) {
+			if(isset($this->bdd['diffuseur']))
+				$data['dif_id'] = array('insert'=>true,'data'=>$this->bdd['diffuseur']);
+		}
 		$data['dis_envoi_ok'] = $this -> get_dis_envoi_ok();
 		$data['emp_id'] = $this -> get_emp_id();
 		$data['emb_id'] = $this -> get_emb_id();
+		if($data['emb_id']==-1) {
+			if(isset($this->bdd['emb']))
+				$data['emb_id'] = array('insert'=>true,'data'=>$this->bdd['emb']);
+		}
 		$data['sty_id'] = $this -> get_sty_id();
 		$i = 1;
 		foreach ($this->colonnes as $colonne) {
@@ -716,11 +760,10 @@ class Disque extends Authenticated_Controller {
 		$this->auth->restrict('Wave.Ajouter.Disque');
 		$artId = $this -> artisteManager -> select('art_id', array('art_nom' => $nom));
 		if (empty($artId)) {
-			if ($insertion)
-				$artId = (int)$this -> artisteManager -> insert($nom, $radio, $categorie);
-			else {
+			if ($insertion) {
+				$this->bdd['artiste'] = array('nom'=>$nom,'radio'=>$radio,'categorie'=>$categorie);
 				$artId = -1;
-			}
+			}	
 		} else
 			$artId = $artId["art_id"];
 		return $artId;
@@ -730,13 +773,8 @@ class Disque extends Authenticated_Controller {
 		$this->auth->restrict('Wave.Ajouter.Disque');
 		$difId = $this -> diffuseurManager -> select('users.id', array('users.username' => $nom, ));
 		if (empty($difId)) {
-			$this -> db -> trans_begin();
-			try {
-				$difId = (int)$this -> utilisateurManager -> insert(null, $nom, $nom, 4, $email);
-				$this -> db -> trans_commit();
-			} catch(Exception $e) {
-				$this -> db -> trans_rollback();
-			}
+			$this->bdd['diffuseur'] = array('nom'=>$nom,'radio'=>$radio,'categorie'=>$categorie,'email'=>$email);
+			$difId = -1;
 		} else
 			$difId = $difId["id"];
 		return $difId;
@@ -746,7 +784,8 @@ class Disque extends Authenticated_Controller {
 		$this->auth->restrict('Wave.Ajouter.Disque');
 		$id = $this -> embManager -> select('emb_id', array('emb_libelle' => $nom));
 		if (empty($id)) {
-			$id = (int)$this -> embManager -> insert($nom, $radio);
+			$this->bdd['emb'] = array('nom'=>$nom,'radio'=>$radio);
+			$id = -1;
 		} else
 			$id = $id["emb_id"];
 		return $id;
@@ -761,7 +800,6 @@ class Disque extends Authenticated_Controller {
 			$embId = $embId["emb_id"];
 		}
 		return $embId;
-
 	}
 
 	public function rechercheEmplacementByNom($nom) {
@@ -780,7 +818,6 @@ class Disque extends Authenticated_Controller {
 		$this->auth->restrict('Wave.Ajouter.Disque');
 		$styleId = $this -> styleManager -> select('sty_id', array('sty_couleur' => $nom));
 		if (empty($styleId)) {
-
 			throw new Exception("Le style n'existe pas.");
 		} else {
 
@@ -804,7 +841,6 @@ class Disque extends Authenticated_Controller {
 		$this->auth->restrict('Wave.Ajouter.Disque');
 		$styleLib = $this -> styleManager -> select('sty_libelle', array('sty_couleur' => $nom));
 		if (empty($styleLib)) {
-
 			throw new Exception("Le style n'existe pas.");
 		} else {
 
@@ -854,10 +890,10 @@ class Disque extends Authenticated_Controller {
 		$emplacement = $this -> input -> post('emplacement');
 		$ecoute = $this -> input -> post('listenBy');
 		$diffuseur = $this -> input -> post('diffuseur');
+		$autoprod = $this -> input -> post('autoprod');
 		$email = $this -> input -> post('email');
 
-		if (empty($titre) && empty($artiste) && empty($format) && empty($style) && empty($emplacement) && empty($ecoute) && empty($diffuseur) && empty($email)) {
-
+		if (empty($titre) && empty($autoprod) && empty($artiste) && empty($format) && empty($style) && empty($emplacement) && empty($ecoute) && empty($diffuseur) && empty($email)) {
 			return true;
 		} else {
 			return false;
@@ -1160,7 +1196,29 @@ class Disque extends Authenticated_Controller {
 		}
 		return $messModifie;
 	}
-
+	
+	//On cherche dans cette fonction les mots clés relatifs aux informations d'un album pour les remplacer par les informations de l'album entré en base
+	public function customizeEmailJS($messLib) {
+		$messModifie = str_replace('%titre%', '<span id="mail-titre" ></span>', $messLib);
+		$messModifie = str_replace('%artiste%', '<span id="mail-artiste" ></span>', $messModifie);
+		$messModifie = str_replace('%style%', '<span id="mail-style" ></span>', $messModifie);
+		$messModifie = str_replace('%emplacement%', '<span id="mail-emplacement" ></span>', $messModifie);
+		$messModifie = str_replace('%d_ajout%', '<span id="mail-d-ajout" ></span>', $messModifie);
+		$messModifie = str_replace('%diffuseur%', '<span id="mail-diffuseur" ></span>', $messModifie);
+		$messModifie = str_replace('%e_par%', '<span id="mail-e-par" ></span>', $messModifie);
+		$messModifie = str_replace('%emb%', '<span id="mail-emb" ></span>', $messModifie);
+		return $messModifie;
+	}
+	
+	public function apercu() {
+		$messLib = $this -> emplacementManager -> select(array('emp_mail','emp_id'), array('emp_libelle' => $this->input->post('emplacement')));
+		//RETOUR FONCTION CUSTOMIZE EMAIL
+		$messModifie = $this->customizeEmailJS($messLib['emp_mail']);
+		if(empty($messModifie))
+			die('Il n\'y a pas de mail défini pour cette emplacement. Pour en définir un, allez <a href="'.site_url("admin/content/emplacement/edit/".$messLib['emp_id']).'">ici</a>.');
+		else
+			die($messModifie);
+	}
 }
 ?>
 
