@@ -162,7 +162,7 @@ class Info_Disque_Model extends CI_Model
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
 						->join('style','disque.sty_id=style.sty_id', 'LEFT')
-						->where('emplacement.emp_id !=',0)
+						->where('emplacement.emp_id !=',5)
 						->order_by('dis_libelle', 'asc'); //-> limit($nb, $debut);
 		$query = $this->db->get('disque');
 		return $query->result();
@@ -185,7 +185,7 @@ class Info_Disque_Model extends CI_Model
 						->join('users AS u1', 'disque.dif_id=u1.id', 'LEFT')
 						->join('users AS u2','disque.uti_id_ecoute=u2.id', 'LEFT')
 						->join('style','disque.sty_id=style.sty_id', 'LEFT')
-						->where('emplacement.emp_id',0)
+						->where('emplacement.emp_id',5)
 						->order_by('dis_date_ajout', 'asc'); //-> limit($nb, $debut);
 		$query = $this->db->get('disque');
 		return $query->result();
