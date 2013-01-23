@@ -62,7 +62,7 @@ class Settings extends Admin_Controller
 	 */
 	public function index($offset=0)
 	{
-		$this->auth->restrict('Bonfire.Users.Manage');
+		$this->auth->restrict('Bonfire.Users.View');
 
 		$roles = $this->role_model->select('role_id, role_name')->where('deleted', 0)->find_all();
 		$ordered_roles = array();
@@ -280,7 +280,7 @@ class Settings extends Admin_Controller
 
 		if ($user_id != $this->current_user->id)
 		{
-			$this->auth->restrict('Bonfire.Users.Manage');
+			$this->auth->restrict('Bonfire.Users.View');
 		}
 
 
@@ -292,9 +292,12 @@ class Settings extends Admin_Controller
 
 		if ($this->input->post('submit'))
 		{
+			if($user->role_id!=='4'){
+				$this->auth->restrict('Bonfire.Users.Manage');
+			}
 			if ($this->save_user('update', $user_id, $meta_fields, $user->role_name))
 			{
-
+				
 				$meta_data = array();
 				foreach ($meta_fields as $field)
 				{

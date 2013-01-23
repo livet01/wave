@@ -70,7 +70,14 @@
 				</td>
 				<td><?php echo $user->id ?></td>
 				<td>
-					<a href="<?php echo site_url(SITE_AREA .'/settings/users/edit/'. $user->id); ?>"><?php echo $user->username; ?></a>
+					<?php if($user->role_id==='4'){ ?>
+						<a href="<?php echo site_url(SITE_AREA .'/settings/users/edit/'. $user->id); ?>"><?php echo $user->username; ?></a>						
+					<?php } else {
+						 	if($this->auth->has_permission('Bonfire.Users.Manage')){ ?>
+								<a href="<?php echo site_url(SITE_AREA .'/settings/users/edit/'. $user->id); ?>"><?php echo $user->username; ?></a>
+							<?php } else {
+								echo $user->username;
+					} } ?>					
 					<?php if ($user->banned) echo '<span class="label label-warning">Banned</span>'; ?>
 				</td>
 				<td><?php echo $user->display_name ?></td>
