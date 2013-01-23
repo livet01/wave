@@ -59,6 +59,22 @@
 			Permet de gérer les données possibles pour les disques.
 		</p>
 		<ul>
+			<?php if ($this->auth->has_permission('Artiste.Content.View')) : ?>
+			<li>
+				<h4>Artiste</h4>
+				<p>
+					Permet de modifier les artites présents dans la base de données.
+				</p>
+			</li>
+			<?php endif; ?>
+			<?php if ($this->auth->has_permission('Emission_Benevole.Content.View')) : ?>
+			<li>
+				<h4>Emission Bénévole</h4>
+				<p>
+					Permet de modifier les émissions bénévoles dans la base de données.
+				</p>
+			</li>
+			<?php endif; ?>
 			<?php if ($this->auth->has_permission('Emplacement.Content.View')) : ?>
 			<li>
 				<h4>Emplacement</h4>
