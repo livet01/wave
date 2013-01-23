@@ -3,7 +3,7 @@
 </div>
 <?php if ($this->auth->has_permission('Site.Signin.Allow')) : ?>
 <div class="page-header">
-	<h2>Panel principal</h2>
+	<h2>Gestion discographique</h2>
 </div>
 <ul>
 	<li>
@@ -49,7 +49,7 @@
 <?php if ($this->auth->has_permission('Site.Content.View')) : ?>
 <div class="page-header"></div>
 <div class="page-header">
-	<h2>Panel d'administration</h2>
+	<h2>Panneau d'administration</h2>
 </div>
 <ul>
 	<?php if ($this->auth->has_permission('Site.Content.View')) : ?>

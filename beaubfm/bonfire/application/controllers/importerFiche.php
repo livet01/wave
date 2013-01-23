@@ -166,7 +166,19 @@ class ImporterFiche extends Authenticated_Controller{
 			$keyEmBev = "Emission Bénévole";
 			$keyGenre = "Style";
 			$listeKeys = array($keyTitre, $keyArtiste, $keyDiffuseur, $keyFormat, $keyEmplacement, $keyDateAjout, $keyEcoutePar, $keyMail, $keyEmBev, $keyGenre);
-			//sinon il provient de la base de gcstar
+			
+			// Chargement des colonnes supplémentaires en base			
+			$this -> load -> model('parametre_model', 'parametreManager');
+			$colonnes=$this -> parametreManager->select('colonnes');
+			if($colonnes['param_valeur']!=''){
+				$colonnes=explode(";", $colonnes['param_valeur']);
+				foreach($colonnes as $colonne) {
+					array_push($listeKeys,$colonne);
+					array_push($listeKeysFinal,$colonne);
+				}
+			}
+				
+		//sinon il provient de la base de gcstar
 		} else {
 			$keyDiffuseur = "Label";
 			$keyEcoutePar = "Ecoute par";
@@ -189,6 +201,7 @@ class ImporterFiche extends Authenticated_Controller{
 				$j++;
 			}
 		}
+		
 		return $arrayEpure;
 	}
 
@@ -461,6 +474,39 @@ class ImporterFiche extends Authenticated_Controller{
 				$disqueControlleur -> set_emp_id($emp_id);
 				$disqueControlleur -> set_emb_id($emb_id);
 				$disqueControlleur -> set_sty_id($style_id);
+				
+				// Chargement des colonnes supplémentaires en base			
+				$this -> load -> model('parametre_model', 'parametreManager');
+				$colonnes=$this -> parametreManager->select('colonnes');
+				if($colonnes['param_valeur']!=''){
+					$colonnes=explode(";", $colonnes['param_valeur']);
+					$i=1;
+					foreach ($colonnes as $colonne) {
+						if(isset($disque[$colonne])){
+							switch ($i) {
+								case 1 :
+									$disqueControlleur -> set_col1($disque[$colonne]);
+									break;
+								case 2 :
+									$disqueControlleur -> set_col2($disque[$colonne]);
+									break;
+								case 3 :
+									$disqueControlleur -> set_col3($disque[$colonne]);
+									break;
+								case 4 :
+									$disqueControlleur -> set_col4($disque[$colonne]);
+									break;
+								case 5 :
+									$disqueControlleur -> set_col5($disque[$colonne]);
+									break;
+								case 6 :
+									$disqueControlleur -> set_col6($disque[$colonne]);
+									break;
+							}
+						}
+						$i++;
+					}
+				}
 				
 				try {
 					$disqueControlleur -> addBDD();
