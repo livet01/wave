@@ -436,10 +436,7 @@ class ImporterFiche extends Authenticated_Controller{
 
 			//Artiste
 			if($valide!==FALSE){
-				$art_id = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $this->current_user->rad_id, $cat_id);
-				if($art_id == -1){
-					$valide = FALSE;
-				}			
+				$art_id = $disqueControlleur -> rechercheArtisteByNom($disque['Artiste'], $this->current_user->rad_id, $cat_id);		
 				if (!$disqueControlleur -> existeTitreArtiste($disque['Titre'], $art_id)) {
 					try {
 						//Diffuseur
