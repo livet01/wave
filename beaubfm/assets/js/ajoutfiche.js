@@ -2,17 +2,31 @@ jQuery(function($){
 	$('#sauvegarder-btn').click(function(){
 		$('#fiche').attr("action",CI.site_url+"/disque/sauvegarde").submit();
 	});
+	$('#apercu-mail>a').click(function(){
+		$.ajax({
+			url :CI.site_url+"/disque/apercu",
+			data : { emplacement : $('input[name="emplacement"]:checked').val()},
+			type : "POST",
+			success : function(data) {
+		  		var body = $('#apercu').find('.modal-body');
+		  		body.html('').html(data);
+		  		body.find('#mail-titre').html($('input[name="titre"]').val());
+		  		body.find('#mail-artiste').html($('input[name="artiste"]').val());
+		  		body.find('#mail-style').html($('input[name="style"]:checked').val());
+		  		body.find('#mail-empacement').html($('input[name="style"]:checked').val());
+		  		body.find('#mail-d-ajout').html( new Date());
+		  		if($('input[name="autoprod"]:checked').val() == "a")
+		  			body.find('#mail-diffuseur').html("(AutoProduction)");
+		  		else
+		  			body.find('#mail-diffuseur').html($('input[name="diffuseur"]').val());
+		  		body.find('#mail-artiste').html($('input[name="listenBy"]').val());
+		  		body.find('#mail-emb').html($('input[name="emb"]').val());
+		  		
+		  		$('#apercu').modal();
+			}
+		});
+	});
 });
-
-function GereControle(Controleur, Controle, Masquer) {
-	var objControleur = document.getElementById(Controleur);
-	var objControle = document.getElementById(Controle);
-	
-	if (Masquer=='1')
-		objControle.style.visibility=(objControleur.checked==true)?'hidden':'visible';	
-	else
-		objControle.disabled=(objControleur.checked==true)?true:false;
-}
 
 function ArtisteChange() {
 	$.ajax({
@@ -64,9 +78,7 @@ function LabelChange() {
 						else {
 							$('#lab-help').removeAttr('class','label label-info').attr('class','label label-success').html('').html('Label trouvé');
 						}
-						if(data.email) {
-							$('#email').val(data.email).attr('disabled','disabled');
-						}
+						$('#email').val(data.email).attr('disabled','disabled');
 					}
 					else {
 						if($('input[name=autoprod]:checked').val() == 'a') {

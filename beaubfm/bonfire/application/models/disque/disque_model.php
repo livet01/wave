@@ -42,13 +42,13 @@ class Disque_model extends CI_Model {
 			}
 			if(is_array($data['dif_id'])) {
 				if($data['dif_id']['insert']) {
-					$pass=$this->hash_password($data['dif_id']['data']['nom']);
+					$pass=$this->hash_password($data['dif_id']['data']['mdp']);
 					$resultat = $this->db
 							->set('username', $data['dif_id']['data']['nom'])
 							->set('password_hash', $pass[0])
 							->set('email',$data['dif_id']['data']['email'])
 							->set('rad_id',$data['dif_id']['data']['radio'])
-							->set('role_id',$data['dif_id']['data']['categorie'])
+							->set('role_id',4)
 							->set('salt',$pass[1])
 							->insert('users'); 
 					if($resultat)

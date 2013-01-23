@@ -436,7 +436,6 @@ class Disque extends Authenticated_Controller {
 	private function attribution($unique = TRUE) {
 		$est_auto_production = $this -> input -> post('autoprod') === "a";
 		try {
-				
 			$art_id = $this -> rechercheArtisteByNom($this -> input -> post('artiste'), $this -> current_user -> rad_id, ($est_auto_production) ? 5 : 3);
 
 			// Si le titre et l'artiste ne sont pas présent en base de données.
@@ -556,10 +555,13 @@ class Disque extends Authenticated_Controller {
 							$login = $this->input->post('artiste');
 						else
 							$login = $this->input->post('diffuseur');
+						
+						$mdp = $this->generatePassword(6);
+						$this->bdd['diffuseur']['mdp'] = $mdp;
 						$objet = '[Beaub\'FM] Inscription ';	
 						$message = '<p>'.$corps_mail.'</p>
 						<p>Nom d\'utilisateur : '.$login.'<br>
-						Mot de passe : '.$this->generatePassword(6).'</p>
+						Mot de passe : '.$mdp.'</p>
 						<p>Ceci est un email automatique, merci de ne pas y répondre.</p>
 						';	
 						$data = array(
@@ -580,7 +582,7 @@ class Disque extends Authenticated_Controller {
 
 	}
 	
-	private function generatePassword($length=8, $possible='$=@#23456789bcdfghjkmnpqrstvwxyz')
+	private function generatePassword($length=8, $possible='23456789bcdfghjkmnpqrstvwxyz')
 	{
 	    $password = '';
 	
@@ -923,7 +925,7 @@ class Disque extends Authenticated_Controller {
 		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
-
+		
 		$json_array = array();
 		$rows = $this -> autocomplete_model -> GetAutocompleteMembre(array('keyword' => $term));
 
@@ -999,9 +1001,8 @@ class Disque extends Authenticated_Controller {
 		$this->auth->restrict('Wave.Recherche.Disque');
 		$this -> load -> model('index/autocomplete_model');
 		$term = $this -> input -> post('term', TRUE);
-
+		
 		$rows = $this -> autocomplete_model -> GetAutocompleteLabel(array('keyword' => $term));
-
 		echo json_encode(array("nom" => $rows[0] -> username, "email" => $rows[0] -> email));
 	}
 	//

@@ -32,8 +32,7 @@ class Autocomplete_Model extends CI_Model
     {
 	    $this->db->select(array('id','username'));
 	    $this->db->like('username', $options['keyword'], 'both');
-		$this->db->where('role_id',1);
-		$this->db->or_where('role_id',2);
+		$this->db->where_in('role_id',array(1,2));
    		$query = $this->db->get('users');
 		return $query->result();
     }
