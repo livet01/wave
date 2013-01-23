@@ -182,7 +182,7 @@ class MY_Form_validation extends CI_Form_validation
 	 */
 	function alpha_extra($str)
 	{
-		$this->CI->form_validation->set_message('alpha_extra', 'The %s field may only contain alpha-numeric characters, spaces, periods, underscores, and dashes.');
+		$this->CI->form_validation->set_message('alpha_extra', 'Le champ <em>%s</em> ne peut contenir que des caract&egrave;res alpha-num&eacute;riques, des tirets bas ou des tirets.');
 		return ( ! preg_match("/^([\.\s-a-z0-9_-])+$/i", $str)) ? FALSE : TRUE;
 
 	}//end alpha_extra()

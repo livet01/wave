@@ -12,6 +12,7 @@ $lang['exact_length'] = 'Le champ <em>%s</em> doit contenir exactement <em>%s</e
 $lang['alpha'] = 'Le champ <em>%s</em> ne peut contenir que des caract&egrave;res alphab';
 $lang['alpha_numeric'] = 'Le champ <em>%s</em> ne peut contenir que des caract&egrave;res alpha-num&eacute;riques.';
 $lang['alpha_dash'] = 'Le champ <em>%s</em> ne peut contenir que des caract&egrave;res alpha-num&eacute;riques, des tirets bas ou des tirets.';
+$lang['alpha_extra'] = 'Le champ <em>%s</em> ne peut contenir que des caract&egrave;res alpha-num&eacute;riques, des tirets bas ou des tirets.';
 $lang['numeric'] = 'Le champ <em>%s</em> ne doit contenir que des nombres.';
 $lang['is_numeric'] = 'Le champ <em>%s</em> ne peut contenir que des caract&egrave;res num&eacute;riques.';
 $lang['integer'] = 'Le champ <em>%s</em> doit contenir un entier.';
