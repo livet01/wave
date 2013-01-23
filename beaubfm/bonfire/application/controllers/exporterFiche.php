@@ -194,13 +194,11 @@ class ExporterFiche extends Base_Controller {
         if(!$query)
             return false;
 		
-		$s = "Titre;Artiste;Diffuseur;Format;Ecouté par;Date d'ajout;Mail diffuseur;Emplacement;Emission Bénévole;Style;";
+		$s = "Titre;Artiste;Diffuseur;Format;Ecouté par;Date d'ajout;Mail diffuseur;Emplacement;Emission Bénévole;Style";
 		$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Emplacement', 'Date d\'ajout', 'Ecouté par', 'Mail diffuseur', 'Emission Bénévole', 'Style');
         $fields = array('dis_libelle', 'art_nom', 'per_nom', 'dis_format', 'emp_libelle', 'dis_date_ajout', 'uti_login', 'dif_mail', 'emb_libelle', 'sty_libelle');
 		
 		$r = $this->paramManager->select('colonnes');
-		$s .= $r['param_valeur']."\r\n";
-		print $s;
 		
 		$i = 1;
 		if(!empty($r['param_valeur'])){
@@ -210,7 +208,12 @@ class ExporterFiche extends Base_Controller {
 				array_push($fields, 'col'.$i);
 				$i++;
 			}
+			$s .= ';'.$r['param_valeur']."\r\n";
 		}
+		else {
+			$s .= "\r\n";
+		}
+		print $s;
 		$datas = array();
 		
 		foreach($disq as $d){
