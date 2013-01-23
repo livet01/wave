@@ -80,7 +80,7 @@ class Base_Controller extends MX_Controller
 		$this->load->model('users/User_model', 'user_model');
 		$this->load->library('users/auth');
 		
-		$this->output->enable_profiler(FALSE);
+		$this->output->enable_profiler(TRUE);
 		
 		if ($this->auth->is_logged_in())
 		{
