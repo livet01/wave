@@ -9,7 +9,7 @@ class Exporter_model extends CI_Model {
 	{
 			
 		if(empty($where)){
-			return $this->db->select(array('disque.dis_libelle','artiste.art_nom','u1.username as per_nom','disque.dis_format','emplacement.emp_libelle','disque.dis_date_ajout','u2.username as uti_login','u1.email as dif_mail','embenevole.emb_libelle','style.sty_libelle'))
+			return $this->db->select(array('disque.dis_libelle','artiste.art_nom','u1.username as per_nom','disque.dis_format','emplacement.emp_libelle','disque.dis_date_ajout','u2.username as uti_login','u1.email as dif_mail','embenevole.emb_libelle','style.sty_libelle', 'col1', 'col2', 'col3', 'col4', 'col5', 'col6'))
 						->from('disque')
 						->join('artiste','disque.art_id = artiste.art_id')
 						->join('users as u1', 'disque.dif_id = u1.id')
@@ -22,7 +22,7 @@ class Exporter_model extends CI_Model {
 		elseif(!empty($where))
 		{
 				
-			return $this->db->select(array('disque.dis_libelle','artiste.art_nom','u1.username as per_nom','disque.dis_format','emplacement.emp_libelle','disque.dis_date_ajout','u2.username as uti_login','u1.email as dif_mail','embenevole.emb_libelle','style.sty_libelle'))
+			return $this->db->select(array('disque.dis_libelle','artiste.art_nom','u1.username as per_nom','disque.dis_format','emplacement.emp_libelle','disque.dis_date_ajout','u2.username as uti_login','u1.email as dif_mail','embenevole.emb_libelle','style.sty_libelle', 'col1', 'col2', 'col3', 'col4', 'col5', 'col6'))
 							->from('disque')
 							->join('artiste','disque.art_id = artiste.art_id')
 							->join('users as u1', 'disque.dif_id = u1.id')

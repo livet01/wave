@@ -1,6 +1,8 @@
 <?php
 class ExporterFiche extends Base_Controller {
 	
+	private $disq = array();
+	private $tit = array();
 	
 	function __construct()
     {
@@ -15,6 +17,7 @@ class ExporterFiche extends Base_Controller {
 			
 		// Chargement des ressources
 		$this -> load -> library('layout');
+		$this -> load -> model('index/Info_Disque_Model');
 		$this -> load -> model('index/Info_Disque_Model');
 		$this -> load -> library('pagination');
 
@@ -96,7 +99,8 @@ class ExporterFiche extends Base_Controller {
 	{
 		$this->auth->restrict('Wave.Exporter.Disque');
 		$this->load->model("exporter_model", "exportManager");
-		
+		$this->load->model("parametre_model", "paramManager");
+		$this->output->enable_profiler(FALSE);
 		date_default_timezone_set("Europe/Paris");
 	   	
 	   	$table_name = 'Disque';
@@ -123,7 +127,18 @@ class ExporterFiche extends Base_Controller {
         // Field names in the first row
 		$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Emplacement', 'Date d\'ajout', 'Ecouté par', 'Mail diffuseur', 'Emission Bénévole', 'Style');
         $fields = array('dis_libelle', 'art_nom', 'per_nom', 'dis_format', 'emp_libelle', 'dis_date_ajout', 'uti_login', 'dif_mail', 'emb_libelle', 'sty_libelle');
-
+		$r = $this->paramManager->select('colonnes');
+		$i = 1;
+		if(!empty($r['param_valeur'])){
+			$colonne = explode(";", $r['param_valeur']);
+			foreach ($colonne as $colo) {
+				array_push($column, $colo);
+				array_push($fields, 'col'.$i);
+				$i++;
+			}
+		}
+		
+		
 		$col = 0;
         foreach ($column as $field)
         {
@@ -204,5 +219,98 @@ class ExporterFiche extends Base_Controller {
 		}
 		
 	}
+
+	public function alot($nb = 0)
+	{
+		$this->output->enable_profiler(FALSE);
+		$this->auth->restrict('Wave.Exporter.Disque');
+		
+		switch ($nb) {
+			case 0:
+				$alphaC = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+				$style = array('Rock/HardRock/Punk','Electro/House/DubStep','HipHop/Slam','Pop/Folk','World/Traditionnelle');
+				$format = array('CD','Vinyle','Numerique');
+				$emp = array('Airplay', 'Archivage');
+				for($i=1 ; $i<= 20000 ; $i++)
+				{
+					$p = '';
+					for($j=1; $j<=3 ; $j++){
+						//do
+						//{
+							$s ='';
+							$m = rand(5,30);
+								
+							for($k=0 ; $k<=rand(5,20) ; $k++)
+								$s .= $alphaC[rand(0,25)];
+							$p .= $s.";";
+						//}while($j == 1 && $i > 1 && $this->notExist($s));
+						/*if($j == 1)
+							$this->tit[] = $s;*/
+					}
+					$p .= $format[rand(0,2)].";Admin;".date('Y-m-d').";;".$emp[rand(0,1)].";;".$style[rand(0,4)]."\r\n";
+					$this->disq[] = $p;
+				}
+				break;
+			
+			case 1:
+				$this->generateDisque1(0, 4999);
+				break;
+			
+			case 2:
+				$this->generateDisque1(5000, 9999);
+				break;
+			
+			case 3:
+				$this->generateDisque1(10000, 14999);
+				break;
+			
+			case 4:
+				$this->generateDisque1(15000, 19999);
+				break;
+		}
+		//var_dump($this->disq);
+		$data['s'] = count($this->disq);
+		var_dump($this->disq);
+		Template::set('data',$data);
+		Template::set_view('exporter');
+		Template::render();
+		
+	}
+	
+	private function generateDisque1($min, $max)
+	{
+			
+		date_default_timezone_set("Europe/Paris");
+			//header('Content-Type: text/csv;');
+			//header('Content-Disposition: attachment; filename="BeaubFm_'.date('dMy-h-i-s').'_20_000_disques.csv"');
+				
+			echo "Titre;Artiste;Diffuseur;Format;Ecouté par;Date d'ajout;Mail diffuseur;Emplacement;Emission Bénévole;Style\r\n";
+			
+			var_dump($this->disq);
+			
+			for($i = $min ; $i <= $max ; $i++)
+				echo $this->disq[$i];
+			
+	}
+	
+	private function notExist($s = '')
+	{
+		$exist = FALSE;
+		$l = 0;
+		
+		if(count($this->tit) > 0){
+			while(!$exist && $l < count($this->tit))
+			{
+				if($this->tit[$l] === $s)
+					$exist = TRUE;
+				$l++;
+			}
+		}
+		
+		return $exist;
+	}
+
+	
+	
  
 }
