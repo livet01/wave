@@ -17,7 +17,8 @@ class Exporter_model extends CI_Model {
 						->join('emplacement', 'disque.emp_id = emplacement.emp_id')
 						->join('embenevole', 'disque.emb_id = embenevole.emb_id','left')
 						->join('style','disque.sty_id = style.sty_id', 'left')
-						->get();
+						->get()
+						->result();
 		}
 		elseif(!empty($where))
 		{
@@ -32,7 +33,17 @@ class Exporter_model extends CI_Model {
 							->join('style','disque.sty_id = style.sty_id', 'left')
 							->where_in('dis_id', $where)
 							->order_by('dis_libelle', 'asc')
-							->get();
+							->get()
+							->result();
 		}
+	}
+
+	public function select_param()
+	{
+		return $this->db->select('param_valeur')
+						->from('parametre')
+						->where('param_libelle', 'colonnes')
+						->get()
+						->row_array();	
 	}
 }
