@@ -245,7 +245,7 @@ class Disque extends Authenticated_Controller {
 				$json_array[] = array("dis_id" => $tab -> dis_id, "dis_envoi_ok" => $tab -> dis_envoi_ok, "sty_couleur" => $tab -> sty_couleur, "sty_libelle" => $tab -> sty_libelle, "mail" => $tab -> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
 		}
 			var_dump($json_array);
-			Template::redirect('index');
+			//Template::redirect('index');
 		}
 	}
 
@@ -254,8 +254,6 @@ class Disque extends Authenticated_Controller {
 	//
 	public function modifier($id) {
 		$this->auth->restrict('Wave.Modifier.Disque');
-		// Initialisation des données a envoyer en bd
-		$data = array('erreur' => "", 'reussi' => "");
 
 		// Chargement des formats
 		$formats = $this -> parametreManager -> select('format');
@@ -693,8 +691,7 @@ class Disque extends Authenticated_Controller {
 		Template::redirect('index');
 	}
 
-	public function addBDD() {
-		$this->auth->restrict('Wave.Ajouter.Disque');
+	private function loadData() {
 		$data['dis_libelle'] = $this -> get_dis_libelle();
 		$data['dis_format'] = $this -> get_dis_format();
 		$data['uti_id_ecoute'] = $this -> get_mem_id();
@@ -740,7 +737,12 @@ class Disque extends Authenticated_Controller {
 			}
 			$i++;
 		}
-		$id = $this -> disqueManager -> insert($data);
+		return $data;
+	}
+	public function addBDD() {
+		$this->auth->restrict('Wave.Ajouter.Disque');
+		
+		$id = $this -> disqueManager -> insert($this->loadData());
 		if ($id === FALSE) {
 			throw new Exception("Erreur dans l'ajout");
 		}
@@ -750,12 +752,9 @@ class Disque extends Authenticated_Controller {
 
 	public function updateBDD() {
 		$this->auth->restrict('Wave.Modifier.Disque');
-		$erreur = $this -> ajouter_disque();
-		if ($erreur != "") {
-			throw new Exception($erreur);
-		}
-		$this -> supprimerOneDisque($this -> get_dis_id());
-
+		$data = $this->loadData();
+		$data['dis_id'] = $this->get_dis_id();
+		$id = $this -> disqueManager -> update($data);
 	}
 
 	public function rechercheArtisteByNom($nom, $radio, $categorie, $insertion = TRUE) {
