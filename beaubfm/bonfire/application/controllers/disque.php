@@ -621,20 +621,20 @@ class Disque extends Authenticated_Controller {
 	}
 	
 	/**
-	 * Fonction permettant la vérification et la persistance en base de donnée.
-	 * Renvoi une chaine de caractère si une erreur se produit
+	 * Fonction permettant la vérification et la persistance en base de données.
+	 * Renvoi une chaine de caractères si une erreur se produit
 	 */
 	public function ajouter_disque() {
 		//Permet d'utiliser cette fonction uniquement à ceux qui ont l'autorisation 
 		$this->auth->restrict('Wave.Ajouter.Disque');		
 		$erreur = "";		
-		// Vérification de la cohérence des données saisies dans les champs à l'aide de fonctions de CodeIgniter
+		// Vérification de la cohérence des données saisies dans les champs à l'aide des fonctions de CodeIgniter
 		// Revoi un booleen si les champs sont valide.
 		if ($this -> verification()) {			
 			try {
 				// Transfert du contenu des variables du formulaire dans les attributs membres
 				$this -> attribution();
-				// Persistance des données en base de donnée
+				// Persistance des données en base de données
 				$this -> addBDD();				
 			// Si une erreur se produit
 			} catch (Exception $e) {				
