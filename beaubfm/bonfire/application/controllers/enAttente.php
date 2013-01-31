@@ -31,18 +31,26 @@ class EnAttente extends Authenticated_Controller {
 	//
 	// Méthode index : affichage de l'ensemble des disques
 	//
-	public function index($g_nb_disques = 1, $affichage = 0) {
-		// Chargement des ressources
-		
-		$this->auth->restrict('Wave.Importer.Disque');
-		
-		
-		
-		if ($affichage === 0)// Si l'affichage est pour l'ensemble des disques
-		{
+	public function index() {
+					
+			// Chargement des ressources
+			$this->auth->restrict('Wave.Importer.Disque');
+			$data['affichage'] = 1;
+			// Chargement de la vue
+			Template::set_view('enAttente/resultat');
+			//Assets::add_js(js_url("pagination"));
+			//Assets::add_js(js_url("cocheTout"));
+			Template::set('data', $data);
+			Template::render();
+
+	}
+	
+	public function index_ajax($tabl = 1, $nb_disques_total = 1, $g_nb_disques = 1)
+	{
+			
 			// Tableau récoltant des données à envoyer à la vue
 			$data = array();
-
+			$data['username'] = $this->current_user->username;
 			// On récupère le nombre de disque présent dans la base
 			$tabs = $this -> importerManager -> selectImport();
 			$nb_disques_total = count($tabs);
@@ -97,24 +105,11 @@ class EnAttente extends Authenticated_Controller {
 					// On passe le tableau de disque
 					$data['resultat2'] = $tab_result2;
 				}
-	
+			}	
 			// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
-			$data['affichage'] = $affichage;
-			$data['username'] = $this->current_user->username;
-			// Chargement de la vue
-			Template::set_view('enAttente/resultat');
-			Assets::add_js(js_url("pagination"));
-			Assets::add_js(js_url("cocheTout"));
-			Template::set('data', $data);
-			Template::render();
-			}
-	else
-	{
-		Template::redirect('index');
+			$this->load->view('enAttente/tableau1',$data);
 	}
-	}
-	}
-
+	
 	public function supprimerDisquesEnAttente($idsupp = 0, $g_nb_disques = 1, $affichage = 0) {
 		
 		$this->auth->restrict('Wave.Importer.Disque');

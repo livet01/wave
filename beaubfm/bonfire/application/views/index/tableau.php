@@ -17,7 +17,7 @@
  ?>
 <table class="table table-hover" id="table-disque">
 	<caption>
-		<h2 style="padding-top: 20px">Liste des disques</h2>
+		<h2 style="padding-top: 20px; padding-bottom:20px;">Liste des disques</h2>
 	</caption>
 
 	<tbody id="disque">
@@ -120,7 +120,6 @@
 </center>
 
 <script type="text/javascript" src="<?php echo js_url('jPages'); ?>"></script>
-<script type="text/javascript" src="<?php echo js_url('cocheTout'); ?>"></script>
 <script type="text/javascript">
 	
 			$(".holder").jPages({
@@ -131,6 +130,7 @@
 			delay : 10
 			});
 </script>
+<script type="text/javascript" src="<?php echo js_url('cocheTout'); ?>"></script>
 <?php }
 	?>
 
