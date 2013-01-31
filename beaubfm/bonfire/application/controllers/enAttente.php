@@ -277,9 +277,9 @@ class EnAttente extends Authenticated_Controller {
 		}
 		
 		// Chargement de la vue
-		Template::set_view('disque/ajouter_fiche');
-		Template::set('data', $data);
-		Template::render();
+		//Template::set('data', $data);
+		//Template::set_view('disque/ajouter_fiche');		
+		//Template::render();
 	}
 	
 }
