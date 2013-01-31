@@ -1123,8 +1123,7 @@ class Disque extends Authenticated_Controller {
 			$data = array();
 
 			// Récupération de tout les disques pour la page
-			$id = $this -> input -> post('choix');
-
+			$id=  $this->input->post('choix');
 			$tabs = $this -> infodisque -> GetAll_in($id);
 
 			// On parcours le tableau, si emb_id n'existe pas on le met à nul et on ajoute chaque disque dans le tableau tab_result.

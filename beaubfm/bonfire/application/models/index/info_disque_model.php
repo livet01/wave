@@ -209,6 +209,7 @@ class Info_Disque_Model extends CI_Model
 	
 	function GetAll_in($iddisque = array())
     {
+    	
     	if (has_permission('Wave.Restriction.Disque'))
 		{
 			$this->db->where('disque.dif_id',$this->id);
@@ -221,7 +222,7 @@ class Info_Disque_Model extends CI_Model
 			
 			if(!has_permission('Wave.Recherche.Disque'))
 			{
-				$this->db	->where_in('emp_plus',array(1,3));
+				$this->db->where_in('emp_plus',array(1,3));
 			}
 			$this->db->select(array('disque.dis_id','dis_libelle','dis_format','u2.username as mem_nom','artiste.art_nom','u1.username as per_nom','emplacement.emp_libelle'))
 						->join('artiste', 'disque.art_id=artiste.art_id', 'LEFT')

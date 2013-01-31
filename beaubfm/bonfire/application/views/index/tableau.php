@@ -15,13 +15,13 @@
 		else {
 
  ?>
+ <form  method="post" id="tdisque" action="#">
 <table class="table table-hover" id="table-disque">
 	<caption>
 		<h2 style="padding-top: 20px; padding-bottom:20px;">Liste des disques</h2>
 	</caption>
 
 	<tbody id="disque">
-		<form  method="post" id="tdisque" action="#">
 			<?php $i = 0;
 			$j = 0;
 			foreach ($resultat as $ligne) {
@@ -91,7 +91,7 @@
 			}
 			
 			?>
-		</form>
+		
 	</tbody>
 		<thead>
 	<tr><?php if(has_permission('Wave.Modifier.Disque') || has_permission('Wave.Supprimer.Disque')) { ?>
@@ -112,6 +112,7 @@
 	</tr>
 	</thead>
 </table>
+</form>
 <?php if(count($resultat)>15){ ?>
 
 <center>
