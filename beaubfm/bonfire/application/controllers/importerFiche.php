@@ -293,8 +293,8 @@ class ImporterFiche extends Authenticated_Controller{
 			$valide = FALSE;
 		}
 			
-			$search = array('@[éèêëÊË]@i', '@[àâäÂÄ]@i', '@[îïÎÏ]@i', '@[ûùüÛÜ]@i', '@[ôöÔÖ]@i', '@[ç]@i','@[_]@i', "@[^a-zA-Z0-9 -'()]@");
-			$replace = array('e', 'a', 'i', 'u', 'o', 'c',' ', '');
+			$search = array('@[ÊË]@i', '@[ÂÄ]@i', '@[ÎÏ]@i', '@[ÛÜ]@i', '@[ÔÖ]@i','@[/\s\s+/]@i', '@[_]@i', "@[^éèêëàâäîïûùüôöça-zA-Z0-9 -!?&%#'()]@");
+			$replace = array('e', 'a', 'i', 'u', 'o',' ',' ', '');
 			$disque['Artiste'] = preg_replace($search, $replace, $disque['Artiste']);
 			$disque['Diffuseur'] = preg_replace($search, $replace, $disque['Diffuseur']);
 			$disque['Titre'] = preg_replace($search, $replace, $disque['Titre']);

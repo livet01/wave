@@ -163,7 +163,6 @@ class Disque_model extends CI_Model {
 					->set('col6', (empty($data['col6']) ? NULL : $data['col6']))
 					->insert($this->table);
 			$this->db->trans_complete();
-			var_dump($this->db->insert_id());
 			return $id;
 		}
 		else {

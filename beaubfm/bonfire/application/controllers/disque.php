@@ -581,8 +581,6 @@ class Disque extends Authenticated_Controller {
 						else
 							$login = $this->input->post('diffuseur');
 						
-						$mdp = $this->generatePassword(6);
-						$this->bdd['diffuseur']['mdp'] = $mdp;
 						$objet = '[Beaub\'FM] Inscription ';	
 						$message = '<p>'.$corps_mail.'</p>
 						<p>Nom d\'utilisateur : '.$login.'<br>
@@ -813,7 +811,9 @@ class Disque extends Authenticated_Controller {
 		$this->auth->restrict('Wave.Ajouter.Disque');
 		$difId = $this -> diffuseurManager -> select('users.id', array('users.username' => $nom, ));
 		if (empty($difId)) {
-			$this->bdd['diffuseur'] = array('nom'=>$nom,'radio'=>$radio,'categorie'=>$categorie,'email'=>$email);
+			$this->bdd['diffuseur'] = array('nom'=>$nom,'radio'=>$radio,'categorie'=>$categorie,'email'=>$email);			
+				$mdp = $this->generatePassword(6);
+				$this->bdd['diffuseur']['mdp'] = $mdp;
 			$difId = -1;
 		} else
 			$difId = $difId["id"];
