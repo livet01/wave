@@ -79,8 +79,8 @@
 				<?php if (form_error('language')) echo '<span class="help-inline">'. form_error('language') .'</span>'; ?>
 			</div>
 		</div>
-
-		<div class="control-group <?php echo form_error('timezone') ? 'error' : '' ?>">
+	
+		<div style="display:none" class="control-group <?php echo form_error('timezone') ? 'error' : '' ?>">
 			<label class="control-label" for="timezones"><?php echo lang('bf_timezone') ?></label>
 			<div class="controls">
 				<?php echo timezone_menu(set_value('timezones', isset($user) ? $user->timezone : $current_user->timezone)); ?>
@@ -129,10 +129,6 @@
 		?>
 
 
-		<!-- Start of User Meta -->
-		<?php $this->load->view('users/user_meta');?>
-		<!-- End of User Meta -->
-
 
 		<?php if (isset($user) && has_permission('Permissions.'. ucfirst($user->role_name).'.Manage') && $user->id != $this->auth->user_id() && ($user->banned || $user->deleted)) : ?>
 		<fieldset>
@@ -143,7 +139,7 @@
 			if ($user->active) :
 					$field = 'de'.$field;
 			endif; ?>
-			<div class="control-group">
+			<div class="control-group" >
 					<div class="controls">
 							<label for="<?php echo $field; ?>">
 									<input type="checkbox" name="<?php echo $field; ?>" id="<?php echo $field; ?>" value="1">

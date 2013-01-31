@@ -11,7 +11,7 @@
 			<tbody>
 			<?php if (isset($records) && is_array($records) && count($records)) : ?>
 			<?php foreach ($records as $record) : ?>
-				<?php if($record->param_libelle==='format' || $record->param_libelle==='colonnes'){ ?>
+				<?php if($record->param_libelle==='mail-inscription' || $record->param_libelle==='format' || $record->param_libelle==='colonnes'){ ?>
 				<tr>					
 				<?php if ($this->auth->has_permission('Parametre.Content.Edit')) : ?>
 				<td><?php echo anchor(SITE_AREA .'/content/parametre/edit/'. $record->param_id, '<i class="icon-pencil">&nbsp;</i>' .  $record->param_libelle) ?></td>

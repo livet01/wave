@@ -102,7 +102,7 @@
 				</div>
 			<?php endif; ?>
 		<?php endif; ?>
-
+		<div style="display: none">
 		<div class="control-group <?php echo form_error('timezone') ? 'error' : '' ?>">
 			<label class="control-label required" for="timezones"><?php echo lang('bf_timezone') ?></label>
 			<div class="controls">
@@ -119,7 +119,7 @@
 		<!-- Start User Meta -->
 		<?php $this->load->view('users/user_meta', array('frontend_only' => TRUE));?>
 		<!-- End of User Meta -->
-
+	</div>
 	<!-- Start of Form Actions -->
 	<div class="form-actions">
 		<input type="submit" name="submit" class="btn btn-primary" value="<?php echo lang('bf_action_save') .' '. lang('bf_user') ?> " /> <?php echo lang('bf_or') ?>

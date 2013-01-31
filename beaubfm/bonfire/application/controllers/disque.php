@@ -242,9 +242,36 @@ class Disque extends Authenticated_Controller {
 				else {
 					$emb_id = $tab -> emb_libelle;
 				}
-				$json_array[] = array("dis_id" => $tab -> dis_id, "dis_envoi_ok" => $tab -> dis_envoi_ok, "sty_couleur" => $tab -> sty_couleur, "sty_libelle" => $tab -> sty_libelle, "mail" => $tab -> mail, "dis_libelle" => $tab -> dis_libelle, "dis_format" => $tab -> dis_format, "mem_nom" => $tab -> mem_nom, "art_nom" => $tab -> art_nom, "per_nom" => $tab -> per_nom, "emp_libelle" => $tab -> emp_libelle, "emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
-		}
-			var_dump($json_array);
+				$json_array[] = array(	"dis_id" => $tab -> dis_id, 
+										"dis_envoi_ok" => $tab -> dis_envoi_ok, 
+										"sty_couleur" => $tab -> sty_couleur, 
+										"sty_libelle" => $tab -> sty_libelle, 
+										"mail" => $tab -> mail, 
+										"dis_libelle" => $tab -> dis_libelle, 
+										"dis_format" => $tab -> dis_format, 
+										"mem_nom" => $tab -> mem_nom, 
+										"art_nom" => $tab -> art_nom, 
+										"per_nom" => $tab -> per_nom, 
+										"emp_libelle" => $tab -> emp_libelle, 
+										"emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
+			}
+			$objet = '[Beaub\'FM] Traitement du disque : '.$json_array['dis_libelle'];
+			
+			//On récupère l'emplacement sélectionné dans le formulaire pour personnaliser le corps du mail
+			
+			$messLib = $this -> emplacementManager -> select('emp_mail', array('emp_libelle' => $json_array['emp_libelle']));
+			if(isset($messLib['emp_mail'])) {
+				//RETOUR FONCTION CUSTOMIZE EMAIL
+				$messModifie = $this->customizeEmail($messLib['emp_mail'], $json_array['dis_libelle'], $json_array['art_nom'], $json_array['per_nom'], $json_array['sty_couleur'], $json_array['emp_libelle'], '', $json_array['mem_nom'], $est_auto_production, $emb_bev_lib);
+								
+				$data = array(
+					'to' => $email, 
+					'subject' => $objet,
+					'message' => $message);
+	
+				$this -> emailer -> send($data);
+			}
+			
 			//Template::redirect('index');
 		}
 	}

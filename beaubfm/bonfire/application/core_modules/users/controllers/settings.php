@@ -531,8 +531,8 @@ class Settings extends Admin_Controller
 
 		$this->form_validation->set_rules('display_name', lang('bf_display_name'), 'trim|strip_tags|max_length[255]|xss_clean');
 
-		$this->form_validation->set_rules('language', lang('bf_language'), 'required|trim|strip_tags|xss_clean');
-		$this->form_validation->set_rules('timezones', lang('bf_timezone'), 'required|trim|strip_tags|max_length[4]|xss_clean');
+		$this->form_validation->set_rules('language', lang('bf_language'), 'trim|strip_tags|xss_clean');
+		$this->form_validation->set_rules('timezones', lang('bf_timezone'), 'trim|strip_tags|max_length[4]|xss_clean');
 
 		if (has_permission('Bonfire.Roles.Manage') && has_permission('Permissions.'.$cur_role_name.'.Manage'))
 		{
