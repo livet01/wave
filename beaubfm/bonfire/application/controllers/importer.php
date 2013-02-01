@@ -73,8 +73,7 @@ class Importer extends Authenticated_Controller{
 			redirect('importer');
 	}
 
-	public function traitement($nameFile) {
-		
+	public function traitement($nameFile) {		
 		if(empty($nameFile)) {
 			redirect('importer');
 			exit();
@@ -91,7 +90,6 @@ class Importer extends Authenticated_Controller{
 			if ($extension == '.xls' || $extension == '.xlsx') {
 				$arrayFichier = $this -> excelFile($chemin);
 			}
-			
 			unlink($chemin);
 			
 			$arrayDisqueEpure = $this -> getTabFinal($arrayFichier);
@@ -108,7 +106,6 @@ class Importer extends Authenticated_Controller{
 				die(json_encode(array("error"=>true,"message"=>"Le fichier est illisible, il lui manque une colonne ou il n'est pas compatible.")));
 			}
 		}
-
 	}
 
 	public function excelFile($data) {
