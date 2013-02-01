@@ -16,7 +16,8 @@
 				<th><i class="icon-music"></i> Titre</th>
 				<th><i class="icon-user"></i> Artiste</th>
 				<th><i class="icon-home"></i> Label</th>
-				<th><i class="icon-wrench"></i> Actions</th>
+				<th><i class="icon-pencil"></i></th>
+				<th><i class="icon-trash"></i></th>
 			</tr>
 			<tbody id="disque1">
 			<?php 
@@ -33,8 +34,8 @@
 				echo '<td class="left" onclick="; }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['dis_libelle'] . '</td>';
 				echo '<td>' . $ligne['art_nom'] . '</td>';
 				echo '<td>' . $ligne['per_nom'] . '</td>';
-				echo '<td><a class="btn btn-info btn-mini " style="margin-right:10px;" href="' . site_url("enAttente/modifDisquesEnAttente/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a> 
-						<a class="btn btn-danger btn-mini" href="' . site_url("enAttente/supprimerDisquesEnAttente/" . $ligne['dis_id']) . '"><i class="icon-trash"></a></td>';
+				echo '<td><a class="action-tab" href="' . site_url("enAttente/modifier/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a></td>';
+				echo '<td><a class="action-tab" href="' . site_url("enAttente/supprimer/" . $ligne['dis_id']) . '"><i class="icon-trash"></a></td>';
 				echo '</tr>';
 				$i++;
 				$j++;
@@ -70,7 +71,8 @@
 				<th><i class="icon-music"></i> Titre</th>
 				<th><i class="icon-user"></i> Artiste</th>
 				<th><i class="icon-home"></i> Label</th>
-				<th><i class="icon-wrench"></i> Actions</th>
+				<th><i class="icon-pencil"></i></th>
+				<th><i class="icon-trash"></i></th>
 			</tr>
 			<tbody id="disque2">
 				
@@ -88,8 +90,8 @@
 				echo '<td class="left" onclick="; }).complete(function(){ajaxBox_loader(false);}).error(function(){ajaxBox_setText(\'Error...\');});">' . $ligne['dis_libelle'] . '</td>';
 				echo '<td>' . $ligne['art_nom'] . '</td>';
 				echo '<td>' . $ligne['per_nom'] . '</td>';
-				echo '<td><a class="btn btn-info btn-mini" style="margin-right:10px;" href="' . site_url("enAttente/modifDisquesEnAttente/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a> 
-						<a class="btn btn-danger btn-mini" href="' . site_url("enAttente/supprimerDisquesEnAttente/" . $ligne['dis_id']) . '"><i class="icon-trash"></a></td>';
+				echo '<td><a class="action-tab" href="' . site_url("enAttente/modifier/" . $ligne['dis_id']) . '"><i class="icon-pencil"></a></td>';
+				echo '<td><a class="action-tab" href="' . site_url("enAttente/supprimer/" . $ligne['dis_id']) . '"><i class="icon-trash"></a></td>';
 				echo '</tr>';
 				$i++;
 				$j++;

@@ -35,12 +35,12 @@ jQuery(function($){
 		  	
 		  	$("#modifier>a").removeClass().addClass("btn");
 		  	$("#modifier>a").click(function(){
-		  		$("#tdisqueI").attr("action",CI.site_url+"/enAttente/modifDisquesEnAttente").submit();
+		  		$("#tdisqueI").attr("action",CI.site_url+"/enAttente/modifier").submit();
 		  	});
 			  	
 		  	$("#supprimerI>a").removeClass().addClass("btn");
 		  	$("#supprimerI>a").click(function(){
-		  		$("#tdisqueI").attr("action",CI.site_url+"/enAttente/supprimerDisquesEnAttente").submit();
+		  		$("#tdisqueI").attr("action",CI.site_url+"/enAttente/supprimer").submit();
 			});
 		}
 		else {

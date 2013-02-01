@@ -110,7 +110,7 @@ class EnAttente extends Authenticated_Controller {
 			$this->load->view('enAttente/tableau1',$data);
 	}
 	
-	public function supprimerDisquesEnAttente($idsupp = 0, $g_nb_disques = 1, $affichage = 0) {
+	public function supprimer($idsupp = 0, $g_nb_disques = 1, $affichage = 0) {
 		
 		$this->auth->restrict('Wave.Importer.Disque');
 		// Chargement des ressources
@@ -189,7 +189,7 @@ class EnAttente extends Authenticated_Controller {
 	}
 
 	
-	public function modifDisquesEnAttente($id) {
+	public function modifier($id) {
 
 		$this->auth->restrict('Wave.Importer.Disque');
 		// Chargement des formats
@@ -260,26 +260,21 @@ class EnAttente extends Authenticated_Controller {
 				else {
 					Template::set_message($is_erreur, 'error');
 					Template::set('data',$data);
-					Template::set_view('disque/ajouter_fiche');
-					Template::render();
 				}
 			}
 			else {
 				Template::set('data',$data);
-				Template::set_view('disque/ajouter_fiche');
-				Template::render();
 			}
 		}
 		else
 		{
-			Template::set_message('Le disque à modifier est introuvable.', 'error');
+			//Template::set_message('Le disque à modifier est introuvable.', 'error');
 			Template::redirect('enAttente/index');
 		}
 		
 		// Chargement de la vue
-		//Template::set('data', $data);
-		//Template::set_view('disque/ajouter_fiche');		
-		//Template::render();
+		Template::set_view('disque/ajouter_fiche');		
+		Template::render();
 	}
 	
 }

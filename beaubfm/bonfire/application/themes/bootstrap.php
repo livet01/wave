@@ -163,12 +163,12 @@
 			  	
 			  	$("#modifier").removeClass().addClass("btn-large-action");
 			  	$("#modifier").click(function(){
-			  		$("#tdisqueI").attr("action","<?php echo site_url("enAttente/modifDisquesEnAttente"); ?>").submit();
+			  		$("#tdisqueI").attr("action","<?php echo site_url("enAttente/modifier"); ?>").submit();
 			  	});
 				  	
 			  	$("#supprimerI").removeClass().addClass("btn-large-action");
 			  	$("#supprimerI").click(function(){
-			  		$("#tdisqueI").attr("action","<?php echo site_url("enAttente/supprimerDisquesEnAttente"); ?>").submit();
+			  		$("#tdisqueI").attr("action","<?php echo site_url("enAttente/supprimer"); ?>").submit();
 				});
 				}
 				else {

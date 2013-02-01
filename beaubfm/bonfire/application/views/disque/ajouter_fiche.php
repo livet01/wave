@@ -125,7 +125,7 @@
 	<div class="page-header">
 		<h1><?php echo (!empty($infoDisque))? "Modification du disque <small>".$infoDisque['dis_libelle']."</small>" : "Ajout d'un disque" ?></h1>
 	</div>
-		<form class="form-horizontal ajax-form" method="post" id="fiche" action="<?php echo (!empty($infoDisque))? ((isset($import) && $import)? site_url('enAttente/modifDisquesEnAttente/'.$infoDisque['dis_id']) : site_url("disque/modifier/".$infoDisque['dis_id'])) : site_url("disque/ajouter"); ?>">
+		<form class="form-horizontal ajax-form" method="post" id="fiche" action="<?php echo (!empty($infoDisque))? ((isset($import) && $import)? site_url('enAttente/modifier/'.$infoDisque['dis_id']) : site_url("disque/modifier/".$infoDisque['dis_id'])) : site_url("disque/ajouter"); ?>">
 		
 			<!-- Titre  -->
 			<div class="control-group <?php if ($est_erreur_titre) echo "error";?>">
