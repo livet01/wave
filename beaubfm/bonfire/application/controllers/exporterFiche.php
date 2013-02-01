@@ -1,5 +1,5 @@
 <?php
-class ExporterFiche extends Base_Controller {
+class Exporter extends Base_Controller {
 	
 	
 	function __construct()

@@ -147,7 +147,7 @@
 				  	
 				  	$("#exporter").removeClass().addClass("btn-large-action");
 				  	$("#exporter").click(function(){
-				  		$("#tdisque").attr("action","<?php echo site_url("exporterFiche"); ?>").submit();
+				  		$("#tdisque").attr("action","<?php echo site_url("exporter"); ?>").submit();
 				  	});
 				  	
 				  	$("#modifier").removeClass().addClass("btn-large-action");
@@ -177,12 +177,12 @@
 				$(":checkbox").click(countChecked);
 				
 				$("#linkXLS").click(function(){
-					$("#exportdisque").attr("action","<?php echo site_url("exporterFiche/xls"); ?>");
+					$("#exportdisque").attr("action","<?php echo site_url("exporter/xls"); ?>");
 					$("#exportdisque").submit();
 				});
 				
 				$("#linkCSV").click(function(){
-					$("#exportdisque").attr("action","<?php echo site_url("exporterFiche/csv"); ?>");
+					$("#exportdisque").attr("action","<?php echo site_url("exporter/csv"); ?>");
 					$("#exportdisque").submit();
 				});
 					

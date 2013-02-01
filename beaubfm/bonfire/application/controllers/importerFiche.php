@@ -1,7 +1,7 @@
 <?php
 require_once 'disque.php';
 
-class ImporterFiche extends Authenticated_Controller{
+class Importer extends Authenticated_Controller{
 
 	public function __construct() {
 		parent::__construct();
@@ -70,13 +70,13 @@ class ImporterFiche extends Authenticated_Controller{
 		 	die(json_encode($json));
 		}
 		else
-			redirect('importerFiche');
+			redirect('importer');
 	}
 
 	public function traitement($nameFile) {
 		
 		if(empty($nameFile)) {
-			redirect('importerFiche');
+			redirect('importer');
 			exit();
 		}
 

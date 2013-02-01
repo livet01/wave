@@ -15,7 +15,7 @@
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
   <script>window.jQuery || document.write('<script src="<?php echo js_path(); ?>jquery-1.7.2.min.js"><\/script>')</script>
-  <?php if(class_exists('ImporterFiche')) { ?>
+  <?php if(class_exists('Importer')) { ?>
   <script type="text/javascript" src="<?php echo js_url("plupload/plupload"); ?>"></script>
   <script type="text/javascript" src="<?php echo js_url("plupload/plupload.flash"); ?>"></script>
   <script type="text/javascript" src="<?php echo js_url("plupload/plupload.html5"); ?>"></script>
@@ -26,7 +26,7 @@
 		container: 'plupload',
 		browse_button: 'browse',
 		drop_element:"droparea",
-		url:'<?php echo site_url("importerFiche/envoi"); ?>',
+		url:'<?php echo site_url("importer/envoi"); ?>',
 		flash_swf_url: '<?php echo base_url()."assets/js/plupload/plupload.flash.swf"; ?>',
 		multipart : true,
 		urlstream_upload: true,
@@ -75,7 +75,7 @@
 				decompte(file,0,data.nombre);
 				
 				$.ajax({
-					url : "<?php echo base_url().index_page().'/importerFiche/traitement/'; ?>"+data.name,
+					url : "<?php echo base_url().index_page().'/importer/traitement/'; ?>"+data.name,
 					success: function(rep,textStatus,jqXHR) {
 						try{
 							var dataRetour = jQuery.parseJSON(rep);

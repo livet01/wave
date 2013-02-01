@@ -30,7 +30,7 @@ jQuery(function($){
 		  	
 		  	$("#exporter>a").removeClass().addClass("btn");
 		  	$("#exporter>a").click(function(){
-		  		$("#tdisque").attr("action",CI.site_url+"/exporterFiche").submit();
+		  		$("#tdisque").attr("action",CI.site_url+"/exporter").submit();
 		  	});
 		  	
 		  	$("#modifier>a").removeClass().addClass("btn");

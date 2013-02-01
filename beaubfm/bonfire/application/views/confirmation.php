@@ -2,7 +2,12 @@
 	<table class="table table-striped table-condensed">
 			<caption>
 				<div class="page-header">
-				<h2><?php echo count($resultat); ?> disque(s) sélectionné(s).</h2>
+				<h2>
+					<?php if(count($resultat)>1){
+						echo count($resultat)." disques sélectionnés.";
+					} else {
+						echo count($resultat)." disque sélectionné.";
+					} ?></h2>
 				</div>
 			</caption>
 			<tr>
