@@ -130,7 +130,7 @@ class Index extends Base_Controller {
 
 		if ($this -> form_validation -> run() == FALSE)// Des erreurs on été détecté !
 		{
-			Template::set_message("Que voulez vous recherchez ? Réessayez en indiquant votre recherche dans le barre de recherche.","error");
+			Template::set_message("Que voulez vous recherchez ? Réessayez en indiquant votre recherche dans la barre de recherche.","error");
 			Template::redirect('index');
 			// On revoie sur la méthode index avec un affichage de -1.
 		} else// Aucune erreur
