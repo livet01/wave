@@ -356,7 +356,7 @@ class Disque extends Authenticated_Controller {
 				Template::render();
 			}
 		} else {
-			Template::set_message('Le disque à modifier est introuvable.', 'error');
+			//Template::set_message('Le disque à modifier est introuvable.', 'error');
 			Template::redirect('index');
 		}
 	}
