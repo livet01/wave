@@ -19,7 +19,7 @@ jQuery(function($){
 		  			body.find('#mail-diffuseur').html("(AutoProduction)");
 		  		else
 		  			body.find('#mail-diffuseur').html($('input[name="diffuseur"]').val());
-		  		body.find('#mail-artiste').html($('input[name="listenBy"]').val());
+		  		body.find('#mail-e-par').html($('input[name="listenBy"]').val());
 		  		body.find('#mail-emb').html($('input[name="emb"]').val());
 		  		
 		  		$('#apercu').modal();

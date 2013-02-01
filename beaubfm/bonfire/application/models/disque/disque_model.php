@@ -144,6 +144,7 @@ class Disque_model extends CI_Model {
 						return false;
 				}
 			}
+			$data['dis_envoi_ok'] = (isset($data['dis_envoi_ok']) ? $data['dis_envoi_ok'] : 0);
 			$test = $this->db->set('dis_id', $id)
 					->set('dis_libelle', $data['dis_libelle'])
 					->set('dis_format', $data['dis_format'])

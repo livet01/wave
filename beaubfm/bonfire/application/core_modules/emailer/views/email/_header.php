@@ -38,7 +38,7 @@
 <tr>
 <td class="headerTop ">
     							<div>
-        							<img src="../../assets/images/LOGO_BEAUBFM_150.jpg"/>
+        							<img alt="BeaubFM" style="color:white" src="../../assets/images/LOGO_BEAUBFM_150.jpg"/>
     							</div>
 </td>
 <td bgcolor="#FFFFFF" valign="top" style="font-size:12px;color:#000000;line-height:150%;font-family:trebuchet ms;">

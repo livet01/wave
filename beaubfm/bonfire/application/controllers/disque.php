@@ -412,7 +412,6 @@ class Disque extends Authenticated_Controller {
 		foreach ($styles as $style) {
 			array_push($data['styles'], array("couleur" => $style -> sty_couleur, "libelle" => $style -> sty_libelle));
 		}
-	
 		Template::set('data', $data);
 		Assets::add_js(js_url("ajoutfiche"));
 		Template::set_view('disque/ajouter_fiche');
@@ -595,7 +594,6 @@ class Disque extends Authenticated_Controller {
 							'to' => $email, 
 							'subject' => $objet,
 							'message' => $message);
-	
 						$this -> emailer -> send($data);
 					}
 				}
@@ -956,8 +954,17 @@ class Disque extends Authenticated_Controller {
 
 		$json_array = array();
 		$rows = $this -> autocomplete_model -> GetAutocompleteArtiste(array('keyword' => $term));
-
-		echo json_encode(array("nom" => $rows[0] -> art_nom));
+if(isset($rows[0])){
+			$art_nom = $rows[0]->art_nom;
+			$art_id = $rows[0]->art_id;
+			
+		}
+		else {
+			$art_id = '';
+		$art_nom='';
+			
+		}
+		echo json_encode(array("nom" => $art_nom));
 	}
 	
 		//
@@ -985,11 +992,17 @@ class Disque extends Authenticated_Controller {
 		$artiste = $this -> input -> post('artiste', TRUE);
 		$disque = $this -> input -> post('disque', TRUE);
 		$rows = $this -> autocomplete_model -> GetAutocompleteArtiste(array('keyword' => $artiste));
-		if(isset($rows[0]))
-			$art_id = $rows[0]->art_nom;
-		else
+		if(isset($rows[0])){
+			$art_nom = $rows[0]->art_nom;
+			$art_id = $rows[0]->art_id;
+			
+		}
+		else {
 			$art_id = '';
-		echo json_encode(array("couple" => $this -> existeTitreArtiste($disque, $rows[0] -> art_id),"artiste"=> $art_id,"disque"=>$disque));
+		$art_nom='';
+			
+		}
+		echo json_encode(array("couple" => $this -> existeTitreArtiste($disque, $art_id),"artiste"=> $art_nom,"disque"=>$disque));
 	}
 	//
 	// Méthode de suggestion : ajax et auto-completion.
@@ -1027,7 +1040,8 @@ class Disque extends Authenticated_Controller {
 		$i = 0;
 		foreach ($rows as $row) {
 			if ($i < 6) {
-				array_push($json_array, array("label" => $row -> username));
+				if (isset($row -> username))
+					array_push($json_array, array("label" => $row -> username));
 			}
 			$i++;
 		}
@@ -1046,7 +1060,8 @@ class Disque extends Authenticated_Controller {
 		$term = $this -> input -> post('term', TRUE);
 		
 		$rows = $this -> autocomplete_model -> GetAutocompleteLabel(array('keyword' => $term));
-		echo json_encode(array("nom" => $rows[0] -> username, "email" => $rows[0] -> email));
+		
+		echo json_encode(array("nom" => ((isset($rows[0] -> username)) ? $rows[0] -> username : null), "email" => ((isset($rows[0] -> email)) ? $rows[0] -> email : null)));
 	}
 	//
 	// Méthode de suggestion : ajax et auto-completion.
