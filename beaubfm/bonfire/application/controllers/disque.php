@@ -340,7 +340,7 @@ class Disque extends Authenticated_Controller {
 				$is_erreur = $this -> modifier_disque();
 				if (empty($is_erreur)) {
 					if($this->old_disque['emp_id']!=$this->get_emp_id()){
-						Template::set_message('<strong>Emplacement modifié</strong><br>Voulez vous lui renvoyer un email : <a href="'.site_url('disque/envoiMailEmplacement/'.$this->get_dis_id()).'" class="btn btn-mini btn-primary">Oui</a> <a href="#" data-dismiss="alert" class="btn btn-mini">Non</a>', 'info');
+						Template::set_message('<strong>Emplacement modifié</strong><br>Voulez vous renvoyer un email au diffuseur : <a href="'.site_url('disque/envoiMailEmplacement/'.$this->get_dis_id()).'" class="btn btn-mini btn-primary">Oui</a> <a href="#" data-dismiss="alert" class="btn btn-mini">Non</a>', 'info');
 					}
 					Template::set_message('Le disque a bien été modifié', 'success');
 					Template::redirect('index');
