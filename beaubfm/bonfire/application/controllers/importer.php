@@ -298,6 +298,7 @@ class Importer extends Authenticated_Controller{
 			$disque['Artiste'] = preg_replace($search, $replace, $disque['Artiste']);
 			$disque['Diffuseur'] = preg_replace($search, $replace, $disque['Diffuseur']);
 			$disque['Titre'] = preg_replace($search, $replace, $disque['Titre']);
+			$disque['Mail'] = strtolower($disque['Mail']);
 			//Insertion de valeurs par défaut sur certains champs non renseignés
 
 			//Format
