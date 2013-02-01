@@ -370,12 +370,15 @@ class Disque extends Authenticated_Controller {
 		if (!$this -> formulaire_null()) {
 			// Formulaire envoyé
 			$is_erreur = $this -> ajouter_disque();
-			if (empty($is_erreur)) {
+			if (empty($is_erreur)) 
+			{
 				Template::set_message('Le disque a bien été ajouté', 'success');
 				if (file_exists('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username))
 					delete_files('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username);
 				Template::redirect('disque');
-			} else {
+			} 
+			else 
+			{
 				Template::set_message($is_erreur, 'error');
 			}
 		} else if (file_exists('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username)) {
@@ -399,7 +402,7 @@ class Disque extends Authenticated_Controller {
 		// Colonne sup
 		$colonnes=$this -> parametreManager->select('colonnes');
 		if($colonnes['param_valeur']!=''){
-			$colonnes=explode(";", $colonnes['param_valeur']);		
+			$colonnes = explode(";", $colonnes['param_valeur']);		
 			$data['colonnes'] = $colonnes;
 		}
 
@@ -576,6 +579,7 @@ class Disque extends Authenticated_Controller {
 						
 					// Si l'utilisateur n'existe pas
 					if($this->get_dif_id() === -1){
+						$mdp = $this->bdd['diffuseur']['mdp'];
 						if($est_auto_production)
 							$login = $this->input->post('artiste');
 						else
@@ -595,8 +599,9 @@ class Disque extends Authenticated_Controller {
 						$this -> emailer -> send($data);
 					}
 				}
-
-			} else {// Le titre, artiste est déja en base de données
+			}
+			else 
+			{// Le titre, artiste est déja en base de données
 				throw new Exception("Le disque $this->dis_libelle est déjà présent dans la base de donnée.");
 			}
 		} catch(Exception $e) {

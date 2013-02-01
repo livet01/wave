@@ -1,4 +1,5 @@
-<table class="table table-striped table-condensed">
+<form  method="post" id="<?php echo $form_id; ?>" action="#">
+	<table class="table table-striped table-condensed">
 			<caption>
 				<div class="page-header">
 				<h2><?php echo count($resultat); ?> disque(s) sélectionné(s).</h2>
@@ -10,7 +11,6 @@
 				<th><i class="icon-home"></i>Label</th>
 			</tr>
 			<tbody id="disque">
-			<form  method="post" id="<?php echo $form_id; ?>" action="#">
 			<?php
 				$i=0;
 				$j=0;
@@ -28,9 +28,9 @@
 					$j++;
 				}
 			?>
-			</form>
 			</tbody>
-</table>
+	</table>
+</form>
 		<?php if(count($resultat)>15){ ?>
 			<center>
 				<div class="pagination">
