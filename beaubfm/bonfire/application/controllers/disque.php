@@ -1173,12 +1173,12 @@ class Disque extends Authenticated_Controller {
 			}
 		}
 		if($suc == $ttx)
-			echo ($ttx > 1) ? Template::set_message('Tous les disques ont été correctement supprimé', 'success') : Template::set_message('Le disque a été correctement supprimé', 'success');
+			($ttx > 1) ? Template::set_message('Tous les disques ont été correctement supprimés', 'success') : Template::set_message('Le disque a été correctement supprimé', 'success');
 		else {
 			if($ech == $ttx)
-				echo ($ttx > 1) ? Template::set_message('Tous les disques n\'ont pas été correctement supprimé', 'error') : Template::set_message('Le disque n\'a pas été correctement supprimé', 'error');
+				($ttx > 1) ? Template::set_message('Tous les disques n\'ont pas été correctement supprimés', 'error') : Template::set_message('Le disque n\'a pas été correctement supprimé', 'error');
 			else{
-				Template::set_message($suc.' disque(s) ont été correctement supprimé', 'success');
+				Template::set_message($suc.' disque(s) ont été correctement supprimé(s)', 'success');
 			}
 		}
 		Template::redirect('index');
