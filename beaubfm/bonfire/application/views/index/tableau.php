@@ -119,7 +119,7 @@
 <div class="holder">
 </div>
 </center>
-
+<script type="text/javascript" src="<?php echo js_url('cocheTout'); ?>"></script>
 <script type="text/javascript" src="<?php echo js_url('jPages'); ?>"></script>
 <script type="text/javascript">
 	
@@ -131,7 +131,6 @@
 			delay : 10
 			});
 </script>
-<script type="text/javascript" src="<?php echo js_url('cocheTout'); ?>"></script>
 <?php }
 	?>
 
