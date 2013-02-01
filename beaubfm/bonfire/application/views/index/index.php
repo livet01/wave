@@ -25,6 +25,11 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function($){
-		$('#tableau-index').load('<?php echo site_url("index/index_ajax/"); ?>');
+		$('#tableau-index').load('<?php echo site_url("index/index_ajax/"); ?>', function(response, status, xhr) {
+if (status == "error") {
+var msg = "Sorry but there was an error: ";
+$("#error").html(msg + xhr.status + " " + xhr.statusText);
+}
+}););
 	});
 </script>

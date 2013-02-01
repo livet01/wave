@@ -375,7 +375,7 @@ class Disque extends Authenticated_Controller {
 				Template::set_message('Le disque a bien été ajouté', 'success');
 				if (file_exists('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username))
 					delete_files('./assets/upload/' . $this -> current_user -> id . '-' . $this -> current_user -> username);
-				Template::redirect('index');
+				Template::redirect('disque/ajouter');
 			} 
 			else 
 			{
