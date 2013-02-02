@@ -234,7 +234,7 @@ class Disque extends Authenticated_Controller {
 			$this -> load -> model('parametre_model', 'parametreManager');
 			$colonnes = $this -> parametreManager -> select('colonnes');
 			$colonnes = explode(";", $colonnes['param_valeur']);
-
+			
 			// Parcours du résultat du model et ajout au json_array
 			foreach ($tabs as $tab) {
 				if (empty($tab -> emb_libelle))
@@ -243,6 +243,7 @@ class Disque extends Authenticated_Controller {
 					$emb_id = $tab -> emb_libelle;
 				}
 				$json_array[] = array(	"dis_id" => $tab -> dis_id, 
+										"dis_libelle" => $tab -> dis_libelle, 
 										"dis_envoi_ok" => $tab -> dis_envoi_ok, 
 										"sty_couleur" => $tab -> sty_couleur, 
 										"sty_libelle" => $tab -> sty_libelle, 
@@ -255,26 +256,34 @@ class Disque extends Authenticated_Controller {
 										"emp_libelle" => $tab -> emp_libelle, 
 										"emb_id" => $emb_id, "col1" => $tab -> col1, "col2" => $tab -> col2, "col3" => $tab -> col3, "col4" => $tab -> col4, "col5" => $tab -> col5, "col6" => $tab -> col6);
 			}
-			$objet = '[Beaub\'FM] Traitement du disque : '.$json_array['dis_libelle'];
-			
-			//On récupère l'emplacement sélectionné dans le formulaire pour personnaliser le corps du mail
-			
-			$messLib = $this -> emplacementManager -> select('emp_mail', array('emp_libelle' => $json_array['emp_libelle']));
-			if(isset($messLib['emp_mail'])) {
-				//RETOUR FONCTION CUSTOMIZE EMAIL
-				$messModifie = $this->customizeEmail($messLib['emp_mail'], $json_array['dis_libelle'], $json_array['art_nom'], $json_array['per_nom'], $json_array['sty_couleur'], $json_array['emp_libelle'], '', $json_array['mem_nom'], $est_auto_production, $emb_bev_lib);
-								
-				$data = array(
-					'to' => $email, 
-					'subject' => $objet,
-					'message' => $message);
-	
-				$this -> emailer -> send($data);
+			if(isset($json_array[0])){
+				$json_array = $json_array[0];
+				$objet = '[Beaub\'FM] Traitement du disque : '.$json_array['dis_libelle'];
+				
+				//On récupère l'emplacement sélectionné dans le formulaire pour personnaliser le corps du mail
+				$emb_bev_lib = (isset($json_array['emp_libelle']) ? $json_array['emp_libelle'] : '');
+				$messLib = $this -> emplacementManager -> select('emp_mail', array('emp_libelle' => $json_array['emp_libelle']));
+				if(isset($messLib['emp_mail']) && isset($json_array['mail'])) {
+					//RETOUR FONCTION CUSTOMIZE EMAIL
+					$messModifie = $this->customizeEmail($messLib['emp_mail'], $json_array['dis_libelle'], $json_array['art_nom'], $json_array['per_nom'], $json_array['sty_couleur'], $json_array['emp_libelle'], '', $json_array['mem_nom'], ($json_array['art_nom']==$json_array['per_nom']), $emb_bev_lib);
+					
+					$message = '<p>'.$messModifie.'</p>';				
+					$data = array(
+						'to' => $json_array['mail'], 
+						'subject' => $objet,
+						'message' => $message);
+		
+					$this -> emailer -> send($data);
+					Template::set_message('Le mail a bien été envoyé', 'success');
+					
+				}
 			}
 			
-			//Template::redirect('index');
 		}
+			
+		Template::redirect('index');
 	}
+	
 
 	//
 	// Modifier un disque
@@ -569,33 +578,6 @@ class Disque extends Authenticated_Controller {
 					}
 					$i++;
 					
-					// Chargement du corps mail
-					$corps_mail = $this -> parametreManager -> select('mail-inscription');
-					$corps_mail = $corps_mail['param_valeur'];
-					
-					if(empty($corps_mail))
-						throw new Exception("Erreur chargement corps mail inscription");
-						
-					// Si l'utilisateur n'existe pas
-					if($this->get_dif_id() === -1){
-						$mdp = $this->bdd['diffuseur']['mdp'];
-						if($est_auto_production)
-							$login = $this->input->post('artiste');
-						else
-							$login = $this->input->post('diffuseur');
-						
-						$objet = '[Beaub\'FM] Inscription ';	
-						$message = '<p>'.$corps_mail.'</p>
-						<p>Nom d\'utilisateur : '.$login.'<br>
-						Mot de passe : '.$mdp.'</p>
-						<p>Ceci est un email automatique, merci de ne pas y répondre.</p>
-						';	
-						$data = array(
-							'to' => $email, 
-							'subject' => $objet,
-							'message' => $message);
-						$this -> emailer -> send($data);
-					}
 				}
 			}
 			else 
@@ -815,8 +797,26 @@ class Disque extends Authenticated_Controller {
 		$difId = $this -> diffuseurManager -> select('users.id', array('users.username' => $nom, ));
 		if (empty($difId)) {
 			$this->bdd['diffuseur'] = array('nom'=>$nom,'radio'=>$radio,'categorie'=>$categorie,'email'=>$email);			
-				$mdp = $this->generatePassword(6);
-				$this->bdd['diffuseur']['mdp'] = $mdp;
+			$mdp = $this->generatePassword(6);
+			$this->bdd['diffuseur']['mdp'] = $mdp;
+			$objet = '[Beaub\'FM] Inscription ';	
+			
+			// Chargement du corps mail
+			$corps_mail = $this -> parametreManager -> select('mail-inscription');
+			$corps_mail = $corps_mail['param_valeur'];
+			
+			if(empty($corps_mail))
+				throw new Exception("Erreur chargement corps mail inscription");
+			$message = '<p>'.$corps_mail.'</p>
+			<p>Nom d\'utilisateur : '.$nom.'<br>
+			Mot de passe : '.$mdp.'</p>
+			<p>Ceci est un email automatique, merci de ne pas y répondre.</p>
+			';	
+			$data = array(
+				'to' => $email, 
+			'subject' => $objet,
+			'message' => $message);
+			$this -> emailer -> send($data);
 			$difId = -1;
 		} else
 			$difId = $difId["id"];

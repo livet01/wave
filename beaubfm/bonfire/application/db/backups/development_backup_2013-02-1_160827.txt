@@ -1,0 +1,314 @@
+#
+# TABLE STRUCTURE FOR: activities
+#
+
+CREATE TABLE `activities` (
+  `activity_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL DEFAULT '0',
+  `activity` varchar(255) NOT NULL,
+  `module` varchar(255) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `deleted` tinyint(12) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`activity_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: artiste
+#
+
+CREATE TABLE `artiste` (
+  `art_id` int(11) NOT NULL AUTO_INCREMENT,
+  `art_nom` varchar(150) NOT NULL,
+  `rad_id` smallint(6) NOT NULL,
+  PRIMARY KEY (`art_id`),
+  KEY `rad_id` (`rad_id`),
+  CONSTRAINT `artiste_ibfk_1` FOREIGN KEY (`rad_id`) REFERENCES `radio` (`rad_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: disque
+#
+
+CREATE TABLE `disque` (
+  `dis_id` int(11) NOT NULL AUTO_INCREMENT,
+  `dis_libelle` varchar(150) NOT NULL,
+  `dis_format` varchar(10) NOT NULL,
+  `uti_id_ecoute` bigint(20) unsigned DEFAULT NULL,
+  `dis_date_ajout` date DEFAULT NULL,
+  `art_id` int(11) NOT NULL,
+  `dif_id` bigint(20) unsigned NOT NULL,
+  `dis_envoi_ok` tinyint(1) NOT NULL DEFAULT '1',
+  `emp_id` int(11) NOT NULL,
+  `emb_id` int(11) DEFAULT NULL,
+  `dis_disponible` tinyint(1) NOT NULL DEFAULT '1',
+  `sty_id` int(11) DEFAULT NULL,
+  `col1` text,
+  `col2` text,
+  `col3` text,
+  `col4` text,
+  `col5` text,
+  `col6` text,
+  PRIMARY KEY (`dis_id`),
+  KEY `style_id` (`sty_id`),
+  KEY `uti_id_ecoute` (`uti_id_ecoute`),
+  KEY `dif_id` (`dif_id`),
+  KEY `emp_id` (`emp_id`),
+  KEY `art_id` (`art_id`),
+  KEY `emb_id` (`emb_id`),
+  CONSTRAINT `disque_ibfk_10` FOREIGN KEY (`emb_id`) REFERENCES `embenevole` (`emb_id`),
+  CONSTRAINT `disque_ibfk_2` FOREIGN KEY (`uti_id_ecoute`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `disque_ibfk_4` FOREIGN KEY (`dif_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `disque_ibfk_7` FOREIGN KEY (`sty_id`) REFERENCES `style` (`sty_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `disque_ibfk_8` FOREIGN KEY (`emp_id`) REFERENCES `emplacement` (`emp_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `disque_ibfk_9` FOREIGN KEY (`art_id`) REFERENCES `artiste` (`art_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+#
+# TABLE STRUCTURE FOR: email_queue
+#
+
+CREATE TABLE `email_queue` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `to_email` varchar(128) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `alt_message` text,
+  `max_attempts` int(11) NOT NULL DEFAULT '3',
+  `attempts` int(11) NOT NULL DEFAULT '0',
+  `success` tinyint(1) NOT NULL DEFAULT '0',
+  `date_published` datetime DEFAULT NULL,
+  `last_attempt` datetime DEFAULT NULL,
+  `date_sent` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: embenevole
+#
+
+CREATE TABLE `embenevole` (
+  `emb_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emb_libelle` varchar(150) NOT NULL,
+  `rad_id` smallint(6) NOT NULL,
+  PRIMARY KEY (`emb_id`),
+  KEY `rad_id` (`rad_id`),
+  CONSTRAINT `embenevole_ibfk_1` FOREIGN KEY (`rad_id`) REFERENCES `radio` (`rad_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: emplacement
+#
+
+CREATE TABLE `emplacement` (
+  `emp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_libelle` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `rad_id` smallint(6) NOT NULL,
+  `emp_plus` tinyint(1) NOT NULL DEFAULT '0',
+  `emp_mail` text CHARACTER SET latin1,
+  PRIMARY KEY (`emp_id`),
+  KEY `rad_id` (`rad_id`),
+  CONSTRAINT `emplacement_ibfk_1` FOREIGN KEY (`rad_id`) REFERENCES `radio` (`rad_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: importdisque
+#
+
+CREATE TABLE `importdisque` (
+  `imp_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `imp_libelle` varchar(100) DEFAULT NULL,
+  `imp_format` varchar(100) DEFAULT NULL,
+  `imp_ecoute` varchar(100) DEFAULT NULL,
+  `imp_date_ajout` varchar(100) DEFAULT NULL,
+  `imp_artiste` varchar(100) DEFAULT NULL,
+  `imp_diffuseur` varchar(100) DEFAULT NULL,
+  `imp_email_diffuseur` varchar(100) DEFAULT NULL,
+  `imp_envoi_ok` varchar(100) DEFAULT NULL,
+  `imp_emplacement` varchar(100) DEFAULT NULL,
+  `per_id_import` bigint(20) unsigned NOT NULL,
+  `imp_date_import` date NOT NULL,
+  `imp_style` varchar(100) DEFAULT NULL,
+  `imp_em_bev` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`imp_id`),
+  UNIQUE KEY `imp_id_UNIQUE` (`imp_id`),
+  KEY `fk_ImportDisque_Users1_idx` (`per_id_import`),
+  CONSTRAINT `importdisque_ibfk_2` FOREIGN KEY (`per_id_import`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+#
+# TABLE STRUCTURE FOR: login_attempts
+#
+
+CREATE TABLE `login_attempts` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ip_address` varchar(40) NOT NULL,
+  `login` varchar(50) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: parametre
+#
+
+CREATE TABLE `parametre` (
+  `param_id` int(11) NOT NULL AUTO_INCREMENT,
+  `param_libelle` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `param_valeur` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  PRIMARY KEY (`param_id`),
+  KEY `param_libelle` (`param_libelle`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: permissions
+#
+
+CREATE TABLE `permissions` (
+  `permission_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `description` varchar(100) NOT NULL,
+  `status` enum('active','inactive','deleted') DEFAULT 'active',
+  PRIMARY KEY (`permission_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: radio
+#
+
+CREATE TABLE `radio` (
+  `rad_id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `rad_libelle` varchar(45) NOT NULL,
+  PRIMARY KEY (`rad_id`),
+  UNIQUE KEY `rad_id_UNIQUE` (`rad_id`),
+  UNIQUE KEY `rad_libelle_UNIQUE` (`rad_libelle`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+#
+# TABLE STRUCTURE FOR: role_permissions
+#
+
+CREATE TABLE `role_permissions` (
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`role_id`,`permission_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: roles
+#
+
+CREATE TABLE `roles` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(60) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `default` tinyint(1) NOT NULL DEFAULT '0',
+  `can_delete` tinyint(1) NOT NULL DEFAULT '1',
+  `login_destination` varchar(255) NOT NULL DEFAULT '/',
+  `deleted` int(1) NOT NULL DEFAULT '0',
+  `default_context` varchar(255) NOT NULL DEFAULT 'content',
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: schema_version
+#
+
+CREATE TABLE `schema_version` (
+  `type` varchar(40) NOT NULL,
+  `version` int(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sessions
+#
+
+CREATE TABLE `sessions` (
+  `session_id` varchar(40) NOT NULL DEFAULT '0',
+  `ip_address` varchar(45) NOT NULL DEFAULT '0',
+  `user_agent` varchar(120) NOT NULL,
+  `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_data` text,
+  PRIMARY KEY (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: settings
+#
+
+CREATE TABLE `settings` (
+  `name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `module` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `value` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`name`),
+  UNIQUE KEY `unique - name` (`name`),
+  KEY `index - name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+#
+# TABLE STRUCTURE FOR: style
+#
+
+CREATE TABLE `style` (
+  `sty_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sty_couleur` varchar(16) CHARACTER SET latin1 NOT NULL,
+  `sty_libelle` varchar(52) CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`sty_id`),
+  KEY `sty_couleur` (`sty_couleur`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: user_cookies
+#
+
+CREATE TABLE `user_cookies` (
+  `user_id` bigint(20) NOT NULL,
+  `token` varchar(128) NOT NULL,
+  `created_on` datetime NOT NULL,
+  KEY `token` (`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: user_meta
+#
+
+CREATE TABLE `user_meta` (
+  `meta_id` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(20) unsigned NOT NULL DEFAULT '0',
+  `meta_key` varchar(255) NOT NULL DEFAULT '',
+  `meta_value` text,
+  PRIMARY KEY (`meta_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: users
+#
+
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL DEFAULT '4',
+  `email` varchar(120) NOT NULL,
+  `username` varchar(150) NOT NULL DEFAULT '',
+  `password_hash` varchar(40) NOT NULL,
+  `reset_hash` varchar(40) DEFAULT NULL,
+  `salt` varchar(7) NOT NULL,
+  `last_login` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `last_ip` varchar(40) NOT NULL DEFAULT '',
+  `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `banned` tinyint(1) NOT NULL DEFAULT '0',
+  `ban_message` varchar(255) DEFAULT NULL,
+  `reset_by` int(10) DEFAULT NULL,
+  `display_name` varchar(255) DEFAULT '',
+  `display_name_changed` date DEFAULT NULL,
+  `timezone` char(4) NOT NULL DEFAULT 'UM6',
+  `language` varchar(20) NOT NULL DEFAULT 'french',
+  `active` tinyint(1) NOT NULL DEFAULT '0',
+  `activate_hash` varchar(40) NOT NULL DEFAULT '',
+  `rad_id` smallint(6) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `email` (`email`),
+  KEY `rad_id` (`rad_id`),
+  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`rad_id`) REFERENCES `radio` (`rad_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
