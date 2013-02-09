@@ -23,6 +23,7 @@ jQuery(function($){
 		// Pour les disques normales et correctes
 		var n = $("input:checked").length;
 		if(n >= 1) {
+		  	console.log("coucou entrée");
 		  	$("#supprimer>a").removeClass().addClass("btn");
 		  	$("#supprimer>a").click(function(){
 		  		$("#tdisque").attr("action",CI.site_url+"/disque/supprimer").submit();
@@ -44,6 +45,7 @@ jQuery(function($){
 			});
 		}
 		else {
+		  	console.log("cocuou sortie");
 		  	$("#supprimer>a").removeClass().addClass("btn disabled");
 		  	$("#supprimer>a").attr("href", "#");
 		  	$("#supprimerI>a").removeClass().addClass("btn disabled");
