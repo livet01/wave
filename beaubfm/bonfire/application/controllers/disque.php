@@ -1163,7 +1163,7 @@ if(isset($rows[0])){
 		// On passe la valeur d'affichage (sélectionne dans la vue les mode à afficher : erreur, résultat recherche, vue général)
 		$data['affichage'] = $affichage;
 		$data['liens'][0] = array("id" => "supprAll", "icon" => "icon-trash", "text" => " Tout supprimer", "href" => "#");
-		$data['liens'][1] = array("id" => "", "icon" => "icon-repeat", "text" => " Annuler", "href" => site_url("enAttente/"));
+		$data['liens'][1] = array("id" => "", "icon" => "icon-repeat", "text" => " Annuler", "href" => site_url("index/"));
 		$data['form_id'] = "supprimerdisque";
 		Assets::add_js(js_url("supprDisque"));
 		Assets::add_js(js_url("pagination"));
