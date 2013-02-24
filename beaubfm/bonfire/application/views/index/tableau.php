@@ -113,7 +113,6 @@
 	</thead>
 </table>
 </form>
-<?php if(count($resultat)>15){ ?>
 
 <center>
 <div class="holder">
@@ -121,6 +120,8 @@
 </center>
 <script type="text/javascript" src="<?php echo js_url('cocheTout'); ?>"></script>
 <script type="text/javascript" src="<?php echo js_url('jPages'); ?>"></script>
+
+<?php if(count($resultat)>15){ ?>
 <script type="text/javascript">
 	
 			$(".holder").jPages({

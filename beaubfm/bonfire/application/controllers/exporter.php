@@ -101,8 +101,8 @@ class Exporter extends Base_Controller {
 	        $objPHPExcel->setActiveSheetIndex(0);
 	 
 	        // Field names in the first row
-			$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Emplacement', 'Date d\'ajout', 'Ecouté par', 'Mail diffuseur', 'Emission Bénévole', 'Style');
-	        $fields = array('dis_libelle', 'art_nom', 'per_nom', 'dis_format', 'emp_libelle', 'dis_date_ajout', 'uti_login', 'dif_mail', 'emb_libelle', 'sty_libelle');
+			$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Ecouté par', 'Date d\'ajout', 'Mail diffuseur','Emplacement', 'Emission Bénévole', 'Style');
+	        $fields = array('dis_libelle', 'art_nom', 'per_nom', 'dis_format', 'uti_login', 'dis_date_ajout', 'dif_mail', 'emp_libelle', 'emb_libelle', 'sty_libelle');
 			
 			$query = $this->exportManager->select_export($choix);
 			$param = $this->exportManager->select_param();
@@ -181,7 +181,7 @@ class Exporter extends Base_Controller {
 			$enTete = "Titre;Artiste;Diffuseur;Format;Ecouté par;Date d'ajout;Mail diffuseur;Emplacement;Emission Bénévole;Style";
 	
 			$column = array('Titre', 'Artiste', 'Diffuseur', 'Format', 'Emplacement', 'Date d\'ajout', 'Ecouté par', 'Mail diffuseur', 'Emission Bénévole', 'Style');
-	        $fields = array('dis_libelle', 'art_nom', 'per_nom', 'dis_format', 'emp_libelle', 'dis_date_ajout', 'uti_login', 'dif_mail', 'emb_libelle', 'sty_libelle');
+	        $fields = array('dis_libelle', 'art_nom', 'per_nom', 'dis_format', 'uti_login', 'dis_date_ajout', 'dif_mail', 'emp_libelle', 'emb_libelle', 'sty_libelle');
 			
 			//Rajout des colonnes supplémentaire s'il existe des paramètres
 			$i = 1;
