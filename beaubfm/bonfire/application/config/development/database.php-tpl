@@ -43,8 +43,8 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'invit';
-$db['default']['password'] = 'sdsd';
-$db['default']['database'] = 'beaubfm_3';
+$db['default']['password'] = '';
+$db['default']['database'] = 'beaubfm';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
